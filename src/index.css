@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-[#faf9f6] text-gray-900;
+  }
+}
+
+@layer components {
+  .nav-link {
+    @apply px-4 py-2 text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors;
+  }
+  
+  .section-title {
+    @apply text-4xl font-bold mb-8 text-gray-900;
+  }
+  
+  .card {
+    @apply bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow;
+  }
+}
