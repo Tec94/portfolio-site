@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { ThemeProvider } from './contexts/ThemeContext';
+import { BackgroundProvider } from './contexts/BackgroundContext';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Experience from './components/Experience';
@@ -13,6 +14,7 @@ import Scanlines from './components/Scanlines';
 import GridBackground from './components/GridBackground';
 import ScrollProgress from './components/ScrollProgress';
 import AnimatedDataStreams from './components/AnimatedDataStreams';
+import UnifiedBackground from './components/UnifiedBackground';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
@@ -40,6 +42,9 @@ function AppContent() {
 
   return (
     <div className="min-h-screen bg-black transition-colors duration-300 relative overflow-x-hidden">
+      {/* Unified 3D Background with smooth transitions */}
+      <UnifiedBackground />
+
       {/* Layered background effects */}
       <MatrixRain />
       <GridBackground />
@@ -66,7 +71,9 @@ function AppContent() {
 function App() {
   return (
     <ThemeProvider>
-      <AppContent />
+      <BackgroundProvider>
+        <AppContent />
+      </BackgroundProvider>
     </ThemeProvider>
   );
 }

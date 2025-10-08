@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { motion } from 'framer-motion';
 
 export default function WaveAnimation() {
@@ -18,24 +18,40 @@ export default function WaveAnimation() {
     return path;
   };
 
+  const wavePaths = useMemo(() => {
+    return Array.from({ length: waveCount }, (_, i) => ({
+      path1: generateWavePath(3 + i * 2, 2 + i * 0.5, 0),
+      path2: generateWavePath(3 + i * 2, 2 + i * 0.5, Math.PI * 2),
+      opacity: 0.3 - i * 0.05,
+      duration: 4 + i * 0.5,
+    }));
+  }, [waveCount]);
+
+  const particles = useMemo(() => {
+    return Array.from({ length: 15 }, () => ({
+      cx: Math.random() * 100,
+      cy: Math.random() * 100,
+      cx2: Math.random() * 100,
+      cy2: Math.random() * 100,
+    }));
+  }, []);
+
   return (
     <div className="absolute inset-0 overflow-hidden opacity-25" style={{ pointerEvents: 'none' }}>
       <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" viewBox="0 0 100 100">
-        {[...Array(waveCount)].map((_, i) => (
+        {wavePaths.map((wave, i) => (
           <motion.path
             key={`wave-${i}`}
-            d={generateWavePath(3 + i * 2, 2 + i * 0.5, 0)}
+            d={wave.path1}
             fill="none"
-            stroke={`rgba(0, 255, 0, ${0.3 - i * 0.05})`}
+            stroke={`rgba(0, 255, 0, ${wave.opacity})`}
             strokeWidth="0.5"
+            initial={{ d: wave.path1 }}
             animate={{
-              d: [
-                generateWavePath(3 + i * 2, 2 + i * 0.5, 0),
-                generateWavePath(3 + i * 2, 2 + i * 0.5, Math.PI * 2),
-              ],
+              d: [wave.path1, wave.path2],
             }}
             transition={{
-              duration: 4 + i * 0.5,
+              duration: wave.duration,
               repeat: Infinity,
               ease: 'linear',
             }}
@@ -55,8 +71,6 @@ export default function WaveAnimation() {
             strokeDasharray="2,4"
             animate={{
               opacity: [0.3, 0.6, 0.3],
-              x1: [`${i * 10}%`, `${i * 10 + 2}%`, `${i * 10}%`],
-              x2: [`${i * 10}%`, `${i * 10 + 2}%`, `${i * 10}%`],
             }}
             transition={{
               duration: 3,
@@ -67,18 +81,19 @@ export default function WaveAnimation() {
         ))}
 
         {/* Flowing particles */}
-        {[...Array(15)].map((_, i) => (
+        {particles.map((particle, i) => (
           <motion.circle
             key={`particle-${i}`}
-            r="0.3"
+            r={0.3}
             fill="rgba(0, 255, 0, 0.8)"
             initial={{
-              cx: `${Math.random() * 100}%`,
-              cy: `${Math.random() * 100}%`,
+              cx: `${particle.cx}%`,
+              cy: `${particle.cy}%`,
+              opacity: 0,
             }}
             animate={{
-              cx: [`${Math.random() * 100}%`, `${Math.random() * 100}%`],
-              cy: [`${Math.random() * 100}%`, `${Math.random() * 100}%`],
+              cx: [`${particle.cx}%`, `${particle.cx2}%`],
+              cy: [`${particle.cy}%`, `${particle.cy2}%`],
               opacity: [0, 1, 0],
             }}
             transition={{

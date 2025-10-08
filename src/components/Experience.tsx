@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import MagneticCard from './MagneticCard';
 import BlurReveal from './BlurReveal';
-import CircuitBoard from './CircuitBoard';
 import TerminalTyping from './TerminalTyping';
+import CardParticleEffect from './CardParticleEffect';
 
 export default function Experience() {
+  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
+
   const experiences = [
     {
       company: "QT-Data Group",
@@ -60,10 +62,7 @@ export default function Experience() {
   };
 
   return (
-    <section id="experience" className="py-20 relative overflow-hidden">
-      {/* Animated Circuit Board Background */}
-      <CircuitBoard />
-
+    <section id="experience" className="py-20 relative">
       {/* Diagonal grid pattern background */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute inset-0"
@@ -95,11 +94,17 @@ export default function Experience() {
           {experiences.map((exp, index) => (
             <BlurReveal key={index} delay={index * 0.1}>
               <MagneticCard className="mb-8" strength={0.2}>
-                <div className="relative p-6 border-2 border-green-500/40 rounded-lg bg-black/70 backdrop-blur-sm overflow-hidden"
+                <div
+                  className="relative p-6 border-2 border-green-500/40 rounded-lg bg-black/70 backdrop-blur-sm overflow-hidden"
                   style={{
                     boxShadow: '0 0 30px rgba(0, 255, 0, 0.2), inset 0 0 30px rgba(0, 255, 0, 0.05)',
                   }}
+                  onMouseEnter={() => setHoveredCard(index)}
+                  onMouseLeave={() => setHoveredCard(null)}
                 >
+                  {/* Particle gathering effect */}
+                  <CardParticleEffect isHovered={hoveredCard === index} />
+
                   {/* Corner brackets */}
                   <div className="absolute top-2 left-2 w-3 h-3 border-l-2 border-t-2 border-green-500" />
                   <div className="absolute top-2 right-2 w-3 h-3 border-r-2 border-t-2 border-green-500" />

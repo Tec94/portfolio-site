@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import ParticleTrail from './ParticleTrail';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [hoveredLink, setHoveredLink] = useState<string | null>(null);
 
   const navLinks = [
     { name: 'About', href: '#about' },
@@ -33,8 +35,15 @@ export default function Navbar() {
                 transition={{ delay: index * 0.1 }}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
+                onMouseEnter={() => setHoveredLink(link.name)}
+                onMouseLeave={() => setHoveredLink(null)}
               >
                 <span className="relative z-10">{link.name}</span>
+
+                {/* Particle trail for Experience link */}
+                {link.name === 'Experience' && (
+                  <ParticleTrail isActive={hoveredLink === 'Experience'} />
+                )}
 
                 {/* Hover outline border with animated corners */}
                 <motion.div
