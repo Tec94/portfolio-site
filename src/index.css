@@ -4,20 +4,290 @@
 
 @layer base {
   body {
-    @apply bg-[#faf9f6] text-gray-900;
+    @apply bg-black dark:bg-black text-green-400 dark:text-green-400 transition-colors duration-300;
+    font-family: 'Courier New', Courier, monospace;
+    overflow-x: hidden;
+  }
+
+  /* Enhanced smooth scrolling with easing */
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px; /* Account for fixed navbar */
+  }
+
+  /* Optional: Scroll snap for section transitions */
+  @media (min-width: 768px) {
+    html {
+      /* Uncomment to enable scroll snap on desktop */
+      /* scroll-snap-type: y proximity; */
+    }
+
+    section {
+      /* Uncomment to enable scroll snap on desktop */
+      /* scroll-snap-align: start; */
+      /* scroll-snap-stop: normal; */
+    }
+  }
+
+  /* CRT screen curve effect */
+  * {
+    text-shadow: 0 0 2px rgba(0, 255, 0, 0.3);
+  }
+
+  /* Custom scrollbar - Hacker style */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-black;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-green-500 rounded-full;
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-green-400;
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.8);
   }
 }
 
 @layer components {
   .nav-link {
-    @apply px-4 py-2 text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors;
+    @apply px-4 py-2 text-sm font-medium text-green-400 hover:text-green-300 transition-colors;
+    border: 1px solid transparent;
   }
-  
+
+  .nav-link:hover {
+    border-color: rgba(0, 255, 0, 0.3);
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+  }
+
   .section-title {
-    @apply text-4xl font-bold mb-8 text-gray-900;
+    @apply text-4xl font-bold mb-8 text-green-400;
+    text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
   }
-  
+
   .card {
-    @apply bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow;
+    @apply bg-black p-6 rounded-2xl transition-all duration-300;
+    border: 2px solid rgba(0, 255, 0, 0.3);
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.1), inset 0 0 20px rgba(0, 255, 0, 0.05);
+  }
+
+  .card:hover {
+    border-color: rgba(0, 255, 0, 0.6);
+    box-shadow: 0 0 30px rgba(0, 255, 0, 0.3), inset 0 0 30px rgba(0, 255, 0, 0.1);
   }
 }
+
+@layer utilities {
+  /* Custom gradient text - Hacker green */
+  .gradient-text {
+    @apply bg-gradient-to-r from-green-400 via-green-500 to-green-300 bg-clip-text text-transparent;
+    filter: drop-shadow(0 0 10px rgba(0, 255, 0, 0.5));
+  }
+
+  /* Glass morphism - Terminal style */
+  .glass {
+    @apply bg-black/80 backdrop-blur-lg;
+    border: 1px solid rgba(0, 255, 0, 0.2);
+  }
+
+  /* Perspective utility */
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+
+  .perspective-2000 {
+    perspective: 2000px;
+  }
+
+  /* 3D Transform utilities */
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+
+  .backface-hidden {
+    backface-visibility: hidden;
+  }
+}
+
+/* Advanced Keyframe Animations */
+@keyframes shineMove {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 0.5;
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+  }
+  50% {
+    opacity: 1;
+    box-shadow: 0 0 40px rgba(0, 255, 0, 0.8);
+  }
+}
+
+@keyframes rotate-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes glitch {
+  0% {
+    transform: translate(0);
+  }
+  20% {
+    transform: translate(-2px, 2px);
+  }
+  40% {
+    transform: translate(-2px, -2px);
+  }
+  60% {
+    transform: translate(2px, 2px);
+  }
+  80% {
+    transform: translate(2px, -2px);
+  }
+  100% {
+    transform: translate(0);
+  }
+}
+
+.animate-shine {
+  animation: shineMove 3s linear infinite;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.animate-rotate-slow {
+  animation: rotate-slow 20s linear infinite;
+}
+
+.animate-gradient-shift {
+  animation: gradient-shift 5s ease infinite;
+  background-size: 200% 200%;
+}
+
+.animate-slide-in-up {
+  animation: slideInUp 0.6s ease-out forwards;
+}
+
+.animate-slide-in-left {
+  animation: slideInLeft 0.6s ease-out forwards;
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 0.6s ease-out forwards;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.6s ease-out forwards;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+.animate-glitch {
+  animation: glitch 0.3s ease-in-out;
+}
+
+/* Stagger animation delays */
+.stagger-1 { animation-delay: 0.1s; }
+.stagger-2 { animation-delay: 0.2s; }
+.stagger-3 { animation-delay: 0.3s; }
+.stagger-4 { animation-delay: 0.4s; }
+.stagger-5 { animation-delay: 0.5s; }
+.stagger-6 { animation-delay: 0.6s; }
