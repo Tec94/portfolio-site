@@ -180,70 +180,201 @@ export default function NetworkProgram({ onExit, onNavigate }: NetworkProgramPro
                   onClick={() => handleNodeClick(node.id)}
                   className="cursor-pointer"
                 >
-                  {/* Glow effect */}
-                  {isSelected && (
+                  {/* Multiple pulsing rings */}
+                  {[60, 50, 40].map((r, i) => (
                     <motion.circle
+                      key={`ring-${i}`}
                       cx={`${x}%`}
                       cy={`${y}%`}
-                      r="40"
+                      r={r}
                       fill="none"
                       stroke="#00ff00"
-                      strokeWidth="2"
-                      initial={{ scale: 0, opacity: 0 }}
-                      animate={{
-                        scale: [1, 1.5, 1],
-                        opacity: [0.5, 0, 0.5]
-                      }}
+                      strokeWidth="1"
+                      opacity="0"
+                      animate={isSelected ? {
+                        scale: [0.5, 1.5, 0.5],
+                        opacity: [0.6, 0, 0.6]
+                      } : {}}
                       transition={{
-                        duration: 2,
-                        repeat: Infinity
+                        duration: 3,
+                        repeat: Infinity,
+                        delay: i * 0.3
                       }}
                     />
+                  ))}
+
+                  {/* Outer hexagon */}
+                  <motion.path
+                    d={`M ${x},${y - 35} L ${x + 30},${y - 17.5} L ${x + 30},${y + 17.5} L ${x},${y + 35} L ${x - 30},${y + 17.5} L ${x - 30},${y - 17.5} Z`}
+                    fill="none"
+                    stroke="#00ff00"
+                    strokeWidth={isSelected ? "2" : "1"}
+                    opacity={isSelected ? 0.8 : 0.3}
+                    initial={{ rotate: 0 }}
+                    animate={{
+                      rotate: 360,
+                      opacity: isSelected ? [0.8, 0.4, 0.8] : 0.3
+                    }}
+                    transition={{
+                      rotate: { duration: 20, repeat: Infinity, ease: 'linear' },
+                      opacity: { duration: 2, repeat: Infinity }
+                    }}
+                    style={{
+                      transformOrigin: `${x}% ${y}%`,
+                      filter: isSelected ? 'drop-shadow(0 0 8px #00ff00)' : 'none'
+                    }}
+                  />
+
+                  {/* Inner rotating ring with data points */}
+                  {isSelected && (
+                    <>
+                      {[0, 60, 120, 180, 240, 300].map((angle, i) => {
+                        const radians = (angle * Math.PI) / 180;
+                        const px = x + Math.cos(radians) * 25;
+                        const py = y + Math.sin(radians) * 25;
+                        return (
+                          <motion.circle
+                            key={`data-point-${i}`}
+                            cx={px}
+                            cy={py}
+                            r="2"
+                            fill="#00ff00"
+                            initial={{ opacity: 0 }}
+                            animate={{
+                              opacity: [0, 1, 0],
+                              scale: [0.5, 1.2, 0.5]
+                            }}
+                            transition={{
+                              duration: 2,
+                              repeat: Infinity,
+                              delay: i * 0.2
+                            }}
+                            style={{
+                              filter: 'drop-shadow(0 0 4px #00ff00)'
+                            }}
+                          />
+                        );
+                      })}
+                    </>
                   )}
 
-                  {/* Node circle */}
+                  {/* Core node with layered effects */}
                   <motion.circle
                     cx={`${x}%`}
                     cy={`${y}%`}
-                    r={isSelected ? "30" : "25"}
-                    fill={isSelected ? '#00ff0040' : '#00ff0020'}
+                    r={isSelected ? "32" : "28"}
+                    fill="url(#nodeGradient)"
                     stroke="#00ff00"
                     strokeWidth={isSelected ? 3 : 2}
                     initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ delay: index * 0.1 }}
+                    animate={{
+                      scale: 1,
+                      boxShadow: isSelected
+                        ? ['0 0 20px #00ff00', '0 0 40px #00ff00', '0 0 20px #00ff00']
+                        : '0 0 10px #00ff00'
+                    }}
+                    transition={{
+                      scale: { delay: index * 0.1 },
+                      boxShadow: { duration: 2, repeat: Infinity }
+                    }}
                     whileHover={{ scale: 1.2 }}
+                    style={{
+                      filter: isSelected
+                        ? 'drop-shadow(0 0 12px #00ff00) drop-shadow(0 0 20px #00ff00aa)'
+                        : 'drop-shadow(0 0 6px #00ff00)'
+                    }}
                   />
 
-                  {/* Label */}
+                  {/* Inner glow circle */}
+                  <motion.circle
+                    cx={`${x}%`}
+                    cy={`${y}%`}
+                    r={isSelected ? "18" : "15"}
+                    fill={isSelected ? '#00ff0060' : '#00ff0030'}
+                    animate={isSelected ? {
+                      opacity: [0.6, 0.3, 0.6],
+                      scale: [0.95, 1.05, 0.95]
+                    } : {}}
+                    transition={{
+                      duration: 1.5,
+                      repeat: Infinity
+                    }}
+                    style={{
+                      filter: 'blur(2px)'
+                    }}
+                  />
+
+                  {/* Label with enhanced styling */}
                   <text
                     x={`${x}%`}
                     y={`${y}%`}
                     textAnchor="middle"
                     dominantBaseline="middle"
-                    className="fill-green-400 font-mono text-xs select-none pointer-events-none"
-                    style={{ fontSize: isSelected ? '14px' : '12px' }}
+                    className="fill-green-400 font-mono font-bold select-none pointer-events-none"
+                    style={{
+                      fontSize: isSelected ? '14px' : '12px',
+                      filter: isSelected ? 'drop-shadow(0 0 6px #00ff00)' : 'drop-shadow(0 0 3px #00ff00)'
+                    }}
                   >
                     {node.label}
                   </text>
 
-                  {/* Info badge */}
+                  {/* Info badge with animation */}
                   {isSelected && (
                     <motion.text
                       x={`${x}%`}
-                      y={`${y + 8}%`}
+                      y={`${y + 10}%`}
                       textAnchor="middle"
-                      className="fill-green-400/60 font-mono text-[10px] select-none pointer-events-none"
+                      className="fill-green-400/80 font-mono text-[10px] select-none pointer-events-none"
                       initial={{ opacity: 0, y: -5 }}
-                      animate={{ opacity: 1, y: 0 }}
+                      animate={{
+                        opacity: [0.8, 1, 0.8],
+                        y: [0, -2, 0]
+                      }}
+                      transition={{
+                        duration: 1.5,
+                        repeat: Infinity
+                      }}
+                      style={{
+                        filter: 'drop-shadow(0 0 4px #00ff00)'
+                      }}
                     >
-                      CLICK TO NAVIGATE
+                      ▸ CLICK TO NAVIGATE ◂
                     </motion.text>
                   )}
+
+                  {/* Status indicator */}
+                  <motion.circle
+                    cx={`${x + 20}%`}
+                    cy={`${y - 20}%`}
+                    r="3"
+                    fill="#00ff00"
+                    animate={{
+                      opacity: [1, 0.3, 1],
+                      scale: [1, 1.3, 1]
+                    }}
+                    transition={{
+                      duration: 1.5,
+                      repeat: Infinity,
+                      delay: index * 0.2
+                    }}
+                    style={{
+                      filter: 'drop-shadow(0 0 6px #00ff00)'
+                    }}
+                  />
                 </g>
               );
             })}
           </g>
+
+          {/* Define gradient for nodes */}
+          <defs>
+            <radialGradient id="nodeGradient">
+              <stop offset="0%" stopColor="#00ff0040" />
+              <stop offset="50%" stopColor="#00ff0020" />
+              <stop offset="100%" stopColor="#00ff0010" />
+            </radialGradient>
+          </defs>
         </svg>
 
         {/* Data packets animation */}
