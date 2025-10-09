@@ -29,14 +29,27 @@
     }
   }
 
-  /* CRT screen curve effect */
+  /* CRT screen curve effect - reduced on mobile */
   * {
     text-shadow: 0 0 2px rgba(0, 255, 0, 0.3);
+  }
+
+  @media (max-width: 639px) {
+    * {
+      text-shadow: 0 0 1px rgba(0, 255, 0, 0.2);
+    }
   }
 
   /* Custom scrollbar - Hacker style */
   ::-webkit-scrollbar {
     width: 10px;
+  }
+
+  /* Thinner scrollbar on mobile */
+  @media (max-width: 639px) {
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
   }
 
   ::-webkit-scrollbar-track {
@@ -291,3 +304,46 @@
 .stagger-4 { animation-delay: 0.4s; }
 .stagger-5 { animation-delay: 0.5s; }
 .stagger-6 { animation-delay: 0.6s; }
+
+/* Mobile-specific optimizations */
+@media (max-width: 639px) {
+  /* Reduce animation durations on mobile */
+  .animate-float {
+    animation-duration: 4s;
+  }
+  
+  .animate-pulse-glow {
+    animation-duration: 3s;
+  }
+  
+  .animate-rotate-slow {
+    animation-duration: 30s;
+  }
+
+  /* Reduce stagger delays on mobile */
+  .stagger-1 { animation-delay: 0.05s; }
+  .stagger-2 { animation-delay: 0.1s; }
+  .stagger-3 { animation-delay: 0.15s; }
+  .stagger-4 { animation-delay: 0.2s; }
+  .stagger-5 { animation-delay: 0.25s; }
+  .stagger-6 { animation-delay: 0.3s; }
+}
+
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .animate-float,
+  .animate-pulse-glow,
+  .animate-rotate-slow,
+  .animate-gradient-shift,
+  .animate-shine {
+    animation: none !important;
+  }
+}

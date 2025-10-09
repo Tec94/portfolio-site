@@ -16,7 +16,7 @@ export default function UnifiedBackground() {
   const backgroundType = getBackgroundType();
 
   return (
-    <div className="fixed inset-0 -z-10">
+    <div className="fixed inset-0 -z-40">
       <AnimatePresence mode="wait">
         {backgroundType === 'hero' && (
           <motion.div

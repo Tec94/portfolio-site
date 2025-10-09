@@ -1,7 +1,9 @@
 import React, { useEffect, useRef } from 'react';
+import { useIsMobile } from '../hooks/useMediaQuery';
 
 export default function MatrixRain() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -16,7 +18,8 @@ export default function MatrixRain() {
 
     // Matrix characters - mix of katakana, latin letters, and numbers
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()_+-=[]{}|;:,.<>?アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
-    const fontSize = 14;
+    // Larger font size on mobile = fewer columns = better performance
+    const fontSize = isMobile ? 16 : 14;
     const columns = canvas.width / fontSize;
 
     // Array to store the y-position of each column
@@ -59,8 +62,9 @@ export default function MatrixRain() {
       }
     }
 
-    // Animation loop
-    const interval = setInterval(draw, 33); // ~30fps
+    // Animation loop - slower frame rate on mobile for better performance
+    const frameInterval = isMobile ? 50 : 33; // ~20fps mobile, ~30fps desktop
+    const interval = setInterval(draw, frameInterval);
 
     // Handle window resize
     const handleResize = () => {
@@ -74,13 +78,13 @@ export default function MatrixRain() {
       clearInterval(interval);
       window.removeEventListener('resize', handleResize);
     };
-  }, []);
+  }, [isMobile]);
 
   return (
     <canvas
       ref={canvasRef}
-      className="fixed top-0 left-0 w-full h-full -z-10 opacity-20 dark:opacity-10"
-      style={{ background: '#000000' }}
+      className={`fixed top-0 left-0 w-full h-full -z-30 ${isMobile ? 'opacity-15' : 'opacity-20'} dark:opacity-10`}
+      style={{ background: 'transparent' }}
     />
   );
 }

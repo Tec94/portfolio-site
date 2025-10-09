@@ -7,14 +7,14 @@ import BlurReveal from './BlurReveal';
 export default function Hero() {
   return (
     <section id="about" className="min-h-screen flex items-center justify-center pt-16 relative">
-      {/* Terminal Header Bar */}
-      <div className="absolute top-20 left-0 right-0 h-8 bg-green-500/10 border-y border-green-500/30 flex items-center px-4 z-20">
+      {/* Terminal Header Bar - adjusted for mobile */}
+      <div className="absolute top-20 left-0 right-0 h-8 bg-green-500/10 border-y border-green-500/30 flex items-center px-2 sm:px-4 z-20">
         <div className="flex gap-2">
           <div className="w-3 h-3 rounded-full bg-red-500" />
           <div className="w-3 h-3 rounded-full bg-yellow-500" />
           <div className="w-3 h-3 rounded-full bg-green-500" />
         </div>
-        <span className="ml-4 text-xs text-green-400 font-mono">jack@portfolio:~$</span>
+        <span className="ml-2 sm:ml-4 text-xs text-green-400 font-mono hidden sm:inline">jack@portfolio:~$</span>
       </div>
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-20 flex flex-col items-center">
@@ -27,9 +27,9 @@ export default function Hero() {
         </BlurReveal>
 
         <BlurReveal delay={0.4}>
-          <div className="flex items-center justify-center flex-wrap gap-4 sm:gap-6 text-green-400 mb-12 font-mono text-sm">
+          <div className="flex items-center justify-center flex-wrap gap-3 sm:gap-6 text-green-400 mb-12 font-mono text-xs sm:text-sm">
             <motion.span
-              className="relative flex items-center border border-green-500/30 px-3 py-1 rounded overflow-hidden group"
+              className="relative flex items-center border border-green-500/30 px-2 sm:px-3 py-1 rounded overflow-hidden group"
               whileHover={{
                 scale: 1.05,
                 borderColor: 'rgba(0, 255, 0, 0.8)',
@@ -44,7 +44,7 @@ export default function Hero() {
             </motion.span>
             <motion.a
               href="tel:737-895-5742"
-              className="relative flex items-center border border-green-500/30 px-3 py-1 rounded hover:text-green-300 transition-colors duration-200 overflow-hidden group"
+              className="relative flex items-center border border-green-500/30 px-2 sm:px-3 py-1 rounded hover:text-green-300 transition-colors duration-200 overflow-hidden group"
               whileHover={{
                 scale: 1.05,
                 borderColor: 'rgba(0, 255, 0, 0.8)',
@@ -58,7 +58,7 @@ export default function Hero() {
             </motion.a>
             <motion.a
               href="mailto:jack.cao@utdallas.edu"
-              className="relative flex items-center border border-green-500/30 px-3 py-1 rounded hover:text-green-300 transition-colors duration-200 overflow-hidden group"
+              className="relative flex items-center border border-green-500/30 px-2 sm:px-3 py-1 rounded hover:text-green-300 transition-colors duration-200 overflow-hidden group"
               whileHover={{
                 scale: 1.05,
                 borderColor: 'rgba(0, 255, 0, 0.8)',
@@ -74,7 +74,7 @@ export default function Hero() {
               href="https://github.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="relative flex items-center border border-green-500/30 px-3 py-1 rounded hover:text-green-300 transition-colors duration-200 overflow-hidden group"
+              className="relative flex items-center border border-green-500/30 px-2 sm:px-3 py-1 rounded hover:text-green-300 transition-colors duration-200 overflow-hidden group"
               whileHover={{
                 scale: 1.05,
                 borderColor: 'rgba(0, 255, 0, 0.8)',
@@ -90,7 +90,7 @@ export default function Hero() {
         </BlurReveal>
 
         <BlurReveal delay={0.6}>
-          <p className="text-lg text-green-300 max-w-2xl mx-auto font-mono leading-relaxed">
+          <p className="text-sm sm:text-lg text-green-300 max-w-2xl mx-auto font-mono leading-relaxed px-4">
             <span className="text-green-500">{'> '}</span>Full-stack developer specializing in React, TypeScript, and Python. Experience in building scalable
             web applications, data pipelines, and automation solutions. Currently pursuing B.S. in Computer Science at UT Dallas.
           </p>

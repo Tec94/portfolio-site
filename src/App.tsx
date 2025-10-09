@@ -1,24 +1,20 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { BackgroundProvider } from './contexts/BackgroundContext';
-import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import Experience from './components/Experience';
-import Projects from './components/Projects';
-import Skills from './components/Skills';
-import Awards from './components/Awards';
-import FunFacts from './components/FunFacts';
-import Footer from './components/Footer';
-import MatrixRain from './components/MatrixRain';
 import Scanlines from './components/Scanlines';
-import GridBackground from './components/GridBackground';
-import ScrollProgress from './components/ScrollProgress';
-import AnimatedDataStreams from './components/AnimatedDataStreams';
-import UnifiedBackground from './components/UnifiedBackground';
+import TerminalShell from './components/Terminal/TerminalShell';
+import NetworkProgram from './components/Programs/NetworkProgram';
+import ScannerProgram from './components/Programs/ScannerProgram';
+import BreachProgram from './components/Programs/BreachProgram';
+import { AnimatePresence } from 'framer-motion';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
 function AppContent() {
+  const [theme, setTheme] = useState('cyberpunk');
+  const [glitchIntensity, setGlitchIntensity] = useState(30);
+  const [activeProgram, setActiveProgram] = useState<string | null>(null);
+
   useEffect(() => {
     AOS.init({
       duration: 800,
@@ -28,42 +24,77 @@ function AppContent() {
       easing: 'ease-out-cubic',
       mirror: false,
       anchorPlacement: 'top-bottom',
-      disable: false,
-      startEvent: 'DOMContentLoaded',
-      initClassName: 'aos-init',
-      animatedClassName: 'aos-animate',
-      useClassNames: false,
-      disableMutationObserver: false,
     });
 
-    // Refresh AOS on route change or dynamic content
     AOS.refresh();
   }, []);
 
+  const handleProgramLaunch = (args: string[]) => {
+    const program = args[0];
+    console.log('Launching program:', program, 'with args:', args.slice(1));
+    setActiveProgram(program);
+  };
+
+  const handleProgramExit = () => {
+    setActiveProgram(null);
+  };
+
+  const handleNavigate = (section: string) => {
+    console.log('Navigating to section:', section);
+    // TODO: Implement actual navigation
+    handleProgramExit();
+  };
+
+  const handleThemeChange = (newTheme: string) => {
+    console.log('Theme changed to:', newTheme);
+    setTheme(newTheme);
+    // TODO: Implement theme switching
+  };
+
+  const handleGlitchChange = (intensity: number) => {
+    console.log('Glitch intensity:', intensity);
+    setGlitchIntensity(intensity);
+    // TODO: Implement glitch effects
+  };
+
   return (
-    <div className="min-h-screen bg-black transition-colors duration-300 relative overflow-x-hidden">
-      {/* Unified 3D Background with smooth transitions */}
-      <UnifiedBackground />
+    <div className="min-h-screen transition-colors duration-300 relative overflow-hidden">
+      {/* Black background layer */}
+      <div className="fixed inset-0 bg-black -z-50" />
 
       {/* Layered background effects */}
-      <MatrixRain />
-      <GridBackground />
-      <AnimatedDataStreams />
       <Scanlines />
-      <ScrollProgress />
 
-      <div className="relative z-10">
-        <Navbar />
-        <main>
-          <Hero />
-          <Experience />
-          <Projects />
-          <Skills />
-          <Awards />
-          <FunFacts />
-        </main>
-        <Footer />
-      </div>
+      {/* Terminal Shell */}
+      {!activeProgram && (
+        <TerminalShell
+          onProgramLaunch={handleProgramLaunch}
+          onThemeChange={handleThemeChange}
+          onGlitchChange={handleGlitchChange}
+        />
+      )}
+
+      {/* Programs */}
+      <AnimatePresence>
+        {activeProgram === 'network' && (
+          <NetworkProgram
+            onExit={handleProgramExit}
+            onNavigate={handleNavigate}
+          />
+        )}
+        {activeProgram === 'scanner' && (
+          <ScannerProgram
+            onExit={handleProgramExit}
+            onNavigate={handleNavigate}
+          />
+        )}
+        {activeProgram === 'breach' && (
+          <BreachProgram
+            onExit={handleProgramExit}
+            onNavigate={handleNavigate}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 }

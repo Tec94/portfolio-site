@@ -14,50 +14,51 @@ export default function CardParticleEffect({ isHovered }: CardParticleEffectProp
       return;
     }
 
-    // Generate particles that will converge to form an outline
+    // Generate particles that come from outside and form a solid outline 5-7px away
     const newParticles: typeof particles = [];
+    const outlineOffset = 6; // 6px offset from edge (approximately 1.5% of typical card size)
 
-    // Top edge particles
-    for (let i = 0; i < 20; i++) {
+    // Top edge particles - coming from above the card
+    for (let i = 0; i < 50; i++) {
       newParticles.push({
         id: newParticles.length,
-        startX: Math.random() * 100,
-        startY: Math.random() * 100,
-        targetX: (i / 20) * 100,
-        targetY: 0,
+        startX: (i / 50) * 100,
+        startY: -30 + Math.random() * 20, // Start from above (-30% to -10%)
+        targetX: (i / 50) * 100,
+        targetY: -(outlineOffset / 4), // Target position 6px above edge
       });
     }
 
-    // Right edge particles
-    for (let i = 0; i < 15; i++) {
+    // Right edge particles - coming from right side of card
+    for (let i = 0; i < 35; i++) {
       newParticles.push({
         id: newParticles.length,
-        startX: Math.random() * 100,
-        startY: Math.random() * 100,
-        targetX: 100,
-        targetY: (i / 15) * 100,
+        startX: 110 + Math.random() * 20, // Start from right side (110% to 130%)
+        startY: (i / 35) * 100,
+        targetX: 100 + (outlineOffset / 4), // Target position 6px right of edge
+        targetY: (i / 35) * 100,
       });
     }
 
-    // Bottom edge particles
-    for (let i = 0; i < 20; i++) {
+    // Bottom edge particles - coming from below the card
+    for (let i = 0; i < 50; i++) {
       newParticles.push({
         id: newParticles.length,
-        startX: Math.random() * 100,
-        startY: Math.random() * 100,
-        targetX: (i / 20) * 100,
-        targetY: 100,
+        startX: (i / 50) * 100,
+        startY: 110 + Math.random() * 20, // Start from below (110% to 130%)
+        targetX: (i / 50) * 100,
+        targetY: 100 + (outlineOffset / 4), // Target position 6px below edge
       });
     }
 
-    // Left edge particles
-    for (let i = 0; i < 15; i++) {
+    // Left edge particles - coming from left side of card
+    for (let i = 0; i < 35; i++) {
       newParticles.push({
         id: newParticles.length,
-        startX: Math.random() * 100,
-        startY: Math.random() * 100,
-        targetX: 0,
-        targetY: (i / 15) * 100,
+        startX: -30 + Math.random() * 20, // Start from left side (-30% to -10%)
+        startY: (i / 35) * 100,
+        targetX: -(outlineOffset / 4), // Target position 6px left of edge
+        targetY: (i / 35) * 100,
       });
     }
 
@@ -65,14 +66,16 @@ export default function CardParticleEffect({ isHovered }: CardParticleEffectProp
   }, [isHovered]);
 
   return (
-    <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-lg">
+    <div className="absolute inset-0 pointer-events-none overflow-visible rounded-lg" style={{ margin: '-20px' }}>
       <AnimatePresence>
         {isHovered && particles.map((particle) => (
           <motion.div
             key={particle.id}
-            className="absolute w-1 h-1 rounded-full bg-green-400"
+            className="absolute rounded-full bg-green-400"
             style={{
-              boxShadow: '0 0 4px rgba(0, 255, 0, 1), 0 0 8px rgba(0, 255, 0, 0.5)',
+              width: '3px',
+              height: '3px',
+              boxShadow: '0 0 6px rgba(0, 255, 0, 1), 0 0 12px rgba(0, 255, 0, 0.8), 0 0 18px rgba(0, 255, 0, 0.4)',
             }}
             initial={{
               left: `${particle.startX}%`,
@@ -83,16 +86,17 @@ export default function CardParticleEffect({ isHovered }: CardParticleEffectProp
             animate={{
               left: `${particle.targetX}%`,
               top: `${particle.targetY}%`,
-              opacity: [0, 1, 0.8],
-              scale: [0, 1.5, 1],
+              opacity: [0, 0.9, 0.7],
+              scale: [0, 1.2, 1],
             }}
             exit={{
               opacity: 0,
               scale: 0,
             }}
             transition={{
-              duration: 0.8,
+              duration: 0.6,
               ease: [0.4, 0, 0.2, 1],
+              delay: Math.random() * 0.2, // Stagger the particles slightly
             }}
           />
         ))}

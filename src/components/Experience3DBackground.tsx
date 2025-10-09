@@ -1,5 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
+import { useIsMobile } from '../hooks/useMediaQuery';
+import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
 
 export default function Experience3DBackground() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -7,9 +9,16 @@ export default function Experience3DBackground() {
   const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
   const animationIdRef = useRef<number | null>(null);
+  const isMobile = useIsMobile();
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
     if (!containerRef.current) return;
+
+    // Disable 3D rendering if user prefers reduced motion
+    if (prefersReducedMotion) {
+      return;
+    }
 
     // Check WebGL support
     try {
@@ -44,12 +53,13 @@ export default function Experience3DBackground() {
     let renderer: THREE.WebGLRenderer;
     try {
       renderer = new THREE.WebGLRenderer({
-        antialias: true,
+        antialias: !isMobile, // Disable antialiasing on mobile for performance
         alpha: true,
         powerPreference: 'high-performance',
       });
       renderer.setSize(width, height);
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      // Lower pixel ratio on mobile for better performance
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.5 : 2));
       renderer.setClearColor(0x000000, 0);
       rendererRef.current = renderer;
 
@@ -59,11 +69,12 @@ export default function Experience3DBackground() {
       return;
     }
 
-    // Floating data cubes
+    // Floating data cubes - reduced on mobile
     const cubes: THREE.Mesh[] = [];
     const cubeGeometry = new THREE.BoxGeometry(10, 10, 10);
+    const cubeCount = isMobile ? 8 : 20;
 
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < cubeCount; i++) {
       try {
         const edges = new THREE.EdgesGeometry(cubeGeometry);
         const lineMaterial = new THREE.LineBasicMaterial({
@@ -99,9 +110,10 @@ export default function Experience3DBackground() {
       }
     }
 
-    // Data stream lines
+    // Data stream lines - reduced on mobile
     const streams: THREE.Line[] = [];
-    for (let i = 0; i < 30; i++) {
+    const streamCount = isMobile ? 10 : 30;
+    for (let i = 0; i < streamCount; i++) {
       try {
         const points = [];
         const startX = (Math.random() - 0.5) * 300;
@@ -162,9 +174,12 @@ export default function Experience3DBackground() {
 
     const hexRadius = 20;
     const hexSpacing = hexRadius * 1.73; // sqrt(3) for hex grid
+    // Simplified grid on mobile: ~5x8 vs 11x17 grid
+    const rowRange = isMobile ? { min: -2, max: 2 } : { min: -5, max: 5 };
+    const colRange = isMobile ? { min: -4, max: 4 } : { min: -8, max: 8 };
 
-    for (let row = -5; row <= 5; row++) {
-      for (let col = -8; col <= 8; col++) {
+    for (let row = rowRange.min; row <= rowRange.max; row++) {
+      for (let col = colRange.min; col <= colRange.max; col++) {
         const x = col * hexSpacing + (row % 2) * (hexSpacing / 2);
         const z = row * (hexRadius * 1.5);
         const hex = createHexagon(x, z, hexRadius);
@@ -176,9 +191,10 @@ export default function Experience3DBackground() {
       }
     }
 
-    // Orbiting data nodes
+    // Orbiting data nodes - reduced on mobile
     const nodes: THREE.Mesh[] = [];
-    for (let i = 0; i < 10; i++) {
+    const nodeCount = isMobile ? 4 : 10;
+    for (let i = 0; i < nodeCount; i++) {
       try {
         const geometry = new THREE.SphereGeometry(3, 16, 16);
         const material = new THREE.MeshBasicMaterial({
@@ -320,7 +336,7 @@ export default function Experience3DBackground() {
         }
       }
     };
-  }, []);
+  }, [isMobile, prefersReducedMotion]);
 
   return (
     <div

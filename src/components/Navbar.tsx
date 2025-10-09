@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import ParticleTrail from './ParticleTrail';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -40,11 +39,6 @@ export default function Navbar() {
               >
                 <span className="relative z-10">{link.name}</span>
 
-                {/* Particle trail for Experience link */}
-                {link.name === 'Experience' && (
-                  <ParticleTrail isActive={hoveredLink === 'Experience'} />
-                )}
-
                 {/* Hover outline border with animated corners */}
                 <motion.div
                   className="absolute inset-0 border border-green-500/0 group-hover:border-green-500/60 rounded bg-green-500/0 group-hover:bg-green-500/10 transition-all duration-150"
@@ -75,11 +69,12 @@ export default function Navbar() {
             ))}
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Menu Button - Touch target optimized (44px minimum) */}
           <div className="flex md:hidden items-center gap-2 ml-auto">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="p-2 text-green-400 hover:text-green-300 transition-colors"
+              className="p-3 text-green-400 hover:text-green-300 transition-colors"
+              aria-label={isOpen ? 'Close menu' : 'Open menu'}
             >
               {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>

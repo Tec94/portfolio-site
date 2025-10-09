@@ -1,5 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
+import { useIsMobile } from '../hooks/useMediaQuery';
+import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
 
 export default function CyberpunkScene3D() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -8,9 +10,16 @@ export default function CyberpunkScene3D() {
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
   const animationIdRef = useRef<number | null>(null);
   const particlesRef = useRef<THREE.Points[]>([]);
+  const isMobile = useIsMobile();
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
     if (!containerRef.current) return;
+
+    // Disable 3D rendering if user prefers reduced motion
+    if (prefersReducedMotion) {
+      return;
+    }
 
     // Check for WebGL support
     try {
@@ -47,12 +56,13 @@ export default function CyberpunkScene3D() {
     let renderer: THREE.WebGLRenderer;
     try {
       renderer = new THREE.WebGLRenderer({
-        antialias: true,
+        antialias: !isMobile, // Disable antialiasing on mobile for performance
         alpha: true,
         powerPreference: 'high-performance',
       });
       renderer.setSize(width, height);
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      // Lower pixel ratio on mobile for better performance
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.5 : 2));
       renderer.setClearColor(0x000000, 0);
       rendererRef.current = renderer;
 
@@ -106,20 +116,20 @@ export default function CyberpunkScene3D() {
       }
     };
 
-    // Create multiple particle layers
-    const mainParticles = createParticleField(2000, 3, 0x00ff00, 1000);
+    // Create multiple particle layers with reduced counts on mobile
+    const mainParticles = createParticleField(isMobile ? 500 : 2000, 3, 0x00ff00, 1000);
     if (mainParticles) {
       scene.add(mainParticles);
       particleSystems.push(mainParticles);
     }
 
-    const smallParticles = createParticleField(1000, 2, 0x00ff88, 800);
+    const smallParticles = createParticleField(isMobile ? 300 : 1000, 2, 0x00ff88, 800);
     if (smallParticles) {
       scene.add(smallParticles);
       particleSystems.push(smallParticles);
     }
 
-    const glowParticles = createParticleField(500, 6, 0x00ff00, 1200);
+    const glowParticles = createParticleField(isMobile ? 150 : 500, 6, 0x00ff00, 1200);
     if (glowParticles) {
       scene.add(glowParticles);
       particleSystems.push(glowParticles);
@@ -147,9 +157,10 @@ export default function CyberpunkScene3D() {
       }
     };
 
-    // Add tunnel rings
+    // Add tunnel rings - reduced on mobile
     const rings: THREE.Mesh[] = [];
-    for (let i = 0; i < 15; i++) {
+    const ringCount = isMobile ? 5 : 15;
+    for (let i = 0; i < ringCount; i++) {
       const ring = createTunnelRing(100 + i * 30, -i * 80);
       if (ring) {
         scene.add(ring);
@@ -300,7 +311,7 @@ export default function CyberpunkScene3D() {
       rendererRef.current = null;
       particlesRef.current = [];
     };
-  }, []);
+  }, [isMobile, prefersReducedMotion]);
 
   return (
     <div

@@ -1,16 +1,34 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useIsMobile } from '../hooks/useMediaQuery';
+import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
 
 export default function AnimatedDataStreams() {
+  const isMobile = useIsMobile();
+  const prefersReducedMotion = usePrefersReducedMotion();
+
+  // Disable all streams if user prefers reduced motion
+  if (prefersReducedMotion) {
+    return null;
+  }
+
   // Generate binary code for data streams
   const generateBinaryString = () => {
     return Array.from({ length: 20 }, () => Math.random() > 0.5 ? '1' : '0').join('');
   };
 
+  // Adjust counts based on mobile
+  const streamCount = isMobile ? 3 : 6;
+  const particleCount = isMobile ? 6 : 15;
+  const scanLineCount = isMobile ? 1 : 2;
+  const circleCount = isMobile ? 1 : 3;
+  const flowLineCount = isMobile ? 2 : 4;
+  const codeSnippetCount = isMobile ? 1 : 2;
+
   return (
-    <div className="fixed inset-0 -z-30 overflow-hidden pointer-events-none">
-      {/* Flowing binary data streams - reduced from 12 to 6 */}
-      {[...Array(6)].map((_, i) => (
+    <div className="fixed inset-0 -z-20 overflow-hidden pointer-events-none">
+      {/* Flowing binary data streams */}
+      {[...Array(streamCount)].map((_, i) => (
         <motion.div
           key={`stream-${i}`}
           className="absolute font-mono text-green-500/20 text-xs whitespace-nowrap"
@@ -36,8 +54,8 @@ export default function AnimatedDataStreams() {
         </motion.div>
       ))}
 
-      {/* Floating particles - reduced from 30 to 15 */}
-      {[...Array(15)].map((_, i) => (
+      {/* Floating particles */}
+      {[...Array(particleCount)].map((_, i) => (
         <motion.div
           key={`particle-${i}`}
           className="absolute w-1 h-1 bg-green-400 rounded-full"
@@ -59,8 +77,8 @@ export default function AnimatedDataStreams() {
         />
       ))}
 
-      {/* Horizontal scanning lines - reduced from 3 to 2 */}
-      {[...Array(2)].map((_, i) => (
+      {/* Horizontal scanning lines */}
+      {[...Array(scanLineCount)].map((_, i) => (
         <motion.div
           key={`scan-${i}`}
           className="absolute left-0 right-0 h-px"
@@ -81,8 +99,8 @@ export default function AnimatedDataStreams() {
         />
       ))}
 
-      {/* Pulsing circles - reduced from 5 to 3 */}
-      {[...Array(3)].map((_, i) => (
+      {/* Pulsing circles */}
+      {[...Array(circleCount)].map((_, i) => (
         <motion.div
           key={`circle-${i}`}
           className="absolute rounded-full border border-green-500/20"
@@ -104,8 +122,8 @@ export default function AnimatedDataStreams() {
         />
       ))}
 
-      {/* Data flow lines - reduced from 8 to 4 */}
-      {[...Array(4)].map((_, i) => (
+      {/* Data flow lines */}
+      {[...Array(flowLineCount)].map((_, i) => (
         <motion.div
           key={`flow-${i}`}
           className="absolute h-px bg-gradient-to-r from-transparent via-green-500/30 to-transparent"
@@ -125,8 +143,8 @@ export default function AnimatedDataStreams() {
         />
       ))}
 
-      {/* Code snippet animations - reduced from 4 to 2 */}
-      {[...Array(2)].map((_, i) => {
+      {/* Code snippet animations */}
+      {[...Array(codeSnippetCount)].map((_, i) => {
         const codeSnippets = [
           '{ success: true }',
           'const init = () => {}'
