@@ -15,9 +15,9 @@ export default function Projects() {
       github: "Tec94/hack-uta",
       demoUrl: "https://hack-uta.vercel.app/",
       metrics: [
-        { label: "API Calls/day", value: "8.2K" },
-        { label: "Avg. Savings", value: "$127" },
-        { label: "Users", value: "680" }
+        { label: "Credit Cards", value: "15" },
+        { label: "Categories", value: "30+" },
+        { label: "APIs", value: "3" }
       ]
     },
     {
@@ -32,9 +32,9 @@ export default function Projects() {
       github: "Tec94/Hack-Rice",
       demoUrl: "https://hack-rice-nine.vercel.app/",
       metrics: [
-        { label: "Users", value: "1.2K" },
-        { label: "Votes Cast", value: "5.4K" },
-        { label: "Proposals", value: "240" }
+        { label: "Features", value: "3" },
+        { label: "DB Tables", value: "8+" },
+        { label: "Auth Policies", value: "12+" }
       ]
     },
     {
@@ -51,7 +51,7 @@ export default function Projects() {
       metrics: [
         { label: "Load Time", value: "0.8s" },
         { label: "Lighthouse", value: "95" },
-        { label: "Users", value: "850" }
+        { label: "Components", value: "24" }
       ]
     },
     {
@@ -67,9 +67,9 @@ export default function Projects() {
       demoUrl: "https://stock-tracker-41285.bubbleapps.io/version-test",
       bubbleDesignUrl: "https://bubble.io/page?id=stock-tracker-41285&tab=Design&name=index",
       metrics: [
-        { label: "Portfolios", value: "320" },
-        { label: "API Calls/day", value: "15K" },
-        { label: "Accuracy", value: "99.8%" }
+        { label: "Data Points", value: "50K+" },
+        { label: "Update Rate", value: "<2s" },
+        { label: "Workflows", value: "15+" }
       ]
     },
     {
