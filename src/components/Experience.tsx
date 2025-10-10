@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import MagneticCard from './MagneticCard';
 import BlurReveal from './BlurReveal';
 import TerminalTyping from './TerminalTyping';
 import CardParticleEffect from './CardParticleEffect';
@@ -93,17 +92,36 @@ export default function Experience() {
         >
           {experiences.map((exp, index) => (
             <BlurReveal key={index} delay={index * 0.1}>
-              <MagneticCard className="mb-8" strength={0.2}>
+              <motion.div
+                className="mb-8"
+                onMouseEnter={() => setHoveredCard(index)}
+                onMouseLeave={() => setHoveredCard(null)}
+                whileHover={{
+                  boxShadow: '0 0 40px rgba(0, 255, 0, 0.25), inset 0 0 40px rgba(0, 255, 0, 0.08)',
+                }}
+                transition={{ duration: 0.3 }}
+              >
                 <div
                   className="relative p-6 border-2 border-green-500/40 rounded-lg bg-black/70 backdrop-blur-sm overflow-hidden"
                   style={{
                     boxShadow: '0 0 30px rgba(0, 255, 0, 0.2), inset 0 0 30px rgba(0, 255, 0, 0.05)',
                   }}
-                  onMouseEnter={() => setHoveredCard(index)}
-                  onMouseLeave={() => setHoveredCard(null)}
                 >
                   {/* Particle gathering effect */}
                   <CardParticleEffect isHovered={hoveredCard === index} />
+
+                  {/* Scanning line effect on hover */}
+                  {hoveredCard === index && (
+                    <motion.div
+                      className="absolute inset-x-0 h-px bg-gradient-to-r from-transparent via-green-400 to-transparent"
+                      initial={{ top: 0, opacity: 0 }}
+                      animate={{ top: '100%', opacity: [0, 1, 1, 0] }}
+                      transition={{ duration: 1.5, repeat: Infinity, ease: 'linear' }}
+                      style={{
+                        boxShadow: '0 0 10px rgba(0, 255, 0, 0.8)',
+                      }}
+                    />
+                  )}
 
                   {/* Corner brackets */}
                   <div className="absolute top-2 left-2 w-3 h-3 border-l-2 border-t-2 border-green-500" />
@@ -136,7 +154,7 @@ export default function Experience() {
                     ))}
                   </ul>
                 </div>
-              </MagneticCard>
+              </motion.div>
             </BlurReveal>
           ))}
         </motion.div>

@@ -17,6 +17,7 @@ interface Project {
   description: string[];
   github: string;
   demoUrl?: string;
+  bubbleDesignUrl?: string;
   metrics?: {
     label: string;
     value: string;
@@ -56,6 +57,18 @@ export default function CyberpunkProjects({ projects }: CyberpunkProjectsProps) 
   };
 
   const activeProject = projects[activeIndex];
+
+  // Handle drag end for touch/swipe navigation
+  const handleDragEnd = (event: any, info: any) => {
+    const swipeThreshold = 50;
+    if (info.offset.x > swipeThreshold) {
+      // Swiped right, go to previous
+      prevProject();
+    } else if (info.offset.x < -swipeThreshold) {
+      // Swiped left, go to next
+      nextProject();
+    }
+  };
 
   return (
     <section id="projects" className="py-20 relative overflow-hidden">
@@ -106,52 +119,80 @@ export default function CyberpunkProjects({ projects }: CyberpunkProjectsProps) 
               exit={{ opacity: 0, x: direction > 0 ? -100 : 100 }}
               transition={{ type: 'spring', stiffness: 200, damping: 30 }}
               className="relative"
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={0.2}
+              onDragEnd={handleDragEnd}
             >
               {/* Project card - wider expanded view */}
-              <div className="grid md:grid-cols-2 gap-6 border-2 border-green-500/40 rounded-lg overflow-hidden bg-black/80 backdrop-blur-sm p-6"
+              <div className="grid md:grid-cols-2 gap-6 border-2 border-green-500/40 rounded-lg overflow-hidden bg-black/80 backdrop-blur-sm p-6 h-[550px]"
                 style={{
                   boxShadow: '0 0 50px rgba(0, 255, 0, 0.3), inset 0 0 50px rgba(0, 255, 0, 0.05)',
                 }}
               >
-                {/* Left side - Video/Demo area */}
-                <div className="relative aspect-video bg-black border border-green-500/30 rounded overflow-hidden group">
-                  {/* Demo placeholder */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-green-900/20 via-black to-green-900/20" />
-
-                  {/* Scanlines effect */}
-                  <div className="absolute inset-0 pointer-events-none"
-                    style={{
-                      backgroundImage: 'repeating-linear-gradient(0deg, rgba(0, 255, 0, 0.03), rgba(0, 255, 0, 0.03) 1px, transparent 1px, transparent 2px)',
-                    }}
-                  />
-
-                  {/* Play overlay */}
-                  <motion.div
-                    className="absolute inset-0 flex items-center justify-center bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
-                    whileHover={{ scale: 1.05 }}
-                  >
-                    <div className="w-20 h-20 rounded-full border-2 border-green-400 flex items-center justify-center"
-                      style={{
-                        boxShadow: '0 0 30px rgba(0, 255, 0, 0.6)',
-                      }}
-                    >
-                      <Play className="h-10 w-10 text-green-400 ml-1" />
-                    </div>
-                  </motion.div>
-
-                  {/* Project stats overlay */}
-                  {activeProject.metrics && (
-                    <div className="absolute bottom-0 left-0 right-0 p-4 bg-black/80 backdrop-blur-sm border-t border-green-500/30">
-                      <div className="flex gap-4 justify-around text-xs font-mono">
-                        {activeProject.metrics.map((metric, idx) => (
-                          <div key={idx} className="text-center">
-                            <div className="text-green-400 font-bold text-lg">{metric.value}</div>
-                            <div className="text-green-500/70">{metric.label}</div>
-                          </div>
-                        ))}
+                {/* Left side - Live Website Preview */}
+                <div className="relative h-full w-full bg-black border border-green-500/30 rounded overflow-hidden group flex items-center justify-center">
+                  <div className="relative w-full" style={{ aspectRatio: '16 / 9' }}>
+                    {/* Live Website iframe - desktop view scaled down */}
+                    {activeProject.demoUrl && (
+                      <div className="absolute inset-0 overflow-hidden">
+                        <iframe
+                          src={activeProject.demoUrl}
+                          className="absolute top-0 left-0"
+                          title={`${activeProject.title} preview`}
+                          loading="lazy"
+                          sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+                          style={{
+                            width: '1920px',
+                            height: '1080px',
+                            transform: 'scale(0.3)',
+                            transformOrigin: 'top left',
+                            border: 'none',
+                            overflow: 'hidden',
+                            pointerEvents: 'none'
+                          }}
+                        />
                       </div>
-                    </div>
-                  )}
+                    )}
+
+                    {/* Scanlines effect overlay */}
+                    <div className="absolute inset-0 pointer-events-none"
+                      style={{
+                        backgroundImage: 'repeating-linear-gradient(0deg, rgba(0, 255, 0, 0.02), rgba(0, 255, 0, 0.02) 1px, transparent 1px, transparent 2px)',
+                      }}
+                    />
+
+                    {/* Click to open overlay */}
+                    <a
+                      href={activeProject.demoUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="absolute inset-0 flex items-center justify-center bg-black/0 hover:bg-black/40 opacity-0 hover:opacity-100 transition-all cursor-pointer group/link z-10"
+                    >
+                      <motion.div
+                        className="bg-green-500/20 backdrop-blur-sm border-2 border-green-400 rounded-lg px-6 py-3 text-green-300 font-mono text-sm flex items-center gap-2"
+                        whileHover={{ scale: 1.05, boxShadow: '0 0 30px rgba(0, 255, 0, 0.6)' }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <ExternalLink className="h-4 w-4" />
+                        <span>VISIT LIVE SITE</span>
+                      </motion.div>
+                    </a>
+
+                    {/* Project stats overlay */}
+                    {activeProject.metrics && (
+                      <div className="absolute bottom-0 left-0 right-0 p-4 bg-black/90 backdrop-blur-sm border-t border-green-500/30 z-20">
+                        <div className="flex gap-4 justify-around text-xs font-mono">
+                          {activeProject.metrics.map((metric, idx) => (
+                            <div key={idx} className="text-center">
+                              <div className="text-green-400 font-bold text-lg">{metric.value}</div>
+                              <div className="text-green-500/70">{metric.label}</div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </div>
 
                 {/* Right side - Project details */}
@@ -177,6 +218,8 @@ export default function CyberpunkProjects({ projects }: CyberpunkProjectsProps) 
                       <div className="flex gap-2">
                         <motion.a
                           href={activeProject.demoUrl || '#'}
+                          target="_blank"
+                          rel="noopener noreferrer"
                           className="relative p-2 border border-green-500/40 rounded hover:border-green-400 transition-colors duration-200 overflow-hidden group"
                           whileHover={{
                             scale: 1.1,
@@ -200,6 +243,8 @@ export default function CyberpunkProjects({ projects }: CyberpunkProjectsProps) 
                         </motion.a>
                         <motion.a
                           href={`https://github.com/${activeProject.github}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
                           className="relative p-2 border border-green-500/40 rounded hover:border-green-400 transition-colors duration-200 overflow-hidden group"
                           whileHover={{
                             scale: 1.1,
@@ -245,7 +290,7 @@ export default function CyberpunkProjects({ projects }: CyberpunkProjectsProps) 
                   </div>
 
                   {/* Description - expanded */}
-                  <div className="flex-1 overflow-y-auto max-h-[300px] pr-2 custom-scrollbar">
+                  <div className="flex-1 overflow-y-auto max-h-[400px] pr-2 custom-scrollbar">
                     <div className="space-y-3">
                       {activeProject.description.map((desc, idx) => (
                         <motion.div
@@ -295,11 +340,14 @@ export default function CyberpunkProjects({ projects }: CyberpunkProjectsProps) 
           ))}
         </div>
 
-        {/* Keyboard hint */}
+        {/* Navigation hint */}
         <div className="text-center mt-6 text-xs font-mono text-green-500/50">
-          <span className="inline-flex items-center gap-2">
+          <span className="hidden md:inline-flex items-center gap-2">
             Use <kbd className="px-2 py-1 border border-green-500/30 rounded">←</kbd>
             <kbd className="px-2 py-1 border border-green-500/30 rounded">→</kbd> to navigate
+          </span>
+          <span className="md:hidden">
+            Swipe left or right to navigate
           </span>
         </div>
       </div>

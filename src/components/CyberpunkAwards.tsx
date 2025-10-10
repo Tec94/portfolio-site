@@ -13,11 +13,20 @@ export default function CyberpunkAwards() {
 
   const awards = [
     {
+      title: "HackUTA Winner",
+      organization: "UT Arlington",
+      date: "October 2025",
+      description: "Built Credify, an AI-powered credit card optimization platform using Google Gemini AI and Plaid API integration",
+      icon: Trophy,
+      color: 'from-green-400 to-green-600',
+      hologramColor: 'rgba(0, 255, 0, 0.3)',
+    },
+    {
       title: "HackRice 15 Best Use of Auth0 Winner",
       organization: "Rice University",
       date: "September 2025",
       description: "Built CitizenVoice, a civic engagement platform with voting and proposal features, winning the Best Use of Auth0 prize",
-      icon: Trophy,
+      icon: Award,
       color: 'from-green-400 to-green-600',
       hologramColor: 'rgba(0, 255, 0, 0.3)',
     },
@@ -50,26 +59,28 @@ export default function CyberpunkAwards() {
         />
       </div>
 
-      {/* Floating particles - reduced from 15 to 8 */}
-      {[...Array(8)].map((_, i) => (
-        <motion.div
-          key={i}
-          className="absolute w-1 h-1 bg-green-400 rounded-full"
-          style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-          }}
-          animate={{
-            y: [0, -30, 0],
-            opacity: [0.2, 0.8, 0.2],
-          }}
-          transition={{
-            duration: 3 + Math.random() * 2,
-            repeat: Infinity,
-            delay: Math.random() * 2,
-          }}
-        />
-      ))}
+      {/* Floating particles - reduced from 15 to 8, hidden on mobile for performance */}
+      <div className="hidden md:block">
+        {[...Array(8)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-1 h-1 bg-green-400 rounded-full"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+            }}
+            animate={{
+              y: [0, -30, 0],
+              opacity: [0.2, 0.8, 0.2],
+            }}
+            transition={{
+              duration: 3 + Math.random() * 2,
+              repeat: Infinity,
+              delay: Math.random() * 2,
+            }}
+          />
+        ))}
+      </div>
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-12 flex flex-col items-center">
@@ -99,10 +110,27 @@ export default function CyberpunkAwards() {
             <span className="text-green-500">{'> '}</span>
             Milestones and recognition earned through innovation and dedication
           </p>
+
+          {/* Achievement Counter */}
+          <motion.div
+            className="mt-6 inline-flex items-center gap-3 px-6 py-3 border-2 border-green-500/40 rounded-lg bg-green-500/10"
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            style={{
+              boxShadow: '0 0 20px rgba(0, 255, 0, 0.3), inset 0 0 20px rgba(0, 255, 0, 0.1)',
+            }}
+          >
+            <Sparkles className="h-5 w-5 text-green-400" />
+            <div className="font-mono">
+              <span className="text-2xl font-bold text-green-300">{awards.length}</span>
+              <span className="text-sm text-green-400 ml-2">Achievements</span>
+            </div>
+          </motion.div>
         </div>
 
         {/* Holographic achievement cards */}
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           {awards.map((award, index) => {
             const IconComponent = award.icon;
             const isHovered = hoveredIndex === index;
@@ -110,7 +138,7 @@ export default function CyberpunkAwards() {
             return (
               <motion.div
                 key={index}
-                className="relative"
+                className="relative h-full"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -132,7 +160,7 @@ export default function CyberpunkAwards() {
 
                 {/* Main card */}
                 <motion.div
-                  className="relative border-2 border-green-500/40 rounded-lg overflow-hidden bg-black/70 backdrop-blur-sm"
+                  className="relative h-full border-2 border-green-500/40 rounded-lg overflow-hidden bg-black/70 backdrop-blur-sm flex flex-col"
                   whileHover={{ scale: 1.02 }}
                   transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                   style={{
@@ -173,9 +201,9 @@ export default function CyberpunkAwards() {
                       >
                         <IconComponent className="h-8 w-8 text-green-400" />
 
-                        {/* Sparkles */}
+                        {/* Sparkles - only on desktop for performance */}
                         {isHovered && (
-                          <>
+                          <div className="hidden md:block">
                             {[...Array(4)].map((_, i) => (
                               <motion.div
                                 key={i}
@@ -196,7 +224,7 @@ export default function CyberpunkAwards() {
                                 <Sparkles className="h-3 w-3 text-green-400" />
                               </motion.div>
                             ))}
-                          </>
+                          </div>
                         )}
                       </motion.div>
 
@@ -250,35 +278,6 @@ export default function CyberpunkAwards() {
             );
           })}
         </div>
-
-        {/* Achievement stats bar */}
-        <motion.div
-          className="mt-12 border border-green-500/30 rounded-lg p-4 bg-black/60 backdrop-blur-sm"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.5 }}
-          style={{
-            boxShadow: '0 0 30px rgba(0, 255, 0, 0.2), inset 0 0 20px rgba(0, 255, 0, 0.05)',
-          }}
-        >
-          <div className="flex items-center justify-around text-center">
-            <div>
-              <div className="text-3xl font-bold text-green-400 font-mono mb-1">2</div>
-              <div className="text-xs text-green-500 font-mono">Achievements</div>
-            </div>
-            <div className="h-12 w-px bg-green-500/30" />
-            <div>
-              <div className="text-3xl font-bold text-green-400 font-mono mb-1">100%</div>
-              <div className="text-xs text-green-500 font-mono">Success Rate</div>
-            </div>
-            <div className="h-12 w-px bg-green-500/30" />
-            <div>
-              <div className="text-3xl font-bold text-green-400 font-mono mb-1">ELITE</div>
-              <div className="text-xs text-green-500 font-mono">Rank Status</div>
-            </div>
-          </div>
-        </motion.div>
       </div>
     </section>
   );

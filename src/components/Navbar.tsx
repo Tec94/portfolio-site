@@ -68,6 +68,47 @@ export default function Navbar() {
                 />
               </motion.a>
             ))}
+
+            {/* Get in Touch CTA Button - Highlighted */}
+            <motion.a
+              href="#contact"
+              className="relative ml-4 px-6 py-2 font-mono text-sm font-bold text-black bg-green-400 rounded overflow-hidden group"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: navLinks.length * 0.1 }}
+              whileHover={{ scale: 1.08 }}
+              whileTap={{ scale: 0.95 }}
+              style={{
+                boxShadow: '0 0 20px rgba(0, 255, 0, 0.6), inset 0 0 10px rgba(0, 255, 0, 0.3)',
+              }}
+            >
+              <span className="relative z-10">Get in Touch</span>
+
+              {/* Animated glow on hover */}
+              <motion.div
+                className="absolute inset-0 bg-green-300 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+              />
+
+              {/* Pulse effect */}
+              <motion.div
+                className="absolute inset-0 bg-green-500/50"
+                animate={{
+                  opacity: [0, 0.3, 0],
+                  scale: [1, 1.05, 1]
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: 'easeInOut'
+                }}
+              />
+
+              {/* Corner brackets on hover */}
+              <div className="absolute top-0 left-0 w-2 h-2 border-l-2 border-t-2 border-black opacity-0 group-hover:opacity-100 transition-opacity duration-150" />
+              <div className="absolute top-0 right-0 w-2 h-2 border-r-2 border-t-2 border-black opacity-0 group-hover:opacity-100 transition-opacity duration-150" />
+              <div className="absolute bottom-0 left-0 w-2 h-2 border-l-2 border-b-2 border-black opacity-0 group-hover:opacity-100 transition-opacity duration-150" />
+              <div className="absolute bottom-0 right-0 w-2 h-2 border-r-2 border-b-2 border-black opacity-0 group-hover:opacity-100 transition-opacity duration-150" />
+            </motion.a>
           </div>
 
           {/* Mobile Menu Button - Touch target optimized (44px minimum) */}
@@ -124,6 +165,41 @@ export default function Navbar() {
                   />
                 </motion.a>
               ))}
+
+              {/* Get in Touch CTA Button - Mobile */}
+              <motion.a
+                href="#contact"
+                className="relative block text-center py-3 font-mono text-sm font-bold text-black bg-green-400 rounded overflow-hidden group mt-4"
+                onClick={() => setIsOpen(false)}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: navLinks.length * 0.05 }}
+                style={{
+                  boxShadow: '0 0 20px rgba(0, 255, 0, 0.6), inset 0 0 10px rgba(0, 255, 0, 0.3)',
+                }}
+              >
+                <span className="relative z-10">Get in Touch</span>
+
+                {/* Pulse effect */}
+                <motion.div
+                  className="absolute inset-0 bg-green-500/50"
+                  animate={{
+                    opacity: [0, 0.3, 0],
+                    scale: [1, 1.05, 1]
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: 'easeInOut'
+                  }}
+                />
+
+                {/* Corner brackets on hover */}
+                <div className="absolute top-1 left-1 w-2 h-2 border-l border-t border-black opacity-0 group-hover:opacity-100 transition-opacity duration-150" />
+                <div className="absolute top-1 right-1 w-2 h-2 border-r border-t border-black opacity-0 group-hover:opacity-100 transition-opacity duration-150" />
+                <div className="absolute bottom-1 left-1 w-2 h-2 border-l border-b border-black opacity-0 group-hover:opacity-100 transition-opacity duration-150" />
+                <div className="absolute bottom-1 right-1 w-2 h-2 border-r border-b border-black opacity-0 group-hover:opacity-100 transition-opacity duration-150" />
+              </motion.a>
             </div>
           </motion.div>
         )}

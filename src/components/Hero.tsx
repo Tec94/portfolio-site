@@ -74,7 +74,7 @@ export default function Hero() {
               <div className="absolute inset-0 border-2 border-green-400 opacity-0 group-hover:opacity-100 transition-opacity duration-150" style={{ clipPath: 'inset(0 0 50% 0)' }} />
             </motion.a>
             <motion.a
-              href="https://github.com"
+              href="https://github.com/Tec94"
               target="_blank"
               rel="noopener noreferrer"
               className="relative flex items-center border border-green-500/30 px-2 sm:px-3 py-1 rounded hover:text-green-300 transition-colors duration-200 overflow-hidden group"

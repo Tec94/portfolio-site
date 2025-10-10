@@ -5,6 +5,7 @@ import Experience from './Experience';
 import Projects from './Projects';
 import Skills from './Skills';
 import Awards from './Awards';
+import Contact from './Contact';
 import Footer from './Footer';
 
 export default function Portfolio() {
@@ -16,6 +17,7 @@ export default function Portfolio() {
       <Projects />
       <Skills />
       <Awards />
+      <Contact />
       <Footer />
     </div>
   );

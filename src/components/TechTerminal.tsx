@@ -150,7 +150,9 @@ export default function TechTerminal({ skills }: TechTerminalProps) {
                     {selectedCategory === index && (
                       <motion.div
                         className="absolute bottom-0 left-0 right-0 h-0.5 bg-green-400"
-                        layoutId="categoryIndicator"
+                        initial={{ opacity: 0, scaleX: 0 }}
+                        animate={{ opacity: 1, scaleX: 1 }}
+                        transition={{ duration: 0.15, ease: "easeOut" }}
                         style={{
                           boxShadow: '0 0 10px rgba(0, 255, 0, 0.8)',
                         }}

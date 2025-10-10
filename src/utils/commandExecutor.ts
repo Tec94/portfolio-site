@@ -61,6 +61,9 @@ export class CommandExecutor {
         return this.launchProgram('scanner', args);
       case 'breach':
         return this.launchProgram('breach', args);
+      case 'calendar':
+      case 'book':
+        return this.launchProgram('calendar', args);
       case 'theme':
         return this.theme(args);
       case 'glitch':
@@ -117,6 +120,7 @@ export class CommandExecutor {
         { type: 'output', content: '  network         - Launch Neural Network Map' },
         { type: 'output', content: '  scanner         - Launch AR Scanner' },
         { type: 'output', content: '  breach          - Launch Breach Protocol' },
+        { type: 'output', content: '  calendar/book   - Schedule a consultation' },
         { type: 'output', content: '' },
         { type: 'output', content: 'System:' },
         { type: 'output', content: '  theme [name]    - Change theme (dark, cyberpunk)' },
@@ -413,7 +417,7 @@ export class CommandExecutor {
   getAutocompleteOptions(partial: string): string[] {
     const commands = [
       'help', 'ls', 'cd', 'pwd', 'cat', 'tree', 'clear',
-      'whoami', 'network', 'scanner', 'breach', 'theme',
+      'whoami', 'network', 'scanner', 'breach', 'calendar', 'book', 'theme',
       'glitch', 'gui', 'exit'
     ];
 

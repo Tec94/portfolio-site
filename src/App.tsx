@@ -7,6 +7,7 @@ import TerminalShell from './components/Terminal/TerminalShell';
 import NetworkProgram from './components/Programs/NetworkProgram';
 import ScannerProgram from './components/Programs/ScannerProgram';
 import BreachProgram from './components/Programs/BreachProgram';
+import CalendarProgram from './components/Programs/CalendarProgram';
 import { AnimatePresence, motion } from 'framer-motion';
 import Terminal from 'lucide-react/dist/esm/icons/terminal';
 import AOS from 'aos';
@@ -83,11 +84,11 @@ function AppContent() {
       {/* Main Portfolio - Always visible when terminal is closed */}
       {!showTerminal && !activeProgram && <Portfolio />}
 
-      {/* Floating Terminal Access Button - Only show when terminal is closed */}
+      {/* Floating Terminal Access Button - Only show when terminal is closed, hidden on mobile */}
       {!showTerminal && !activeProgram && (
         <motion.button
           onClick={handleTerminalToggle}
-          className="fixed bottom-6 right-6 z-40 p-4 bg-green-500/20 border-2 border-green-500/60 rounded-lg hover:bg-green-500/30 transition-all group"
+          className="hidden md:flex fixed bottom-6 right-6 z-40 p-4 bg-green-500/20 border-2 border-green-500/60 rounded-lg hover:bg-green-500/30 transition-all group"
           initial={{ scale: 0, rotate: -180 }}
           animate={{ scale: 1, rotate: 0 }}
           whileHover={{
@@ -161,6 +162,12 @@ function AppContent() {
         )}
         {activeProgram === 'breach' && (
           <BreachProgram
+            onExit={handleProgramExit}
+            onNavigate={handleNavigate}
+          />
+        )}
+        {activeProgram === 'calendar' && (
+          <CalendarProgram
             onExit={handleProgramExit}
             onNavigate={handleNavigate}
           />
