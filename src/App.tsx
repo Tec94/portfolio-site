@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { BackgroundProvider } from './contexts/BackgroundContext';
 import Scanlines from './components/Scanlines';
@@ -8,13 +8,11 @@ import NetworkProgram from './components/Programs/NetworkProgram';
 import ScannerProgram from './components/Programs/ScannerProgram';
 import BreachProgram from './components/Programs/BreachProgram';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Terminal } from 'lucide-react';
+import Terminal from 'lucide-react/dist/esm/icons/terminal';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
 function AppContent() {
-  const [theme, setTheme] = useState('cyberpunk');
-  const [glitchIntensity, setGlitchIntensity] = useState(30);
   const [activeProgram, setActiveProgram] = useState<string | null>(null);
   const [showTerminal, setShowTerminal] = useState(false);
 
@@ -32,17 +30,17 @@ function AppContent() {
     AOS.refresh();
   }, []);
 
-  const handleProgramLaunch = (args: string[]) => {
+  const handleProgramLaunch = useCallback((args: string[]) => {
     const program = args[0];
     console.log('Launching program:', program, 'with args:', args.slice(1));
     setActiveProgram(program);
-  };
+  }, []);
 
-  const handleProgramExit = () => {
+  const handleProgramExit = useCallback(() => {
     setActiveProgram(null);
-  };
+  }, []);
 
-  const handleNavigate = (section: string) => {
+  const handleNavigate = useCallback((section: string) => {
     console.log('Navigating to section:', section);
     // Close terminal and programs
     setShowTerminal(false);
@@ -55,22 +53,12 @@ function AppContent() {
         element.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     }, 300);
-  };
+  }, []);
 
-  const handleThemeChange = (newTheme: string) => {
-    console.log('Theme changed to:', newTheme);
-    setTheme(newTheme);
-  };
-
-  const handleGlitchChange = (intensity: number) => {
-    console.log('Glitch intensity:', intensity);
-    setGlitchIntensity(intensity);
-  };
-
-  const handleTerminalToggle = () => {
-    setShowTerminal(!showTerminal);
+  const handleTerminalToggle = useCallback(() => {
+    setShowTerminal(prev => !prev);
     setActiveProgram(null);
-  };
+  }, []);
 
   // Handle ESC key to close terminal
   useEffect(() => {
@@ -145,8 +133,6 @@ function AppContent() {
           >
             <TerminalShell
               onProgramLaunch={handleProgramLaunch}
-              onThemeChange={handleThemeChange}
-              onGlitchChange={handleGlitchChange}
             />
             {/* Exit button for terminal */}
             <button

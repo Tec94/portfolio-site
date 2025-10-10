@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Trophy, Star, Award, Sparkles } from 'lucide-react';
+import Trophy from 'lucide-react/dist/esm/icons/trophy';
+import Star from 'lucide-react/dist/esm/icons/star';
+import Award from 'lucide-react/dist/esm/icons/award';
+import Sparkles from 'lucide-react/dist/esm/icons/sparkles';
 import TerminalTyping from './TerminalTyping';
 import BlurReveal from './BlurReveal';
 import HexagonWave from './HexagonWave';

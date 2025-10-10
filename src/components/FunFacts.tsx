@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Coffee, Code2, Music, Gamepad2, Brain, Zap, TrendingUp, Clock, Github } from 'lucide-react';
+import Coffee from 'lucide-react/dist/esm/icons/coffee';
+import Code2 from 'lucide-react/dist/esm/icons/code-2';
+import Music from 'lucide-react/dist/esm/icons/music';
+import Gamepad2 from 'lucide-react/dist/esm/icons/gamepad-2';
+import Brain from 'lucide-react/dist/esm/icons/brain';
+import Zap from 'lucide-react/dist/esm/icons/zap';
+import TrendingUp from 'lucide-react/dist/esm/icons/trending-up';
+import Clock from 'lucide-react/dist/esm/icons/clock';
+import Github from 'lucide-react/dist/esm/icons/github';
 import BlurReveal from './BlurReveal';
 import TerminalTyping from './TerminalTyping';
 import WaveAnimation from './WaveAnimation';

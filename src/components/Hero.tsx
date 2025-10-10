@@ -1,5 +1,8 @@
 import React from 'react';
-import { Github, Mail, MapPin, Phone } from 'lucide-react';
+import Github from 'lucide-react/dist/esm/icons/github';
+import Mail from 'lucide-react/dist/esm/icons/mail';
+import MapPin from 'lucide-react/dist/esm/icons/map-pin';
+import Phone from 'lucide-react/dist/esm/icons/phone';
 import { motion } from 'framer-motion';
 import TerminalTyping from './TerminalTyping';
 import BlurReveal from './BlurReveal';

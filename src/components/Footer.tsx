@@ -1,5 +1,8 @@
 import React from 'react';
-import { Github, Mail, Linkedin, Twitter } from 'lucide-react';
+import Github from 'lucide-react/dist/esm/icons/github';
+import Mail from 'lucide-react/dist/esm/icons/mail';
+import Linkedin from 'lucide-react/dist/esm/icons/linkedin';
+import Twitter from 'lucide-react/dist/esm/icons/twitter';
 import { motion } from 'framer-motion';
 
 export default function Footer() {

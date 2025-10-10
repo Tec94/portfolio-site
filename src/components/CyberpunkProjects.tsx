@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Github, ExternalLink, Code, Database, Zap, Play } from 'lucide-react';
+import Github from 'lucide-react/dist/esm/icons/github';
+import ExternalLink from 'lucide-react/dist/esm/icons/external-link';
+import Code from 'lucide-react/dist/esm/icons/code';
+import Database from 'lucide-react/dist/esm/icons/database';
+import Zap from 'lucide-react/dist/esm/icons/zap';
+import Play from 'lucide-react/dist/esm/icons/play';
 import TerminalTyping from './TerminalTyping';
 import BlurReveal from './BlurReveal';
 import NetworkNodes from './NetworkNodes';

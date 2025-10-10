@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Terminal, ChevronRight } from 'lucide-react';
+import Terminal from 'lucide-react/dist/esm/icons/terminal';
+import ChevronRight from 'lucide-react/dist/esm/icons/chevron-right';
 import TerminalTyping from './TerminalTyping';
 import BlurReveal from './BlurReveal';
 import CodeRain from './CodeRain';

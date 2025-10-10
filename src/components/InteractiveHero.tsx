@@ -1,5 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Github, Mail, MapPin, Phone, Code2, Database, Rocket } from 'lucide-react';
+import Github from 'lucide-react/dist/esm/icons/github';
+import Mail from 'lucide-react/dist/esm/icons/mail';
+import MapPin from 'lucide-react/dist/esm/icons/map-pin';
+import Phone from 'lucide-react/dist/esm/icons/phone';
+import Code2 from 'lucide-react/dist/esm/icons/code-2';
+import Database from 'lucide-react/dist/esm/icons/database';
+import Rocket from 'lucide-react/dist/esm/icons/rocket';
 import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
 import TerminalTyping from './TerminalTyping';
 import BlurReveal from './BlurReveal';

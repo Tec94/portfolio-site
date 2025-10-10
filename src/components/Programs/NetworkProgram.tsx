@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback, useMemo, memo } from 'react';
 import { motion } from 'framer-motion';
 import * as THREE from 'three';
 import { useIsMobile } from '../../hooks/useMediaQuery';
@@ -18,72 +18,70 @@ interface Node {
   connections: string[];
 }
 
+// Move static data outside component to prevent recreation
+const NETWORK_NODES: Node[] = [
+  {
+    id: 'about',
+    label: 'ABOUT',
+    position: new THREE.Vector3(0, 50, 0),
+    velocity: new THREE.Vector3(0, 0, 0),
+    section: 'about',
+    connections: ['skills', 'contact']
+  },
+  {
+    id: 'projects',
+    label: 'PROJECTS',
+    position: new THREE.Vector3(100, 0, 0),
+    velocity: new THREE.Vector3(0, 0, 0),
+    section: 'projects',
+    connections: ['skills', 'about']
+  },
+  {
+    id: 'skills',
+    label: 'SKILLS',
+    position: new THREE.Vector3(0, -50, 0),
+    velocity: new THREE.Vector3(0, 0, 0),
+    section: 'skills',
+    connections: ['about', 'projects', 'experience']
+  },
+  {
+    id: 'experience',
+    label: 'EXPERIENCE',
+    position: new THREE.Vector3(-100, 0, 0),
+    velocity: new THREE.Vector3(0, 0, 0),
+    section: 'experience',
+    connections: ['skills', 'contact']
+  },
+  {
+    id: 'contact',
+    label: 'CONTACT',
+    position: new THREE.Vector3(0, 0, 0),
+    velocity: new THREE.Vector3(0, 0, 0),
+    section: 'contact',
+    connections: ['about', 'experience']
+  }
+];
+
 export default function NetworkProgram({ onExit, onNavigate }: NetworkProgramProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const isMobile = useIsMobile();
   const prefersReducedMotion = usePrefersReducedMotion();
   const [selectedNode, setSelectedNode] = useState<string | null>(null);
   const [isDragging, setIsDragging] = useState(false);
-  const nodesRef = useRef<Node[]>([]);
+  const nodesRef = useRef<Node[]>(NETWORK_NODES);
   const mouseRef = useRef({ x: 0, y: 0 });
 
-  // Node network data
-  const networkNodes: Node[] = [
-    {
-      id: 'about',
-      label: 'ABOUT',
-      position: new THREE.Vector3(0, 50, 0),
-      velocity: new THREE.Vector3(0, 0, 0),
-      section: 'about',
-      connections: ['skills', 'contact']
-    },
-    {
-      id: 'projects',
-      label: 'PROJECTS',
-      position: new THREE.Vector3(100, 0, 0),
-      velocity: new THREE.Vector3(0, 0, 0),
-      section: 'projects',
-      connections: ['skills', 'about']
-    },
-    {
-      id: 'skills',
-      label: 'SKILLS',
-      position: new THREE.Vector3(0, -50, 0),
-      velocity: new THREE.Vector3(0, 0, 0),
-      section: 'skills',
-      connections: ['about', 'projects', 'experience']
-    },
-    {
-      id: 'experience',
-      label: 'EXPERIENCE',
-      position: new THREE.Vector3(-100, 0, 0),
-      velocity: new THREE.Vector3(0, 0, 0),
-      section: 'experience',
-      connections: ['skills', 'contact']
-    },
-    {
-      id: 'contact',
-      label: 'CONTACT',
-      position: new THREE.Vector3(0, 0, 0),
-      velocity: new THREE.Vector3(0, 0, 0),
-      section: 'contact',
-      connections: ['about', 'experience']
+  // Memoize handleKeyDown to prevent recreation
+  const handleKeyDown = useCallback((e: KeyboardEvent) => {
+    if (e.key === 'Escape' || e.key.toLowerCase() === 'q') {
+      onExit();
     }
-  ];
+  }, [onExit]);
 
   useEffect(() => {
-    nodesRef.current = networkNodes;
-
-    // Handle escape key
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' || e.key.toLowerCase() === 'q') {
-        onExit();
-      }
-    };
-
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [onExit]);
+  }, [handleKeyDown]);
 
   useEffect(() => {
     // Track mouse position
@@ -98,13 +96,19 @@ export default function NetworkProgram({ onExit, onNavigate }: NetworkProgramPro
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
-  const handleNodeClick = (nodeId: string) => {
+  const handleNodeClick = useCallback((nodeId: string) => {
     setSelectedNode(nodeId);
-    const node = networkNodes.find(n => n.id === nodeId);
+    const node = NETWORK_NODES.find(n => n.id === nodeId);
     if (node && onNavigate) {
       onNavigate(node.section);
     }
-  };
+  }, [onNavigate]);
+
+  // Calculate total connections count
+  const totalConnections = useMemo(() =>
+    NETWORK_NODES.reduce((sum, n) => sum + n.connections.length, 0),
+    []
+  );
 
   return (
     <motion.div
@@ -114,20 +118,22 @@ export default function NetworkProgram({ onExit, onNavigate }: NetworkProgramPro
       className="fixed inset-0 z-50 bg-black flex flex-col"
     >
       {/* Header */}
-      <div className="bg-green-500/10 border-b border-green-500/30 px-4 py-3 flex items-center justify-between">
-        <div className="flex items-center gap-3">
+      <div className="bg-green-500/10 border-b border-green-500/30 px-2 sm:px-4 py-2 sm:py-3 flex items-center justify-between">
+        <div className="flex items-center gap-2 sm:gap-3">
           <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-          <span className="text-green-400 font-mono text-sm">NETWORK MAP v1.0</span>
+          <span className="text-green-400 font-mono text-xs sm:text-sm">NETWORK MAP v1.0</span>
         </div>
-        <div className="flex items-center gap-4">
-          <span className="text-green-400/60 font-mono text-xs">
-            {selectedNode ? `SELECTED: ${selectedNode.toUpperCase()}` : 'HOVER TO SELECT'}
-          </span>
+        <div className="flex items-center gap-2 sm:gap-4">
+          {!isMobile && (
+            <span className="text-green-400/60 font-mono text-xs">
+              {selectedNode ? `SELECTED: ${selectedNode.toUpperCase()}` : 'HOVER TO SELECT'}
+            </span>
+          )}
           <button
             onClick={onExit}
-            className="px-3 py-1 bg-red-500/20 border border-red-500/50 rounded text-red-400 font-mono text-xs hover:bg-red-500/30 transition-colors"
+            className="px-2 sm:px-3 py-1 bg-red-500/20 border border-red-500/50 rounded text-red-400 font-mono text-[10px] sm:text-xs hover:bg-red-500/30 transition-colors"
           >
-            EXIT [ESC]
+            EXIT {!isMobile && '[ESC]'}
           </button>
         </div>
       </div>
@@ -137,9 +143,9 @@ export default function NetworkProgram({ onExit, onNavigate }: NetworkProgramPro
         <svg className="w-full h-full">
           {/* Draw connections */}
           <g>
-            {networkNodes.map(node =>
+            {NETWORK_NODES.map(node =>
               node.connections.map(connId => {
-                const targetNode = networkNodes.find(n => n.id === connId);
+                const targetNode = NETWORK_NODES.find(n => n.id === connId);
                 if (!targetNode) return null;
 
                 const isActive = selectedNode === node.id || selectedNode === connId;
@@ -167,7 +173,7 @@ export default function NetworkProgram({ onExit, onNavigate }: NetworkProgramPro
 
           {/* Draw nodes */}
           <g>
-            {networkNodes.map((node, index) => {
+            {NETWORK_NODES.map((node, index) => {
               const isSelected = selectedNode === node.id;
               const x = ((node.position.x + 200) / 400) * 100;
               const y = ((node.position.y + 200) / 400) * 100;
@@ -378,9 +384,9 @@ export default function NetworkProgram({ onExit, onNavigate }: NetworkProgramPro
         </svg>
 
         {/* Data packets animation */}
-        {networkNodes.map(node =>
+        {!prefersReducedMotion && NETWORK_NODES.map(node =>
           node.connections.map((connId, idx) => {
-            const targetNode = networkNodes.find(n => n.id === connId);
+            const targetNode = NETWORK_NODES.find(n => n.id === connId);
             if (!targetNode) return null;
 
             const x1 = ((node.position.x + 200) / 400) * 100;
@@ -413,23 +419,23 @@ export default function NetworkProgram({ onExit, onNavigate }: NetworkProgramPro
       </div>
 
       {/* Info Panel */}
-      <div className="bg-green-500/5 border-t border-green-500/20 p-4">
+      <div className="bg-green-500/5 border-t border-green-500/20 p-2 sm:p-4">
         <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 font-mono text-xs">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-2 sm:gap-4 font-mono text-[10px] sm:text-xs">
             <div>
-              <div className="text-green-400/60">NETWORK STATUS</div>
-              <div className="text-green-400">ONLINE - {networkNodes.length} NODES</div>
+              <div className="text-green-400/60">STATUS</div>
+              <div className="text-green-400">ONLINE - {NETWORK_NODES.length} NODES</div>
             </div>
             <div>
               <div className="text-green-400/60">CONNECTIONS</div>
-              <div className="text-green-400">
-                {networkNodes.reduce((sum, n) => sum + n.connections.length, 0)} ACTIVE
+              <div className="text-green-400">{totalConnections} ACTIVE</div>
+            </div>
+            {!isMobile && (
+              <div>
+                <div className="text-green-400/60">LATENCY</div>
+                <div className="text-green-400">12ms AVG</div>
               </div>
-            </div>
-            <div>
-              <div className="text-green-400/60">LATENCY</div>
-              <div className="text-green-400">12ms AVG</div>
-            </div>
+            )}
           </div>
         </div>
       </div>

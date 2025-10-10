@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Github, ChevronLeft, ChevronRight } from 'lucide-react';
+import Github from 'lucide-react/dist/esm/icons/github';
+import ChevronLeft from 'lucide-react/dist/esm/icons/chevron-left';
+import ChevronRight from 'lucide-react/dist/esm/icons/chevron-right';
 
 interface Project {
   title: string;
