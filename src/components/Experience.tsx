@@ -4,6 +4,25 @@ import BlurReveal from './BlurReveal';
 import TerminalTyping from './TerminalTyping';
 import CardParticleEffect from './CardParticleEffect';
 
+// Timeline dot component
+const TimelineDot = ({ isFirst }: { isFirst: boolean }) => (
+  <div className="absolute left-[-48px] top-1/2 -translate-y-1/2 hidden md:flex flex-col items-center">
+    <motion.div
+      className={`rounded-full border-2 border-green-400 bg-black ${
+        isFirst ? 'w-4 h-4' : 'w-3 h-3'
+      }`}
+      style={{
+        boxShadow: isFirst
+          ? '0 0 15px rgba(0, 255, 0, 0.8), inset 0 0 5px rgba(0, 255, 0, 0.5)'
+          : '0 0 10px rgba(0, 255, 0, 0.6)'
+      }}
+      initial={{ scale: 0 }}
+      animate={{ scale: 1 }}
+      transition={{ delay: 0.3, type: 'spring' }}
+    />
+  </div>
+);
+
 export default function Experience() {
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
 
@@ -92,21 +111,35 @@ export default function Experience() {
         >
           {experiences.map((exp, index) => (
             <BlurReveal key={index} delay={index * 0.1}>
-              <motion.div
-                className="mb-8"
-                onMouseEnter={() => setHoveredCard(index)}
-                onMouseLeave={() => setHoveredCard(null)}
-                whileHover={{
-                  boxShadow: '0 0 40px rgba(0, 255, 0, 0.25), inset 0 0 40px rgba(0, 255, 0, 0.08)',
-                }}
-                transition={{ duration: 0.3 }}
-              >
-                <div
-                  className="relative p-6 border-2 border-green-500/40 rounded-lg bg-black/70 backdrop-blur-sm overflow-hidden"
-                  style={{
-                    boxShadow: '0 0 30px rgba(0, 255, 0, 0.2), inset 0 0 30px rgba(0, 255, 0, 0.05)',
+              <div className="relative md:ml-16">
+                {/* Vertical line connecting dots (except for last item) */}
+                {index < experiences.length - 1 && (
+                  <div
+                    className="absolute left-[-48px] top-1/2 w-0.5 bg-green-500/30 hidden md:block"
+                    style={{
+                      height: 'calc(100% + 3rem)',
+                      boxShadow: '0 0 5px rgba(0, 255, 0, 0.3)'
+                    }}
+                  />
+                )}
+
+                <motion.div
+                  className="mb-8 relative"
+                  onMouseEnter={() => setHoveredCard(index)}
+                  onMouseLeave={() => setHoveredCard(null)}
+                  whileHover={{
+                    boxShadow: '0 0 40px rgba(0, 255, 0, 0.25), inset 0 0 40px rgba(0, 255, 0, 0.08)',
                   }}
+                  transition={{ duration: 0.15 }}
                 >
+                  {/* Timeline dot */}
+                  <TimelineDot isFirst={index === 0} />
+                  <div
+                    className="relative p-6 border-2 border-green-500/40 rounded-lg bg-black/70 backdrop-blur-sm overflow-hidden"
+                    style={{
+                      boxShadow: '0 0 30px rgba(0, 255, 0, 0.2), inset 0 0 30px rgba(0, 255, 0, 0.05)',
+                    }}
+                  >
                   {/* Particle gathering effect */}
                   <CardParticleEffect isHovered={hoveredCard === index} />
 
@@ -155,6 +188,7 @@ export default function Experience() {
                   </ul>
                 </div>
               </motion.div>
+            </div>
             </BlurReveal>
           ))}
         </motion.div>

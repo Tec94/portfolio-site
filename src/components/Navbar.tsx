@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Menu from 'lucide-react/dist/esm/icons/menu';
 import X from 'lucide-react/dist/esm/icons/x';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -6,14 +7,40 @@ import { motion, AnimatePresence } from 'framer-motion';
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [hoveredLink, setHoveredLink] = useState<string | null>(null);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const navLinks = [
     { name: 'About', href: '#about' },
     { name: 'Experience', href: '#experience' },
+    { name: 'Services', href: '#services' },
     { name: 'Projects', href: '#projects' },
-    { name: 'Skills', href: '#skills' },
-    { name: 'Awards', href: '#awards' }
+    { name: 'Tech Stack', href: '#skills' },
+    { name: 'FAQ', href: '#faq' }
   ];
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    setIsOpen(false);
+
+    // If we're on a service detail page, navigate to home first
+    if (location.pathname !== '/') {
+      navigate('/');
+      // Wait for navigation to complete, then scroll
+      setTimeout(() => {
+        const element = document.querySelector(href);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 100);
+    } else {
+      // Already on home page, just scroll
+      const element = document.querySelector(href);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+  };
 
   return (
     <nav className="fixed top-0 left-0 right-0 bg-black/90 backdrop-blur-md z-50 border-b-2 border-green-500/40"
@@ -29,7 +56,8 @@ export default function Navbar() {
               <motion.a
                 key={link.name}
                 href={link.href}
-                className="relative px-4 py-2 font-mono text-sm text-green-400 hover:text-green-300 transition-colors group overflow-hidden"
+                onClick={(e) => handleNavClick(e, link.href)}
+                className="relative px-4 py-2 font-mono text-sm text-green-400 hover:text-green-300 transition-colors group overflow-hidden cursor-pointer"
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
@@ -72,7 +100,8 @@ export default function Navbar() {
             {/* Get in Touch CTA Button - Highlighted */}
             <motion.a
               href="#contact"
-              className="relative ml-4 px-6 py-2 font-mono text-sm font-bold text-black bg-green-400 rounded overflow-hidden group"
+              onClick={(e) => handleNavClick(e, '#contact')}
+              className="relative ml-4 px-6 py-2 font-mono text-sm font-bold text-black bg-green-400 rounded overflow-hidden group cursor-pointer"
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: navLinks.length * 0.1 }}
@@ -142,8 +171,8 @@ export default function Navbar() {
                 <motion.a
                   key={link.name}
                   href={link.href}
-                  className="relative block text-center py-3 font-mono text-sm text-green-400 hover:text-green-300 border border-green-500/30 hover:border-green-500/60 rounded bg-green-500/5 hover:bg-green-500/15 transition-colors overflow-hidden group"
-                  onClick={() => setIsOpen(false)}
+                  onClick={(e) => handleNavClick(e, link.href)}
+                  className="relative block text-center py-3 font-mono text-sm text-green-400 hover:text-green-300 border border-green-500/30 hover:border-green-500/60 rounded bg-green-500/5 hover:bg-green-500/15 transition-colors overflow-hidden group cursor-pointer"
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: index * 0.05 }}
@@ -169,8 +198,8 @@ export default function Navbar() {
               {/* Get in Touch CTA Button - Mobile */}
               <motion.a
                 href="#contact"
-                className="relative block text-center py-3 font-mono text-sm font-bold text-black bg-green-400 rounded overflow-hidden group mt-4"
-                onClick={() => setIsOpen(false)}
+                onClick={(e) => handleNavClick(e, '#contact')}
+                className="relative block text-center py-3 font-mono text-sm font-bold text-black bg-green-400 rounded overflow-hidden group mt-4 cursor-pointer"
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: navLinks.length * 0.05 }}

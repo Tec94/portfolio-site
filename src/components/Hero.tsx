@@ -32,71 +32,140 @@ export default function Hero() {
         <BlurReveal delay={0.4}>
           <div className="flex items-center justify-center flex-wrap gap-3 sm:gap-6 text-green-400 mb-12 font-mono text-xs sm:text-sm">
             <motion.span
-              className="relative flex items-center border border-green-500/30 px-2 sm:px-3 py-1 rounded overflow-hidden group"
+              className="relative flex items-center border border-green-500/30 px-2 sm:px-3 py-1 rounded overflow-visible group"
               whileHover={{
                 scale: 1.05,
-                borderColor: 'rgba(0, 255, 0, 0.8)',
-                boxShadow: '0 0 20px rgba(0, 255, 0, 0.5), inset 0 0 10px rgba(0, 255, 0, 0.1)'
+                borderColor: 'rgba(0, 255, 0, 0.8)'
               }}
-              transition={{ type: 'spring', stiffness: 500, damping: 25 }}
+              transition={{ duration: 0.15 }}
             >
               <MapPin className="h-4 w-4 mr-2 relative z-10" />
               <span className="relative z-10">Dallas, TX</span>
-              {/* Glitch outline effect */}
-              <div className="absolute inset-0 border-2 border-green-400 opacity-0 group-hover:opacity-100 transition-opacity duration-150" style={{ clipPath: 'inset(0 0 50% 0)' }} />
+              {/* Outer glow effect */}
+              <motion.div
+                className="absolute -inset-0.5 border-2 border-green-400 rounded opacity-0 group-hover:opacity-100"
+                style={{ filter: 'blur(2px)' }}
+                transition={{ duration: 0.15 }}
+              />
             </motion.span>
             <motion.a
               href="tel:737-895-5742"
-              className="relative flex items-center border border-green-500/30 px-2 sm:px-3 py-1 rounded hover:text-green-300 transition-colors duration-200 overflow-hidden group"
+              className="relative flex items-center border border-green-500/30 px-2 sm:px-3 py-1 rounded hover:text-green-300 transition-colors overflow-visible group"
               whileHover={{
                 scale: 1.05,
-                borderColor: 'rgba(0, 255, 0, 0.8)',
-                boxShadow: '0 0 20px rgba(0, 255, 0, 0.5), inset 0 0 10px rgba(0, 255, 0, 0.1)'
+                borderColor: 'rgba(0, 255, 0, 0.8)'
               }}
-              transition={{ type: 'spring', stiffness: 500, damping: 25 }}
+              transition={{ duration: 0.15 }}
             >
               <Phone className="h-4 w-4 mr-2 relative z-10" />
               <span className="relative z-10">737-895-5742</span>
-              <div className="absolute inset-0 border-2 border-green-400 opacity-0 group-hover:opacity-100 transition-opacity duration-150" style={{ clipPath: 'inset(0 0 50% 0)' }} />
+              <motion.div
+                className="absolute -inset-0.5 border-2 border-green-400 rounded opacity-0 group-hover:opacity-100"
+                style={{ filter: 'blur(2px)' }}
+                transition={{ duration: 0.15 }}
+              />
             </motion.a>
             <motion.a
               href="mailto:jack.cao@utdallas.edu"
-              className="relative flex items-center border border-green-500/30 px-2 sm:px-3 py-1 rounded hover:text-green-300 transition-colors duration-200 overflow-hidden group"
+              className="relative flex items-center border border-green-500/30 px-2 sm:px-3 py-1 rounded hover:text-green-300 transition-colors overflow-visible group"
               whileHover={{
                 scale: 1.05,
-                borderColor: 'rgba(0, 255, 0, 0.8)',
-                boxShadow: '0 0 20px rgba(0, 255, 0, 0.5), inset 0 0 10px rgba(0, 255, 0, 0.1)'
+                borderColor: 'rgba(0, 255, 0, 0.8)'
               }}
-              transition={{ type: 'spring', stiffness: 500, damping: 25 }}
+              transition={{ duration: 0.15 }}
             >
               <Mail className="h-4 w-4 mr-2 relative z-10" />
               <span className="relative z-10">jack.cao@utdallas.edu</span>
-              <div className="absolute inset-0 border-2 border-green-400 opacity-0 group-hover:opacity-100 transition-opacity duration-150" style={{ clipPath: 'inset(0 0 50% 0)' }} />
+              <motion.div
+                className="absolute -inset-0.5 border-2 border-green-400 rounded opacity-0 group-hover:opacity-100"
+                style={{ filter: 'blur(2px)' }}
+                transition={{ duration: 0.15 }}
+              />
             </motion.a>
             <motion.a
               href="https://github.com/Tec94"
               target="_blank"
               rel="noopener noreferrer"
-              className="relative flex items-center border border-green-500/30 px-2 sm:px-3 py-1 rounded hover:text-green-300 transition-colors duration-200 overflow-hidden group"
+              className="relative flex items-center border border-green-500/30 px-2 sm:px-3 py-1 rounded hover:text-green-300 transition-colors overflow-visible group"
               whileHover={{
                 scale: 1.05,
-                borderColor: 'rgba(0, 255, 0, 0.8)',
-                boxShadow: '0 0 20px rgba(0, 255, 0, 0.5), inset 0 0 10px rgba(0, 255, 0, 0.1)'
+                borderColor: 'rgba(0, 255, 0, 0.8)'
               }}
-              transition={{ type: 'spring', stiffness: 500, damping: 25 }}
+              transition={{ duration: 0.15 }}
             >
               <Github className="h-4 w-4 mr-2 relative z-10" />
               <span className="relative z-10">GitHub</span>
-              <div className="absolute inset-0 border-2 border-green-400 opacity-0 group-hover:opacity-100 transition-opacity duration-150" style={{ clipPath: 'inset(0 0 50% 0)' }} />
+              <motion.div
+                className="absolute -inset-0.5 border-2 border-green-400 rounded opacity-0 group-hover:opacity-100"
+                style={{ filter: 'blur(2px)' }}
+                transition={{ duration: 0.15 }}
+              />
             </motion.a>
           </div>
         </BlurReveal>
 
         <BlurReveal delay={0.6}>
-          <p className="text-sm sm:text-lg text-green-300 max-w-2xl mx-auto font-mono leading-relaxed px-4">
+          <p className="text-sm sm:text-lg text-green-300 max-w-2xl mx-auto font-mono leading-relaxed px-4 mb-8">
             <span className="text-green-500">{'> '}</span>Full-stack developer specializing in React, TypeScript, and Python. Experience in building scalable
             web applications, data pipelines, and automation solutions. Currently pursuing B.S. in Computer Science at UT Dallas.
           </p>
+        </BlurReveal>
+
+        <BlurReveal delay={0.8}>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8">
+            <motion.a
+              href="#services"
+              className="relative w-full sm:w-auto px-8 py-3 border-2 border-green-500/60 rounded-lg bg-green-500/20 text-green-300 font-mono hover:bg-green-500/30 transition-all text-center"
+              whileHover={{
+                scale: 1.05,
+                borderColor: 'rgba(0, 255, 0, 0.9)'
+              }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ duration: 0.15 }}
+              style={{
+                boxShadow: '0 0 15px rgba(0, 255, 0, 0.3)'
+              }}
+            >
+              <motion.div
+                className="absolute -inset-0.5 rounded-lg opacity-0"
+                style={{
+                  background: 'rgba(0, 255, 0, 0.4)',
+                  filter: 'blur(8px)',
+                  zIndex: -1
+                }}
+                whileHover={{ opacity: 1 }}
+                transition={{ duration: 0.15 }}
+              />
+              {'> '}View Services
+            </motion.a>
+            <motion.a
+              href="/Jack_Cao_Resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="relative w-full sm:w-auto px-8 py-3 border-2 border-green-500/40 rounded-lg bg-black/50 text-green-300 font-mono hover:bg-green-500/10 transition-all text-center"
+              whileHover={{
+                scale: 1.05,
+                borderColor: 'rgba(0, 255, 0, 0.7)'
+              }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ duration: 0.15 }}
+              style={{
+                boxShadow: '0 0 10px rgba(0, 255, 0, 0.2)'
+              }}
+            >
+              <motion.div
+                className="absolute -inset-0.5 rounded-lg opacity-0"
+                style={{
+                  background: 'rgba(0, 255, 0, 0.3)',
+                  filter: 'blur(6px)',
+                  zIndex: -1
+                }}
+                whileHover={{ opacity: 1 }}
+                transition={{ duration: 0.15 }}
+              />
+              {'> '}Download Resume
+            </motion.a>
+          </div>
         </BlurReveal>
       </div>
     </section>
