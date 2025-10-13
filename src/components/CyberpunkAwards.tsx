@@ -186,7 +186,7 @@ export default function CyberpunkAwards() {
                     }}
                   />
 
-                  <div className="p-6 relative z-10">
+                  <div className="p-4 relative z-10">
                     {/* Icon and sparkle effect */}
                     <div className="flex items-start gap-4 mb-4">
                       <motion.div

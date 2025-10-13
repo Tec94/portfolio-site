@@ -114,7 +114,7 @@ export default function Experience() {
                   <div className="hidden md:grid md:grid-cols-[1fr_auto_2fr] md:gap-8 items-start">
                     {/* Left column: Role and Date */}
                     <motion.div
-                      className="text-right pt-6"
+                      className="text-right pt-4"
                       initial={{ opacity: 0, x: -30 }}
                       animate={{
                         opacity: hoveredCard === index ? 1 : 0.8,
@@ -125,7 +125,7 @@ export default function Experience() {
                         x: { delay: 0.6 + (index * 0.2), duration: 0.5 }
                       }}
                     >
-                      <h4 className="text-green-300 font-mono font-semibold text-base mb-1"
+                      <h4 className="text-green-300 font-mono font-semibold text-xl mb-1"
                         style={{
                           textShadow: hoveredCard === index ? '0 0 10px rgba(0, 255, 0, 0.6)' : 'none',
                           transition: 'text-shadow 0s'
@@ -139,7 +139,7 @@ export default function Experience() {
                     </motion.div>
 
                     {/* Center: Timeline dot and connecting line */}
-                    <div className="relative flex flex-col items-center pt-6">
+                    <div className="relative flex flex-col items-center pt-4">
                       <TimelineDot isFirst={index === 0} isHovered={hoveredCard === index} />
 
                       {/* Vertical line connecting to next dot */}
@@ -148,12 +148,12 @@ export default function Experience() {
                           className="absolute bg-green-500/30"
                           style={{
                             width: '2px',
-                            // Start from bottom edge of current dot
-                            top: `${index === 0 ? '16px' : '12px'}`,
-                            // Height spans: space-y-12 gap (48px) + pt-6 padding (24px) = 72px to reach next dot
-                            height: 'calc(3rem + 1.5rem)', // 48px + 24px = 72px
-                            left: '50%',
-                            transform: 'translateX(-50%)',
+                            // Start from center of current dot (pt-4 = 1rem + half dot height)
+                            top: index === 0 ? 'calc(1rem + 0.5rem)' : 'calc(1rem + 0.375rem)',
+                            // Height: measured to reach center of next dot accounting for varying card content heights
+                            height: index === 0 ? '22rem' : '19rem',
+                            // Center the 2px line (50% - 1px for the 2px width)
+                            left: 'calc(50% - 1px)',
                             boxShadow: '0 0 5px rgba(0, 255, 0, 0.3)'
                           }}
                           initial={{ scaleY: 0, opacity: 0, transformOrigin: 'top' }}
@@ -183,7 +183,7 @@ export default function Experience() {
                       }}
                     >
                       <div
-                        className="relative p-6 border-2 border-green-500/40 rounded-lg bg-black/70 backdrop-blur-sm overflow-hidden"
+                        className="relative p-4 border-2 border-green-500/40 rounded-lg bg-black/70 backdrop-blur-sm overflow-hidden"
                         style={{
                           boxShadow: '0 0 30px rgba(0, 255, 0, 0.2), inset 0 0 30px rgba(0, 255, 0, 0.05)',
                         }}
@@ -248,7 +248,7 @@ export default function Experience() {
                     }}
                   >
                     <div
-                      className="relative p-6 border-2 border-green-500/40 rounded-lg bg-black/70 backdrop-blur-sm overflow-hidden"
+                      className="relative p-4 border-2 border-green-500/40 rounded-lg bg-black/70 backdrop-blur-sm overflow-hidden"
                       style={{
                         boxShadow: '0 0 30px rgba(0, 255, 0, 0.2), inset 0 0 30px rgba(0, 255, 0, 0.05)',
                       }}
@@ -288,7 +288,7 @@ export default function Experience() {
                         </div>
                         <div>
                           <p className="text-green-400 font-mono text-sm">{exp.location}</p>
-                          <p className="text-xs text-green-500/70 font-mono">{exp.period}</p>
+                          <p className="text-sm text-green-500/70 font-mono">{exp.period}</p>
                         </div>
                       </div>
 
