@@ -62,7 +62,7 @@ export default function Services() {
                     y: -8,
                     boxShadow: '0 0 40px rgba(0, 255, 0, 0.3), inset 0 0 40px rgba(0, 255, 0, 0.08)',
                   }}
-                  transition={{ duration: 0.15 }}
+                  transition={{ duration: 0, type: "tween" }}
                 >
                   <div
                     className="relative h-full p-6 border-2 border-green-500/40 rounded-lg bg-black/70 backdrop-blur-sm overflow-hidden flex flex-col"
@@ -88,6 +88,7 @@ export default function Services() {
                           borderColor: 'rgba(0, 255, 0, 0.6)',
                           boxShadow: '0 0 20px rgba(0, 255, 0, 0.4)'
                         }}
+                        transition={{ duration: 0 }}
                       >
                         <service.icon className="h-8 w-8 text-green-400" style={{
                           filter: 'drop-shadow(0 0 4px rgba(0, 255, 0, 0.5))'
@@ -150,6 +151,7 @@ export default function Services() {
                 boxShadow: '0 0 30px rgba(0, 255, 0, 0.4)'
               }}
               whileTap={{ scale: 0.95 }}
+              transition={{ duration: 0 }}
             >
               {'> '}Start a Project
             </motion.a>

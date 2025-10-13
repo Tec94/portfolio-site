@@ -195,7 +195,7 @@ export default function Testimonials() {
             </div>
 
             {/* Navigation buttons */}
-            <div className="flex justify-center items-center gap-4 mt-12 relative z-20">
+            <div className="flex justify-center items-center gap-4 mt-20 relative z-20">
               <motion.button
                 onClick={prevTestimonial}
                 className="p-3 border-2 border-green-500/40 rounded-lg bg-green-500/10 text-green-400 hover:bg-green-500/20 transition-colors relative z-20"
@@ -205,7 +205,7 @@ export default function Testimonials() {
                   boxShadow: '0 0 20px rgba(0, 255, 0, 0.4)'
                 }}
                 whileTap={{ scale: 0.95 }}
-                transition={{ duration: 0.15 }}
+                transition={{ duration: 0 }}
               >
                 <ChevronLeft className="h-6 w-6" />
               </motion.button>
@@ -230,7 +230,7 @@ export default function Testimonials() {
                         backgroundColor: 'rgba(0, 255, 0, 0.6)',
                         boxShadow: '0 0 10px rgba(0, 255, 0, 0.6)'
                       }}
-                      transition={{ duration: 0.15 }}
+                      transition={{ duration: 0 }}
                       style={{
                         boxShadow: index === currentIndex ? '0 0 8px rgba(0, 255, 0, 0.8)' : 'none'
                       }}
@@ -248,7 +248,7 @@ export default function Testimonials() {
                   boxShadow: '0 0 20px rgba(0, 255, 0, 0.4)'
                 }}
                 whileTap={{ scale: 0.95 }}
-                transition={{ duration: 0.15 }}
+                transition={{ duration: 0 }}
               >
                 <ChevronRight className="h-6 w-6" />
               </motion.button>

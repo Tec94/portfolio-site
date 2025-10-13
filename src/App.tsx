@@ -14,6 +14,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import Terminal from 'lucide-react/dist/esm/icons/terminal';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import { Analytics } from '@vercel/analytics/react';
 
 function AppContent() {
   const [activeProgram, setActiveProgram] = useState<string | null>(null);
@@ -196,6 +197,7 @@ function App() {
     <ThemeProvider>
       <BackgroundProvider>
         <AppContent />
+        <Analytics />
       </BackgroundProvider>
     </ThemeProvider>
   );

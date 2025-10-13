@@ -70,17 +70,18 @@ export default function Navbar() {
 
                 {/* Hover outline border with animated corners */}
                 <motion.div
-                  className="absolute inset-0 border border-green-500/0 group-hover:border-green-500/60 rounded bg-green-500/0 group-hover:bg-green-500/10 transition-all duration-150"
+                  className="absolute inset-0 border border-green-500/0 group-hover:border-green-500/60 rounded bg-green-500/0 group-hover:bg-green-500/10"
                   whileHover={{
                     boxShadow: '0 0 20px rgba(0, 255, 0, 0.4), inset 0 0 10px rgba(0, 255, 0, 0.1)',
                   }}
+                  transition={{ duration: 0 }}
                 />
 
                 {/* Corner brackets that appear on hover */}
-                <div className="absolute top-0 left-0 w-2 h-2 border-l-2 border-t-2 border-green-400 opacity-0 group-hover:opacity-100 transition-opacity duration-150" />
-                <div className="absolute top-0 right-0 w-2 h-2 border-r-2 border-t-2 border-green-400 opacity-0 group-hover:opacity-100 transition-opacity duration-150" />
-                <div className="absolute bottom-0 left-0 w-2 h-2 border-l-2 border-b-2 border-green-400 opacity-0 group-hover:opacity-100 transition-opacity duration-150" />
-                <div className="absolute bottom-0 right-0 w-2 h-2 border-r-2 border-b-2 border-green-400 opacity-0 group-hover:opacity-100 transition-opacity duration-150" />
+                <div className="absolute top-0 left-0 w-2 h-2 border-l-2 border-t-2 border-green-400 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute top-0 right-0 w-2 h-2 border-r-2 border-t-2 border-green-400 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute bottom-0 left-0 w-2 h-2 border-l-2 border-b-2 border-green-400 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute bottom-0 right-0 w-2 h-2 border-r-2 border-b-2 border-green-400 opacity-0 group-hover:opacity-100 transition-opacity" />
 
                 {/* Scan line effect on hover */}
                 <motion.div
@@ -133,10 +134,10 @@ export default function Navbar() {
               />
 
               {/* Corner brackets on hover */}
-              <div className="absolute top-0 left-0 w-2 h-2 border-l-2 border-t-2 border-black opacity-0 group-hover:opacity-100 transition-opacity duration-150" />
-              <div className="absolute top-0 right-0 w-2 h-2 border-r-2 border-t-2 border-black opacity-0 group-hover:opacity-100 transition-opacity duration-150" />
-              <div className="absolute bottom-0 left-0 w-2 h-2 border-l-2 border-b-2 border-black opacity-0 group-hover:opacity-100 transition-opacity duration-150" />
-              <div className="absolute bottom-0 right-0 w-2 h-2 border-r-2 border-b-2 border-black opacity-0 group-hover:opacity-100 transition-opacity duration-150" />
+              <div className="absolute top-0 left-0 w-2 h-2 border-l-2 border-t-2 border-black opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="absolute top-0 right-0 w-2 h-2 border-r-2 border-t-2 border-black opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="absolute bottom-0 left-0 w-2 h-2 border-l-2 border-b-2 border-black opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="absolute bottom-0 right-0 w-2 h-2 border-r-2 border-b-2 border-black opacity-0 group-hover:opacity-100 transition-opacity" />
             </motion.a>
           </div>
 
@@ -182,10 +183,10 @@ export default function Navbar() {
                 >
                   <span className="relative z-10">{link.name}</span>
                   {/* Corner brackets on hover */}
-                  <div className="absolute top-1 left-1 w-2 h-2 border-l border-t border-green-400 opacity-0 group-hover:opacity-100 transition-opacity duration-150" />
-                  <div className="absolute top-1 right-1 w-2 h-2 border-r border-t border-green-400 opacity-0 group-hover:opacity-100 transition-opacity duration-150" />
-                  <div className="absolute bottom-1 left-1 w-2 h-2 border-l border-b border-green-400 opacity-0 group-hover:opacity-100 transition-opacity duration-150" />
-                  <div className="absolute bottom-1 right-1 w-2 h-2 border-r border-b border-green-400 opacity-0 group-hover:opacity-100 transition-opacity duration-150" />
+                  <div className="absolute top-1 left-1 w-2 h-2 border-l border-t border-green-400 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <div className="absolute top-1 right-1 w-2 h-2 border-r border-t border-green-400 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <div className="absolute bottom-1 left-1 w-2 h-2 border-l border-b border-green-400 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <div className="absolute bottom-1 right-1 w-2 h-2 border-r border-b border-green-400 opacity-0 group-hover:opacity-100 transition-opacity" />
                   {/* Scan line */}
                   <motion.div
                     className="absolute inset-0 bg-gradient-to-b from-transparent via-green-400/20 to-transparent opacity-0 group-hover:opacity-100"
@@ -224,10 +225,10 @@ export default function Navbar() {
                 />
 
                 {/* Corner brackets on hover */}
-                <div className="absolute top-1 left-1 w-2 h-2 border-l border-t border-black opacity-0 group-hover:opacity-100 transition-opacity duration-150" />
-                <div className="absolute top-1 right-1 w-2 h-2 border-r border-t border-black opacity-0 group-hover:opacity-100 transition-opacity duration-150" />
-                <div className="absolute bottom-1 left-1 w-2 h-2 border-l border-b border-black opacity-0 group-hover:opacity-100 transition-opacity duration-150" />
-                <div className="absolute bottom-1 right-1 w-2 h-2 border-r border-b border-black opacity-0 group-hover:opacity-100 transition-opacity duration-150" />
+                <div className="absolute top-1 left-1 w-2 h-2 border-l border-t border-black opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute top-1 right-1 w-2 h-2 border-r border-t border-black opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute bottom-1 left-1 w-2 h-2 border-l border-b border-black opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute bottom-1 right-1 w-2 h-2 border-r border-b border-black opacity-0 group-hover:opacity-100 transition-opacity" />
               </motion.a>
             </div>
           </motion.div>
