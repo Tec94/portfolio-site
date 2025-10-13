@@ -139,7 +139,7 @@ export default function Hero() {
               {'> '}View Services
             </motion.a>
             <motion.a
-              href="/Jack_Cao_Resume.pdf"
+              href="https://drive.google.com/uc?export=download&id=1Mjd2We-16bRyXCtBhJaxzI3MbxxJdfQc"
               target="_blank"
               rel="noopener noreferrer"
               className="relative w-full sm:w-auto px-8 py-3 border-2 border-green-500/40 rounded-lg bg-black/50 text-green-300 font-mono hover:bg-green-500/10 transition-all text-center"
