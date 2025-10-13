@@ -29,14 +29,14 @@
     }
   }
 
-  /* CRT screen curve effect - reduced on mobile */
-  * {
-    text-shadow: 0 0 2px rgba(0, 255, 0, 0.3);
+  /* Minimal text glow effect - only on headings, not all elements */
+  h1, h2, h3, h4, h5, h6 {
+    text-shadow: 0 0 1px rgba(0, 255, 0, 0.15);
   }
 
   @media (max-width: 639px) {
-    * {
-      text-shadow: 0 0 1px rgba(0, 255, 0, 0.2);
+    h1, h2, h3, h4, h5, h6 {
+      text-shadow: none;
     }
   }
 
@@ -79,33 +79,40 @@
   }
 
   .section-title {
-    @apply text-4xl font-bold mb-8 text-green-400;
-    text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+    @apply text-4xl font-bold mb-8 text-green-300;
   }
 
   .card {
-    @apply bg-black p-6 rounded-2xl transition-all duration-300;
+    @apply bg-black p-6 rounded-2xl transition-all duration-200;
     border: 2px solid rgba(0, 255, 0, 0.3);
-    box-shadow: 0 0 20px rgba(0, 255, 0, 0.1), inset 0 0 20px rgba(0, 255, 0, 0.05);
+    box-shadow: 0 0 8px rgba(0, 255, 0, 0.1);
   }
 
   .card:hover {
-    border-color: rgba(0, 255, 0, 0.6);
-    box-shadow: 0 0 30px rgba(0, 255, 0, 0.3), inset 0 0 30px rgba(0, 255, 0, 0.1);
+    border-color: rgba(0, 255, 0, 0.5);
+    box-shadow: 0 0 12px rgba(0, 255, 0, 0.15);
   }
 }
 
 @layer utilities {
-  /* Custom gradient text - Hacker green */
+  /* Custom gradient text - Hacker green with cyan */
   .gradient-text {
-    @apply bg-gradient-to-r from-green-400 via-green-500 to-green-300 bg-clip-text text-transparent;
-    filter: drop-shadow(0 0 10px rgba(0, 255, 0, 0.5));
+    @apply bg-gradient-to-r from-green-400 via-cyan-400 to-green-300 bg-clip-text text-transparent;
   }
 
   /* Glass morphism - Terminal style */
   .glass {
     @apply bg-black/80 backdrop-blur-lg;
     border: 1px solid rgba(0, 255, 0, 0.2);
+  }
+
+  /* Focus visible states for accessibility */
+  *:focus-visible {
+    @apply outline-none ring-2 ring-cyan-400 ring-offset-2 ring-offset-black;
+  }
+
+  button:focus-visible, a:focus-visible {
+    @apply outline-none ring-2 ring-cyan-400 ring-offset-2 ring-offset-black;
   }
 
   /* Perspective utility */

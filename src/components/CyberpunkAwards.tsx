@@ -6,7 +6,6 @@ import Award from 'lucide-react/dist/esm/icons/award';
 import Sparkles from 'lucide-react/dist/esm/icons/sparkles';
 import TerminalTyping from './TerminalTyping';
 import BlurReveal from './BlurReveal';
-import HexagonWave from './HexagonWave';
 
 export default function CyberpunkAwards() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
@@ -43,8 +42,6 @@ export default function CyberpunkAwards() {
 
   return (
     <section id="awards" className="py-20 relative overflow-hidden">
-      {/* Hexagon Wave Background */}
-      <HexagonWave />
 
       {/* Holographic grid background */}
       <div className="absolute inset-0 opacity-10">

@@ -10,6 +10,7 @@ import FAQ from './FAQ';
 import Awards from './Awards';
 import Contact from './Contact';
 import Footer from './Footer';
+import FloatingCTA from './FloatingCTA';
 
 export default function Portfolio() {
   return (
@@ -25,6 +26,7 @@ export default function Portfolio() {
       <Awards />
       <Contact />
       <Footer />
+      <FloatingCTA />
     </div>
   );
 }

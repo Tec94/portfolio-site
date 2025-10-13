@@ -8,7 +8,6 @@ import Zap from 'lucide-react/dist/esm/icons/zap';
 import Play from 'lucide-react/dist/esm/icons/play';
 import TerminalTyping from './TerminalTyping';
 import BlurReveal from './BlurReveal';
-import NetworkNodes from './NetworkNodes';
 
 interface Project {
   title: string;
@@ -73,7 +72,6 @@ export default function CyberpunkProjects({ projects }: CyberpunkProjectsProps) 
   return (
     <section id="projects" className="py-20 relative overflow-hidden">
       {/* Network Nodes Background */}
-      <NetworkNodes />
 
       {/* Animated circuit lines in background - reduced from 10 to 5 */}
       <div className="absolute inset-0 opacity-10 pointer-events-none">

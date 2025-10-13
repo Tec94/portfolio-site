@@ -11,7 +11,6 @@ import Clock from 'lucide-react/dist/esm/icons/clock';
 import Github from 'lucide-react/dist/esm/icons/github';
 import BlurReveal from './BlurReveal';
 import TerminalTyping from './TerminalTyping';
-import WaveAnimation from './WaveAnimation';
 
 interface GitHubStats {
   totalRepos: number;
@@ -143,7 +142,6 @@ export default function FunFacts() {
   return (
     <section id="funfacts" className="py-20 relative overflow-hidden">
       {/* Wave Animation Background */}
-      <WaveAnimation />
 
       {/* Unique hexagonal honeycomb pattern background */}
       <div className="absolute inset-0 opacity-10">

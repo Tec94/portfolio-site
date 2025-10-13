@@ -29,6 +29,7 @@ export interface ServiceData {
   deliverables: string[];
   technologies: string[];
   pricingPlans: PricingPlan[];
+  startingPrice: string;
 }
 
 export const servicesData: ServiceData[] = [
@@ -57,6 +58,7 @@ export const servicesData: ServiceData[] = [
       'Post-launch support period'
     ],
     technologies: ['React', 'TypeScript', 'Node.js', 'Express', 'PostgreSQL', 'MongoDB', 'AWS', 'Vercel'],
+    startingPrice: '$1,250',
     pricingPlans: [
       {
         name: 'Starter',
@@ -141,6 +143,7 @@ export const servicesData: ServiceData[] = [
       'User flow documentation'
     ],
     technologies: ['React', 'Tailwind CSS', 'Framer Motion', 'Figma', 'Lighthouse', 'WCAG 2.1'],
+    startingPrice: '$750',
     pricingPlans: [
       {
         name: 'Starter',
@@ -223,6 +226,7 @@ export const servicesData: ServiceData[] = [
       'Maintenance guide'
     ],
     technologies: ['Python', 'BeautifulSoup', 'Selenium', 'Pandas', 'PostgreSQL', 'AWS Lambda', 'Airflow'],
+    startingPrice: '$1,000',
     pricingPlans: [
       {
         name: 'Starter',
@@ -306,6 +310,7 @@ export const servicesData: ServiceData[] = [
       'Maintenance documentation'
     ],
     technologies: ['Python', 'OpenAI API', 'Anthropic Claude', 'LangChain', 'Node.js', 'REST APIs'],
+    startingPrice: '$1,250',
     pricingPlans: [
       {
         name: 'Starter',
@@ -389,6 +394,7 @@ export const servicesData: ServiceData[] = [
       'Performance monitoring setup'
     ],
     technologies: ['Lighthouse', 'WebPageTest', 'Chrome DevTools', 'Cloudflare', 'Vercel', 'Webpack'],
+    startingPrice: '$750',
     pricingPlans: [
       {
         name: 'Starter',
@@ -472,6 +478,7 @@ export const servicesData: ServiceData[] = [
       'Monitoring dashboard'
     ],
     technologies: ['Node.js', 'Express', 'REST', 'GraphQL', 'JWT', 'OAuth', 'Postman', 'Swagger'],
+    startingPrice: '$1,000',
     pricingPlans: [
       {
         name: 'Starter',

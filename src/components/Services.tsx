@@ -60,24 +60,24 @@ export default function Services() {
                   onMouseLeave={() => setHoveredCard(null)}
                   whileHover={{
                     y: -8,
-                    boxShadow: '0 0 40px rgba(0, 255, 0, 0.3), inset 0 0 40px rgba(0, 255, 0, 0.08)',
+                    boxShadow: '0 0 15px rgba(0, 255, 0, 0.2)',
                   }}
-                  transition={{ duration: 0, type: "tween" }}
+                  transition={{ duration: 0.2, type: "tween" }}
                 >
                   <div
                     className="relative h-full p-6 border-2 border-green-500/40 rounded-lg bg-black/70 backdrop-blur-sm overflow-hidden flex flex-col"
                     style={{
-                      boxShadow: '0 0 30px rgba(0, 255, 0, 0.2), inset 0 0 30px rgba(0, 255, 0, 0.05)',
+                      boxShadow: '0 0 10px rgba(0, 255, 0, 0.15)',
                     }}
                   >
                     {/* Particle effect */}
                     <CardParticleEffect isHovered={hoveredCard === index} />
 
                     {/* Corner brackets */}
-                    <div className="absolute top-2 left-2 w-3 h-3 border-l-2 border-t-2 border-green-500" />
-                    <div className="absolute top-2 right-2 w-3 h-3 border-r-2 border-t-2 border-green-500" />
-                    <div className="absolute bottom-2 left-2 w-3 h-3 border-l-2 border-b-2 border-green-500" />
-                    <div className="absolute bottom-2 right-2 w-3 h-3 border-r-2 border-b-2 border-green-500" />
+                    <div className="absolute top-2 left-2 w-3 h-3 border-l-2 border-t-2 border-green-500" aria-hidden="true" />
+                    <div className="absolute top-2 right-2 w-3 h-3 border-r-2 border-t-2 border-green-500" aria-hidden="true" />
+                    <div className="absolute bottom-2 left-2 w-3 h-3 border-l-2 border-b-2 border-green-500" aria-hidden="true" />
+                    <div className="absolute bottom-2 right-2 w-3 h-3 border-r-2 border-b-2 border-green-500" aria-hidden="true" />
 
                     {/* Icon */}
                     <div className="relative mb-4">
@@ -86,32 +86,35 @@ export default function Services() {
                         whileHover={{
                           scale: 1.1,
                           borderColor: 'rgba(0, 255, 0, 0.6)',
-                          boxShadow: '0 0 20px rgba(0, 255, 0, 0.4)'
                         }}
-                        transition={{ duration: 0 }}
+                        transition={{ duration: 0.2 }}
                       >
-                        <service.icon className="h-8 w-8 text-green-400" style={{
-                          filter: 'drop-shadow(0 0 4px rgba(0, 255, 0, 0.5))'
-                        }} />
+                        <service.icon className="h-8 w-8 text-green-400" />
                       </motion.div>
                     </div>
 
-                    {/* Title */}
-                    <h3 className="text-xl font-bold text-green-300 font-mono mb-3"
-                      style={{
-                        textShadow: '0 0 10px rgba(0, 255, 0, 0.5)',
-                      }}
-                    >
+                    {/* Title - Fixed height for alignment */}
+                    <h3 className="text-xl font-bold text-green-300 font-mono mb-3 min-h-[3.5rem] flex items-start">
                       {service.title}
                     </h3>
 
-                    {/* Description */}
-                    <p className="text-green-400 font-mono text-sm mb-4 leading-relaxed flex-grow">
+                    {/* Starting Price Badge - Fixed positioning */}
+                    <div className="mb-4">
+                      <span className="inline-block px-3 py-1 bg-cyan-500/20 border border-cyan-500/40 rounded text-cyan-300 font-mono text-sm font-bold">
+                        Starting at {service.startingPrice}
+                      </span>
+                    </div>
+
+                    {/* Description - Fixed height to ensure alignment */}
+                    <p className="text-green-400 font-mono text-sm mb-4 leading-relaxed min-h-[4.5rem]">
                       {service.shortDescription}
                     </p>
 
-                    {/* Features */}
-                    <div className="space-y-2">
+                    {/* Spacer to push features to bottom */}
+                    <div className="flex-grow"></div>
+
+                    {/* Features - Always at bottom of card */}
+                    <div className="space-y-2 mt-auto">
                       {service.features.map((feature, i) => (
                         <div key={i} className="flex items-center gap-2">
                           <span className="text-green-500 text-xs">▸</span>
@@ -119,19 +122,6 @@ export default function Services() {
                         </div>
                       ))}
                     </div>
-
-                    {/* Scanning line effect on hover */}
-                    {hoveredCard === index && (
-                      <motion.div
-                        className="absolute inset-x-0 h-px bg-gradient-to-r from-transparent via-green-400 to-transparent"
-                        initial={{ top: 0, opacity: 0 }}
-                        animate={{ top: '100%', opacity: [0, 1, 1, 0] }}
-                        transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
-                        style={{
-                          boxShadow: '0 0 10px rgba(0, 255, 0, 0.8)',
-                        }}
-                      />
-                    )}
                   </div>
                 </motion.div>
               </Link>
@@ -144,14 +134,13 @@ export default function Services() {
           <div className="mt-12 text-center">
             <motion.a
               href="#contact"
-              className="inline-block px-8 py-3 border-2 border-green-500/50 rounded-lg bg-green-500/10 text-green-300 font-mono hover:bg-green-500/20 transition-all"
+              className="inline-block px-8 py-3 border-2 border-cyan-500/50 rounded-lg bg-cyan-500/10 text-cyan-300 font-mono hover:bg-cyan-500/20 transition-all"
               whileHover={{
                 scale: 1.05,
-                borderColor: 'rgba(0, 255, 0, 0.8)',
-                boxShadow: '0 0 30px rgba(0, 255, 0, 0.4)'
+                borderColor: 'rgba(34, 211, 238, 0.8)',
               }}
               whileTap={{ scale: 0.95 }}
-              transition={{ duration: 0 }}
+              transition={{ duration: 0.2 }}
             >
               {'> '}Start a Project
             </motion.a>

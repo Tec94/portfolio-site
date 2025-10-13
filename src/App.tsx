@@ -95,25 +95,27 @@ function AppContent() {
             {/* Main Portfolio - Always visible when terminal is closed */}
             {!showTerminal && !activeProgram && <Portfolio />}
 
-            {/* Floating Terminal Access Button - Only show on home page when terminal is closed */}
+            {/* Floating Terminal Access Button - Moved to left side, smaller */}
             {!showTerminal && !activeProgram && (
               <motion.button
                 onClick={handleTerminalToggle}
-                className="hidden md:flex fixed bottom-6 right-6 z-40 p-4 bg-green-500/20 border-2 border-green-500/60 rounded-lg hover:bg-green-500/30 transition-all group"
+                className="hidden md:flex fixed bottom-6 left-6 z-40 p-3 bg-green-500/20 border-2 border-green-500/60 rounded-lg hover:bg-green-500/30 transition-all group"
                 initial={{ scale: 0, rotate: -180 }}
                 animate={{ scale: 1, rotate: 0 }}
                 whileHover={{
-                  scale: 1.1,
-                  boxShadow: '0 0 30px rgba(0, 255, 0, 0.6), inset 0 0 20px rgba(0, 255, 0, 0.2)'
+                  scale: 1.05,
+                  boxShadow: '0 0 20px rgba(0, 255, 0, 0.5)'
                 }}
                 whileTap={{ scale: 0.95 }}
+                transition={{ duration: 0.2 }}
                 style={{
-                  boxShadow: '0 0 20px rgba(0, 255, 0, 0.4), inset 0 0 10px rgba(0, 255, 0, 0.1)',
+                  boxShadow: '0 0 15px rgba(0, 255, 0, 0.3)',
                 }}
+                aria-label="Access Terminal"
               >
-                <Terminal className="h-6 w-6 text-green-400 group-hover:text-green-300" />
+                <Terminal className="h-5 w-5 text-green-400 group-hover:text-green-300" />
                 <motion.div
-                  className="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full"
+                  className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-green-400 rounded-full"
                   animate={{
                     scale: [1, 1.2, 1],
                     opacity: [1, 0.5, 1]
@@ -123,13 +125,14 @@ function AppContent() {
                     repeat: Infinity
                   }}
                   style={{
-                    boxShadow: '0 0 10px rgba(0, 255, 0, 0.8)'
+                    boxShadow: '0 0 8px rgba(0, 255, 0, 0.8)'
                   }}
+                  aria-hidden="true"
                 />
 
                 {/* Tooltip */}
-                <div className="absolute bottom-full right-0 mb-2 px-3 py-2 bg-green-500/90 border border-green-400 rounded text-xs font-mono text-black whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-                  Access Terminal [Side Quest]
+                <div className="absolute bottom-full left-0 mb-2 px-3 py-2 bg-green-500/90 border border-green-400 rounded text-xs font-mono text-black whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                  Access Terminal
                 </div>
               </motion.button>
             )}

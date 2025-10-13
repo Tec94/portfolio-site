@@ -23,7 +23,7 @@ export default function Projects() {
     {
       title: "CitizenVoice",
       tech: "TypeScript, React, TailwindCSS, PostgreSQL, Auth0",
-      period: "Sept 2025",
+      period: "Sept 2024",
       description: [
         "Built a civic-engagement app (proposals, voting, issue reports) backed by Auth0; organized a modular codebase with reusable UI primitives and hooks",
         "Modeled a PostgreSQL schema in Supabase and enforced Row Level Security policies; supplied SQL seed scripts and helper functions for demo bootstrap and local dev",
@@ -40,7 +40,7 @@ export default function Projects() {
     {
       title: "Smartnest",
       tech: "TypeScript, React, Next.js, TailwindCSS, Node.js",
-      period: "Apr 2025 - Jun 2025",
+      period: "Apr 2024 - Jun 2024",
       description: [
         "Developed a marketing site using Next.js and Tailwind; structured components for rapid iteration with TypeScript configs",
         "Implemented basic Node.js API routes and deployed to Vercel; maintained CI-ready tooling for stable previews",
@@ -57,7 +57,7 @@ export default function Projects() {
     {
       title: "Stock Tracker",
       tech: "Bubble.io, REST APIs, QuiverQuant API",
-      period: "Mar 2025 - May 2025",
+      period: "Mar 2024 - May 2024",
       description: [
         "Delivered a portfolio tracker in Bubble using reusable elements, custom states, and workflow triggers to manage UI state and periodic data refreshes",
         "Integrated the QuiverQuant REST API via Bubble API Connector; normalized JSON responses into Bubble's database and built dynamic filtering and charting for analysis",

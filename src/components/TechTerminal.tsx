@@ -4,7 +4,6 @@ import Terminal from 'lucide-react/dist/esm/icons/terminal';
 import ChevronRight from 'lucide-react/dist/esm/icons/chevron-right';
 import TerminalTyping from './TerminalTyping';
 import BlurReveal from './BlurReveal';
-import CodeRain from './CodeRain';
 
 interface TechTerminalProps {
   skills: {
@@ -47,8 +46,6 @@ export default function TechTerminal({ skills }: TechTerminalProps) {
 
   return (
     <section id="skills" className="py-20 relative overflow-hidden">
-      {/* Code Rain Background */}
-      <CodeRain />
 
       {/* Terminal scan line effect */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">

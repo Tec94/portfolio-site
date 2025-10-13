@@ -1,7 +1,6 @@
 import React from 'react';
 import Github from 'lucide-react/dist/esm/icons/github';
 import Mail from 'lucide-react/dist/esm/icons/mail';
-import Linkedin from 'lucide-react/dist/esm/icons/linkedin';
 import Phone from 'lucide-react/dist/esm/icons/phone';
 import MapPin from 'lucide-react/dist/esm/icons/map-pin';
 import { motion } from 'framer-motion';
@@ -100,17 +99,6 @@ export default function Footer() {
                 <Github className="inline h-4 w-4 mr-2" />
                 <span className="group-hover:translate-x-1 inline-block transition-transform">
                   GitHub
-                </span>
-              </a>
-              <a
-                href="https://linkedin.com/in/yourprofile"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block text-green-400 font-mono text-sm hover:text-green-300 transition-colors group"
-              >
-                <Linkedin className="inline h-4 w-4 mr-2" />
-                <span className="group-hover:translate-x-1 inline-block transition-transform">
-                  LinkedIn
                 </span>
               </a>
             </div>
