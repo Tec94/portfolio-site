@@ -122,14 +122,14 @@ export default function CyberpunkProjects({ projects }: CyberpunkProjectsProps) 
               dragElastic={0.2}
               onDragEnd={handleDragEnd}
             >
-              {/* Project card - wider expanded view */}
-              <div className="grid md:grid-cols-2 gap-6 border-2 border-green-500/40 rounded-lg overflow-hidden bg-black/80 backdrop-blur-sm p-6 h-[550px]"
+              {/* Project card - wider expanded view, responsive height */}
+              <div className="grid md:grid-cols-2 gap-6 border-2 border-green-500/40 rounded-lg overflow-hidden bg-black/80 backdrop-blur-sm p-4 md:p-6 h-auto md:h-[550px] max-h-[80vh] md:max-h-none"
                 style={{
                   boxShadow: '0 0 50px rgba(0, 255, 0, 0.3), inset 0 0 50px rgba(0, 255, 0, 0.05)',
                 }}
               >
                 {/* Left side - Live Website Preview */}
-                <div className="relative h-full w-full bg-black border border-green-500/30 rounded overflow-hidden group flex items-center justify-center">
+                <div className="relative h-[250px] md:h-full w-full bg-black border border-green-500/30 rounded overflow-hidden group flex items-center justify-center">
                   <div className="relative w-full" style={{ aspectRatio: '16 / 9' }}>
                     {/* Live Website iframe - desktop view scaled down */}
                     {activeProject.demoUrl && (
@@ -287,8 +287,8 @@ export default function CyberpunkProjects({ projects }: CyberpunkProjectsProps) 
                     </div>
                   </div>
 
-                  {/* Description - expanded */}
-                  <div className="flex-1 overflow-y-auto max-h-[400px] pr-2 custom-scrollbar">
+                  {/* Description - expanded, better mobile scrolling */}
+                  <div className="flex-1 overflow-y-auto max-h-[300px] md:max-h-[400px] pr-2 custom-scrollbar">
                     <div className="space-y-3">
                       {activeProject.description.map((desc, idx) => (
                         <motion.div

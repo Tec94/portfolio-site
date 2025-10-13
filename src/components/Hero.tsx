@@ -11,7 +11,7 @@ export default function Hero() {
   return (
     <section id="about" className="min-h-screen flex items-center justify-center pt-16 relative">
       {/* Terminal Header Bar - adjusted for mobile */}
-      <div className="absolute top-20 left-0 right-0 h-8 bg-green-500/10 border-y border-green-500/30 flex items-center px-2 sm:px-4 z-20">
+      <div className="absolute top-20 left-0 right-0 h-8 bg-green-500/10 border-y border-green-500/30 flex items-center px-2 sm:px-4 z-10">
         <div className="flex gap-2">
           <div className="w-3 h-3 rounded-full bg-red-500" />
           <div className="w-3 h-3 rounded-full bg-yellow-500" />
@@ -20,8 +20,10 @@ export default function Hero() {
         <span className="ml-2 sm:ml-4 text-xs text-green-400 font-mono hidden sm:inline">jack@portfolio:~$</span>
       </div>
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-20 flex flex-col items-center">
-        <TerminalTyping text="Jack Cao" className="mb-6" typingSpeed={100} deletingSpeed={60} pauseDuration={3000} />
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-30 flex flex-col items-center">
+        <div className="relative z-30">
+          <TerminalTyping text="Jack Cao" className="mb-6" typingSpeed={100} deletingSpeed={60} pauseDuration={3000} />
+        </div>
 
         <BlurReveal delay={0.2}>
           <h2 className="text-2xl text-green-300 mb-8 font-mono">

@@ -109,7 +109,7 @@ export default function Testimonials() {
         <BlurReveal delay={0.2}>
           <div className="relative">
             {/* Main testimonial card */}
-            <div className="relative min-h-[400px] sm:min-h-[350px] flex items-center">
+            <div className="relative min-h-[450px] sm:min-h-[380px] md:min-h-[350px] flex items-center mb-8 md:mb-0">
               <AnimatePresence initial={false} custom={direction} mode="wait">
                 <motion.div
                   key={currentIndex}
@@ -195,7 +195,7 @@ export default function Testimonials() {
             </div>
 
             {/* Navigation buttons */}
-            <div className="flex justify-center items-center gap-4 mt-20 relative z-20">
+            <div className="flex justify-center items-center gap-4 mt-8 md:mt-20 relative z-20">
               <motion.button
                 onClick={prevTestimonial}
                 className="p-3 border-2 border-green-500/40 rounded-lg bg-green-500/10 text-green-400 hover:bg-green-500/20 transition-colors relative z-20"
