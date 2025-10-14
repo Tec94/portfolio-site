@@ -21,7 +21,7 @@ export default function Services() {
   };
 
   return (
-    <section id="services" className="py-20 relative">
+    <section id="services" className="py-16 md:py-20 relative">
       {/* Circuit pattern background */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute inset-0"

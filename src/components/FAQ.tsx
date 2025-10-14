@@ -47,7 +47,7 @@ export default function FAQ() {
   };
 
   return (
-    <section id="faq" className="py-20 relative">
+    <section id="faq" className="py-16 md:py-20 relative">
       {/* Hex pattern background */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute inset-0"

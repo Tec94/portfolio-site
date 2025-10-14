@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [hoveredLink, setHoveredLink] = useState<string | null>(null);
+  const [activeSection, setActiveSection] = useState('about');
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -18,6 +19,33 @@ export default function Navbar() {
     { name: 'Tech Stack', href: '#skills' },
     { name: 'FAQ', href: '#faq' }
   ];
+
+  // Scroll spy: track which section is currently visible
+  React.useEffect(() => {
+    if (location.pathname !== '/') return;
+
+    const handleScroll = () => {
+      const sections = navLinks.map(link => {
+        const id = link.href.replace('#', '');
+        return { id, element: document.getElementById(id) };
+      });
+
+      const scrollPosition = window.scrollY + 100; // Offset for navbar height
+
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const section = sections[i];
+        if (section.element && section.element.offsetTop <= scrollPosition) {
+          setActiveSection(section.id);
+          break;
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Call once on mount
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [location.pathname]);
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
@@ -57,7 +85,11 @@ export default function Navbar() {
                 key={link.name}
                 href={link.href}
                 onClick={(e) => handleNavClick(e, link.href)}
-                className="relative px-4 py-2 font-mono text-sm text-green-400 hover:text-green-300 transition-colors group overflow-hidden cursor-pointer"
+                className={`relative px-4 py-2 font-mono text-sm transition-colors group overflow-hidden cursor-pointer ${
+                  activeSection === link.href.replace('#', '')
+                    ? 'text-green-300'
+                    : 'text-green-400 hover:text-green-300'
+                }`}
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
@@ -68,9 +100,26 @@ export default function Navbar() {
               >
                 <span className="relative z-10">{link.name}</span>
 
+                {/* Active indicator */}
+                {activeSection === link.href.replace('#', '') && (
+                  <motion.div
+                    className="absolute bottom-0 left-0 right-0 h-0.5 bg-green-400"
+                    layoutId="activeIndicator"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    style={{
+                      boxShadow: '0 0 8px rgba(0, 255, 0, 0.8)'
+                    }}
+                  />
+                )}
+
                 {/* Hover outline border with animated corners */}
                 <motion.div
-                  className="absolute inset-0 border border-green-500/0 group-hover:border-green-500/60 rounded bg-green-500/0 group-hover:bg-green-500/10"
+                  className={`absolute inset-0 border rounded transition-all ${
+                    activeSection === link.href.replace('#', '')
+                      ? 'border-green-500/40 bg-green-500/5'
+                      : 'border-green-500/0 group-hover:border-green-500/60 bg-green-500/0 group-hover:bg-green-500/10'
+                  }`}
                   whileHover={{
                     boxShadow: '0 0 20px rgba(0, 255, 0, 0.4), inset 0 0 10px rgba(0, 255, 0, 0.1)',
                   }}
@@ -173,7 +222,11 @@ export default function Navbar() {
                   key={link.name}
                   href={link.href}
                   onClick={(e) => handleNavClick(e, link.href)}
-                  className="relative block text-center py-3 font-mono text-sm text-green-400 hover:text-green-300 border border-green-500/30 hover:border-green-500/60 rounded bg-green-500/5 hover:bg-green-500/15 transition-colors overflow-hidden group cursor-pointer"
+                  className={`relative block text-center py-3 font-mono text-sm rounded transition-colors overflow-hidden group cursor-pointer ${
+                    activeSection === link.href.replace('#', '')
+                      ? 'text-green-300 border-green-500/60 bg-green-500/15 border-2'
+                      : 'text-green-400 hover:text-green-300 border border-green-500/30 hover:border-green-500/60 bg-green-500/5 hover:bg-green-500/15'
+                  }`}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: index * 0.05 }}

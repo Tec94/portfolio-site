@@ -22,7 +22,7 @@ export default function Contact() {
   }, []);
 
   return (
-    <section id="contact" className="py-20 relative">
+    <section id="contact" className="py-16 md:py-20 relative">
       {/* Background pattern */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute inset-0"

@@ -76,7 +76,7 @@ export default function Experience() {
   };
 
   return (
-    <section id="experience" className="py-20 relative">
+    <section id="experience" className="py-16 md:py-20 relative">
       {/* Diagonal grid pattern background */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute inset-0"

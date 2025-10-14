@@ -1,20 +1,36 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, lazy, Suspense } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { BackgroundProvider } from './contexts/BackgroundContext';
 import Scanlines from './components/Scanlines';
 import Portfolio from './components/Portfolio';
-import ServiceDetailPage from './pages/ServiceDetailPage';
-import TerminalShell from './components/Terminal/TerminalShell';
-import NetworkProgram from './components/Programs/NetworkProgram';
-import ScannerProgram from './components/Programs/ScannerProgram';
-import BreachProgram from './components/Programs/BreachProgram';
-import CalendarProgram from './components/Programs/CalendarProgram';
 import { AnimatePresence, motion } from 'framer-motion';
 import Terminal from 'lucide-react/dist/esm/icons/terminal';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { Analytics } from '@vercel/analytics/react';
+
+// Lazy load components for better performance
+const ServiceDetailPage = lazy(() => import('./pages/ServiceDetailPage'));
+const TerminalShell = lazy(() => import('./components/Terminal/TerminalShell'));
+const NetworkProgram = lazy(() => import('./components/Programs/NetworkProgram'));
+const ScannerProgram = lazy(() => import('./components/Programs/ScannerProgram'));
+const BreachProgram = lazy(() => import('./components/Programs/BreachProgram'));
+const CalendarProgram = lazy(() => import('./components/Programs/CalendarProgram'));
+
+// Loading component
+const LoadingScreen = () => (
+  <div className="min-h-screen bg-black flex items-center justify-center">
+    <div className="text-center">
+      <motion.div
+        className="w-16 h-16 border-4 border-green-400 border-t-transparent rounded-full mx-auto mb-4"
+        animate={{ rotate: 360 }}
+        transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+      />
+      <p className="text-green-400 font-mono text-sm">Loading...</p>
+    </div>
+  </div>
+);
 
 function AppContent() {
   const [activeProgram, setActiveProgram] = useState<string | null>(null);
@@ -89,14 +105,15 @@ function AppContent() {
       <Scanlines />
 
       {/* Routes */}
-      <Routes>
-        <Route path="/" element={
-          <>
-            {/* Main Portfolio - Always visible when terminal is closed */}
-            {!showTerminal && !activeProgram && <Portfolio />}
+      <Suspense fallback={<LoadingScreen />}>
+        <Routes>
+          <Route path="/" element={
+            <>
+              {/* Main Portfolio - Always visible when terminal is closed */}
+              {!showTerminal && !activeProgram && <Portfolio />}
 
-            {/* Floating Terminal Access Button - Moved to left side, smaller */}
-            {!showTerminal && !activeProgram && (
+              {/* Floating Terminal Access Button - Moved to left side, smaller */}
+              {!showTerminal && !activeProgram && (
               <motion.button
                 onClick={handleTerminalToggle}
                 className="hidden md:flex fixed bottom-6 left-6 z-40 p-3 bg-green-500/20 border-2 border-green-500/60 rounded-lg hover:bg-green-500/30 transition-all group"
@@ -187,10 +204,11 @@ function AppContent() {
                 />
               )}
             </AnimatePresence>
-          </>
-        } />
-        <Route path="/services/:slug" element={<ServiceDetailPage />} />
-      </Routes>
+            </>
+          } />
+          <Route path="/services/:slug" element={<ServiceDetailPage />} />
+        </Routes>
+      </Suspense>
     </div>
   );
 }

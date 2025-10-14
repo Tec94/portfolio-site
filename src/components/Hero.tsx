@@ -9,9 +9,9 @@ import BlurReveal from './BlurReveal';
 
 export default function Hero() {
   return (
-    <section id="about" className="min-h-screen flex items-center justify-center pt-16 relative">
+    <section id="about" className="min-h-screen flex items-center justify-center pt-20 pb-12 relative">
       {/* Terminal Header Bar - adjusted for mobile */}
-      <div className="absolute top-20 left-0 right-0 h-8 bg-green-500/10 border-y border-green-500/30 flex items-center px-2 sm:px-4 z-10">
+      <div className="absolute top-20 md:top-24 left-0 right-0 h-8 bg-green-500/10 border-y border-green-500/30 flex items-center px-2 sm:px-4 z-10">
         <div className="flex gap-2">
           <div className="w-3 h-3 rounded-full bg-red-500" />
           <div className="w-3 h-3 rounded-full bg-yellow-500" />
@@ -20,7 +20,7 @@ export default function Hero() {
         <span className="ml-2 sm:ml-4 text-xs text-green-400 font-mono hidden sm:inline">jack@portfolio:~$</span>
       </div>
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-30 flex flex-col items-center">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-30 flex flex-col items-center pt-8">
         <div className="relative z-30">
           <TerminalTyping text="Jack Cao" className="mb-6" typingSpeed={100} deletingSpeed={60} pauseDuration={3000} />
         </div>
@@ -32,7 +32,7 @@ export default function Hero() {
         </BlurReveal>
 
         <BlurReveal delay={0.4}>
-          <div className="flex items-center justify-center flex-wrap gap-3 sm:gap-6 text-green-400 mb-12 font-mono text-xs sm:text-sm">
+          <div className="flex items-center justify-center flex-wrap gap-2 sm:gap-4 text-green-400 mb-12 font-mono text-xs sm:text-sm px-2">
             <motion.span
               className="relative flex items-center border border-green-500/30 px-2 sm:px-3 py-1 rounded overflow-visible group"
               whileHover={{

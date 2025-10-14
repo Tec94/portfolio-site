@@ -11,22 +11,36 @@ import Awards from './Awards';
 import Contact from './Contact';
 import Footer from './Footer';
 import FloatingCTA from './FloatingCTA';
+import BackToTop from './BackToTop';
 
 export default function Portfolio() {
   return (
     <div className="min-h-screen bg-black">
+      {/* Skip to main content link for accessibility */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-green-400 focus:text-black focus:font-mono focus:font-bold focus:rounded focus:border-2 focus:border-green-500"
+      >
+        Skip to main content
+      </a>
+
       <Navbar />
-      <Hero />
-      <Experience />
-      <Services />
-      <Projects />
-      <Skills />
-      <Testimonials />
-      <FAQ />
-      <Awards />
-      <Contact />
+
+      <main id="main-content">
+        <Hero />
+        <Experience />
+        <Services />
+        <Projects />
+        <Skills />
+        <Testimonials />
+        <FAQ />
+        <Awards />
+        <Contact />
+      </main>
+
       <Footer />
       <FloatingCTA />
+      <BackToTop />
     </div>
   );
 }
