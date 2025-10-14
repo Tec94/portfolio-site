@@ -1,14 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import BlurReveal from './BlurReveal';
 import TerminalTyping from './TerminalTyping';
 import CardParticleEffect from './CardParticleEffect';
 import { servicesData } from '../data/servicesData';
+import { useFlags } from '../hooks/useFlags';
 
 export default function Services() {
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const services = servicesData;
+  const { trackSectionView, trackSectionClick, trackCTAClick } = useFlags();
+
+  useEffect(() => {
+    trackSectionView('services');
+  }, [trackSectionView]);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -53,7 +59,10 @@ export default function Services() {
         >
           {services.map((service, index) => (
             <BlurReveal key={index} delay={index * 0.1}>
-              <Link to={`/services/${service.slug}`}>
+              <Link
+                to={`/services/${service.slug}`}
+                onClick={() => trackSectionClick('services', `service-card-${service.slug}`)}
+              >
                 <motion.div
                   className="h-full cursor-pointer"
                   onMouseEnter={() => setHoveredCard(index)}
@@ -134,6 +143,7 @@ export default function Services() {
           <div className="mt-12 text-center">
             <motion.a
               href="#contact"
+              onClick={() => trackCTAClick('start-project', 'services')}
               className="inline-block px-8 py-3 border-2 border-cyan-500/50 rounded-lg bg-cyan-500/10 text-cyan-300 font-mono hover:bg-cyan-500/20 transition-all"
               whileHover={{
                 scale: 1.05,

@@ -5,12 +5,17 @@ import Calendar from 'lucide-react/dist/esm/icons/calendar';
 import TerminalTyping from './TerminalTyping';
 import BlurReveal from './BlurReveal';
 import ContactForm from './ContactForm';
+import { useFlags } from '../hooks/useFlags';
 
 // Cal.com username - same as in CalendarProgram
 const CAL_USERNAME = 'jack-cao';
 
 export default function Contact() {
+  const { trackSectionView, trackCTAClick } = useFlags();
+
   useEffect(() => {
+    trackSectionView('contact');
+
     (async function () {
       const cal = await getCalApi();
       cal('ui', {
@@ -19,7 +24,7 @@ export default function Contact() {
         layout: 'month_view',
       });
     })();
-  }, []);
+  }, [trackSectionView]);
 
   return (
     <section id="contact" className="py-16 md:py-20 relative">
@@ -83,6 +88,7 @@ export default function Contact() {
                   layout: 'month_view',
                   theme: 'dark'
                 })}
+                onClick={() => trackCTAClick('book-consultation', 'contact')}
                 className="w-full px-8 py-4 border-2 border-green-500/60 rounded-lg bg-green-500/20 text-green-300 font-mono hover:bg-green-500/30 transition-all text-center font-bold text-lg focus:outline-none focus:ring-2 focus:ring-green-400"
               >
                 {'> '}Book Consultation

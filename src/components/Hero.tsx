@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Github from 'lucide-react/dist/esm/icons/github';
 import Mail from 'lucide-react/dist/esm/icons/mail';
 import MapPin from 'lucide-react/dist/esm/icons/map-pin';
@@ -6,8 +6,15 @@ import Phone from 'lucide-react/dist/esm/icons/phone';
 import { motion } from 'framer-motion';
 import TerminalTyping from './TerminalTyping';
 import BlurReveal from './BlurReveal';
+import { useFlags } from '../hooks/useFlags';
 
 export default function Hero() {
+  const { trackSectionView, trackLinkClick, trackCTAClick } = useFlags();
+
+  useEffect(() => {
+    trackSectionView('hero');
+  }, [trackSectionView]);
+
   return (
     <section id="about" className="min-h-screen flex items-center justify-center pt-20 pb-12 relative">
       {/* Terminal Header Bar - adjusted for mobile */}
@@ -52,6 +59,7 @@ export default function Hero() {
             </motion.span>
             <motion.a
               href="tel:737-895-5742"
+              onClick={() => trackLinkClick('phone', 'tel:737-895-5742', 'hero')}
               className="relative flex items-center border border-green-500/30 px-2 sm:px-3 py-1 rounded hover:text-green-300 transition-colors overflow-visible group"
               whileHover={{
                 scale: 1.05,
@@ -69,6 +77,7 @@ export default function Hero() {
             </motion.a>
             <motion.a
               href="mailto:jack.cao@utdallas.edu"
+              onClick={() => trackLinkClick('email', 'mailto:jack.cao@utdallas.edu', 'hero')}
               className="relative flex items-center border border-green-500/30 px-2 sm:px-3 py-1 rounded hover:text-green-300 transition-colors overflow-visible group"
               whileHover={{
                 scale: 1.05,
@@ -88,6 +97,7 @@ export default function Hero() {
               href="https://github.com/Tec94"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackLinkClick('github', 'https://github.com/Tec94', 'hero')}
               className="relative flex items-center border border-green-500/30 px-2 sm:px-3 py-1 rounded hover:text-green-300 transition-colors overflow-visible group"
               whileHover={{
                 scale: 1.05,
@@ -117,6 +127,7 @@ export default function Hero() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8">
             <motion.a
               href="#services"
+              onClick={() => trackCTAClick('view-services', 'hero')}
               className="relative w-full sm:w-auto px-8 py-3 border-2 border-green-500/60 rounded-lg bg-green-500/20 text-green-300 font-mono hover:bg-green-500/30 transition-all text-center"
               whileHover={{
                 scale: 1.05,
@@ -144,6 +155,7 @@ export default function Hero() {
               href="https://drive.google.com/uc?export=download&id=1Mjd2We-16bRyXCtBhJaxzI3MbxxJdfQc"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackCTAClick('download-resume', 'hero')}
               className="relative w-full sm:w-auto px-8 py-3 border-2 border-green-500/40 rounded-lg bg-black/50 text-green-300 font-mono hover:bg-green-500/10 transition-all text-center"
               whileHover={{
                 scale: 1.05,

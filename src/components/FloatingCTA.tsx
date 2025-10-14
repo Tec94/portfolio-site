@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import MessageCircle from 'lucide-react/dist/esm/icons/message-circle';
 import X from 'lucide-react/dist/esm/icons/x';
+import { useFlags } from '../hooks/useFlags';
 
 export default function FloatingCTA() {
   const [isVisible, setIsVisible] = useState(false);
+  const { trackCTAClick } = useFlags();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,6 +22,7 @@ export default function FloatingCTA() {
   }, []);
 
   const scrollToContact = () => {
+    trackCTAClick('get-in-touch', 'floating-cta');
     const contactSection = document.getElementById('contact');
     if (contactSection) {
       contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });

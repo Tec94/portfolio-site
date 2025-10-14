@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback, lazy, Suspense } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { BackgroundProvider } from './contexts/BackgroundContext';
+import { StatsigWrapper } from './contexts/StatsigContext';
 import Scanlines from './components/Scanlines';
 import Portfolio from './components/Portfolio';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -216,13 +217,15 @@ function AppContent() {
 
 function App() {
   return (
-    <ThemeProvider>
-      <BackgroundProvider>
-        <AppContent />
-        <Analytics />
-        <SpeedInsights />
-      </BackgroundProvider>
-    </ThemeProvider>
+    <StatsigWrapper>
+      <ThemeProvider>
+        <BackgroundProvider>
+          <AppContent />
+          <Analytics />
+          <SpeedInsights />
+        </BackgroundProvider>
+      </ThemeProvider>
+    </StatsigWrapper>
   );
 }
 

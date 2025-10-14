@@ -7,4 +7,5 @@ export default defineConfig({
   optimizeDeps: {
     exclude: ['lucide-react'],
   },
+  envPrefix: ['VITE_', 'NEXT_PUBLIC_', 'EXPERIMENTATION_'],
 });
