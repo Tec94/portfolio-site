@@ -11,47 +11,33 @@ export default function Testimonials() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(0);
 
+  // REPLACE WITH REAL TESTIMONIALS
+  // Get testimonials from:
+  // 1. Internship supervisors (QT-Data Group, Portlogics JSC, Hotel Link Solutions)
+  // 2. UT Dallas professors
+  // 3. Hackathon teammates/judges
+  // 4. LinkedIn recommendations
+
   const testimonials = [
     {
-      name: "Dr. Sarah Chen",
-      role: "CTO, TechStart Inc",
-      company: "TechStart Inc",
-      content: "Jack's full-stack development skills are exceptional. He delivered our React dashboard ahead of schedule with clean, maintainable code. His attention to performance optimization reduced our load times by 35%.",
+      name: "Supervisor Name",
+      role: "Engineering Manager",
+      company: "QT-Data Group",
+      content: "Replace with real feedback from your internship supervisor. Ask them for a LinkedIn recommendation or email testimonial highlighting your Python skills, automation work, and professionalism.",
       rating: 5
     },
     {
-      name: "Michael Rodriguez",
-      role: "Product Manager",
-      company: "DataFlow Solutions",
-      content: "Working with Jack on our data pipeline project was a great experience. His Python automation skills and ability to handle complex ETL workflows saved us countless hours. Highly professional and communicative.",
+      name: "Professor Name",
+      role: "Professor of Computer Science",
+      company: "UT Dallas",
+      content: "Ask a professor who knows your work for a brief testimonial about your technical skills, project quality, and work ethic. Focus on specific projects or assignments.",
       rating: 5
     },
     {
-      name: "Emily Thompson",
-      role: "Founder",
-      company: "GreenLeaf Consulting",
-      content: "Jack rebuilt our company website with a modern, responsive design. The site loads incredibly fast and looks amazing on all devices. He was patient with our feedback and delivered exactly what we needed.",
-      rating: 5
-    },
-    {
-      name: "David Park",
-      role: "Engineering Lead",
-      company: "CloudNet Systems",
-      content: "Jack integrated our application with multiple third-party APIs seamlessly. His understanding of REST architecture and authentication flows is impressive. The code quality exceeded our expectations.",
-      rating: 5
-    },
-    {
-      name: "Lisa Martinez",
-      role: "Startup Founder",
-      company: "HealthTrack App",
-      content: "As a non-technical founder, I appreciated Jack's ability to explain complex concepts clearly. He built our MVP efficiently and provided excellent documentation. Would definitely work with him again.",
-      rating: 5
-    },
-    {
-      name: "Prof. James Wilson",
-      role: "Academic Mentor",
-      company: "UT Dallas CS Department",
-      content: "Jack consistently demonstrates strong problem-solving abilities and a deep understanding of software engineering principles. His projects show creativity, technical rigor, and attention to best practices.",
+      name: "Project Teammate",
+      role: "Co-developer",
+      company: "HackUTA Team",
+      content: "Reach out to teammates from Credify, CitizenVoice, or other projects. Ask them to describe working with you - collaboration, technical skills, problem-solving.",
       rating: 5
     }
   ];

@@ -9,6 +9,7 @@ import Terminal from 'lucide-react/dist/esm/icons/terminal';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 
 // Lazy load components for better performance
 const ServiceDetailPage = lazy(() => import('./pages/ServiceDetailPage'));
@@ -219,6 +220,7 @@ function App() {
       <BackgroundProvider>
         <AppContent />
         <Analytics />
+        <SpeedInsights />
       </BackgroundProvider>
     </ThemeProvider>
   );
