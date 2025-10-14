@@ -6,6 +6,7 @@ import Trophy from 'lucide-react/dist/esm/icons/trophy';
 import Award from 'lucide-react/dist/esm/icons/award';
 import Star from 'lucide-react/dist/esm/icons/star';
 import TrendingUp from 'lucide-react/dist/esm/icons/trending-up';
+import NotebookPen from 'lucide-react/dist/esm/icons/notebook-pen';
 
 export default function Recognition() {
   const achievements = [
@@ -19,7 +20,7 @@ export default function Recognition() {
     {
       icon: Award,
       title: "HackRice 2024",
-      subtitle: "Civic Engagement Platform",
+      subtitle: "Best Use of Auth0",
       description: "Developed CitizenVoice with Auth0, PostgreSQL, and React-Leaflet for community proposals and voting",
       metric: "3 core features shipped"
     },
@@ -31,7 +32,7 @@ export default function Recognition() {
       metric: "$2M peak volume, 8.5K holders"
     },
     {
-      icon: Star,
+      icon: NotebookPen,
       title: "Academic Excellence",
       subtitle: "UT Dallas Computer Science",
       description: "Pursuing B.S. in Computer Science with focus on full-stack development and data engineering",
