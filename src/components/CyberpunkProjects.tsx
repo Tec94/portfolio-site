@@ -33,6 +33,11 @@ export default function CyberpunkProjects({ projects }: CyberpunkProjectsProps) 
   const [direction, setDirection] = useState(0);
   const [expandedDescription, setExpandedDescription] = useState(false);
 
+  // Reset expanded description when project changes
+  useEffect(() => {
+    setExpandedDescription(false);
+  }, [activeIndex]);
+
   // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -125,7 +130,10 @@ export default function CyberpunkProjects({ projects }: CyberpunkProjectsProps) 
               onDragEnd={handleDragEnd}
             >
               {/* Project card - wider expanded view, responsive height */}
-              <div className="grid md:grid-cols-2 gap-6 border-2 border-green-500/40 rounded-lg overflow-hidden bg-black/80 backdrop-blur-sm p-4 md:p-6 h-auto md:h-[550px] max-h-[80vh] md:max-h-none"
+              <motion.div
+                className="grid md:grid-cols-2 gap-6 border-2 border-green-500/40 rounded-lg overflow-hidden bg-black/80 backdrop-blur-sm p-4 md:p-6 h-auto md:h-[550px] md:max-h-none"
+                animate={{ height: 'auto' }}
+                transition={{ duration: 0.3, ease: 'easeInOut' }}
                 style={{
                   boxShadow: '0 0 50px rgba(0, 255, 0, 0.3), inset 0 0 50px rgba(0, 255, 0, 0.05)',
                 }}
@@ -289,9 +297,56 @@ export default function CyberpunkProjects({ projects }: CyberpunkProjectsProps) 
                     </div>
                   </div>
 
-                  {/* Description - expanded, better mobile scrolling */}
-                  <div className="flex-1 overflow-y-auto max-h-[300px] md:max-h-[400px] pr-2 custom-scrollbar">
-                    <div className="space-y-3">
+                  {/* Description - expandable on mobile */}
+                  <div className="flex-1 md:overflow-y-auto md:max-h-[400px] pr-2 custom-scrollbar">
+                    {/* Mobile: Expandable with button */}
+                    <div className="md:hidden">
+                      {/* Show Details button - Mobile only */}
+                      <motion.button
+                        onClick={() => setExpandedDescription(!expandedDescription)}
+                        className="mb-3 w-full py-2 px-4 bg-green-500/10 border border-green-500/40 rounded hover:bg-green-500/20 hover:border-green-500/60 transition-all flex items-center justify-center gap-2 font-mono text-sm text-green-400 touch-manipulation"
+                        whileTap={{ scale: 0.98 }}
+                        style={{
+                          boxShadow: '0 0 10px rgba(0, 255, 0, 0.2)',
+                        }}
+                      >
+                        <span>{expandedDescription ? 'Hide Details' : 'Show Details'}</span>
+                        <motion.div
+                          animate={{ rotate: expandedDescription ? 180 : 0 }}
+                          transition={{ duration: 0.3 }}
+                        >
+                          <ChevronDown className="h-4 w-4" />
+                        </motion.div>
+                      </motion.button>
+
+                      <AnimatePresence>
+                        {expandedDescription && (
+                          <motion.div
+                            className="space-y-3 overflow-hidden"
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: 'auto' }}
+                            exit={{ opacity: 0, height: 0 }}
+                            transition={{ duration: 0.3, ease: 'easeInOut' }}
+                          >
+                            {activeProject.description.map((desc, idx) => (
+                              <motion.div
+                                key={idx}
+                                className="flex items-start gap-3 text-sm text-green-300 font-mono leading-relaxed"
+                                initial={{ opacity: 0, x: -20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ delay: idx * 0.05 }}
+                              >
+                                <Code className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
+                                <span>{desc}</span>
+                              </motion.div>
+                            ))}
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+
+                    {/* Desktop: always show description */}
+                    <div className="hidden md:block space-y-3">
                       {activeProject.description.map((desc, idx) => (
                         <motion.div
                           key={idx}
@@ -315,7 +370,7 @@ export default function CyberpunkProjects({ projects }: CyberpunkProjectsProps) 
                     </div>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             </motion.div>
           </AnimatePresence>
         </div>
