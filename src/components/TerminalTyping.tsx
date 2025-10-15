@@ -119,11 +119,13 @@ export default function TerminalTyping({
             </div>
 
             {/* Typing text */}
-            <div className="flex items-center min-h-[60px]">
+            <div className="flex items-start min-h-[80px] md:min-h-[60px]">
               <motion.span
                 className="text-3xl md:text-5xl font-bold text-green-300 mr-1"
                 style={{
                   textShadow: '0 0 20px rgba(0, 255, 0, 0.6)',
+                  minHeight: '80px',
+                  display: 'inline-block'
                 }}
               >
                 {displayText}
@@ -131,7 +133,7 @@ export default function TerminalTyping({
 
               {/* Blinking cursor */}
               <motion.span
-                className="inline-block w-3 h-10 md:h-14 bg-green-400"
+                className="inline-block w-3 h-10 md:h-14 bg-green-400 flex-shrink-0"
                 animate={{
                   opacity: showCursor ? 1 : 0,
                 }}
