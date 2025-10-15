@@ -15,28 +15,32 @@ export default function Recognition() {
       title: "HackUTA 2024",
       subtitle: "Participant",
       description: "Built Credify - AI-powered credit card optimization platform with Plaid API integration and Google Gemini AI",
-      metric: "15+ credit cards analyzed"
+      metric: "15+ credit cards analyzed",
+      color: 'cyan'
     },
     {
       icon: Award,
       title: "HackRice 2024",
       subtitle: "Best Use of Auth0",
       description: "Developed CitizenVoice with Auth0, PostgreSQL, and React-Leaflet for community proposals and voting",
-      metric: "3 core features shipped"
+      metric: "3 core features shipped",
+      color: 'green'
     },
     {
       icon: TrendingUp,
       title: "$Munky Token Launch",
       subtitle: "Web3 Project Success",
       description: "Led frontend development for crypto token website that reached $2M peak trading volume",
-      metric: "$2M peak volume, 8.5K holders"
+      metric: "$2M peak volume, 8.5K holders",
+      color: 'cyan'
     },
     {
       icon: NotebookPen,
       title: "Academic Excellence",
       subtitle: "UT Dallas Computer Science",
       description: "Pursuing B.S. in Computer Science with focus on full-stack development and data engineering",
-      metric: "3+ internships"
+      metric: "3+ internships",
+      color: 'green'
     }
   ];
 
@@ -70,7 +74,7 @@ export default function Recognition() {
               return (
                 <motion.div
                   key={index}
-                  className="relative p-6 border-2 border-green-500/40 rounded-lg bg-black/70 backdrop-blur-sm overflow-hidden h-full flex flex-col"
+                  className="relative p-6 border-2 border-green-500/40 rounded-lg bg-black/70 backdrop-blur-sm overflow-hidden h-full flex flex-col group"
                   style={{
                     boxShadow: '0 0 30px rgba(0, 255, 0, 0.2), inset 0 0 30px rgba(0, 255, 0, 0.05)',
                   }}
@@ -78,10 +82,7 @@ export default function Recognition() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  whileHover={{
-                    y: -4,
-                    boxShadow: '0 0 40px rgba(0, 255, 0, 0.3), inset 0 0 40px rgba(0, 255, 0, 0.08)',
-                  }}
+                  whileHover={{ y: -4 }}
                 >
                   {/* Corner brackets */}
                   <div className="absolute top-2 left-2 w-3 h-3 border-l-2 border-t-2 border-green-500" />
@@ -89,11 +90,33 @@ export default function Recognition() {
                   <div className="absolute bottom-2 left-2 w-3 h-3 border-l-2 border-b-2 border-green-500" />
                   <div className="absolute bottom-2 right-2 w-3 h-3 border-r-2 border-b-2 border-green-500" />
 
-                  <div className="flex items-start gap-4 flex-1">
-                    <div className="p-3 bg-green-500/10 border border-green-500/30 rounded-lg flex-shrink-0">
-                      <Icon className="h-6 w-6 text-green-400" style={{
-                        filter: 'drop-shadow(0 0 4px rgba(0, 255, 0, 0.5))'
-                      }} />
+                  {/* Hover glow effect */}
+                  <motion.div
+                    className={`absolute inset-0 bg-gradient-to-br ${
+                      achievement.color === 'cyan'
+                        ? 'from-cyan-500/10 to-transparent'
+                        : 'from-green-500/10 to-transparent'
+                    } opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
+                  />
+
+                  <div className="flex items-start gap-4 flex-1 relative z-10">
+                    <div
+                      className={`p-3 ${
+                        achievement.color === 'cyan'
+                          ? 'bg-cyan-500/10 border-cyan-500/30'
+                          : 'bg-green-500/10 border-green-500/30'
+                      } border rounded-lg flex-shrink-0`}
+                    >
+                      <Icon
+                        className={`h-6 w-6 ${
+                          achievement.color === 'cyan' ? 'text-cyan-400' : 'text-green-400'
+                        }`}
+                        style={{
+                          filter: achievement.color === 'cyan'
+                            ? 'drop-shadow(0 0 4px rgba(34, 211, 238, 0.5))'
+                            : 'drop-shadow(0 0 4px rgba(0, 255, 0, 0.5))'
+                        }}
+                      />
                     </div>
 
                     <div className="flex-1 flex flex-col">
@@ -110,11 +133,36 @@ export default function Recognition() {
                       <p className="text-green-300/80 font-mono text-sm leading-relaxed mb-3 flex-1">
                         {achievement.description}
                       </p>
-                      <div className="inline-block px-3 py-1 bg-cyan-500/20 border border-cyan-500/40 rounded text-cyan-300 font-mono text-xs self-start">
+                      <div
+                        className={`inline-block px-3 py-1 ${
+                          achievement.color === 'cyan'
+                            ? 'bg-cyan-500/20 border-cyan-500/40 text-cyan-300'
+                            : 'bg-green-500/20 border-green-500/40 text-green-300'
+                        } border rounded font-mono text-xs self-start`}
+                        style={{
+                          boxShadow: achievement.color === 'cyan'
+                            ? '0 0 10px rgba(34, 211, 238, 0.3)'
+                            : '0 0 10px rgba(0, 255, 0, 0.3)',
+                        }}
+                      >
                         {achievement.metric}
                       </div>
                     </div>
                   </div>
+
+                  {/* Bottom accent line */}
+                  <motion.div
+                    className={`absolute bottom-0 left-0 right-0 h-1 ${
+                      achievement.color === 'cyan'
+                        ? 'bg-gradient-to-r from-transparent via-cyan-400/50 to-transparent'
+                        : 'bg-gradient-to-r from-transparent via-green-400/50 to-transparent'
+                    } opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
+                    style={{
+                      boxShadow: achievement.color === 'cyan'
+                        ? '0 0 10px rgba(34, 211, 238, 0.5)'
+                        : '0 0 10px rgba(0, 255, 0, 0.5)',
+                    }}
+                  />
                 </motion.div>
               );
             })}

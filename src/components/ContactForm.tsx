@@ -193,13 +193,17 @@ export default function ContactForm() {
             type="text"
             id="name"
             name="name"
+            autoComplete="name"
             value={formData.name}
             onChange={handleChange}
             className="w-full px-4 py-2 bg-black border border-green-500/30 rounded text-green-300 font-mono text-sm focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30 transition-colors"
             placeholder="Your name"
+            aria-required="true"
+            aria-invalid={!!errors.name}
+            aria-describedby={errors.name ? "name-error" : undefined}
           />
           {errors.name && (
-            <p className="text-red-400 font-mono text-xs mt-1">{errors.name}</p>
+            <p id="name-error" className="text-red-400 font-mono text-xs mt-1" role="alert">{errors.name}</p>
           )}
         </div>
 
@@ -212,13 +216,17 @@ export default function ContactForm() {
             type="email"
             id="email"
             name="email"
+            autoComplete="email"
             value={formData.email}
             onChange={handleChange}
             className="w-full px-4 py-2 bg-black border border-green-500/30 rounded text-green-300 font-mono text-sm focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30 transition-colors"
             placeholder="your.email@example.com"
+            aria-required="true"
+            aria-invalid={!!errors.email}
+            aria-describedby={errors.email ? "email-error" : undefined}
           />
           {errors.email && (
-            <p className="text-red-400 font-mono text-xs mt-1">{errors.email}</p>
+            <p id="email-error" className="text-red-400 font-mono text-xs mt-1" role="alert">{errors.email}</p>
           )}
         </div>
 
@@ -253,9 +261,12 @@ export default function ContactForm() {
             rows={5}
             className="w-full px-4 py-2 bg-black border border-green-500/30 rounded text-green-300 font-mono text-sm focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30 transition-colors resize-vertical"
             placeholder="Tell me about your project..."
+            aria-required="true"
+            aria-invalid={!!errors.message}
+            aria-describedby={errors.message ? "message-error" : undefined}
           />
           {errors.message && (
-            <p className="text-red-400 font-mono text-xs mt-1">{errors.message}</p>
+            <p id="message-error" className="text-red-400 font-mono text-xs mt-1" role="alert">{errors.message}</p>
           )}
         </div>
 

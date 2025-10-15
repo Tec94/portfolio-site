@@ -131,7 +131,7 @@ export default function CyberpunkProjects({ projects }: CyberpunkProjectsProps) 
             >
               {/* Project card - wider expanded view, responsive height */}
               <motion.div
-                className="grid md:grid-cols-2 gap-6 border-2 border-green-500/40 rounded-lg overflow-hidden bg-black/80 backdrop-blur-sm p-4 md:p-6 h-auto md:h-[550px] md:max-h-none"
+                className="grid md:grid-cols-2 gap-6 border-2 border-green-500/40 rounded-lg overflow-hidden bg-black/80 backdrop-blur-sm p-4 md:p-6 h-auto"
                 animate={{ height: 'auto' }}
                 transition={{ duration: 0.3, ease: 'easeInOut' }}
                 style={{
@@ -151,6 +151,12 @@ export default function CyberpunkProjects({ projects }: CyberpunkProjectsProps) 
                           title={`${activeProject.title} preview`}
                           loading="lazy"
                           sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+                          onError={(e) => {
+                            const iframe = e.target as HTMLIFrameElement;
+                            iframe.style.display = 'none';
+                            const fallback = iframe.parentElement?.querySelector('.iframe-fallback');
+                            if (fallback) (fallback as HTMLElement).style.display = 'flex';
+                          }}
                           style={{
                             width: '1440px',
                             height: '1200px',
@@ -160,6 +166,18 @@ export default function CyberpunkProjects({ projects }: CyberpunkProjectsProps) 
                             pointerEvents: 'none'
                           }}
                         />
+                        {/* Fallback for broken iframe */}
+                        <div className="iframe-fallback hidden absolute inset-0 flex-col items-center justify-center bg-black/90 border border-green-500/30">
+                          <p className="text-green-400 font-mono text-sm mb-4">Preview unavailable</p>
+                          <a
+                            href={activeProject.demoUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="px-4 py-2 border border-green-500/60 rounded bg-green-500/20 text-green-300 font-mono hover:bg-green-500/30 transition-all"
+                          >
+                            Visit Live Site
+                          </a>
+                        </div>
                       </div>
                     )}
 

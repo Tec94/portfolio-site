@@ -8,6 +8,7 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [hoveredLink, setHoveredLink] = useState<string | null>(null);
   const [activeSection, setActiveSection] = useState('about');
+  const [isNavigating, setIsNavigating] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -50,6 +51,7 @@ export default function Navbar() {
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
     setIsOpen(false);
+    setIsNavigating(true);
 
     // If we're on a service detail page, navigate to home first
     if (location.pathname !== '/') {
@@ -60,6 +62,7 @@ export default function Navbar() {
         if (element) {
           element.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
+        setIsNavigating(false);
       }, 100);
     } else {
       // Already on home page, just scroll
@@ -67,6 +70,7 @@ export default function Navbar() {
       if (element) {
         element.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
+      setTimeout(() => setIsNavigating(false), 500);
     }
   };
 
@@ -76,6 +80,18 @@ export default function Navbar() {
         boxShadow: '0 0 20px rgba(0, 255, 0, 0.2), inset 0 -2px 10px rgba(0, 255, 0, 0.1)',
       }}
     >
+      {/* Navigation loading indicator */}
+      {isNavigating && (
+        <motion.div
+          className="absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-transparent via-cyan-400 to-transparent"
+          initial={{ width: '0%' }}
+          animate={{ width: '100%' }}
+          transition={{ duration: 0.5, ease: 'easeInOut' }}
+          style={{
+            boxShadow: '0 0 10px rgba(34, 211, 238, 0.8)',
+          }}
+        />
+      )}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-center items-center h-16 relative">
           {/* Desktop Navigation - Centered */}

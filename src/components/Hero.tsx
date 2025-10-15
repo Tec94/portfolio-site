@@ -18,13 +18,13 @@ export default function Hero() {
   return (
     <section id="about" className="min-h-screen flex items-center justify-center pt-20 pb-12 relative">
       {/* Terminal Header Bar - adjusted for mobile */}
-      <div className="absolute top-20 md:top-24 left-0 right-0 h-8 bg-green-500/10 border-y border-green-500/30 flex items-center px-2 sm:px-4 z-10">
-        <div className="flex gap-2">
-          <div className="w-3 h-3 rounded-full bg-red-500" />
-          <div className="w-3 h-3 rounded-full bg-yellow-500" />
-          <div className="w-3 h-3 rounded-full bg-green-500" />
+      <div className="absolute top-20 md:top-24 left-0 right-0 h-10 md:h-8 bg-green-500/10 border-y border-green-500/30 flex items-center px-3 sm:px-4 z-10">
+        <div className="flex gap-1.5 sm:gap-2">
+          <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-red-500" />
+          <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-yellow-500" />
+          <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-green-500" />
         </div>
-        <span className="ml-2 sm:ml-4 text-xs text-green-400 font-mono hidden sm:inline">jack@portfolio:~$</span>
+        <span className="ml-3 sm:ml-4 text-xs text-green-400 font-mono hidden sm:inline">jack@portfolio:~$</span>
       </div>
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-30 flex flex-col items-center pt-8">

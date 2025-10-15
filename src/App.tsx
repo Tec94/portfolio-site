@@ -5,6 +5,7 @@ import { BackgroundProvider } from './contexts/BackgroundContext';
 import { StatsigWrapper } from './contexts/StatsigContext';
 import Scanlines from './components/Scanlines';
 import Portfolio from './components/Portfolio';
+import ErrorBoundary from './components/ErrorBoundary';
 import { AnimatePresence, motion } from 'framer-motion';
 import Terminal from 'lucide-react/dist/esm/icons/terminal';
 import AOS from 'aos';
@@ -14,6 +15,7 @@ import { SpeedInsights } from '@vercel/speed-insights/react';
 
 // Lazy load components for better performance
 const ServiceDetailPage = lazy(() => import('./pages/ServiceDetailPage'));
+const NotFound = lazy(() => import('./pages/NotFound'));
 const TerminalShell = lazy(() => import('./components/Terminal/TerminalShell'));
 const NetworkProgram = lazy(() => import('./components/Programs/NetworkProgram'));
 const ScannerProgram = lazy(() => import('./components/Programs/ScannerProgram'));
@@ -100,6 +102,14 @@ function AppContent() {
 
   return (
     <div className="min-h-screen transition-colors duration-300 relative">
+      {/* Skip to main content link for accessibility */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[9999] focus:px-6 focus:py-3 focus:bg-cyan-500 focus:text-black focus:font-mono focus:font-bold focus:rounded-lg focus:shadow-[0_0_20px_rgba(34,211,238,0.8)]"
+      >
+        Skip to main content
+      </a>
+
       {/* Black background layer */}
       <div className="fixed inset-0 bg-black -z-50" />
 
@@ -209,6 +219,7 @@ function AppContent() {
             </>
           } />
           <Route path="/services/:slug" element={<ServiceDetailPage />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
     </div>
@@ -217,15 +228,17 @@ function AppContent() {
 
 function App() {
   return (
-    <StatsigWrapper>
-      <ThemeProvider>
-        <BackgroundProvider>
-          <AppContent />
-          <Analytics />
-          <SpeedInsights />
-        </BackgroundProvider>
-      </ThemeProvider>
-    </StatsigWrapper>
+    <ErrorBoundary>
+      <StatsigWrapper>
+        <ThemeProvider>
+          <BackgroundProvider>
+            <AppContent />
+            <Analytics />
+            <SpeedInsights />
+          </BackgroundProvider>
+        </ThemeProvider>
+      </StatsigWrapper>
+    </ErrorBoundary>
   );
 }
 

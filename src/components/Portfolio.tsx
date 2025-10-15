@@ -8,7 +8,6 @@ import Skills from './Skills';
 import Recognition from './Recognition'; // Replaced Testimonials with Recognition
 // import Testimonials from './Testimonials'; // Will use once you have real client testimonials
 import FAQ from './FAQ';
-import Awards from './Awards';
 import Contact from './Contact';
 import Footer from './Footer';
 import FloatingCTA from './FloatingCTA';
@@ -36,7 +35,6 @@ export default function Portfolio() {
         <Recognition /> {/* Shows hackathon wins, project metrics, achievements */}
         {/* <Testimonials /> */} {/* Uncomment once you have real client testimonials */}
         <FAQ />
-        <Awards />
         <Contact />
       </main>
 

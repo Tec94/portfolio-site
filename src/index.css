@@ -360,6 +360,16 @@
   .stagger-6 { animation-delay: 0.3s; }
 }
 
+/* Accessibility: Minimum contrast enforcement */
+/* Override low-opacity text colors for WCAG AA compliance */
+@layer utilities {
+  .text-green-400\/60,
+  .text-green-400\/70,
+  .text-green-500\/70 {
+    opacity: 0.85 !important; /* Increase from 0.6/0.7 to 0.85 for better contrast */
+  }
+}
+
 /* Respect user's motion preferences */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -369,7 +379,7 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  
+
   .animate-float,
   .animate-pulse-glow,
   .animate-rotate-slow,
