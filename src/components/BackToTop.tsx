@@ -27,7 +27,7 @@ export default function BackToTop() {
       {isVisible && (
         <motion.button
           onClick={scrollToTop}
-          className="fixed bottom-24 right-6 z-40 p-3 bg-green-500/20 border-2 border-green-500/60 rounded-lg hover:bg-green-500/30 transition-all group"
+          className="p-3 bg-green-500/20 border-2 border-green-500/60 rounded-lg hover:bg-green-500/30 transition-all group touch-manipulation"
           initial={{ scale: 0, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0, opacity: 0 }}
@@ -38,7 +38,13 @@ export default function BackToTop() {
           whileTap={{ scale: 0.95 }}
           transition={{ duration: 0.2 }}
           style={{
+            position: 'fixed',
+            bottom: '6rem',
+            right: '1.5rem',
+            zIndex: 40,
             boxShadow: '0 0 15px rgba(0, 255, 0, 0.3)',
+            transform: 'translate3d(0, 0, 0)',
+            willChange: 'transform'
           }}
           aria-label="Back to top"
         >

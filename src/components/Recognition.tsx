@@ -36,7 +36,7 @@ export default function Recognition() {
       title: "Academic Excellence",
       subtitle: "UT Dallas Computer Science",
       description: "Pursuing B.S. in Computer Science with focus on full-stack development and data engineering",
-      metric: "Multiple internships completed"
+      metric: "3+ internships"
     }
   ];
 

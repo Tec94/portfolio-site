@@ -222,27 +222,29 @@ export default function Navbar() {
                   key={link.name}
                   href={link.href}
                   onClick={(e) => handleNavClick(e, link.href)}
-                  className={`relative block text-center py-3 font-mono text-sm rounded transition-colors overflow-hidden group cursor-pointer ${
+                  className={`relative block text-center py-3 font-mono text-sm rounded transition-colors overflow-hidden group cursor-pointer touch-manipulation ${
                     activeSection === link.href.replace('#', '')
                       ? 'text-green-300 border-green-500/60 bg-green-500/15 border-2'
                       : 'text-green-400 hover:text-green-300 border border-green-500/30 hover:border-green-500/60 bg-green-500/5 hover:bg-green-500/15'
                   }`}
+                  style={{ WebkitTapHighlightColor: 'transparent' }}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: index * 0.05 }}
                   whileHover={{
                     boxShadow: '0 0 20px rgba(0, 255, 0, 0.4), inset 0 0 10px rgba(0, 255, 0, 0.1)',
                   }}
+                  whileTap={{ scale: 0.98 }}
                 >
-                  <span className="relative z-10">{link.name}</span>
+                  <span className="relative z-10 pointer-events-none">{link.name}</span>
                   {/* Corner brackets on hover */}
-                  <div className="absolute top-1 left-1 w-2 h-2 border-l border-t border-green-400 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  <div className="absolute top-1 right-1 w-2 h-2 border-r border-t border-green-400 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  <div className="absolute bottom-1 left-1 w-2 h-2 border-l border-b border-green-400 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  <div className="absolute bottom-1 right-1 w-2 h-2 border-r border-b border-green-400 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <div className="absolute top-1 left-1 w-2 h-2 border-l border-t border-green-400 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+                  <div className="absolute top-1 right-1 w-2 h-2 border-r border-t border-green-400 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+                  <div className="absolute bottom-1 left-1 w-2 h-2 border-l border-b border-green-400 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+                  <div className="absolute bottom-1 right-1 w-2 h-2 border-r border-b border-green-400 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
                   {/* Scan line */}
                   <motion.div
-                    className="absolute inset-0 bg-gradient-to-b from-transparent via-green-400/20 to-transparent opacity-0 group-hover:opacity-100"
+                    className="absolute inset-0 bg-gradient-to-b from-transparent via-green-400/20 to-transparent opacity-0 group-hover:opacity-100 pointer-events-none"
                     animate={{ y: ['-100%', '200%'] }}
                     transition={{ duration: 0.8, repeat: Infinity, ease: 'linear' }}
                   />
@@ -253,19 +255,21 @@ export default function Navbar() {
               <motion.a
                 href="#contact"
                 onClick={(e) => handleNavClick(e, '#contact')}
-                className="relative block text-center py-3 font-mono text-sm font-bold text-black bg-green-400 rounded overflow-hidden group mt-4 cursor-pointer"
+                className="relative block text-center py-3 font-mono text-sm font-bold text-black bg-green-400 rounded overflow-hidden group mt-4 cursor-pointer touch-manipulation"
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: navLinks.length * 0.05 }}
+                whileTap={{ scale: 0.98 }}
                 style={{
                   boxShadow: '0 0 20px rgba(0, 255, 0, 0.6), inset 0 0 10px rgba(0, 255, 0, 0.3)',
+                  WebkitTapHighlightColor: 'transparent'
                 }}
               >
-                <span className="relative z-10">Get in Touch</span>
+                <span className="relative z-10 pointer-events-none">Get in Touch</span>
 
                 {/* Pulse effect */}
                 <motion.div
-                  className="absolute inset-0 bg-green-500/50"
+                  className="absolute inset-0 bg-green-500/50 pointer-events-none"
                   animate={{
                     opacity: [0, 0.3, 0],
                     scale: [1, 1.05, 1]
@@ -278,10 +282,10 @@ export default function Navbar() {
                 />
 
                 {/* Corner brackets on hover */}
-                <div className="absolute top-1 left-1 w-2 h-2 border-l border-t border-black opacity-0 group-hover:opacity-100 transition-opacity" />
-                <div className="absolute top-1 right-1 w-2 h-2 border-r border-t border-black opacity-0 group-hover:opacity-100 transition-opacity" />
-                <div className="absolute bottom-1 left-1 w-2 h-2 border-l border-b border-black opacity-0 group-hover:opacity-100 transition-opacity" />
-                <div className="absolute bottom-1 right-1 w-2 h-2 border-r border-b border-black opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute top-1 left-1 w-2 h-2 border-l border-t border-black opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+                <div className="absolute top-1 right-1 w-2 h-2 border-r border-t border-black opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+                <div className="absolute bottom-1 left-1 w-2 h-2 border-l border-b border-black opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+                <div className="absolute bottom-1 right-1 w-2 h-2 border-r border-b border-black opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
               </motion.a>
             </div>
           </motion.div>

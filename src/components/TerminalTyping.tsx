@@ -19,6 +19,7 @@ export default function TerminalTyping({
   const [displayText, setDisplayText] = useState('');
   const [isTyping, setIsTyping] = useState(true);
   const [showCursor, setShowCursor] = useState(true);
+  const [isComplete, setIsComplete] = useState(false);
 
   useEffect(() => {
     let timeout: NodeJS.Timeout;
@@ -30,6 +31,9 @@ export default function TerminalTyping({
           setDisplayText(text.slice(0, displayText.length + 1));
         }, typingSpeed);
       } else {
+        // Typing complete - stop cursor blinking
+        setIsComplete(true);
+        setShowCursor(true);
         // Pause before deleting
         timeout = setTimeout(() => {
           setIsTyping(false);
@@ -52,14 +56,16 @@ export default function TerminalTyping({
     return () => clearTimeout(timeout);
   }, [displayText, isTyping, text, typingSpeed, deletingSpeed, pauseDuration]);
 
-  // Cursor blink effect
+  // Cursor blink effect - only when not complete
   useEffect(() => {
+    if (isComplete) return;
+
     const cursorInterval = setInterval(() => {
       setShowCursor((prev) => !prev);
     }, 530);
 
     return () => clearInterval(cursorInterval);
-  }, []);
+  }, [isComplete]);
 
   return (
     <div className={`relative ${className}`}>

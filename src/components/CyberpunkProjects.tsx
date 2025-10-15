@@ -6,6 +6,7 @@ import Code from 'lucide-react/dist/esm/icons/code';
 import Database from 'lucide-react/dist/esm/icons/database';
 import Zap from 'lucide-react/dist/esm/icons/zap';
 import Play from 'lucide-react/dist/esm/icons/play';
+import ChevronDown from 'lucide-react/dist/esm/icons/chevron-down';
 import TerminalTyping from './TerminalTyping';
 import BlurReveal from './BlurReveal';
 
@@ -30,6 +31,7 @@ interface CyberpunkProjectsProps {
 export default function CyberpunkProjects({ projects }: CyberpunkProjectsProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [direction, setDirection] = useState(0);
+  const [expandedDescription, setExpandedDescription] = useState(false);
 
   // Keyboard navigation
   useEffect(() => {
@@ -129,24 +131,24 @@ export default function CyberpunkProjects({ projects }: CyberpunkProjectsProps) 
                 }}
               >
                 {/* Left side - Live Website Preview */}
-                <div className="relative h-[250px] md:h-full w-full bg-black border border-green-500/30 rounded overflow-hidden group flex items-center justify-center">
-                  <div className="relative w-full" style={{ aspectRatio: '16 / 9' }}>
+                <div className="relative h-[250px] md:h-full w-full bg-black border border-green-500/30 rounded overflow-hidden group flex flex-col">
+                  {/* Preview area - grows to fill space above stats */}
+                  <div className="relative flex-1 overflow-hidden">
                     {/* Live Website iframe - desktop view scaled down */}
                     {activeProject.demoUrl && (
-                      <div className="absolute inset-0 overflow-hidden">
+                      <div className="absolute inset-0 flex items-start justify-center overflow-hidden">
                         <iframe
                           src={activeProject.demoUrl}
-                          className="absolute top-0 left-0"
+                          className="absolute top-0 left-1/2 -translate-x-1/2"
                           title={`${activeProject.title} preview`}
                           loading="lazy"
                           sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
                           style={{
-                            width: '1920px',
-                            height: '1080px',
-                            transform: 'scale(0.3)',
-                            transformOrigin: 'top left',
+                            width: '1440px',
+                            height: '1200px',
+                            transform: 'translateX(-50%) scale(0.4)',
+                            transformOrigin: 'top center',
                             border: 'none',
-                            overflow: 'hidden',
                             pointerEvents: 'none'
                           }}
                         />
@@ -176,21 +178,21 @@ export default function CyberpunkProjects({ projects }: CyberpunkProjectsProps) 
                         <span>VISIT LIVE SITE</span>
                       </motion.div>
                     </a>
-
-                    {/* Project stats overlay */}
-                    {activeProject.metrics && (
-                      <div className="absolute bottom-0 left-0 right-0 p-4 bg-black/90 backdrop-blur-sm border-t border-green-500/30 z-20">
-                        <div className="flex gap-4 justify-around text-xs font-mono">
-                          {activeProject.metrics.map((metric, idx) => (
-                            <div key={idx} className="text-center">
-                              <div className="text-green-400 font-bold text-lg">{metric.value}</div>
-                              <div className="text-green-500/70">{metric.label}</div>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
                   </div>
+
+                  {/* Project stats overlay at bottom - full width */}
+                  {activeProject.metrics && (
+                    <div className="relative w-full px-4 py-3 bg-black/90 backdrop-blur-sm border-t border-green-500/30 z-20">
+                      <div className="flex gap-4 md:gap-6 justify-center">
+                        {activeProject.metrics.map((metric, idx) => (
+                          <div key={idx} className="text-center">
+                            <div className="text-green-400 font-bold text-base md:text-lg font-mono">{metric.value}</div>
+                            <div className="text-green-500/70 text-xs font-mono">{metric.label}</div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 {/* Right side - Project details */}

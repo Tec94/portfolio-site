@@ -34,13 +34,21 @@ export default function FloatingCTA() {
       {isVisible && (
         <motion.button
           onClick={scrollToContact}
-          className="fixed bottom-6 right-6 z-50 px-5 py-3 bg-cyan-500/90 hover:bg-cyan-400 border-2 border-cyan-300 rounded-lg shadow-lg transition-all group focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 focus:ring-offset-black"
+          className="px-5 py-3 bg-cyan-500/90 hover:bg-cyan-400 border-2 border-cyan-300 rounded-lg shadow-lg transition-all group focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 focus:ring-offset-black touch-manipulation"
           initial={{ scale: 0, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0, opacity: 0 }}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           transition={{ duration: 0.2 }}
+          style={{
+            position: 'fixed',
+            bottom: '1.5rem',
+            right: '1.5rem',
+            zIndex: 50,
+            transform: 'translate3d(0, 0, 0)',
+            willChange: 'transform'
+          }}
           aria-label="Contact me"
         >
           <div className="flex items-center gap-2">

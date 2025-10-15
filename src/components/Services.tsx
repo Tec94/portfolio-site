@@ -71,6 +71,10 @@ export default function Services() {
                     y: -8,
                     boxShadow: '0 0 15px rgba(0, 255, 0, 0.2)',
                   }}
+                  whileTap={{
+                    scale: 0.98,
+                    boxShadow: '0 0 25px rgba(0, 255, 0, 0.4)',
+                  }}
                   transition={{ duration: 0.2, type: "tween" }}
                 >
                   <div
@@ -131,6 +135,33 @@ export default function Services() {
                         </div>
                       ))}
                     </div>
+
+                    {/* Click to View Details CTA */}
+                    <motion.div
+                      className="mt-4 pt-4 border-t border-green-500/20"
+                      whileHover={{ x: 5 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <div className="flex items-center justify-between text-cyan-400 font-mono text-sm">
+                        <span className="font-bold">View Pricing Plans</span>
+                        <svg
+                          className="w-5 h-5"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M13 7l5 5m0 0l-5 5m5-5H6"
+                          />
+                        </svg>
+                      </div>
+                      <p className="text-xs text-green-500/70 mt-1">
+                        Tap to see full details
+                      </p>
+                    </motion.div>
                   </div>
                 </motion.div>
               </Link>
