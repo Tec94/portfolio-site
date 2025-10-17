@@ -58,11 +58,11 @@ export const servicesData: ServiceData[] = [
       'Post-launch support period'
     ],
     technologies: ['React', 'TypeScript', 'Node.js', 'Express', 'PostgreSQL', 'MongoDB', 'AWS', 'Vercel'],
-    startingPrice: '$500',
+    startingPrice: '$600',
     pricingPlans: [
       {
         name: 'Starter',
-        price: 'Starting at $500',
+        price: 'Starting at $600',
         description: 'Perfect for landing pages and simple web applications',
         features: [
           'Up to 5 pages/routes',
@@ -78,7 +78,7 @@ export const servicesData: ServiceData[] = [
       },
       {
         name: 'Professional',
-        price: 'Starting at $1,000',
+        price: 'Starting at $1,150',
         description: 'Full-featured applications with custom functionality',
         features: [
           'Up to 15 pages/routes',
@@ -98,7 +98,7 @@ export const servicesData: ServiceData[] = [
       },
       {
         name: 'Enterprise',
-        price: 'Starting at $3,000',
+        price: 'Starting at $3,200',
         description: 'Complex applications with advanced features and integrations',
         features: [
           'Unlimited pages/routes',
@@ -143,11 +143,11 @@ export const servicesData: ServiceData[] = [
       'User flow documentation'
     ],
     technologies: ['React', 'Tailwind CSS', 'Framer Motion', 'Figma', 'Lighthouse', 'WCAG 2.1'],
-    startingPrice: '$300',
+    startingPrice: '$400',
     pricingPlans: [
       {
         name: 'Starter',
-        price: 'Starting at $300',
+        price: 'Starting at $400',
         description: 'UI refresh for existing sites',
         features: [
           'Mobile responsive design',
@@ -163,7 +163,7 @@ export const servicesData: ServiceData[] = [
       },
       {
         name: 'Professional',
-        price: 'Starting at $600',
+        price: 'Starting at $750',
         description: 'Complete UI/UX redesign',
         features: [
           'Full mobile-first redesign',
@@ -182,7 +182,7 @@ export const servicesData: ServiceData[] = [
       },
       {
         name: 'Enterprise',
-        price: 'Starting at $1,600',
+        price: 'Starting at $1,800',
         description: 'Complete UX overhaul with research',
         features: [
           'User research & personas',
@@ -226,11 +226,11 @@ export const servicesData: ServiceData[] = [
       'Maintenance guide'
     ],
     technologies: ['Python', 'BeautifulSoup', 'Selenium', 'Pandas', 'PostgreSQL', 'AWS Lambda', 'Airflow'],
-    startingPrice: '$400',
+    startingPrice: '$500',
     pricingPlans: [
       {
         name: 'Starter',
-        price: 'Starting at $400',
+        price: 'Starting at $500',
         description: 'Simple web scraping & data collection',
         features: [
           'Single source scraping',
@@ -246,7 +246,7 @@ export const servicesData: ServiceData[] = [
       },
       {
         name: 'Professional',
-        price: 'Starting at $800',
+        price: 'Starting at $950',
         description: 'Multi-source ETL pipeline',
         features: [
           'Multiple data sources',
@@ -266,7 +266,7 @@ export const servicesData: ServiceData[] = [
       },
       {
         name: 'Enterprise',
-        price: 'Starting at $2,000',
+        price: 'Starting at $2,200',
         description: 'Complex data ecosystem with ML',
         features: [
           'Unlimited data sources',
@@ -310,11 +310,11 @@ export const servicesData: ServiceData[] = [
       'Maintenance documentation'
     ],
     technologies: ['Python', 'OpenAI API', 'Anthropic Claude', 'LangChain', 'Node.js', 'REST APIs'],
-    startingPrice: '$500',
+    startingPrice: '$600',
     pricingPlans: [
       {
         name: 'Starter',
-        price: 'Starting at $500',
+        price: 'Starting at $600',
         description: 'Basic AI integration',
         features: [
           'Single AI workflow',
@@ -330,7 +330,7 @@ export const servicesData: ServiceData[] = [
       },
       {
         name: 'Professional',
-        price: 'Starting at $1,000',
+        price: 'Starting at $1,150',
         description: 'Multi-step AI automation',
         features: [
           'Complex workflow orchestration',
@@ -350,7 +350,7 @@ export const servicesData: ServiceData[] = [
       },
       {
         name: 'Enterprise',
-        price: 'Starting at $2,400',
+        price: 'Starting at $2,600',
         description: 'Advanced AI ecosystem',
         features: [
           'Multi-agent systems',
@@ -394,11 +394,11 @@ export const servicesData: ServiceData[] = [
       'Performance monitoring setup'
     ],
     technologies: ['Lighthouse', 'WebPageTest', 'Chrome DevTools', 'Cloudflare', 'Vercel', 'Webpack'],
-    startingPrice: '$300',
+    startingPrice: '$400',
     pricingPlans: [
       {
         name: 'Starter',
-        price: 'Starting at $300',
+        price: 'Starting at $400',
         description: 'Basic performance audit & fixes',
         features: [
           'Lighthouse audit',
@@ -414,7 +414,7 @@ export const servicesData: ServiceData[] = [
       },
       {
         name: 'Professional',
-        price: 'Starting at $600',
+        price: 'Starting at $750',
         description: 'Comprehensive optimization',
         features: [
           'Deep performance analysis',
@@ -434,7 +434,7 @@ export const servicesData: ServiceData[] = [
       },
       {
         name: 'Enterprise',
-        price: 'Starting at $1,400',
+        price: 'Starting at $1,600',
         description: 'Full-stack performance overhaul',
         features: [
           'Backend optimization',
@@ -478,11 +478,11 @@ export const servicesData: ServiceData[] = [
       'Monitoring dashboard'
     ],
     technologies: ['Node.js', 'Express', 'REST', 'GraphQL', 'JWT', 'OAuth', 'Postman', 'Swagger'],
-    startingPrice: '$400',
+    startingPrice: '$500',
     pricingPlans: [
       {
         name: 'Starter',
-        price: 'Starting at $400',
+        price: 'Starting at $500',
         description: 'Basic API development',
         features: [
           'Up to 10 endpoints',
@@ -498,7 +498,7 @@ export const servicesData: ServiceData[] = [
       },
       {
         name: 'Professional',
-        price: 'Starting at $800',
+        price: 'Starting at $950',
         description: 'Full API ecosystem',
         features: [
           'Unlimited endpoints',
@@ -518,7 +518,7 @@ export const servicesData: ServiceData[] = [
       },
       {
         name: 'Enterprise',
-        price: 'Starting at $2,000',
+        price: 'Starting at $2,200',
         description: 'Advanced API infrastructure',
         features: [
           'GraphQL API',
