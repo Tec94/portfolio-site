@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { PricingPlan } from '../data/servicesData';
 import Check from 'lucide-react/dist/esm/icons/check';
 import Star from 'lucide-react/dist/esm/icons/star';
+import ChevronDown from 'lucide-react/dist/esm/icons/chevron-down';
+import ChevronUp from 'lucide-react/dist/esm/icons/chevron-up';
 
 interface PricingTableProps {
   plans: PricingPlan[];
@@ -11,6 +13,33 @@ interface PricingTableProps {
 
 export default function PricingTable({ plans, onSelectPlan }: PricingTableProps) {
   const [hoveredPlan, setHoveredPlan] = useState<string | null>(null);
+  const [expandedPlans, setExpandedPlans] = useState<{ [key: string]: boolean }>({});
+
+  const toggleExpanded = (planName: string) => {
+    setExpandedPlans(prev => ({
+      ...prev,
+      [planName]: !prev[planName]
+    }));
+  };
+
+  const INITIAL_VISIBLE_COUNT = 7; // Same for all plans to ensure consistent height
+
+  const getVisibleFeatures = (plan: PricingPlan) => {
+    const isExpanded = expandedPlans[plan.name];
+
+    // Show all features if expanded or if it's a Basic plan (which should have fewer features)
+    if (isExpanded || plan.name === 'Basic') {
+      return plan.features;
+    }
+
+    // Show only first 7 features for Business/Premium when collapsed
+    return plan.features.slice(0, INITIAL_VISIBLE_COUNT);
+  };
+
+  const shouldShowViewMore = (plan: PricingPlan) => {
+    // Only show "View More" for Business and Premium plans if they have more than INITIAL_VISIBLE_COUNT features
+    return plan.features.length > INITIAL_VISIBLE_COUNT && plan.name !== 'Basic';
+  };
 
   return (
     <div className="py-12">
@@ -64,14 +93,14 @@ export default function PricingTable({ plans, onSelectPlan }: PricingTableProps)
             </h3>
 
             {/* Price */}
-            <div className="text-center mb-4">
+            <div className="text-center mb-4 h-16 flex items-center justify-center">
               <p className="text-3xl font-bold text-green-400 font-mono">
                 {plan.price}
               </p>
             </div>
 
             {/* Description */}
-            <p className="text-green-300/80 font-mono text-sm text-center mb-6 min-h-[3rem]">
+            <p className="text-green-300/80 font-mono text-sm text-center mb-6 h-12 flex items-center justify-center">
               {plan.description}
             </p>
 
@@ -79,33 +108,69 @@ export default function PricingTable({ plans, onSelectPlan }: PricingTableProps)
             <div className="h-px bg-green-500/30 mb-6" />
 
             {/* Features */}
-            <div className="space-y-3 mb-6 flex-grow">
+            <div className="space-y-3 mb-4">
               <p className="text-green-400 font-mono text-xs uppercase tracking-wider mb-2">Features:</p>
-              {plan.features.map((feature, i) => (
-                <div key={i} className="flex items-start gap-2">
-                  <Check className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
-                  <span className="text-green-300/90 font-mono text-sm leading-relaxed">{feature}</span>
-                </div>
-              ))}
+              <div className={`${!expandedPlans[plan.name] ? 'min-h-[280px]' : ''}`}>
+                <AnimatePresence initial={false}>
+                  {getVisibleFeatures(plan).map((feature, i) => (
+                    <motion.div
+                      key={i}
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.2 }}
+                      className="flex items-start gap-2 mb-3"
+                    >
+                      <Check className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
+                      <span className="text-green-300/90 font-mono text-sm leading-relaxed">{feature}</span>
+                    </motion.div>
+                  ))}
+                </AnimatePresence>
+              </div>
+            </div>
+
+            {/* View More Button - Fixed height area */}
+            <div className="h-12 mb-4 flex items-center">
+              {shouldShowViewMore(plan) && (
+                <button
+                  onClick={() => toggleExpanded(plan.name)}
+                  className="w-full py-2 text-green-400 hover:text-green-300 font-mono text-xs flex items-center justify-center gap-1 border border-green-500/30 rounded hover:border-green-500/50 transition-all hover:bg-green-500/5"
+                >
+                  {expandedPlans[plan.name] ? (
+                    <>
+                      <ChevronUp className="h-3 w-3" />
+                      View Less
+                    </>
+                  ) : (
+                    <>
+                      <ChevronDown className="h-3 w-3" />
+                      View More ({plan.features.length - INITIAL_VISIBLE_COUNT} more)
+                    </>
+                  )}
+                </button>
+              )}
             </div>
 
             {/* Details */}
-            <div className="space-y-2 mb-6 p-4 bg-green-500/5 border border-green-500/20 rounded min-h-[120px]">
-              <div className="flex justify-between items-center gap-2">
-                <span className="text-green-400/80 font-mono text-xs whitespace-nowrap">Revisions:</span>
-                <span className="text-green-300 font-mono text-xs font-bold text-right">{plan.revisions}</span>
+            <div className="space-y-3 mb-6 p-4 bg-green-500/5 border border-green-500/20 rounded min-h-[220px]">
+              <div className="space-y-1">
+                <span className="text-green-400/80 font-mono text-xs uppercase tracking-wider">Revisions:</span>
+                <p className="text-green-300 font-mono text-sm font-bold">{plan.revisions}</p>
               </div>
-              <div className="flex justify-between items-center gap-2">
-                <span className="text-green-400/80 font-mono text-xs whitespace-nowrap">Meetings:</span>
-                <span className="text-green-300 font-mono text-xs font-bold text-right">{plan.meetings}</span>
+              <div className="h-px bg-green-500/20" />
+              <div className="space-y-1">
+                <span className="text-green-400/80 font-mono text-xs uppercase tracking-wider">Meetings:</span>
+                <p className="text-green-300 font-mono text-sm font-bold">{plan.meetings}</p>
               </div>
-              <div className="flex justify-between items-center gap-2">
-                <span className="text-green-400/80 font-mono text-xs whitespace-nowrap">Timeline:</span>
-                <span className="text-green-300 font-mono text-xs font-bold text-right">{plan.timeline}</span>
+              <div className="h-px bg-green-500/20" />
+              <div className="space-y-1">
+                <span className="text-green-400/80 font-mono text-xs uppercase tracking-wider">Timeline:</span>
+                <p className="text-green-300 font-mono text-sm font-bold">{plan.timeline}</p>
               </div>
-              <div className="flex justify-between items-center gap-2">
-                <span className="text-green-400/80 font-mono text-xs whitespace-nowrap">Support:</span>
-                <span className="text-green-300 font-mono text-xs font-bold text-right">{plan.support}</span>
+              <div className="h-px bg-green-500/20" />
+              <div className="space-y-1">
+                <span className="text-green-400/80 font-mono text-xs uppercase tracking-wider">Support:</span>
+                <p className="text-green-300 font-mono text-sm font-bold break-words">{plan.support}</p>
               </div>
             </div>
 

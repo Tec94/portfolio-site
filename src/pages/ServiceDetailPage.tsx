@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { getServiceBySlug } from '../data/servicesData';
-import PricingTable from '../components/PricingTable';
 import BookingWidget from '../components/BookingWidget';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -16,7 +15,6 @@ import AOS from 'aos';
 export default function ServiceDetailPage() {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
-  const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
   const [showBooking, setShowBooking] = useState(false);
 
   const service = slug ? getServiceBySlug(slug) : undefined;
@@ -35,7 +33,7 @@ export default function ServiceDetailPage() {
   }, [slug]);
 
   useEffect(() => {
-    if (showBooking && selectedPlan) {
+    if (showBooking) {
       // Scroll to booking section
       setTimeout(() => {
         const bookingElement = document.getElementById('booking');
@@ -44,7 +42,7 @@ export default function ServiceDetailPage() {
         }
       }, 100);
     }
-  }, [showBooking, selectedPlan]);
+  }, [showBooking]);
 
   if (!service) {
     return (
@@ -61,11 +59,6 @@ export default function ServiceDetailPage() {
       </div>
     );
   }
-
-  const handleSelectPlan = (planName: string) => {
-    setSelectedPlan(planName);
-    setShowBooking(true);
-  };
 
   const ServiceIcon = service.icon;
 
@@ -192,7 +185,7 @@ export default function ServiceDetailPage() {
             </div>
           </BlurReveal>
 
-          {/* Pricing plans */}
+          {/* Pricing Information */}
           <BlurReveal delay={0.5}>
             <div className="mb-16">
               <h2 className="text-3xl font-bold text-green-300 font-mono mb-3 text-center"
@@ -200,20 +193,81 @@ export default function ServiceDetailPage() {
                   textShadow: '0 0 10px rgba(0, 255, 0, 0.5)',
                 }}
               >
-                Pricing Plans
+                Pricing & Process
               </h2>
-              <p className="text-green-400 font-mono text-sm text-center mb-8">
-                Choose the plan that best fits your project needs and budget
+              <p className="text-green-400 font-mono text-sm text-center mb-4">
+                Every project is unique. Let's discuss your needs and create a custom solution.
               </p>
-              <PricingTable plans={service.pricingPlans} onSelectPlan={handleSelectPlan} />
+              <div className="max-w-2xl mx-auto mb-8 p-4 border border-cyan-500/30 rounded-lg bg-cyan-500/5">
+                <p className="text-cyan-400 font-mono text-xs text-center">
+                  <span className="font-bold">Combine Services:</span> Need comprehensive solutions? Services can be combined for better value.
+                  For example, combine Web Development + Modern Design + Optimization for complete packages.
+                </p>
+              </div>
+
+              {/* Simple pricing info card */}
+              <div className="max-w-3xl mx-auto">
+                <div className="p-8 border-2 border-green-500/40 rounded-lg bg-black/70 backdrop-blur-sm"
+                  style={{
+                    boxShadow: '0 0 30px rgba(0, 255, 0, 0.2), inset 0 0 30px rgba(0, 255, 0, 0.05)',
+                  }}
+                >
+                  <div className="text-center mb-6">
+                    <p className="text-green-400 font-mono text-sm mb-2">Starting at</p>
+                    <p className="text-5xl font-bold text-green-300 font-mono mb-4">
+                      {service.startingPrice}
+                    </p>
+                    <p className="text-green-300/80 font-mono text-sm">
+                      Final pricing based on project scope, timeline, and requirements
+                    </p>
+                  </div>
+
+                  <div className="h-px bg-green-500/30 my-6" />
+
+                  <div className="space-y-4">
+                    <h3 className="text-lg font-bold text-green-400 font-mono mb-4">What's Included:</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      {service.benefits.map((benefit, index) => (
+                        <div key={index} className="flex items-start gap-2">
+                          <span className="text-green-400 text-lg mt-0.5">✓</span>
+                          <span className="text-green-300/90 font-mono text-sm">{benefit}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="h-px bg-green-500/30 my-6" />
+
+                  <div className="text-center">
+                    <p className="text-green-400 font-mono text-sm mb-4">
+                      Most projects range from {service.startingPrice} to {service.typicalRange || '$4,000-$6,000'} depending on scope and complexity
+                    </p>
+                    <motion.button
+                      onClick={() => {
+                        setShowBooking(true);
+                        const bookingElement = document.getElementById('booking');
+                        if (bookingElement) {
+                          bookingElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                      }}
+                      className="px-8 py-3 bg-green-400 text-black rounded-lg font-mono font-bold hover:bg-green-300 transition-all border-2 border-green-400"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      transition={{ duration: 0.15 }}
+                    >
+                      {'> '}Get Your Custom Quote
+                    </motion.button>
+                  </div>
+                </div>
+              </div>
             </div>
           </BlurReveal>
 
           {/* Booking section */}
-          {showBooking && selectedPlan && (
+          {showBooking && (
             <BlurReveal delay={0.1}>
               <div id="booking" className="mb-16 scroll-mt-24">
-                <BookingWidget selectedPlan={selectedPlan} serviceName={service.title} />
+                <BookingWidget selectedPlan="Custom Quote" serviceName={service.title} />
               </div>
             </BlurReveal>
           )}
@@ -230,10 +284,10 @@ export default function ServiceDetailPage() {
                   textShadow: '0 0 10px rgba(0, 255, 0, 0.5)',
                 }}
               >
-                Ready to Get Started?
+                Let's Build Something Great
               </h3>
               <p className="text-green-400 font-mono text-sm mb-6 max-w-2xl mx-auto">
-                Have questions or need a custom quote? Let's discuss your project and find the perfect solution.
+                Every project is unique. Share your vision and I'll create a custom solution tailored to your needs and budget.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <motion.button
@@ -244,12 +298,12 @@ export default function ServiceDetailPage() {
                       bookingElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
                     }
                   }}
-                  className="px-8 py-3 border-2 border-green-500/60 rounded-lg bg-green-500/20 text-green-300 font-mono hover:bg-green-500/30 transition-all"
+                  className="px-8 py-3 bg-green-400 text-black rounded-lg font-mono font-bold hover:bg-green-300 transition-all border-2 border-green-400"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   transition={{ duration: 0.15 }}
                 >
-                  {'> '}Book Consultation
+                  {'> '}Schedule Free Consultation
                 </motion.button>
                 <motion.button
                   onClick={() => {
@@ -266,7 +320,7 @@ export default function ServiceDetailPage() {
                   whileTap={{ scale: 0.95 }}
                   transition={{ duration: 0.15 }}
                 >
-                  {'> '}Contact Me
+                  {'> '}Send Message
                 </motion.button>
               </div>
             </div>

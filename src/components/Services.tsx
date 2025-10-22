@@ -48,6 +48,12 @@ export default function Services() {
             <span className="text-green-500">{'> '}</span>
             Professional freelance development services tailored to your needs
           </p>
+          <div className="mt-6 p-4 border border-green-500/30 rounded-lg bg-green-500/5 max-w-3xl">
+            <p className="text-green-400 font-mono text-xs">
+              <span className="text-green-300 font-bold">Note:</span> Web development includes basic design, APIs, and performance optimization.
+              For comprehensive design systems, dedicated API platforms, or deep performance audits, those specialized services are available separately and can be combined.
+            </p>
+          </div>
         </div>
 
         <motion.div
@@ -126,24 +132,24 @@ export default function Services() {
                     {/* Spacer to push features to bottom */}
                     <div className="flex-grow"></div>
 
-                    {/* Features - Always at bottom of card */}
+                    {/* Key Highlights - Always at bottom of card */}
                     <div className="space-y-2 mt-auto">
-                      {service.features.map((feature, i) => (
+                      {service.features.slice(0, 4).map((feature, i) => (
                         <div key={i} className="flex items-center gap-2">
-                          <span className="text-green-500 text-xs">▸</span>
+                          <span className="text-green-500 text-xs">✓</span>
                           <span className="text-green-300/80 font-mono text-xs">{feature}</span>
                         </div>
                       ))}
                     </div>
 
-                    {/* Click to View Details CTA */}
+                    {/* Get Custom Quote CTA */}
                     <motion.div
                       className="mt-4 pt-4 border-t border-green-500/20"
                       whileHover={{ x: 5 }}
                       transition={{ duration: 0.2 }}
                     >
                       <div className="flex items-center justify-between text-cyan-400 font-mono text-sm">
-                        <span className="font-bold">View Pricing Plans</span>
+                        <span className="font-bold">Get Custom Quote</span>
                         <svg
                           className="w-5 h-5"
                           fill="none"
@@ -159,7 +165,7 @@ export default function Services() {
                         </svg>
                       </div>
                       <p className="text-xs text-green-500/70 mt-1">
-                        Tap to see full details
+                        View details & book consultation
                       </p>
                     </motion.div>
                   </div>
