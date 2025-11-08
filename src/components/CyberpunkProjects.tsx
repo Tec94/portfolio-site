@@ -18,6 +18,7 @@ interface Project {
   github: string;
   demoUrl?: string;
   bubbleDesignUrl?: string;
+  screenshot?: string;
   metrics?: {
     label: string;
     value: string;
@@ -138,12 +139,21 @@ export default function CyberpunkProjects({ projects }: CyberpunkProjectsProps) 
                   boxShadow: '0 0 50px rgba(0, 255, 0, 0.3), inset 0 0 50px rgba(0, 255, 0, 0.05)',
                 }}
               >
-                {/* Left side - Live Website Preview */}
+                {/* Left side - Project Preview */}
                 <div className="relative h-[250px] md:h-full w-full bg-black border border-green-500/30 rounded overflow-hidden group flex flex-col">
                   {/* Preview area - grows to fill space above stats */}
                   <div className="relative flex-1 overflow-hidden">
-                    {/* Live Website iframe - desktop view scaled down */}
-                    {activeProject.demoUrl && (
+                    {/* Screenshot if available, otherwise iframe */}
+                    {activeProject.screenshot ? (
+                      <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
+                        <img
+                          src={activeProject.screenshot}
+                          alt={`${activeProject.title} screenshot`}
+                          className="w-full h-full object-cover object-top"
+                          loading="lazy"
+                        />
+                      </div>
+                    ) : activeProject.demoUrl && (
                       <div className="absolute inset-0 flex items-start justify-center overflow-hidden">
                         <iframe
                           src={activeProject.demoUrl}

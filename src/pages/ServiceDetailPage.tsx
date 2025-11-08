@@ -67,14 +67,14 @@ export default function ServiceDetailPage() {
       <Scanlines />
       <Navbar />
 
-      <div className="pt-24 pb-20 relative">
+      <div className="pt-20 pb-20 relative">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Back button */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.3 }}
-            className="mb-8"
+            className="mb-4"
           >
             <button
               onClick={() => navigate('/')}
@@ -85,79 +85,161 @@ export default function ServiceDetailPage() {
             </button>
           </motion.div>
 
-          {/* Service header */}
-          <div className="text-center mb-12">
+          {/* Compact Service header */}
+          <div className="text-center mb-6">
             <motion.div
-              className="inline-flex items-center justify-center p-4 bg-green-500/10 border border-green-500/30 rounded-lg mb-6"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
+              className="inline-flex items-center justify-center gap-3 mb-2"
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3 }}
             >
-              <ServiceIcon className="h-12 w-12 text-green-400" style={{
+              <ServiceIcon className="h-7 w-7 text-green-400" style={{
                 filter: 'drop-shadow(0 0 8px rgba(0, 255, 0, 0.5))'
               }} />
-            </motion.div>
-
-            <TerminalTyping text={service.title} className="mb-6" />
-
-            <BlurReveal delay={0.2}>
-              <p className="text-lg text-green-300 font-mono max-w-3xl mx-auto leading-relaxed">
-                <span className="text-green-500">{'> '}</span>
-                {service.fullDescription}
-              </p>
-            </BlurReveal>
-          </div>
-
-          {/* Key features */}
-          <BlurReveal delay={0.3}>
-            <div className="mb-16">
-              <h2 className="text-2xl font-bold text-green-300 font-mono mb-6 text-center"
+              <h1 className="text-xl font-bold text-green-300 font-mono"
                 style={{
                   textShadow: '0 0 10px rgba(0, 255, 0, 0.5)',
                 }}
               >
-                What's Included
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* Benefits */}
-                <div className="p-6 border-2 border-green-500/40 rounded-lg bg-black/70 backdrop-blur-sm"
-                  style={{
-                    boxShadow: '0 0 30px rgba(0, 255, 0, 0.2), inset 0 0 30px rgba(0, 255, 0, 0.05)',
-                  }}
-                >
-                  <h3 className="text-lg font-bold text-green-400 font-mono mb-4">Benefits</h3>
-                  <ul className="space-y-3">
-                    {service.benefits.map((benefit, index) => (
-                      <li key={index} className="flex items-start gap-2">
-                        <Check className="h-5 w-5 text-green-400 flex-shrink-0 mt-0.5" />
-                        <span className="text-green-300/90 font-mono text-sm">{benefit}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                {service.title}
+              </h1>
+            </motion.div>
 
-                {/* Deliverables */}
+            <BlurReveal delay={0.1}>
+              <p className="text-sm text-green-300/80 font-mono max-w-2xl mx-auto">
+                {service.shortDescription}
+              </p>
+            </BlurReveal>
+          </div>
+
+          {/* Pricing Information - Moved up for immediate visibility */}
+          <BlurReveal delay={0.2}>
+            <div className="mb-16">
+              <h2 className="text-2xl font-bold text-green-300 font-mono mb-2 text-center"
+                style={{
+                  textShadow: '0 0 10px rgba(0, 255, 0, 0.5)',
+                }}
+              >
+                Pricing & Process
+              </h2>
+              <p className="text-green-400 font-mono text-sm text-center mb-3">
+                Every project is unique. Let's discuss your needs and create a custom solution.
+              </p>
+              <div className="max-w-2xl mx-auto mb-4 p-3 border border-cyan-500/30 rounded-lg bg-cyan-500/5">
+                <p className="text-cyan-400 font-mono text-xs text-center">
+                  <span className="font-bold">Combine Services:</span> Need comprehensive solutions? Services can be combined for better value.
+                  For example, combine Web Development + Modern Design + Optimization for complete packages.
+                </p>
+              </div>
+
+              {/* Simple pricing info card */}
+              <div className="max-w-3xl mx-auto">
                 <div className="p-6 border-2 border-green-500/40 rounded-lg bg-black/70 backdrop-blur-sm"
                   style={{
                     boxShadow: '0 0 30px rgba(0, 255, 0, 0.2), inset 0 0 30px rgba(0, 255, 0, 0.05)',
                   }}
                 >
-                  <h3 className="text-lg font-bold text-green-400 font-mono mb-4">Deliverables</h3>
-                  <ul className="space-y-3">
-                    {service.deliverables.map((deliverable, index) => (
-                      <li key={index} className="flex items-start gap-2">
-                        <Check className="h-5 w-5 text-green-400 flex-shrink-0 mt-0.5" />
-                        <span className="text-green-300/90 font-mono text-sm">{deliverable}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  <div className="text-center mb-4">
+                    <p className="text-green-400 font-mono text-sm mb-2">Starting at</p>
+                    <p className="text-4xl font-bold text-green-300 font-mono mb-3">
+                      {service.startingPrice}
+                    </p>
+                    <p className="text-green-300/80 font-mono text-xs">
+                      Final pricing based on project scope, timeline, and requirements
+                    </p>
+                  </div>
+
+                  <div className="h-px bg-green-500/30 my-4" />
+
+                  <div className="space-y-3">
+                    <h3 className="text-base font-bold text-green-400 font-mono mb-2">What's Included:</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      {service.pricingPlans.length > 0 && (
+                        <>
+                          <div className="flex items-baseline gap-2">
+                            <span className="text-green-400 text-sm flex-shrink-0 leading-none">✓</span>
+                            <span className="text-green-300/90 font-mono text-sm leading-relaxed">
+                              <strong>Revisions:</strong> {service.pricingPlans[0].revisions}
+                            </span>
+                          </div>
+                          <div className="flex items-baseline gap-2">
+                            <span className="text-green-400 text-sm flex-shrink-0 leading-none">✓</span>
+                            <span className="text-green-300/90 font-mono text-sm leading-relaxed">
+                              <strong>Meetings:</strong> {service.pricingPlans[0].meetings}
+                            </span>
+                          </div>
+                          <div className="flex items-baseline gap-2">
+                            <span className="text-green-400 text-sm flex-shrink-0 leading-none">✓</span>
+                            <span className="text-green-300/90 font-mono text-sm leading-relaxed">
+                              <strong>Timeline:</strong> {service.pricingPlans[0].timeline}
+                            </span>
+                          </div>
+                          <div className="flex items-baseline gap-2">
+                            <span className="text-green-400 text-sm flex-shrink-0 leading-none">✓</span>
+                            <span className="text-green-300/90 font-mono text-sm leading-relaxed">
+                              <strong>Support:</strong> {service.pricingPlans[0].support}
+                            </span>
+                          </div>
+                          <div className="flex items-baseline gap-2">
+                            <span className="text-green-400 text-sm flex-shrink-0 leading-none">✓</span>
+                            <span className="text-green-300/90 font-mono text-sm leading-relaxed">
+                              Source code ownership &{' '}
+                              <span className="whitespace-nowrap">full handoff</span>
+                            </span>
+                          </div>
+                          <div className="flex items-baseline gap-2">
+                            <span className="text-green-400 text-sm flex-shrink-0 leading-none">✓</span>
+                            <span className="text-green-300/90 font-mono text-sm leading-relaxed">
+                              Training &{' '}
+                              <span className="whitespace-nowrap">documentation included</span>
+                            </span>
+                          </div>
+                          <div className="flex items-baseline gap-2">
+                            <span className="text-green-400 text-sm flex-shrink-0 leading-none">✓</span>
+                            <span className="text-green-300/90 font-mono text-sm leading-relaxed">
+                              Regular progress updates
+                            </span>
+                          </div>
+                          <div className="flex items-baseline gap-2">
+                            <span className="text-green-400 text-sm flex-shrink-0 leading-none">✓</span>
+                            <span className="text-green-300/90 font-mono text-sm leading-relaxed">
+                              Post-deployment support
+                            </span>
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="h-px bg-green-500/30 my-4" />
+
+                  <div className="text-center">
+                    <p className="text-green-400 font-mono text-xs mb-3">
+                      Most projects range from {service.startingPrice} to {service.typicalRange || '$4,000-$6,000'} depending on scope and complexity
+                    </p>
+                    <motion.button
+                      onClick={() => {
+                        setShowBooking(true);
+                        const bookingElement = document.getElementById('booking');
+                        if (bookingElement) {
+                          bookingElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                      }}
+                      className="px-8 py-3 bg-green-400 text-black rounded-lg font-mono font-bold hover:bg-green-300 transition-all border-2 border-green-400"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      transition={{ duration: 0.15 }}
+                    >
+                      {'> '}Get Your Custom Quote
+                    </motion.button>
+                  </div>
                 </div>
               </div>
             </div>
           </BlurReveal>
 
-          {/* Technologies */}
-          <BlurReveal delay={0.4}>
+          {/* Technologies & Tools - Moved after pricing */}
+          <BlurReveal delay={0.3}>
             <div className="mb-16">
               <h2 className="text-2xl font-bold text-green-300 font-mono mb-6 text-center"
                 style={{
@@ -185,84 +267,6 @@ export default function ServiceDetailPage() {
             </div>
           </BlurReveal>
 
-          {/* Pricing Information */}
-          <BlurReveal delay={0.5}>
-            <div className="mb-16">
-              <h2 className="text-3xl font-bold text-green-300 font-mono mb-3 text-center"
-                style={{
-                  textShadow: '0 0 10px rgba(0, 255, 0, 0.5)',
-                }}
-              >
-                Pricing & Process
-              </h2>
-              <p className="text-green-400 font-mono text-sm text-center mb-4">
-                Every project is unique. Let's discuss your needs and create a custom solution.
-              </p>
-              <div className="max-w-2xl mx-auto mb-8 p-4 border border-cyan-500/30 rounded-lg bg-cyan-500/5">
-                <p className="text-cyan-400 font-mono text-xs text-center">
-                  <span className="font-bold">Combine Services:</span> Need comprehensive solutions? Services can be combined for better value.
-                  For example, combine Web Development + Modern Design + Optimization for complete packages.
-                </p>
-              </div>
-
-              {/* Simple pricing info card */}
-              <div className="max-w-3xl mx-auto">
-                <div className="p-8 border-2 border-green-500/40 rounded-lg bg-black/70 backdrop-blur-sm"
-                  style={{
-                    boxShadow: '0 0 30px rgba(0, 255, 0, 0.2), inset 0 0 30px rgba(0, 255, 0, 0.05)',
-                  }}
-                >
-                  <div className="text-center mb-6">
-                    <p className="text-green-400 font-mono text-sm mb-2">Starting at</p>
-                    <p className="text-5xl font-bold text-green-300 font-mono mb-4">
-                      {service.startingPrice}
-                    </p>
-                    <p className="text-green-300/80 font-mono text-sm">
-                      Final pricing based on project scope, timeline, and requirements
-                    </p>
-                  </div>
-
-                  <div className="h-px bg-green-500/30 my-6" />
-
-                  <div className="space-y-4">
-                    <h3 className="text-lg font-bold text-green-400 font-mono mb-4">What's Included:</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                      {service.benefits.map((benefit, index) => (
-                        <div key={index} className="flex items-start gap-2">
-                          <span className="text-green-400 text-lg mt-0.5">✓</span>
-                          <span className="text-green-300/90 font-mono text-sm">{benefit}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="h-px bg-green-500/30 my-6" />
-
-                  <div className="text-center">
-                    <p className="text-green-400 font-mono text-sm mb-4">
-                      Most projects range from {service.startingPrice} to {service.typicalRange || '$4,000-$6,000'} depending on scope and complexity
-                    </p>
-                    <motion.button
-                      onClick={() => {
-                        setShowBooking(true);
-                        const bookingElement = document.getElementById('booking');
-                        if (bookingElement) {
-                          bookingElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                        }
-                      }}
-                      className="px-8 py-3 bg-green-400 text-black rounded-lg font-mono font-bold hover:bg-green-300 transition-all border-2 border-green-400"
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      transition={{ duration: 0.15 }}
-                    >
-                      {'> '}Get Your Custom Quote
-                    </motion.button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </BlurReveal>
-
           {/* Booking section */}
           {showBooking && (
             <BlurReveal delay={0.1}>
@@ -273,7 +277,7 @@ export default function ServiceDetailPage() {
           )}
 
           {/* CTA section */}
-          <BlurReveal delay={0.6}>
+          <BlurReveal delay={0.4}>
             <div className="text-center p-8 border-2 border-green-500/40 rounded-lg bg-black/70 backdrop-blur-sm"
               style={{
                 boxShadow: '0 0 30px rgba(0, 255, 0, 0.2), inset 0 0 30px rgba(0, 255, 0, 0.05)',

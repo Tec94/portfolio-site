@@ -68,30 +68,12 @@ export const servicesData: ServiceData[] = [
       'Post-launch support period'
     ],
     technologies: ['React', 'TypeScript', 'Node.js', 'Express', 'PostgreSQL', 'MongoDB', 'AWS', 'Vercel'],
-    startingPrice: '$1,200',
-    typicalRange: '$5,000-$6,000',
+    startingPrice: '$400',
+    typicalRange: '$1,700-$2,000',
     pricingPlans: [
       {
-        name: 'Basic',
-        price: 'Starting at $600',
-        description: 'Perfect for landing pages and simple web applications',
-        features: [
-          'Up to 5 pages/routes (e.g., Home, About, Services, Contact, Blog)',
-          'Basic responsive design & deployment',
-          'Contact form & basic SEO',
-          'SSL certificate & analytics setup',
-          'Domain connection assistance',
-          'Project kickoff & weekly updates',
-          'Source code ownership & training'
-        ],
-        revisions: '2 rounds',
-        meetings: '3 check-in meetings',
-        timeline: '2-3 weeks',
-        support: '30 days post-launch'
-      },
-      {
-        name: 'Business',
-        price: 'Starting at $1,150',
+        name: 'Growth Platform',
+        price: 'Starting at $400',
         description: 'Full-featured applications with custom functionality',
         features: [
           'Up to 15 pages/routes',
@@ -115,8 +97,8 @@ export const servicesData: ServiceData[] = [
         recommended: true
       },
       {
-        name: 'Premium',
-        price: 'Starting at $3,200',
+        name: 'Complete Digital System',
+        price: 'Starting at $1,100',
         description: 'Complex applications with advanced features and integrations',
         features: [
           'Unlimited pages/routes & custom features',
@@ -168,30 +150,12 @@ export const servicesData: ServiceData[] = [
       'User flow documentation'
     ],
     technologies: ['React', 'Tailwind CSS', 'Framer Motion', 'Figma', 'Lighthouse', 'WCAG 2.1'],
-    startingPrice: '$800',
-    typicalRange: '$3,000-$4,000',
+    startingPrice: '$250',
+    typicalRange: '$1,000-$1,300',
     pricingPlans: [
       {
-        name: 'Basic',
-        price: 'Starting at $400',
-        description: 'UI refresh for existing sites',
-        features: [
-          'Mobile responsive design',
-          'Modern UI components & animations',
-          'Basic accessibility fixes',
-          '2-3 initial design concepts',
-          'Color palette & typography guide',
-          'Stock image sourcing & mobile mockups',
-          'Design files handoff & training'
-        ],
-        revisions: '2 rounds',
-        meetings: '2 design reviews',
-        timeline: '1-2 weeks',
-        support: '30 days post-launch'
-      },
-      {
-        name: 'Business',
-        price: 'Starting at $750',
+        name: 'Professional Makeover',
+        price: 'Starting at $250',
         description: 'Complete UI/UX redesign',
         features: [
           'Full mobile-first redesign',
@@ -215,8 +179,8 @@ export const servicesData: ServiceData[] = [
         recommended: true
       },
       {
-        name: 'Premium',
-        price: 'Starting at $1,800',
+        name: 'Strategic Design Excellence',
+        price: 'Starting at $600',
         description: 'Complete UX overhaul with research',
         features: [
           'User research & persona development',
@@ -266,30 +230,12 @@ export const servicesData: ServiceData[] = [
       'Maintenance guide'
     ],
     technologies: ['Python', 'BeautifulSoup', 'Selenium', 'Pandas', 'PostgreSQL', 'AWS Lambda', 'Airflow'],
-    startingPrice: '$1,000',
-    typicalRange: '$4,000-$5,000',
+    startingPrice: '$320',
+    typicalRange: '$1,300-$1,700',
     pricingPlans: [
       {
-        name: 'Basic',
-        price: 'Starting at $500',
-        description: 'Simple web scraping & data collection',
-        features: [
-          'Single source data scraping',
-          'Basic data cleaning & validation',
-          'CSV/JSON export formats',
-          'Simple scheduling & automation',
-          'Error notifications & logging',
-          'Data dictionary & sample preview',
-          'Training & source code ownership'
-        ],
-        revisions: '2 rounds',
-        meetings: '2 technical meetings',
-        timeline: '1-2 weeks',
-        support: '30 days post-delivery'
-      },
-      {
-        name: 'Business',
-        price: 'Starting at $950',
+        name: 'Smart Data Hub',
+        price: 'Starting at $320',
         description: 'Multi-source ETL pipeline',
         features: [
           'Multiple data sources integration',
@@ -313,8 +259,8 @@ export const servicesData: ServiceData[] = [
         recommended: true
       },
       {
-        name: 'Premium',
-        price: 'Starting at $2,200',
+        name: 'Data Intelligence Suite',
+        price: 'Starting at $750',
         description: 'Complex data ecosystem with ML',
         features: [
           'Unlimited data sources integration',
@@ -364,30 +310,12 @@ export const servicesData: ServiceData[] = [
       'Maintenance documentation'
     ],
     technologies: ['Python', 'OpenAI API', 'Anthropic Claude', 'LangChain', 'Node.js', 'REST APIs'],
-    startingPrice: '$1,200',
-    typicalRange: '$5,000-$6,000',
+    startingPrice: '$400',
+    typicalRange: '$1,700-$2,000',
     pricingPlans: [
       {
-        name: 'Basic',
-        price: 'Starting at $600',
-        description: 'Basic AI integration',
-        features: [
-          'Single AI workflow integration',
-          'Custom prompt engineering & optimization',
-          'API integration & error handling',
-          'Usage monitoring & cost tracking',
-          'Prompt library & documentation',
-          'Fallback strategies & testing results',
-          'Training & source code ownership'
-        ],
-        revisions: '2 rounds',
-        meetings: '3 implementation meetings',
-        timeline: '2-3 weeks',
-        support: '30 days post-launch'
-      },
-      {
-        name: 'Business',
-        price: 'Starting at $1,150',
+        name: 'Intelligent Work Assistant',
+        price: 'Starting at $400',
         description: 'Multi-step AI automation',
         features: [
           'Complex workflow orchestration',
@@ -411,8 +339,8 @@ export const servicesData: ServiceData[] = [
         recommended: true
       },
       {
-        name: 'Premium',
-        price: 'Starting at $2,600',
+        name: 'AI Transformation Suite',
+        price: 'Starting at $900',
         description: 'Advanced AI ecosystem',
         features: [
           'Multi-agent systems & orchestration',
@@ -461,30 +389,12 @@ export const servicesData: ServiceData[] = [
       'Performance monitoring setup'
     ],
     technologies: ['Lighthouse', 'WebPageTest', 'Chrome DevTools', 'Cloudflare', 'Vercel', 'Webpack'],
-    startingPrice: '$800',
-    typicalRange: '$2,500-$3,500',
+    startingPrice: '$250',
+    typicalRange: '$850-$1,200',
     pricingPlans: [
       {
-        name: 'Basic',
-        price: 'Starting at $400',
-        description: 'Basic performance audit & fixes',
-        features: [
-          'Lighthouse audit & performance report',
-          'Image optimization & compression tools',
-          'Basic code splitting & minification',
-          'Core Web Vitals tracking setup',
-          'Before/after metrics report',
-          'Specific recommendations list',
-          'Training & source code ownership'
-        ],
-        revisions: '2 rounds',
-        meetings: '2 review meetings',
-        timeline: '1-2 weeks',
-        support: '30 days post-delivery'
-      },
-      {
-        name: 'Business',
-        price: 'Starting at $750',
+        name: 'Performance Excellence',
+        price: 'Starting at $250',
         description: 'Comprehensive optimization',
         features: [
           'Deep performance analysis',
@@ -507,8 +417,8 @@ export const servicesData: ServiceData[] = [
         recommended: true
       },
       {
-        name: 'Premium',
-        price: 'Starting at $1,600',
+        name: 'Peak Performance System',
+        price: 'Starting at $550',
         description: 'Full-stack performance overhaul',
         features: [
           'Backend & database optimization',
@@ -557,30 +467,12 @@ export const servicesData: ServiceData[] = [
       'Monitoring dashboard'
     ],
     technologies: ['Node.js', 'Express', 'REST', 'GraphQL', 'JWT', 'OAuth', 'Postman', 'Swagger'],
-    startingPrice: '$1,000',
-    typicalRange: '$4,000-$5,000',
+    startingPrice: '$320',
+    typicalRange: '$1,300-$1,700',
     pricingPlans: [
       {
-        name: 'Basic',
-        price: 'Starting at $500',
-        description: 'Basic API development',
-        features: [
-          'Up to 10 API endpoints',
-          'Basic authentication & error handling',
-          'JSON response format',
-          'Interactive API documentation',
-          'Postman collection & example payloads',
-          'Error code reference guide',
-          'Training & source code ownership'
-        ],
-        revisions: '2 rounds',
-        meetings: '3 technical meetings',
-        timeline: '2-3 weeks',
-        support: '30 days post-launch'
-      },
-      {
-        name: 'Business',
-        price: 'Starting at $950',
+        name: 'Connected Platform',
+        price: 'Starting at $320',
         description: 'Full API ecosystem',
         features: [
           'Unlimited API endpoints',
@@ -604,8 +496,8 @@ export const servicesData: ServiceData[] = [
         recommended: true
       },
       {
-        name: 'Premium',
-        price: 'Starting at $2,200',
+        name: 'Enterprise Integration Hub',
+        price: 'Starting at $750',
         description: 'Advanced API infrastructure',
         features: [
           'GraphQL API & microservices architecture',

@@ -8,12 +8,13 @@ export default function Projects() {
       tech: "TypeScript, React, Vite, TailwindCSS, Node.js, PostgreSQL, Auth0, Plaid API",
       period: "Oct 2024",
       description: [
-        "Won 1st Place at HackUTA 2024 for Best Use of AI - Built credit card optimizer that helped users maximize rewards by analyzing spending patterns across 15+ cards and 30+ categories",
+        "Built credit card optimizer that helped users maximize rewards by analyzing spending patterns across 15+ cards and 30+ categories",
         "Reduced API latency by 40% through strategic response caching, enabling real-time recommendations powered by Google Gemini AI with 95% accuracy rate",
         "Integrated Plaid API for secure bank connections and Auth0 authentication, handling 1000+ test transactions with zero security incidents during demo"
       ],
       github: "Tec94/hack-uta",
       demoUrl: "https://hack-uta.vercel.app/",
+      screenshot: "/screenshots/credify.png",
       metrics: [
         { label: "Credit Cards", value: "15" },
         { label: "Categories", value: "30+" },
@@ -31,6 +32,7 @@ export default function Projects() {
       ],
       github: "Tec94/Hack-Rice",
       demoUrl: "https://hack-rice-nine.vercel.app/",
+      screenshot: "/screenshots/citizenvoice.png",
       metrics: [
         { label: "Features", value: "3" },
         { label: "DB Tables", value: "8+" },
@@ -48,6 +50,7 @@ export default function Projects() {
       ],
       github: "Tec94/smartnest",
       demoUrl: "https://smartnest.health/",
+      screenshot: "/screenshots/smartnest.png",
       metrics: [
         { label: "Load Time", value: "0.8s" },
         { label: "Lighthouse", value: "95" },
@@ -66,6 +69,7 @@ export default function Projects() {
       github: "Tec94/stock-tracker",
       demoUrl: "https://stock-tracker-41285.bubbleapps.io/version-test",
       bubbleDesignUrl: "https://bubble.io/page?id=stock-tracker-41285&tab=Design&name=index",
+      screenshot: "/screenshots/stock-tracker.png",
       metrics: [
         { label: "Data Points", value: "50K+" },
         { label: "Update Rate", value: "<2s" },
@@ -83,6 +87,7 @@ export default function Projects() {
       ],
       github: "Tec94/munky-sol",
       demoUrl: "https://munky-sol.vercel.app/",
+      screenshot: "/screenshots/munky.png",
       metrics: [
         { label: "Peak Volume", value: "$2M" },
         { label: "Growth", value: "+20%" },
