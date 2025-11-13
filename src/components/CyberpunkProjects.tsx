@@ -19,6 +19,7 @@ interface Project {
   demoUrl?: string;
   bubbleDesignUrl?: string;
   screenshot?: string;
+  screenshots?: string[]; // NEW: Multiple screenshots for carousel
   metrics?: {
     label: string;
     value: string;
@@ -33,11 +34,27 @@ export default function CyberpunkProjects({ projects }: CyberpunkProjectsProps) 
   const [activeIndex, setActiveIndex] = useState(0);
   const [direction, setDirection] = useState(0);
   const [expandedDescription, setExpandedDescription] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  // Reset expanded description when project changes
+  // Reset expanded description and image index when project changes
   useEffect(() => {
     setExpandedDescription(false);
+    setCurrentImageIndex(0);
   }, [activeIndex]);
+
+  // Auto-advance images in carousel
+  useEffect(() => {
+    const activeProject = projects[activeIndex];
+    const images = activeProject.screenshots || (activeProject.screenshot ? [activeProject.screenshot] : []);
+    
+    if (images.length <= 1) return; // Don't auto-advance if only one image
+
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % images.length);
+    }, 3000); // Change image every 3 seconds
+
+    return () => clearInterval(interval);
+  }, [activeIndex, projects]);
 
   // Keyboard navigation
   useEffect(() => {
@@ -143,53 +160,89 @@ export default function CyberpunkProjects({ projects }: CyberpunkProjectsProps) 
                 <div className="relative h-[250px] md:h-full w-full bg-black border border-green-500/30 rounded overflow-hidden group flex flex-col">
                   {/* Preview area - grows to fill space above stats */}
                   <div className="relative flex-1 overflow-hidden">
-                    {/* Screenshot if available, otherwise iframe */}
-                    {activeProject.screenshot ? (
-                      <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
-                        <img
-                          src={activeProject.screenshot}
-                          alt={`${activeProject.title} screenshot`}
-                          className="w-full h-full object-cover object-top"
-                          loading="lazy"
-                        />
-                      </div>
-                    ) : activeProject.demoUrl && (
-                      <div className="absolute inset-0 flex items-start justify-center overflow-hidden">
-                        <iframe
-                          src={activeProject.demoUrl}
-                          className="absolute top-0 left-1/2 -translate-x-1/2"
-                          title={`${activeProject.title} preview`}
-                          loading="lazy"
-                          sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
-                          onError={(e) => {
-                            const iframe = e.target as HTMLIFrameElement;
-                            iframe.style.display = 'none';
-                            const fallback = iframe.parentElement?.querySelector('.iframe-fallback');
-                            if (fallback) (fallback as HTMLElement).style.display = 'flex';
-                          }}
-                          style={{
-                            width: '1440px',
-                            height: '1200px',
-                            transform: 'translateX(-50%) scale(0.4)',
-                            transformOrigin: 'top center',
-                            border: 'none',
-                            pointerEvents: 'none'
-                          }}
-                        />
-                        {/* Fallback for broken iframe */}
-                        <div className="iframe-fallback hidden absolute inset-0 flex-col items-center justify-center bg-black/90 border border-green-500/30">
-                          <p className="text-green-400 font-mono text-sm mb-4">Preview unavailable</p>
-                          <a
-                            href={activeProject.demoUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="px-4 py-2 border border-green-500/60 rounded bg-green-500/20 text-green-300 font-mono hover:bg-green-500/30 transition-all"
-                          >
-                            Visit Live Site
-                          </a>
+                    {/* Screenshot(s) if available, otherwise iframe */}
+                    {(() => {
+                      const images = activeProject.screenshots || (activeProject.screenshot ? [activeProject.screenshot] : []);
+                      
+                      if (images.length > 0) {
+                        return (
+                          <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
+                            <AnimatePresence mode="wait">
+                              <motion.img
+                                key={currentImageIndex}
+                                src={images[currentImageIndex]}
+                                alt={`${activeProject.title} screenshot ${currentImageIndex + 1}`}
+                                className="w-full h-full object-cover object-top"
+                                loading="lazy"
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                transition={{ duration: 0.5 }}
+                              />
+                            </AnimatePresence>
+                            
+                            {/* Image indicators - only show if multiple images */}
+                            {images.length > 1 && (
+                              <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5 z-30 bg-black/60 backdrop-blur-sm px-2 py-1 rounded-full">
+                                {images.map((_, idx) => (
+                                  <button
+                                    key={idx}
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      setCurrentImageIndex(idx);
+                                    }}
+                                    className={`h-1.5 rounded-full transition-all ${
+                                      idx === currentImageIndex ? 'w-6 bg-green-400' : 'w-1.5 bg-green-600/40 hover:bg-green-500/60'
+                                    }`}
+                                    style={{
+                                      boxShadow: idx === currentImageIndex ? '0 0 8px rgba(0, 255, 0, 0.6)' : 'none',
+                                    }}
+                                  />
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                        );
+                      }
+                      
+                      return activeProject.demoUrl ? (
+                        <div className="absolute inset-0 flex items-start justify-center overflow-hidden">
+                          <iframe
+                            src={activeProject.demoUrl}
+                            className="absolute top-0 left-1/2 -translate-x-1/2"
+                            title={`${activeProject.title} preview`}
+                            loading="lazy"
+                            sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+                            onError={(e) => {
+                              const iframe = e.target as HTMLIFrameElement;
+                              iframe.style.display = 'none';
+                              const fallback = iframe.parentElement?.querySelector('.iframe-fallback');
+                              if (fallback) (fallback as HTMLElement).style.display = 'flex';
+                            }}
+                            style={{
+                              width: '1440px',
+                              height: '1200px',
+                              transform: 'translateX(-50%) scale(0.4)',
+                              transformOrigin: 'top center',
+                              border: 'none',
+                              pointerEvents: 'none'
+                            }}
+                          />
+                          {/* Fallback for broken iframe */}
+                          <div className="iframe-fallback hidden absolute inset-0 flex-col items-center justify-center bg-black/90 border border-green-500/30">
+                            <p className="text-green-400 font-mono text-sm mb-4">Preview unavailable</p>
+                            <a
+                              href={activeProject.demoUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="px-4 py-2 border border-green-500/60 rounded bg-green-500/20 text-green-300 font-mono hover:bg-green-500/30 transition-all"
+                            >
+                              Visit Live Site
+                            </a>
+                          </div>
                         </div>
-                      </div>
-                    )}
+                      ) : null;
+                    })()}
 
                     {/* Scanlines effect overlay */}
                     <div className="absolute inset-0 pointer-events-none"

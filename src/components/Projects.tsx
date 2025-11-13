@@ -14,7 +14,14 @@ export default function Projects() {
       ],
       github: "Tec94/hack-uta",
       demoUrl: "https://hack-uta.vercel.app/",
-      screenshot: "/screenshots/credify.png",
+      screenshots: [
+        "/screenshots/credify-landing-page.png",
+        "/screenshots/credify-budget-manager.png",
+        "/screenshots/credify-cards.png",
+        "/screenshots/credify-transfer.png",
+        "/screenshots/credify-settings.png",
+        "/screenshots/credify-wallet.png"
+      ],
       metrics: [
         { label: "Credit Cards", value: "15" },
         { label: "Categories", value: "30+" },
@@ -32,7 +39,7 @@ export default function Projects() {
       ],
       github: "Tec94/Hack-Rice",
       demoUrl: "https://hack-rice-nine.vercel.app/",
-      screenshot: "/screenshots/citizenvoice.png",
+      screenshot: "/screenshots/citizen-voice-gif.gif",
       metrics: [
         { label: "Features", value: "3" },
         { label: "DB Tables", value: "8+" },
@@ -50,7 +57,7 @@ export default function Projects() {
       ],
       github: "Tec94/smartnest",
       demoUrl: "https://smartnest.health/",
-      screenshot: "/screenshots/smartnest.png",
+      screenshot: "/screenshots/smartnest-gif.gif",
       metrics: [
         { label: "Load Time", value: "0.8s" },
         { label: "Lighthouse", value: "95" },

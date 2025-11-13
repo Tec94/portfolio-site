@@ -2,24 +2,67 @@
 
 This directory contains screenshots for the project cards displayed on the portfolio website.
 
-## Required Screenshots
+## 🎉 NEW: Multiple Images Support!
 
-Please add the following screenshot files to this directory:
+You can now show multiple screenshots per project with automatic carousel! [See full guide](../../MULTIPLE_IMAGES_GUIDE.md)
 
-1. `credify.png` - Screenshot of the Credify project
-2. `citizenvoice.png` - Screenshot of the CitizenVoice project
-3. `smartnest.png` - Screenshot of the Smartnest project
-4. `stock-tracker.png` - Screenshot of the Stock Tracker project
-5. `munky.png` - Screenshot of the $Munky project
+## Screenshot Options
+
+### Option 1: Single Screenshot (Simple)
+```
+credify.png
+citizenvoice.png
+smartnest.png
+stock-tracker.png
+munky.png
+```
+
+### Option 2: Multiple Screenshots (Recommended)
+```
+credify-1-landing.png
+credify-2-signup.png
+credify-3-dashboard.png
+credify-4-features.png
+
+citizenvoice-1-home.png
+citizenvoice-2-map.png
+citizenvoice-3-proposals.png
+
+smartnest-1-home.png
+smartnest-2-services.png
+smartnest-3-booking.png
+
+stock-tracker-1-dashboard.png
+stock-tracker-2-portfolio.png
+stock-tracker-3-analysis.png
+
+munky-1-landing.png
+munky-2-tokenomics.png
+munky-3-community.png
+```
+
+### Option 3: Animated GIF
+```
+credify-demo.gif
+citizenvoice-demo.gif
+smartnest-demo.gif
+stock-tracker-demo.gif
+munky-demo.gif
+```
 
 ## Recommendations
 
-- **Format**: PNG or JPG
+- **Format**: PNG for screenshots, WebP for smaller sizes, GIF for animations
 - **Dimensions**: Recommended minimum width of 1200px for best quality
 - **Aspect Ratio**: 16:9 or similar landscape orientation works best
-- **Content**: Capture the main landing page or most representative view of each project
+- **Multiple Images**: Capture 3-5 different views (landing, dashboard, key features, mobile view)
 - **Quality**: Use high-quality screenshots with clear, readable text
+- **File Size**: Keep PNGs under 500KB each, GIFs under 5MB
 
 ## How It Works
 
-The screenshots will automatically display in the project cards on the website. If a screenshot is not available, the system will fall back to showing an iframe preview of the live website.
+- **Single image**: Just displays the screenshot
+- **Multiple images**: Auto-rotates every 3 seconds with manual navigation dots
+- **No images**: Falls back to iframe preview of the live website
+
+See the [full implementation guide](../../MULTIPLE_IMAGES_GUIDE.md) for detailed instructions!
