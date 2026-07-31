@@ -1,71 +1,63 @@
-import React, { useEffect, lazy, Suspense } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Suspense } from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
+import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { BackgroundProvider } from './contexts/BackgroundContext';
 import { StatsigWrapper } from './contexts/StatsigContext';
 import Scanlines from './components/Scanlines';
-import Portfolio from './components/Portfolio';
 import ErrorBoundary from './components/ErrorBoundary';
-import { motion } from 'framer-motion';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
-import { Analytics } from '@vercel/analytics/react';
-import { SpeedInsights } from '@vercel/speed-insights/react';
+import CustomCursorManager from './components/CustomCursorManager';
+import { lazyWithRetry } from './lib/lazyWithRetry';
 
 // Lazy load components for better performance
-const ServiceDetailPage = lazy(() => import('./pages/ServiceDetailPage'));
-const NotFound = lazy(() => import('./pages/NotFound'));
+const Portfolio = lazyWithRetry(() => import('./components/Portfolio'), 'classic');
+const PaymentDemoPage = lazyWithRetry(() => import('./pages/PaymentDemoPage'), 'payment');
+const ServiceDetailPage = lazyWithRetry(() => import('./pages/ServiceDetailPage'), 'service-detail');
+const NotFound = lazyWithRetry(() => import('./pages/NotFound'), 'not-found');
+const V2Layout = lazyWithRetry(() => import('./components/v2/V2Layout'), 'v2-layout');
+const ProjectsPage = lazyWithRetry(() => import('./components/v2/ProjectsPage'), 'projects');
+const ServicesPage = lazyWithRetry(() => import('./components/v2/ServicesPage'), 'services');
+const AboutPage = lazyWithRetry(() => import('./components/v2/AboutPage'), 'about');
+const ContactPage = lazyWithRetry(() => import('./components/v2/ContactPage'), 'contact');
+const enableVercelInsights = Boolean(import.meta.env.VITE_VERCEL_ENV);
 
-// Loading component
 const LoadingScreen = () => (
-  <div className="min-h-screen bg-black flex items-center justify-center">
-    <div className="text-center">
-      <motion.div
-        className="w-16 h-16 border-4 border-green-400 border-t-transparent rounded-full mx-auto mb-4"
-        animate={{ rotate: 360 }}
-        transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-      />
-      <p className="text-green-400 font-mono text-sm">Loading...</p>
-    </div>
+  <div className="v2-loading" role="status" aria-busy="true">
+    <span className="v2-loading-mark">JC</span>
+    <span>Loading portfolio</span>
   </div>
 );
 
 function AppContent() {
-  useEffect(() => {
-    AOS.init({
-      duration: 800,
-      once: true,
-      offset: 120,
-      delay: 50,
-      easing: 'ease-out-cubic',
-      mirror: false,
-      anchorPlacement: 'top-bottom',
-    });
-
-    AOS.refresh();
-  }, []);
-
+  const location = useLocation();
+  const isPaymentRoute = location.pathname === '/payment';
+  const isClassicRoute =
+    location.pathname === '/classic' || location.pathname.startsWith('/services/');
   return (
     <div className="min-h-screen transition-colors duration-300 relative">
-      {/* Skip to main content link for accessibility */}
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[9999] focus:px-6 focus:py-3 focus:bg-cyan-500 focus:text-black focus:font-mono focus:font-bold focus:rounded-lg focus:shadow-[0_0_20px_rgba(34,211,238,0.8)]"
+        className="v2-skip-link"
       >
         Skip to main content
       </a>
 
-      {/* Black background layer */}
-      <div className="fixed inset-0 bg-black -z-50" />
+      {!isPaymentRoute ? <div className="fixed inset-0 bg-black -z-50" /> : null}
 
-      {/* Layered background effects */}
-      <Scanlines />
+      {isClassicRoute ? <Scanlines /> : null}
 
-      {/* Routes */}
       <Suspense fallback={<LoadingScreen />}>
         <Routes>
-          <Route path="/" element={<Portfolio />} />
+          <Route element={<V2Layout />}>
+            <Route path="/" element={<ProjectsPage />} />
+            <Route path="/services" element={<ServicesPage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/contact" element={<ContactPage />} />
+          </Route>
+          <Route path="/classic" element={<Portfolio />} />
           <Route path="/services/:slug" element={<ServiceDetailPage />} />
+          <Route path="/payment" element={<PaymentDemoPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
@@ -79,9 +71,10 @@ function App() {
       <StatsigWrapper>
         <ThemeProvider>
           <BackgroundProvider>
+            <CustomCursorManager />
             <AppContent />
-            <Analytics />
-            <SpeedInsights />
+            {enableVercelInsights ? <Analytics /> : null}
+            {enableVercelInsights ? <SpeedInsights /> : null}
           </BackgroundProvider>
         </ThemeProvider>
       </StatsigWrapper>

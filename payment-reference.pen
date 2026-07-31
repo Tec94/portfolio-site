@@ -1,0 +1,2282 @@
+{
+  "version": "2.11",
+  "children": [
+    {
+      "type": "frame",
+      "id": "paymentRef",
+      "x": 0,
+      "y": 0,
+      "name": "Payment Reference",
+      "clip": true,
+      "width": 4096,
+      "height": 2458,
+      "layout": "none",
+      "children": [
+        {
+          "type": "rectangle",
+          "id": "paymentRefImage",
+          "x": 0,
+          "y": 0,
+          "fill": {
+            "type": "image",
+            "enabled": true,
+            "url": "./public/payment-design.jpg",
+            "mode": "stretch"
+          },
+          "width": 4096,
+          "height": 2458
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "paymentBuild",
+      "x": 4400,
+      "y": 0,
+      "name": "Payment Build",
+      "clip": true,
+      "width": 4096,
+      "height": 2458,
+      "fill": [
+        {
+          "type": "gradient",
+          "gradientType": "radial",
+          "enabled": true,
+          "rotation": 0,
+          "size": {
+            "width": 1.2,
+            "height": 0.82
+          },
+          "colors": [
+            {
+              "color": "#FFFFFF",
+              "position": 0
+            },
+            {
+              "color": "#F6F2EC",
+              "position": 1
+            }
+          ],
+          "center": {
+            "y": 0.08
+          }
+        },
+        {
+          "type": "gradient",
+          "gradientType": "radial",
+          "enabled": true,
+          "opacity": 0.26,
+          "rotation": 0,
+          "size": {
+            "width": 1.28,
+            "height": 0.92
+          },
+          "colors": [
+            {
+              "color": "#E8DED100",
+              "position": 0.12
+            },
+            {
+              "color": "#E8DED1",
+              "position": 1
+            }
+          ],
+          "center": {
+            "y": 0.68
+          }
+        }
+      ],
+      "stroke": {
+        "align": "inside",
+        "thickness": 0,
+        "fill": "#00000000"
+      },
+      "effect": {
+        "type": "shadow",
+        "shadowType": "outer",
+        "color": "#00000040",
+        "offset": {
+          "x": 0,
+          "y": 4
+        },
+        "blur": 4
+      },
+      "layout": "none",
+      "children": [
+        {
+          "type": "frame",
+          "id": "NILPe",
+          "x": 220,
+          "y": 372,
+          "name": "payment-shell",
+          "clip": true,
+          "width": 3656,
+          "height": 1740,
+          "cornerRadius": [
+            86,
+            86,
+            28,
+            86
+          ],
+          "stroke": {
+            "align": "inside",
+            "thickness": 2,
+            "fill": "#cdccd1"
+          },
+          "effect": {
+            "type": "shadow",
+            "shadowType": "outer",
+            "color": "#00000040",
+            "offset": {
+              "x": 0,
+              "y": 4
+            },
+            "blur": 4
+          },
+          "layout": "none",
+          "children": [
+            {
+              "type": "rectangle",
+              "cornerRadius": 74,
+              "id": "B2aAo",
+              "x": 26,
+              "y": 26,
+              "name": "payment-shell-outline",
+              "fill": "#f6f6f8",
+              "width": 3604,
+              "height": 1688,
+              "stroke": {
+                "align": "inside",
+                "thickness": 2,
+                "fill": "#E4DDD7"
+              }
+            },
+            {
+              "type": "frame",
+              "id": "oD7vo",
+              "x": 42,
+              "y": 42,
+              "name": "payment-left-panel",
+              "width": 1264,
+              "height": 1640,
+              "fill": "#f6f6f8",
+              "cornerRadius": [
+                56,
+                28,
+                28,
+                56
+              ],
+              "stroke": {
+                "align": "inside",
+                "thickness": 2
+              },
+              "layout": "vertical",
+              "padding": [
+                74,
+                92,
+                54,
+                92
+              ],
+              "justifyContent": "space_between",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "bFOym",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "BZMfc",
+                      "width": 92,
+                      "height": 84,
+                      "layout": "none",
+                      "children": [
+                        {
+                          "type": "rectangle",
+                          "cornerRadius": 2,
+                          "id": "cLX1V",
+                          "x": 0,
+                          "y": 0,
+                          "fill": "#111111",
+                          "width": 14,
+                          "height": 42
+                        },
+                        {
+                          "type": "rectangle",
+                          "cornerRadius": 2,
+                          "id": "TDqZ5",
+                          "x": 0,
+                          "y": 28,
+                          "fill": "#111111",
+                          "width": 40,
+                          "height": 14
+                        },
+                        {
+                          "type": "rectangle",
+                          "cornerRadius": 2,
+                          "id": "gV0Xw",
+                          "x": 26,
+                          "y": 28,
+                          "fill": "#111111",
+                          "width": 18,
+                          "height": 56
+                        },
+                        {
+                          "type": "rectangle",
+                          "cornerRadius": 2,
+                          "id": "EnjZw",
+                          "x": 48,
+                          "y": 32,
+                          "fill": "#111111",
+                          "width": 18,
+                          "height": 52
+                        },
+                        {
+                          "type": "rectangle",
+                          "cornerRadius": 2,
+                          "id": "30Ew2",
+                          "x": 48,
+                          "y": 32,
+                          "fill": "#111111",
+                          "width": 44,
+                          "height": 16
+                        },
+                        {
+                          "type": "rectangle",
+                          "cornerRadius": 2,
+                          "id": "6iz1j",
+                          "x": 48,
+                          "y": 50,
+                          "fill": "#111111",
+                          "width": 44,
+                          "height": 16
+                        },
+                        {
+                          "type": "rectangle",
+                          "cornerRadius": 2,
+                          "id": "O2oM2",
+                          "x": 78,
+                          "y": 32,
+                          "fill": "#111111",
+                          "width": 14,
+                          "height": 52
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "Pfv3R",
+                      "width": 1,
+                      "height": 100,
+                      "layout": "none"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "3wDht",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "WTQ6q",
+                          "fill": "#16224A",
+                          "content": "Build your own\ndesign package",
+                          "lineHeight": 0.93,
+                          "fontFamily": "Avenir Next, SF Pro Display, Helvetica Neue, Segoe UI, Arial, sans-serif",
+                          "fontSize": 124,
+                          "fontWeight": "700",
+                          "letterSpacing": -8
+                        },
+                        {
+                          "type": "frame",
+                          "id": "iaXan",
+                          "width": 1,
+                          "height": 34,
+                          "layout": "none"
+                        },
+                        {
+                          "type": "text",
+                          "id": "H8oR8",
+                          "fill": "#6A6F79",
+                          "textGrowth": "fixed-width",
+                          "width": 1075,
+                          "content": "Pay only for what you need, to get your project up and running.\nI'll handle the rest.",
+                          "lineHeight": 1.45,
+                          "fontFamily": "Avenir Next, SF Pro Display, Helvetica Neue, Segoe UI, Arial, sans-serif",
+                          "fontSize": 37,
+                          "fontWeight": "500",
+                          "letterSpacing": -1
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "hcyJM",
+                      "width": 1,
+                      "height": 62,
+                      "layout": "none"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "KIwgY",
+                      "width": "fill_container",
+                      "fill": "#F1ECE7",
+                      "cornerRadius": 42,
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 2,
+                        "fill": "#E8E1DB"
+                      },
+                      "layout": "vertical",
+                      "gap": 16,
+                      "padding": [
+                        18,
+                        6,
+                        6,
+                        6
+                      ],
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "E1gzW",
+                          "width": "fill_container",
+                          "padding": [
+                            14,
+                            30
+                          ],
+                          "justifyContent": "space_between",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "fwQSm",
+                              "fill": "#666A74",
+                              "content": "Your selection",
+                              "fontFamily": "Avenir Next, SF Pro Display, Helvetica Neue, Segoe UI, Arial, sans-serif",
+                              "fontSize": 30,
+                              "fontWeight": "500",
+                              "letterSpacing": -1
+                            },
+                            {
+                              "type": "text",
+                              "id": "asoOx",
+                              "name": "✏️",
+                              "fill": "#676A74",
+                              "content": "✎",
+                              "fontFamily": "Segoe UI Symbol, Arial, sans-serif",
+                              "fontSize": 34,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "dDCmZ",
+                          "width": "fill_container",
+                          "fill": "#FFFDFA",
+                          "cornerRadius": 34,
+                          "stroke": {
+                            "align": "inside",
+                            "thickness": 2,
+                            "fill": "#ECE7E2"
+                          },
+                          "effect": {
+                            "type": "shadow",
+                            "shadowType": "outer",
+                            "color": "#1F1E2409",
+                            "offset": {
+                              "x": 0,
+                              "y": 12
+                            },
+                            "blur": 26
+                          },
+                          "layout": "vertical",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "oNxJX",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": 16,
+                              "padding": [
+                                30,
+                                30,
+                                24,
+                                30
+                              ],
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "SzPbb",
+                                  "width": "fill_container",
+                                  "justifyContent": "space_between",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "frame",
+                                      "id": "TcJcy",
+                                      "gap": 20,
+                                      "alignItems": "center",
+                                      "children": [
+                                        {
+                                          "type": "frame",
+                                          "id": "NvzuE",
+                                          "width": 32,
+                                          "height": 32,
+                                          "layout": "none",
+                                          "children": [
+                                            {
+                                              "type": "rectangle",
+                                              "cornerRadius": 4,
+                                              "id": "AvuJL",
+                                              "x": 3,
+                                              "y": 7,
+                                              "fill": "#00000000",
+                                              "width": 24,
+                                              "height": 16,
+                                              "stroke": {
+                                                "align": "inside",
+                                                "thickness": 2,
+                                                "fill": "#636772"
+                                              }
+                                            },
+                                            {
+                                              "type": "rectangle",
+                                              "id": "URWPA",
+                                              "x": 7,
+                                              "y": 11,
+                                              "fill": "#636772",
+                                              "width": 16,
+                                              "height": 2
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "type": "text",
+                                          "id": "LVCVq",
+                                          "fill": "#191D25",
+                                          "content": "MVP sprint",
+                                          "fontFamily": "Avenir Next, SF Pro Display, Helvetica Neue, Segoe UI, Arial, sans-serif",
+                                          "fontSize": 44,
+                                          "fontWeight": "700",
+                                          "letterSpacing": -2
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "type": "frame",
+                                      "id": "0sflq",
+                                      "width": 463,
+                                      "gap": 16,
+                                      "justifyContent": "end",
+                                      "alignItems": "center",
+                                      "children": [
+                                        {
+                                          "type": "frame",
+                                          "id": "E9Xpm",
+                                          "width": 36,
+                                          "height": 36,
+                                          "fill": "#7F818A",
+                                          "cornerRadius": 18,
+                                          "justifyContent": "center",
+                                          "children": [
+                                            {
+                                              "type": "text",
+                                              "id": "kUbEh",
+                                              "fill": "#FFFFFF",
+                                              "textGrowth": "fixed-width-height",
+                                              "width": 12,
+                                              "height": "fit_content(24)",
+                                              "content": "–",
+                                              "textAlign": "center",
+                                              "fontFamily": "Arial, sans-serif",
+                                              "fontSize": 22,
+                                              "fontWeight": "700"
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "type": "frame",
+                                          "id": "tUGRg",
+                                          "width": 90,
+                                          "height": 55,
+                                          "fill": "#FFFFFF",
+                                          "cornerRadius": 14,
+                                          "stroke": {
+                                            "align": "inside",
+                                            "thickness": 2,
+                                            "fill": "#EDE9E5"
+                                          },
+                                          "effect": {
+                                            "type": "shadow",
+                                            "shadowType": "outer",
+                                            "color": "#1218260A",
+                                            "offset": {
+                                              "x": 0,
+                                              "y": 8
+                                            },
+                                            "blur": 18
+                                          },
+                                          "justifyContent": "center",
+                                          "alignItems": "center",
+                                          "children": [
+                                            {
+                                              "type": "text",
+                                              "id": "Lra33",
+                                              "fill": "#151922",
+                                              "content": "3",
+                                              "fontFamily": "Avenir Next, SF Pro Display, Helvetica Neue, Segoe UI, Arial, sans-serif",
+                                              "fontSize": 40,
+                                              "fontWeight": "600"
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "type": "frame",
+                                          "id": "KpnlY",
+                                          "width": 36,
+                                          "height": 36,
+                                          "fill": "#7F818A",
+                                          "cornerRadius": 18,
+                                          "justifyContent": "center",
+                                          "alignItems": "center",
+                                          "children": [
+                                            {
+                                              "type": "text",
+                                              "id": "EZzSE",
+                                              "fill": "#FFFFFF",
+                                              "content": "+",
+                                              "fontFamily": "Arial, sans-serif",
+                                              "fontSize": 20,
+                                              "fontWeight": "700"
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "type": "frame",
+                                          "id": "57arW",
+                                          "width": 40,
+                                          "height": "fill_container",
+                                          "layout": "none"
+                                        },
+                                        {
+                                          "type": "text",
+                                          "id": "2UYkw",
+                                          "fill": "#141822",
+                                          "content": "$15,000",
+                                          "fontFamily": "Avenir Next, SF Pro Display, Helvetica Neue, Segoe UI, Arial, sans-serif",
+                                          "fontSize": 37,
+                                          "fontWeight": "700",
+                                          "letterSpacing": -2
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "rectangle",
+                                  "id": "Yct8W",
+                                  "fill": "#EFEBE7",
+                                  "width": "fill_container",
+                                  "height": 2
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "p4dAj",
+                                  "fill": "#767984",
+                                  "content": "Daily async updates • One-time purchase • Pre-defined scope",
+                                  "lineHeight": 1.4,
+                                  "fontFamily": "Avenir Next, SF Pro Display, Helvetica Neue, Segoe UI, Arial, sans-serif",
+                                  "fontSize": 30,
+                                  "fontWeight": "500",
+                                  "letterSpacing": -1
+                                }
+                              ]
+                            },
+                            {
+                              "type": "rectangle",
+                              "id": "1WT8w",
+                              "fill": "#EFEBE7",
+                              "width": "fill_container",
+                              "height": 2
+                            },
+                            {
+                              "type": "frame",
+                              "id": "2gUF9",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": 16,
+                              "padding": [
+                                30,
+                                30,
+                                24,
+                                30
+                              ],
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "pg2kC",
+                                  "width": "fill_container",
+                                  "justifyContent": "space_between",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "frame",
+                                      "id": "0UQaA",
+                                      "gap": 20,
+                                      "alignItems": "center",
+                                      "children": [
+                                        {
+                                          "type": "frame",
+                                          "id": "GMdVZ",
+                                          "width": 32,
+                                          "height": 32,
+                                          "layout": "none",
+                                          "children": [
+                                            {
+                                              "type": "path",
+                                              "id": "P7jy2",
+                                              "x": 2,
+                                              "y": 0,
+                                              "geometry": "M14 0l-14 18h10l-6 16 26-21h-12l6-13z",
+                                              "viewBox": [
+                                                0,
+                                                0,
+                                                30,
+                                                34
+                                              ],
+                                              "fill": "#636772",
+                                              "width": 28,
+                                              "height": 32
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "type": "text",
+                                          "id": "QZKjM",
+                                          "fill": "#191D25",
+                                          "content": "Hyper-fast delivery",
+                                          "fontFamily": "Avenir Next, SF Pro Display, Helvetica Neue, Segoe UI, Arial, sans-serif",
+                                          "fontSize": 44,
+                                          "fontWeight": "700",
+                                          "letterSpacing": -2
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "type": "frame",
+                                      "id": "Y6koU",
+                                      "width": 463,
+                                      "height": 55,
+                                      "gap": 16,
+                                      "justifyContent": "end",
+                                      "alignItems": "center",
+                                      "children": [
+                                        {
+                                          "type": "frame",
+                                          "id": "Yp2L4",
+                                          "width": 36,
+                                          "height": 36,
+                                          "fill": "#7F818A",
+                                          "cornerRadius": 18,
+                                          "justifyContent": "center",
+                                          "alignItems": "center",
+                                          "children": [
+                                            {
+                                              "type": "text",
+                                              "id": "29U0N",
+                                              "fill": "#FFFFFF",
+                                              "textGrowth": "fixed-width-height",
+                                              "width": 12,
+                                              "height": 24,
+                                              "content": "–",
+                                              "textAlign": "center",
+                                              "textAlignVertical": "bottom",
+                                              "fontFamily": "Arial, sans-serif",
+                                              "fontSize": 22,
+                                              "fontWeight": "700"
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "type": "frame",
+                                          "id": "Lp7CM",
+                                          "width": 90,
+                                          "height": 55,
+                                          "fill": "#FFFFFF",
+                                          "cornerRadius": 14,
+                                          "stroke": {
+                                            "align": "inside",
+                                            "thickness": 2,
+                                            "fill": "#EDE9E5"
+                                          },
+                                          "effect": {
+                                            "type": "shadow",
+                                            "shadowType": "outer",
+                                            "color": "#1218260A",
+                                            "offset": {
+                                              "x": 0,
+                                              "y": 8
+                                            },
+                                            "blur": 18
+                                          },
+                                          "justifyContent": "center",
+                                          "alignItems": "center",
+                                          "children": [
+                                            {
+                                              "type": "text",
+                                              "id": "rK8mn",
+                                              "fill": "#151922",
+                                              "content": "1",
+                                              "fontFamily": "Avenir Next, SF Pro Display, Helvetica Neue, Segoe UI, Arial, sans-serif",
+                                              "fontSize": 40,
+                                              "fontWeight": "600"
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "type": "frame",
+                                          "id": "ZRejg",
+                                          "width": 36,
+                                          "height": 36,
+                                          "fill": "#7F818A",
+                                          "cornerRadius": 18,
+                                          "justifyContent": "center",
+                                          "alignItems": "center",
+                                          "children": [
+                                            {
+                                              "type": "text",
+                                              "id": "NZE2i",
+                                              "fill": "#FFFFFF",
+                                              "content": "+",
+                                              "fontFamily": "Arial, sans-serif",
+                                              "fontSize": 20,
+                                              "fontWeight": "700"
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "type": "frame",
+                                          "id": "UgUTi",
+                                          "width": 40,
+                                          "height": "fill_container",
+                                          "layout": "none"
+                                        },
+                                        {
+                                          "type": "frame",
+                                          "id": "26l5c",
+                                          "gap": 4,
+                                          "alignItems": "end",
+                                          "children": [
+                                            {
+                                              "type": "text",
+                                              "id": "kG3h1",
+                                              "fill": "#141822",
+                                              "content": "$500",
+                                              "fontFamily": "Avenir Next, SF Pro Display, Helvetica Neue, Segoe UI, Arial, sans-serif",
+                                              "fontSize": 37,
+                                              "fontWeight": "700",
+                                              "letterSpacing": -2
+                                            },
+                                            {
+                                              "type": "text",
+                                              "id": "hwU8N",
+                                              "fill": "#6D7079",
+                                              "content": "/w",
+                                              "fontFamily": "Avenir Next, SF Pro Display, Helvetica Neue, Segoe UI, Arial, sans-serif",
+                                              "fontSize": 38,
+                                              "fontWeight": "500"
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "rectangle",
+                                  "id": "2hAea",
+                                  "fill": "#EFEBE7",
+                                  "width": "fill_container",
+                                  "height": 2
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "fTAlJ",
+                                  "fill": "#767984",
+                                  "content": "Highest priority turnaround • Paid weekly",
+                                  "lineHeight": 1.4,
+                                  "fontFamily": "Avenir Next, SF Pro Display, Helvetica Neue, Segoe UI, Arial, sans-serif",
+                                  "fontSize": 30,
+                                  "fontWeight": "500",
+                                  "letterSpacing": -1
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "eFWgT",
+                      "width": 1,
+                      "height": 36,
+                      "layout": "none"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "9k1DY",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 8,
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "BaYY0",
+                          "width": "fill_container",
+                          "justifyContent": "space_between",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "vcx8C",
+                              "fill": "#636771",
+                              "content": "Subtotal",
+                              "fontFamily": "Avenir Next, SF Pro Display, Helvetica Neue, Segoe UI, Arial, sans-serif",
+                              "fontSize": 37,
+                              "fontWeight": "500"
+                            },
+                            {
+                              "type": "text",
+                              "id": "JzpOk",
+                              "fill": "#161A23",
+                              "content": "$15,500",
+                              "fontFamily": "Avenir Next, SF Pro Display, Helvetica Neue, Segoe UI, Arial, sans-serif",
+                              "fontSize": 37,
+                              "fontWeight": "700"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "DmCTW",
+                          "width": "fill_container",
+                          "justifyContent": "space_between",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "b5YbF",
+                              "fill": "#636771",
+                              "content": "Taxes (6%)",
+                              "fontFamily": "Avenir Next, SF Pro Display, Helvetica Neue, Segoe UI, Arial, sans-serif",
+                              "fontSize": 37,
+                              "fontWeight": "500"
+                            },
+                            {
+                              "type": "text",
+                              "id": "8DSEB",
+                              "fill": "#161A23",
+                              "content": "$930",
+                              "fontFamily": "Avenir Next, SF Pro Display, Helvetica Neue, Segoe UI, Arial, sans-serif",
+                              "fontSize": 37,
+                              "fontWeight": "700"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "Kdg94",
+                      "width": 1,
+                      "height": 30,
+                      "layout": "none"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "Xf5Ms",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 28,
+                      "children": [
+                        {
+                          "type": "line",
+                          "id": "wgHb5",
+                          "width": "fill_container",
+                          "height": 1,
+                          "stroke": {
+                            "align": "center",
+                            "thickness": 4,
+                            "fill": "#DDD7D1"
+                          }
+                        },
+                        {
+                          "type": "frame",
+                          "id": "pCDhN",
+                          "width": "fill_container",
+                          "justifyContent": "space_between",
+                          "alignItems": "end",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "uPz7x",
+                              "fill": "#151923",
+                              "textGrowth": "fixed-width-height",
+                              "width": 305,
+                              "height": 54,
+                              "content": "To be paid today",
+                              "textAlignVertical": "middle",
+                              "fontFamily": "Avenir Next, SF Pro Display, Helvetica Neue, Segoe UI, Arial, sans-serif",
+                              "fontSize": 40,
+                              "fontWeight": "600",
+                              "letterSpacing": -1
+                            },
+                            {
+                              "type": "text",
+                              "id": "omLr3",
+                              "fill": "#11161D",
+                              "textGrowth": "fixed-width-height",
+                              "width": "fit_content(169)",
+                              "height": "fill_container",
+                              "content": "$16,430",
+                              "lineHeight": 1,
+                              "textAlignVertical": "middle",
+                              "fontFamily": "Avenir Next, SF Pro Display, Helvetica Neue, Segoe UI, Arial, sans-serif",
+                              "fontSize": 52,
+                              "fontWeight": "700",
+                              "letterSpacing": -4
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "dS2g0",
+                  "width": "fill_container",
+                  "gap": 6,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "yLNW7",
+                      "fill": "#B2B5BC",
+                      "content": "When subscribing, you agree to",
+                      "fontFamily": "Avenir Next, SF Pro Display, Helvetica Neue, Segoe UI, Arial, sans-serif",
+                      "fontSize": 27,
+                      "fontWeight": "500"
+                    },
+                    {
+                      "type": "text",
+                      "id": "DP4uP",
+                      "fill": "#B2B5BC",
+                      "content": "Terms of service",
+                      "fontFamily": "Avenir Next, SF Pro Display, Helvetica Neue, Segoe UI, Arial, sans-serif",
+                      "fontSize": 27,
+                      "fontWeight": "500"
+                    },
+                    {
+                      "type": "text",
+                      "id": "BY8g9",
+                      "fill": "#B2B5BC",
+                      "content": "and the",
+                      "fontFamily": "Avenir Next, SF Pro Display, Helvetica Neue, Segoe UI, Arial, sans-serif",
+                      "fontSize": 27,
+                      "fontWeight": "500"
+                    },
+                    {
+                      "type": "text",
+                      "id": "kVlIi",
+                      "fill": "#B2B5BC",
+                      "content": "Refund policy",
+                      "fontFamily": "Avenir Next, SF Pro Display, Helvetica Neue, Segoe UI, Arial, sans-serif",
+                      "fontSize": 27,
+                      "fontWeight": "500"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "4mSuX",
+              "x": 1306,
+              "y": 42,
+              "name": "payment-right-panel",
+              "width": 2308,
+              "height": 1640,
+              "fill": {
+                "type": "gradient",
+                "gradientType": "linear",
+                "enabled": true,
+                "rotation": 180,
+                "size": {
+                  "height": 1
+                },
+                "colors": [
+                  {
+                    "color": "#FCFAF7",
+                    "position": 0
+                  },
+                  {
+                    "color": "#FBF9F6",
+                    "position": 1
+                  }
+                ]
+              },
+              "cornerRadius": [
+                28,
+                56,
+                56,
+                28
+              ],
+              "stroke": {
+                "align": "inside",
+                "thickness": 2,
+                "fill": "#fdfdfd"
+              },
+              "effect": {
+                "type": "shadow",
+                "shadowType": "outer",
+                "color": "#1F1E240D",
+                "offset": {
+                  "x": 0,
+                  "y": 10
+                },
+                "blur": 24
+              },
+              "layout": "vertical",
+              "padding": [
+                168,
+                0,
+                0,
+                0
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "CfLul",
+                  "name": "payment-right-column",
+                  "width": 1002,
+                  "layout": "vertical",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "KdfRB",
+                      "width": "fill_container",
+                      "fill": "#f3f0ec",
+                      "cornerRadius": 44,
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 2,
+                        "fill": "#ece7e2"
+                      },
+                      "layout": "vertical",
+                      "gap": 6,
+                      "padding": [
+                        11,
+                        0
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "sBQzS",
+                          "name": "pmLabel",
+                          "fill": "#666A74",
+                          "textGrowth": "fixed-width",
+                          "width": "fit_content(294)",
+                          "content": "Payment method",
+                          "textAlign": "center",
+                          "textAlignVertical": "middle",
+                          "fontFamily": "Avenir Next, SF Pro Display, Helvetica Neue, Segoe UI, Arial, sans-serif",
+                          "fontSize": 27,
+                          "fontWeight": "500",
+                          "letterSpacing": -1
+                        },
+                        {
+                          "type": "frame",
+                          "id": "IJjaO",
+                          "name": "pmTabs",
+                          "width": "fill_container",
+                          "cornerRadius": 44,
+                          "stroke": {
+                            "align": "inside",
+                            "thickness": 2
+                          },
+                          "gap": 2,
+                          "padding": 10,
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "lm048",
+                              "width": "fill_container",
+                              "height": 176,
+                              "fill": "#FFFDFB",
+                              "cornerRadius": 38,
+                              "stroke": {
+                                "align": "inside",
+                                "thickness": 4,
+                                "fill": "#2382FF"
+                              },
+                              "effect": {
+                                "type": "shadow",
+                                "shadowType": "outer",
+                                "color": "#2382FF1F",
+                                "offset": {
+                                  "x": 0,
+                                  "y": 10
+                                },
+                                "blur": 28
+                              },
+                              "layout": "vertical",
+                              "padding": [
+                                30,
+                                34
+                              ],
+                              "justifyContent": "space_between",
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "2qnJQ",
+                                  "gap": 18,
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "frame",
+                                      "id": "I2T0S",
+                                      "width": 54,
+                                      "height": 54,
+                                      "fill": "#2083FF",
+                                      "cornerRadius": 27,
+                                      "stroke": {
+                                        "align": "inside",
+                                        "thickness": 2,
+                                        "fill": "#1C80FF"
+                                      },
+                                      "justifyContent": "center",
+                                      "alignItems": "center",
+                                      "children": [
+                                        {
+                                          "type": "ellipse",
+                                          "id": "6daxg",
+                                          "fill": "#FFFFFF",
+                                          "width": 16,
+                                          "height": 16
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "type": "text",
+                                      "id": "rujQM",
+                                      "fill": "#1F2129",
+                                      "content": "Bank card",
+                                      "fontFamily": "Avenir Next, SF Pro Display, Helvetica Neue, Segoe UI, Arial, sans-serif",
+                                      "fontSize": 40,
+                                      "fontWeight": "600",
+                                      "letterSpacing": -1
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "dGtcF",
+                                  "gap": 14,
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "frame",
+                                      "id": "z9KS9",
+                                      "width": 64,
+                                      "height": 30,
+                                      "layout": "none",
+                                      "children": [
+                                        {
+                                          "type": "ellipse",
+                                          "id": "d5pBm",
+                                          "x": 0,
+                                          "y": 0,
+                                          "fill": "#B0B1B68C",
+                                          "width": 30,
+                                          "height": 30
+                                        },
+                                        {
+                                          "type": "ellipse",
+                                          "id": "y4a0u",
+                                          "x": 20,
+                                          "y": 0,
+                                          "fill": "#B0B1B65C",
+                                          "width": 30,
+                                          "height": 30
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "type": "text",
+                                      "id": "mcSBZ",
+                                      "fill": "#B0B1B6",
+                                      "content": "VISA",
+                                      "fontFamily": "Avenir Next, SF Pro Display, Helvetica Neue, Segoe UI, Arial, sans-serif",
+                                      "fontSize": 40,
+                                      "fontWeight": "700",
+                                      "letterSpacing": -3,
+                                      "fontStyle": "italic"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "ISQtr",
+                              "width": "fill_container",
+                              "height": 176,
+                              "fill": "#F8F5F1",
+                              "cornerRadius": 38,
+                              "stroke": {
+                                "align": "inside",
+                                "thickness": 2,
+                                "fill": "#E5E4E1"
+                              },
+                              "layout": "vertical",
+                              "padding": [
+                                30,
+                                34
+                              ],
+                              "justifyContent": "space_between",
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "99BpB",
+                                  "gap": 18,
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "frame",
+                                      "id": "YD44q",
+                                      "width": 54,
+                                      "height": 54,
+                                      "fill": "#FFFFFF",
+                                      "cornerRadius": 27,
+                                      "stroke": {
+                                        "align": "inside",
+                                        "thickness": 2,
+                                        "fill": "#E4E5E9"
+                                      },
+                                      "justifyContent": "center",
+                                      "alignItems": "center"
+                                    },
+                                    {
+                                      "type": "text",
+                                      "id": "Eo2Un",
+                                      "fill": "#898D98",
+                                      "content": "Crypto",
+                                      "fontFamily": "Avenir Next, SF Pro Display, Helvetica Neue, Segoe UI, Arial, sans-serif",
+                                      "fontSize": 40,
+                                      "fontWeight": "600",
+                                      "letterSpacing": -1
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "Y9hWK",
+                                  "gap": 12,
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "frame",
+                                      "id": "H0XRm",
+                                      "width": 28,
+                                      "height": 28,
+                                      "fill": "#FFFFFFB3",
+                                      "cornerRadius": 14,
+                                      "stroke": {
+                                        "align": "inside",
+                                        "thickness": 1,
+                                        "fill": "#DADADF"
+                                      },
+                                      "justifyContent": "center",
+                                      "alignItems": "center",
+                                      "children": [
+                                        {
+                                          "type": "text",
+                                          "id": "yQvBQ",
+                                          "fill": "#A8ABB2",
+                                          "content": "S",
+                                          "fontFamily": "Arial, sans-serif",
+                                          "fontSize": 18,
+                                          "fontWeight": "700"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "type": "frame",
+                                      "id": "cRx28",
+                                      "width": 28,
+                                      "height": 28,
+                                      "fill": "#FFFFFFB3",
+                                      "cornerRadius": 14,
+                                      "stroke": {
+                                        "align": "inside",
+                                        "thickness": 1,
+                                        "fill": "#DADADF"
+                                      },
+                                      "justifyContent": "center",
+                                      "alignItems": "center",
+                                      "children": [
+                                        {
+                                          "type": "text",
+                                          "id": "dzwcc",
+                                          "fill": "#A8ABB2",
+                                          "content": "E",
+                                          "fontFamily": "Arial, sans-serif",
+                                          "fontSize": 18,
+                                          "fontWeight": "700"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "type": "frame",
+                                      "id": "fnvSx",
+                                      "width": 28,
+                                      "height": 28,
+                                      "fill": "#FFFFFFB3",
+                                      "cornerRadius": 14,
+                                      "stroke": {
+                                        "align": "inside",
+                                        "thickness": 1,
+                                        "fill": "#DADADF"
+                                      },
+                                      "justifyContent": "center",
+                                      "alignItems": "center",
+                                      "children": [
+                                        {
+                                          "type": "text",
+                                          "id": "b1xj9",
+                                          "fill": "#A8ABB2",
+                                          "content": "$",
+                                          "fontFamily": "Arial, sans-serif",
+                                          "fontSize": 18,
+                                          "fontWeight": "700"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "type": "frame",
+                                      "id": "9t6Ol",
+                                      "width": 28,
+                                      "height": 28,
+                                      "fill": "#FFFFFFB3",
+                                      "cornerRadius": 14,
+                                      "stroke": {
+                                        "align": "inside",
+                                        "thickness": 1,
+                                        "fill": "#DADADF"
+                                      },
+                                      "justifyContent": "center",
+                                      "alignItems": "center",
+                                      "children": [
+                                        {
+                                          "type": "text",
+                                          "id": "QEtwZ",
+                                          "fill": "#A8ABB2",
+                                          "content": "T",
+                                          "fontFamily": "Arial, sans-serif",
+                                          "fontSize": 18,
+                                          "fontWeight": "700"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "rtuBx",
+                              "width": "fill_container",
+                              "height": 176,
+                              "fill": "#F8F5F1",
+                              "cornerRadius": 38,
+                              "stroke": {
+                                "align": "inside",
+                                "thickness": 2,
+                                "fill": "#E5E4E1"
+                              },
+                              "layout": "vertical",
+                              "padding": [
+                                30,
+                                34
+                              ],
+                              "justifyContent": "space_between",
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "ZdrWu",
+                                  "gap": 18,
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "frame",
+                                      "id": "jyoo1",
+                                      "width": 54,
+                                      "height": 54,
+                                      "fill": "#FFFFFF",
+                                      "cornerRadius": 27,
+                                      "stroke": {
+                                        "align": "inside",
+                                        "thickness": 2,
+                                        "fill": "#E4E5E9"
+                                      },
+                                      "justifyContent": "center",
+                                      "alignItems": "center"
+                                    },
+                                    {
+                                      "type": "text",
+                                      "id": "Yhd5k",
+                                      "fill": "#898D98",
+                                      "content": "ApplePay",
+                                      "fontFamily": "Avenir Next, SF Pro Display, Helvetica Neue, Segoe UI, Arial, sans-serif",
+                                      "fontSize": 40,
+                                      "fontWeight": "600",
+                                      "letterSpacing": -1
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "7tehN",
+                                  "gap": 12,
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "frame",
+                                      "id": "aQNcA",
+                                      "width": 30,
+                                      "height": 30,
+                                      "layout": "none",
+                                      "children": [
+                                        {
+                                          "type": "ellipse",
+                                          "id": "Z2ohe",
+                                          "x": 4,
+                                          "y": 6,
+                                          "fill": "#B6B7BC",
+                                          "width": 20,
+                                          "height": 24
+                                        },
+                                        {
+                                          "type": "ellipse",
+                                          "id": "1TPat",
+                                          "x": 18,
+                                          "y": 0,
+                                          "rotation": -25,
+                                          "fill": "#B6B7BC",
+                                          "width": 10,
+                                          "height": 10
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "type": "text",
+                                      "id": "i3OYI",
+                                      "fill": "#B6B7BC",
+                                      "content": "Pay",
+                                      "fontFamily": "Avenir Next, SF Pro Display, Helvetica Neue, Segoe UI, Arial, sans-serif",
+                                      "fontSize": 40,
+                                      "fontWeight": "600"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "S3Nda",
+                      "name": "fieldsSpacer",
+                      "width": 1,
+                      "height": 58,
+                      "layout": "none"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "njm92",
+                      "name": "fieldsBlock",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 38,
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "avwxC",
+                          "width": "fill_container",
+                          "gap": 34,
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "RHzR7",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": 18,
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "r2bEL",
+                                  "fill": "#5F636F",
+                                  "content": "Full name",
+                                  "fontFamily": "Avenir Next, SF Pro Display, Helvetica Neue, Segoe UI, Arial, sans-serif",
+                                  "fontSize": 32,
+                                  "fontWeight": "500",
+                                  "letterSpacing": -1
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "4iKsV",
+                                  "width": "fill_container",
+                                  "height": 96,
+                                  "fill": "#FFFFFF",
+                                  "cornerRadius": 24,
+                                  "stroke": {
+                                    "align": "inside",
+                                    "thickness": 2,
+                                    "fill": "#EBE7E3"
+                                  },
+                                  "effect": {
+                                    "type": "shadow",
+                                    "shadowType": "outer",
+                                    "color": "#12182609",
+                                    "offset": {
+                                      "x": 0,
+                                      "y": 10
+                                    },
+                                    "blur": 22
+                                  },
+                                  "padding": [
+                                    0,
+                                    30
+                                  ],
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "5JLvJ",
+                                      "fill": "#151923",
+                                      "content": "Harry Alexanderoff",
+                                      "fontFamily": "Avenir Next, SF Pro Display, Helvetica Neue, Segoe UI, Arial, sans-serif",
+                                      "fontSize": 42,
+                                      "fontWeight": "600",
+                                      "letterSpacing": -1
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "yUSSV",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": 18,
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "0RqKd",
+                                  "fill": "#5F636F",
+                                  "content": "Company name",
+                                  "fontFamily": "Avenir Next, SF Pro Display, Helvetica Neue, Segoe UI, Arial, sans-serif",
+                                  "fontSize": 32,
+                                  "fontWeight": "500",
+                                  "letterSpacing": -1
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "zKY9Y",
+                                  "width": "fill_container",
+                                  "height": 96,
+                                  "fill": "#FFFFFF",
+                                  "cornerRadius": 24,
+                                  "stroke": {
+                                    "align": "inside",
+                                    "thickness": 2,
+                                    "fill": "#EBE7E3"
+                                  },
+                                  "effect": {
+                                    "type": "shadow",
+                                    "shadowType": "outer",
+                                    "color": "#12182609",
+                                    "offset": {
+                                      "x": 0,
+                                      "y": 10
+                                    },
+                                    "blur": 22
+                                  },
+                                  "padding": [
+                                    0,
+                                    30
+                                  ],
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "ROiBx",
+                                      "fill": "#151923",
+                                      "content": "Alexandroff Design",
+                                      "fontFamily": "Avenir Next, SF Pro Display, Helvetica Neue, Segoe UI, Arial, sans-serif",
+                                      "fontSize": 42,
+                                      "fontWeight": "600",
+                                      "letterSpacing": -1
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "gkCo9",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": 18,
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "d0OD6",
+                              "fill": "#5F636F",
+                              "content": "Billing email",
+                              "fontFamily": "Avenir Next, SF Pro Display, Helvetica Neue, Segoe UI, Arial, sans-serif",
+                              "fontSize": 32,
+                              "fontWeight": "500",
+                              "letterSpacing": -1
+                            },
+                            {
+                              "type": "frame",
+                              "id": "dVBnd",
+                              "width": "fill_container",
+                              "height": 96,
+                              "fill": "#FFFFFF",
+                              "cornerRadius": 24,
+                              "stroke": {
+                                "align": "inside",
+                                "thickness": 2,
+                                "fill": "#EBE7E3"
+                              },
+                              "effect": {
+                                "type": "shadow",
+                                "shadowType": "outer",
+                                "color": "#12182609",
+                                "offset": {
+                                  "x": 0,
+                                  "y": 10
+                                },
+                                "blur": 22
+                              },
+                              "padding": [
+                                0,
+                                30
+                              ],
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "ahR7L",
+                                  "fill": "#151923",
+                                  "content": "harry@alexandroff.design",
+                                  "fontFamily": "Avenir Next, SF Pro Display, Helvetica Neue, Segoe UI, Arial, sans-serif",
+                                  "fontSize": 42,
+                                  "fontWeight": "600",
+                                  "letterSpacing": -1
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "Eca5V",
+                          "width": "fill_container",
+                          "gap": 26,
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "sVmuz",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": 18,
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "67N8x",
+                                  "fill": "#5F636F",
+                                  "content": "Card details",
+                                  "fontFamily": "Avenir Next, SF Pro Display, Helvetica Neue, Segoe UI, Arial, sans-serif",
+                                  "fontSize": 32,
+                                  "fontWeight": "500",
+                                  "letterSpacing": -1
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "6rYji",
+                                  "width": "fill_container",
+                                  "height": 96,
+                                  "fill": "#FFFFFF",
+                                  "cornerRadius": 24,
+                                  "stroke": {
+                                    "align": "inside",
+                                    "thickness": 2,
+                                    "fill": "#EBE7E3"
+                                  },
+                                  "effect": {
+                                    "type": "shadow",
+                                    "shadowType": "outer",
+                                    "color": "#12182609",
+                                    "offset": {
+                                      "x": 0,
+                                      "y": 10
+                                    },
+                                    "blur": 22
+                                  },
+                                  "padding": [
+                                    0,
+                                    30
+                                  ],
+                                  "justifyContent": "space_between",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "iflIP",
+                                      "fill": "#151923",
+                                      "content": "4149 4991 5415 9532",
+                                      "fontFamily": "Avenir Next, SF Pro Display, Helvetica Neue, Segoe UI, Arial, sans-serif",
+                                      "fontSize": 42,
+                                      "fontWeight": "600",
+                                      "letterSpacing": -1
+                                    },
+                                    {
+                                      "type": "text",
+                                      "id": "iETCQ",
+                                      "fill": "#1878FF",
+                                      "content": "VISA",
+                                      "fontFamily": "Avenir Next, SF Pro Display, Helvetica Neue, Segoe UI, Arial, sans-serif",
+                                      "fontSize": 58,
+                                      "fontWeight": "700",
+                                      "letterSpacing": -4,
+                                      "fontStyle": "italic"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "iHl4M",
+                              "width": 214,
+                              "layout": "vertical",
+                              "gap": 18,
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "TK33O",
+                                  "fill": "#5F636F",
+                                  "content": "Expiration",
+                                  "fontFamily": "Avenir Next, SF Pro Display, Helvetica Neue, Segoe UI, Arial, sans-serif",
+                                  "fontSize": 32,
+                                  "fontWeight": "500",
+                                  "letterSpacing": -1
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "0qfGC",
+                                  "width": "fill_container",
+                                  "height": 96,
+                                  "fill": "#FFFFFF",
+                                  "cornerRadius": 24,
+                                  "stroke": {
+                                    "align": "inside",
+                                    "thickness": 2,
+                                    "fill": "#EBE7E3"
+                                  },
+                                  "effect": {
+                                    "type": "shadow",
+                                    "shadowType": "outer",
+                                    "color": "#12182609",
+                                    "offset": {
+                                      "x": 0,
+                                      "y": 10
+                                    },
+                                    "blur": 22
+                                  },
+                                  "padding": [
+                                    0,
+                                    30
+                                  ],
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "IUUB8",
+                                      "fill": "#151923",
+                                      "content": "11/29",
+                                      "fontFamily": "Avenir Next, SF Pro Display, Helvetica Neue, Segoe UI, Arial, sans-serif",
+                                      "fontSize": 42,
+                                      "fontWeight": "600",
+                                      "letterSpacing": -1
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "mGC2E",
+                              "width": 172,
+                              "layout": "vertical",
+                              "gap": 18,
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "etY3J",
+                                  "fill": "#5F636F",
+                                  "content": "CVV",
+                                  "fontFamily": "Avenir Next, SF Pro Display, Helvetica Neue, Segoe UI, Arial, sans-serif",
+                                  "fontSize": 32,
+                                  "fontWeight": "500",
+                                  "letterSpacing": -1
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "y3Nqh",
+                                  "width": "fill_container",
+                                  "height": 96,
+                                  "fill": "#FFFFFF",
+                                  "cornerRadius": 24,
+                                  "stroke": {
+                                    "align": "inside",
+                                    "thickness": 2,
+                                    "fill": "#EBE7E3"
+                                  },
+                                  "effect": {
+                                    "type": "shadow",
+                                    "shadowType": "outer",
+                                    "color": "#12182609",
+                                    "offset": {
+                                      "x": 0,
+                                      "y": 10
+                                    },
+                                    "blur": 22
+                                  },
+                                  "padding": [
+                                    0,
+                                    30
+                                  ],
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "Makjh",
+                                      "fill": "#151923",
+                                      "content": "•••",
+                                      "fontFamily": "Avenir Next, SF Pro Display, Helvetica Neue, Segoe UI, Arial, sans-serif",
+                                      "fontSize": 42,
+                                      "fontWeight": "600"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "Y5ZE0",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": 18,
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "tVpSo",
+                              "fill": "#5F636F",
+                              "content": "Discount code",
+                              "fontFamily": "Avenir Next, SF Pro Display, Helvetica Neue, Segoe UI, Arial, sans-serif",
+                              "fontSize": 32,
+                              "fontWeight": "500",
+                              "letterSpacing": -1
+                            },
+                            {
+                              "type": "frame",
+                              "id": "lQzgq",
+                              "width": "fill_container",
+                              "height": 96,
+                              "fill": "#FFFFFF",
+                              "cornerRadius": 24,
+                              "stroke": {
+                                "align": "inside",
+                                "thickness": 2,
+                                "fill": "#EBE7E3"
+                              },
+                              "effect": {
+                                "type": "shadow",
+                                "shadowType": "outer",
+                                "color": "#12182609",
+                                "offset": {
+                                  "x": 0,
+                                  "y": 10
+                                },
+                                "blur": 22
+                              },
+                              "padding": [
+                                0,
+                                30
+                              ],
+                              "justifyContent": "space_between",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "OQv3r",
+                                  "fill": "#B4B7BF",
+                                  "content": "ABC123",
+                                  "fontFamily": "Avenir Next, SF Pro Display, Helvetica Neue, Segoe UI, Arial, sans-serif",
+                                  "fontSize": 42,
+                                  "fontWeight": "600",
+                                  "letterSpacing": -1
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "d2h0j",
+                                  "width": 20,
+                                  "height": 20,
+                                  "layout": "none",
+                                  "children": [
+                                    {
+                                      "type": "rectangle",
+                                      "cornerRadius": 2,
+                                      "id": "QVg9f",
+                                      "x": 5,
+                                      "y": 2,
+                                      "fill": "#00000000",
+                                      "width": 11,
+                                      "height": 13,
+                                      "stroke": {
+                                        "align": "inside",
+                                        "thickness": 2,
+                                        "fill": "#676B77"
+                                      }
+                                    },
+                                    {
+                                      "type": "rectangle",
+                                      "cornerRadius": 2,
+                                      "id": "FeUe3",
+                                      "x": 2,
+                                      "y": 5,
+                                      "fill": "#00000000",
+                                      "width": 11,
+                                      "height": 13,
+                                      "stroke": {
+                                        "align": "inside",
+                                        "thickness": 2,
+                                        "fill": "#676B77"
+                                      }
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "UL3oA",
+                      "name": "checkSpacer",
+                      "width": 1,
+                      "height": 34,
+                      "layout": "none"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "dnoG3",
+                      "name": "checkRow",
+                      "gap": 18,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "kvaCt",
+                          "width": 32,
+                          "height": 32,
+                          "fill": "#FFFFFF",
+                          "cornerRadius": 8,
+                          "stroke": {
+                            "align": "inside",
+                            "thickness": 2,
+                            "fill": "#DDDFE4"
+                          },
+                          "effect": {
+                            "type": "shadow",
+                            "shadowType": "outer",
+                            "color": "#15181F09",
+                            "offset": {
+                              "x": 0,
+                              "y": 6
+                            },
+                            "blur": 14
+                          },
+                          "justifyContent": "center",
+                          "alignItems": "center"
+                        },
+                        {
+                          "type": "text",
+                          "id": "PHK5X",
+                          "fill": "#6A6E79",
+                          "content": "Save payment data for the future",
+                          "fontFamily": "Arial",
+                          "fontSize": 40,
+                          "fontWeight": "500",
+                          "letterSpacing": -1
+                        },
+                        {
+                          "type": "path",
+                          "id": "7ZOuW",
+                          "geometry": "M9 1l6 3v4c0 4-2.4 7-6 9-3.6-2-6-5-6-9v-4l6-3z m0 3.6c-1 0-1.8 0.8-1.8 1.8 0 1 0.8 1.8 1.8 1.8 1 0 1.8-0.8 1.8-1.8 0-1-0.8-1.8-1.8-1.8z",
+                          "viewBox": [
+                            0,
+                            0,
+                            18,
+                            18
+                          ],
+                          "fill": "#B8BBC3",
+                          "width": 18,
+                          "height": 18
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "6ftpq",
+                      "name": "buttonSpacer",
+                      "width": 1,
+                      "height": 48,
+                      "layout": "none"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "jGqpX",
+                      "name": "payButton",
+                      "width": "fill_container",
+                      "height": 96,
+                      "fill": {
+                        "type": "gradient",
+                        "gradientType": "linear",
+                        "enabled": true,
+                        "rotation": 180,
+                        "size": {
+                          "height": 1
+                        },
+                        "colors": [
+                          {
+                            "color": "#2F96FF",
+                            "position": 0
+                          },
+                          {
+                            "color": "#0874FF",
+                            "position": 1
+                          }
+                        ]
+                      },
+                      "cornerRadius": 18,
+                      "effect": {
+                        "type": "shadow",
+                        "shadowType": "outer",
+                        "color": "#0874FF42",
+                        "offset": {
+                          "x": 0,
+                          "y": 20
+                        },
+                        "blur": 34
+                      },
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "rFKry",
+                          "fill": "#FFFFFF",
+                          "content": "Pay $16,430",
+                          "fontFamily": "Arial",
+                          "fontSize": 44,
+                          "fontWeight": "600",
+                          "letterSpacing": -1
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "IgDo6",
+                      "name": "badgeSpacer",
+                      "width": 1,
+                      "height": 30,
+                      "layout": "none"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "7IifV",
+                      "name": "badges",
+                      "width": "fill_container",
+                      "gap": 44,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "Udai2",
+                          "gap": 10,
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "EBFAO",
+                              "width": 20,
+                              "height": 20,
+                              "fill": "#00000000",
+                              "cornerRadius": 10,
+                              "stroke": {
+                                "align": "inside",
+                                "thickness": 2,
+                                "fill": "#B0B3BB"
+                              },
+                              "justifyContent": "center",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "yWmPK",
+                                  "fill": "#B0B3BB",
+                                  "content": "✓",
+                                  "fontFamily": "Arial",
+                                  "fontSize": 12,
+                                  "fontWeight": "700"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "text",
+                              "id": "TjIbe",
+                              "fill": "#B0B3BB",
+                              "content": "3D Secure",
+                              "fontFamily": "Arial",
+                              "fontSize": 31,
+                              "fontWeight": "500"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "cslWv",
+                          "gap": 10,
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "iYKqV",
+                              "width": 20,
+                              "height": 20,
+                              "fill": "#00000000",
+                              "cornerRadius": 10,
+                              "stroke": {
+                                "align": "inside",
+                                "thickness": 2,
+                                "fill": "#B0B3BB"
+                              },
+                              "justifyContent": "center",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "eXpAm",
+                                  "fill": "#B0B3BB",
+                                  "content": "✓",
+                                  "fontFamily": "Arial",
+                                  "fontSize": 12,
+                                  "fontWeight": "700"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "text",
+                              "id": "D8Qmn",
+                              "fill": "#B0B3BB",
+                              "content": "SSL Secured",
+                              "fontFamily": "Arial",
+                              "fontSize": 31,
+                              "fontWeight": "500"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "jqC9O",
+                          "gap": 10,
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "budrJ",
+                              "width": 20,
+                              "height": 20,
+                              "fill": "#00000000",
+                              "cornerRadius": 10,
+                              "stroke": {
+                                "align": "inside",
+                                "thickness": 2,
+                                "fill": "#B0B3BB"
+                              },
+                              "justifyContent": "center",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "PjJNL",
+                                  "fill": "#B0B3BB",
+                                  "content": "✓",
+                                  "fontFamily": "Arial",
+                                  "fontSize": 12,
+                                  "fontWeight": "700"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "text",
+                              "id": "dIRKt",
+                              "fill": "#B0B3BB",
+                              "content": "MoR Protected",
+                              "fontFamily": "Arial",
+                              "fontSize": 31,
+                              "fontWeight": "500"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

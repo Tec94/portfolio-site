@@ -2,13 +2,26 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <script>
+      (function () {
+        const isDevPort =
+          window.location.port === '5173' ||
+          window.location.port === '4173';
+
+        if (window.location.hostname !== '127.0.0.1' || !isDevPort) {
+          return;
+        }
+
+        const nextUrl = new URL(window.location.href);
+        nextUrl.hostname = 'localhost';
+        window.location.replace(nextUrl.toString());
+      })();
+    </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Preconnect to external resources for better performance -->
+    <!-- Cal.com is loaded only after the booking action is requested. -->
     <link rel="preconnect" href="https://cal.com" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="dns-prefetch" href="https://vercel.com" />
     <link rel="dns-prefetch" href="https://vitals.vercel-analytics.com" />
 
@@ -37,10 +50,61 @@
     <link rel="canonical" href="https://jackcao.dev/" />
 
     <!-- Theme Color -->
-    <meta name="theme-color" content="#000000" />
+    <meta name="theme-color" content="#061019" />
   </head>
   <body>
     <div id="root"></div>
+    <script>
+      (function () {
+        const isLocalhost =
+          window.location.hostname === 'localhost' ||
+          window.location.hostname === '127.0.0.1';
+        const cleanupKey = 'dev-service-worker-cleanup-v3';
+
+        if (!isLocalhost || !('serviceWorker' in navigator)) {
+          return;
+        }
+
+        try {
+          if (window.sessionStorage.getItem(cleanupKey) === 'done') {
+            return;
+          }
+        } catch (error) {
+          console.warn('Unable to read sessionStorage during SW cleanup.', error);
+        }
+
+        navigator.serviceWorker
+          .getRegistrations()
+          .then(async (registrations) => {
+            if (registrations.length === 0) {
+              try {
+                window.sessionStorage.setItem(cleanupKey, 'done');
+              } catch (error) {
+                console.warn('Unable to persist SW cleanup state.', error);
+              }
+              return;
+            }
+
+            await Promise.all(registrations.map((registration) => registration.unregister()));
+
+            if ('caches' in window) {
+              const cacheNames = await caches.keys();
+              await Promise.all(cacheNames.map((cacheName) => caches.delete(cacheName)));
+            }
+
+            try {
+              window.sessionStorage.setItem(cleanupKey, 'done');
+            } catch (error) {
+              console.warn('Unable to persist SW cleanup state.', error);
+            }
+
+            window.location.reload();
+          })
+          .catch((error) => {
+            console.warn('Failed to clean up stale service workers.', error);
+          });
+      })();
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

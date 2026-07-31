@@ -1,0 +1,16 @@
+{
+  "extends": "./tsconfig.app.json",
+  "compilerOptions": {
+    "types": ["vite/client", "vitest/globals"]
+  },
+  "include": [
+    "src/components/v2/**/*.ts",
+    "src/components/v2/**/*.tsx",
+    "src/components/CustomCursorManager.tsx",
+    "src/data/portfolioData.ts",
+    "src/lib/contactSubmissions.ts",
+    "src/hooks/usePrefersReducedMotion.ts",
+    "src/test/**/*.ts",
+    "src/test/**/*.tsx"
+  ]
+}

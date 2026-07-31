@@ -16,7 +16,26 @@ export default {
           700: '#0e7490',
           800: '#155e75',
           900: '#164e63',
+          DEFAULT: '#00F3FF', // Electric Cyan
         },
+        magenta: {
+          50: '#fdf2f8',
+          100: '#fce7f3',
+          200: '#fbcfe8',
+          300: '#f9a8d4',
+          400: '#f472b6',
+          500: '#ec4899',
+          600: '#db2777',
+          700: '#be185d',
+          800: '#9d174d',
+          900: '#831843',
+          DEFAULT: '#FF00FF', // Neon Magenta
+        },
+        obsidian: {
+          DEFAULT: '#050505',
+          light: '#0a0a0a',
+          dark: '#020202',
+        }
       },
       animation: {
         'fade-in': 'fadeIn 0.5s ease-in-out',

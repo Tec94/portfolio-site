@@ -1,0 +1,140 @@
+:root {
+  --cursor-default:
+    url("./assets/cursors/default.png") 1 2,
+    default;
+  --cursor-pointer:
+    url("./assets/cursors/pointer.png") 0 1,
+    url("./assets/cursors/default.png") 1 2,
+    pointer;
+  --cursor-pressed:
+    url("./assets/cursors/pressed.png") 1 2,
+    url("./assets/cursors/pointer.png") 0 1,
+    url("./assets/cursors/default.png") 1 2,
+    grabbing;
+  --cursor-text:
+    url("./assets/cursors/text.png") 3 5,
+    url("./assets/cursors/default.png") 1 2,
+    text;
+  --cursor-crosshair:
+    url("./assets/cursors/crosshair.png") 4 4,
+    url("./assets/cursors/default.png") 1 2,
+    crosshair;
+  --cursor-busy-0:
+    url("./assets/cursors/busy-frame-01.png") 1 2,
+    url("./assets/cursors/default.png") 1 2,
+    wait;
+  --cursor-busy-1:
+    url("./assets/cursors/busy-frame-02.png") 1 2,
+    url("./assets/cursors/default.png") 1 2,
+    wait;
+  --cursor-busy-2:
+    url("./assets/cursors/busy-frame-03.png") 1 2,
+    url("./assets/cursors/default.png") 1 2,
+    wait;
+  --cursor-busy-3:
+    url("./assets/cursors/busy-frame-04.png") 1 2,
+    url("./assets/cursors/default.png") 1 2,
+    wait;
+  --cursor-busy-active: var(--cursor-busy-0);
+}
+
+html,
+body,
+#root {
+  cursor: var(--cursor-default);
+}
+
+:where(
+  a[href],
+  button:not(:disabled),
+  input:is(
+    [type="button"],
+    [type="submit"],
+    [type="reset"],
+    [type="checkbox"],
+    [type="radio"],
+    [type="file"],
+    [type="range"],
+    [type="color"]
+  ):not(:disabled),
+  select:not(:disabled),
+  summary,
+  label[for],
+  [role="button"]:not([aria-disabled="true"]),
+  [role="link"]:not([aria-disabled="true"]),
+  [role="menuitem"]:not([aria-disabled="true"]),
+  [role="option"]:not([aria-disabled="true"]),
+  [role="tab"]:not([aria-disabled="true"]),
+  .cursor-pointer,
+  [style*="cursor: pointer"],
+  [style*="cursor:pointer"],
+  [data-cursor="pointer"]
+) {
+  cursor: var(--cursor-pointer) !important;
+}
+
+:where(
+  input:not(
+    [type="button"],
+    [type="submit"],
+    [type="reset"],
+    [type="checkbox"],
+    [type="radio"],
+    [type="file"],
+    [type="range"],
+    [type="color"]
+  ):not(:disabled),
+  textarea:not(:disabled),
+  [contenteditable="true"]
+) {
+  cursor: var(--cursor-text) !important;
+}
+
+:where(
+  :disabled,
+  [aria-disabled="true"],
+  .cursor-default,
+  .cursor-not-allowed,
+  [style*="cursor: default"],
+  [style*="cursor:default"]
+) {
+  cursor: var(--cursor-default) !important;
+}
+
+.v2-world-map {
+  cursor: var(--cursor-crosshair) !important;
+}
+
+html[data-cursor-pressed="true"],
+html[data-cursor-pressed="true"] * {
+  cursor: var(--cursor-pressed) !important;
+}
+
+html[data-cursor-busy-frame="0"] {
+  --cursor-busy-active: var(--cursor-busy-0);
+}
+
+html[data-cursor-busy-frame="1"] {
+  --cursor-busy-active: var(--cursor-busy-1);
+}
+
+html[data-cursor-busy-frame="2"] {
+  --cursor-busy-active: var(--cursor-busy-2);
+}
+
+html[data-cursor-busy-frame="3"] {
+  --cursor-busy-active: var(--cursor-busy-3);
+}
+
+html[data-cursor-busy="true"],
+html[data-cursor-busy="true"] * {
+  cursor: var(--cursor-busy-active) !important;
+}
+
+@media (pointer: coarse) {
+  html,
+  body,
+  body * {
+    cursor: auto !important;
+  }
+}

@@ -183,7 +183,7 @@ export default function ContactForm() {
         </div>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-4" aria-busy={isSubmitting}>
         {/* Name field */}
         <div>
           <label htmlFor="name" className="block text-green-300 font-mono text-sm mb-2">
