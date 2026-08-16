@@ -1,0 +1,54 @@
+.shared-raster-cursor {
+  --cursor-x: -100px;
+  --cursor-y: -100px;
+  --cursor-tilt: 0deg;
+  --cursor-stretch-x: 1;
+  --cursor-stretch-y: 1;
+  position: fixed;
+  z-index: 2147483647;
+  inset: 0 auto auto 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  transform: translate3d(var(--cursor-x), var(--cursor-y), 0);
+}
+
+.shared-raster-cursor[hidden] {
+  display: none !important;
+}
+
+.shared-raster-cursor img {
+  display: block;
+  width: 2rem;
+  height: 2rem;
+  max-width: none;
+  max-height: none;
+  image-rendering: pixelated;
+  transform-origin: 0.15rem 0.15rem;
+  transform: rotate(var(--cursor-tilt)) scaleX(var(--cursor-stretch-x)) scaleY(var(--cursor-stretch-y));
+}
+
+.shared-raster-cursor[data-tone="light"] img,
+.shared-raster-cursor[data-tone="neutral"] img {
+  filter: drop-shadow(0 1px 0 rgba(255, 255, 255, 0.92)) drop-shadow(0 0 1px rgba(0, 0, 0, 0.9));
+}
+
+.shared-raster-cursor[data-tone="dark"] img {
+  filter: brightness(1.28) saturate(0.78) drop-shadow(0 0 1px rgba(255, 255, 255, 0.95));
+}
+
+.shared-raster-cursor[data-tone="accent"] img {
+  filter: hue-rotate(265deg) saturate(1.24) brightness(1.08) drop-shadow(0 0 1px rgba(255, 255, 255, 0.9));
+}
+
+html[data-raster-cursor-ready="true"],
+html[data-raster-cursor-ready="true"] body,
+html[data-raster-cursor-ready="true"] body * {
+  cursor: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shared-raster-cursor img {
+    transform: none;
+  }
+}

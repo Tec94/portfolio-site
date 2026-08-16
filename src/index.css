@@ -40,30 +40,15 @@
     }
   }
 
-  /* Custom scrollbar - Hacker style */
-  ::-webkit-scrollbar {
-    width: 10px;
+  * {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
   }
 
-  /* Thinner scrollbar on mobile */
-  @media (max-width: 639px) {
-    ::-webkit-scrollbar {
-      width: 6px;
-    }
-  }
-
-  ::-webkit-scrollbar-track {
-    @apply bg-black;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    @apply bg-green-500 rounded-full;
-    box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    @apply bg-green-400;
-    box-shadow: 0 0 20px rgba(0, 255, 0, 0.8);
+  *::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    display: none;
   }
 }
 

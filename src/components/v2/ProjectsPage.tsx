@@ -4,10 +4,10 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowUpRight, Github } from 'lucide-react';
 import { useSearchParams } from 'react-router-dom';
-import { projects, type ProjectCategory } from '../../data/portfolioData';
+import { projects, type Project, type ProjectCategory } from '../../data/portfolioData';
 import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion';
 import ProjectGlyph from './ProjectGlyph';
-import ScrollProjectDevice from './ScrollProjectDevice';
+import { useProjectGallery } from './ProjectGalleryContext';
 import { parseProjectView } from './projectViewState';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -21,6 +21,21 @@ const categories: Array<'All work' | ProjectCategory> = [
   'Client Work',
 ];
 
+function ProjectPreviewContent({ project, eager }: { project: Project; eager: boolean }) {
+  return (
+    <>
+      <img
+        src={project.images[0]}
+        alt={`${project.title} interface preview`}
+        loading={eager ? 'eager' : 'lazy'}
+      />
+      <span className="v2-project-preview-index" aria-hidden="true">
+        {project.index}
+      </span>
+    </>
+  );
+}
+
 export default function ProjectsPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [category, setCategory] = useState<(typeof categories)[number]>('All work');
@@ -28,8 +43,11 @@ export default function ProjectsPage() {
   const [activeProjectId, setActiveProjectId] = useState(initialProject.id);
   const archiveRef = useRef<HTMLDivElement>(null);
   const projectStackRef = useRef<HTMLElement>(null);
-  const projectRefs = useRef(new Map<string, HTMLElement>());
+  const [projectRefs] = useState(() => new Map<string, HTMLElement>());
+  const activePreviewRef = useRef<HTMLElement | null>(null);
+  const pendingScrollProjectRef = useRef<string | null>(null);
   const reducedMotion = usePrefersReducedMotion();
+  const { selectedId, setSelectedId, setBridge } = useProjectGallery();
 
   const filtered = useMemo(
     () =>
@@ -49,12 +67,19 @@ export default function ProjectsPage() {
   const selectProject = useCallback(
     (projectId: string, updateUrl = true) => {
       setActiveProjectId(projectId);
+      setSelectedId(projectId);
       if (updateUrl) {
         setSearchParams({ project: projectId }, { replace: true });
       }
     },
-    [setSearchParams],
+    [setSearchParams, setSelectedId],
   );
+
+  useEffect(() => {
+    if (filtered.some((project) => project.id === selectedId) && selectedId !== activeProjectId) {
+      setActiveProjectId(selectedId);
+    }
+  }, [activeProjectId, filtered, selectedId]);
 
   useEffect(() => {
     if (!filtered.some((project) => project.id === activeProjectId) && filtered[0]) {
@@ -65,7 +90,7 @@ export default function ProjectsPage() {
   useGSAP(
     () => {
       const triggers = filtered.flatMap((project) => {
-        const article = projectRefs.current.get(project.id);
+        const article = projectRefs.get(project.id);
         if (!article) return [];
 
         const activeTrigger = ScrollTrigger.create({
@@ -89,28 +114,58 @@ export default function ProjectsPage() {
     },
   );
 
-  const scrollToProject = (index: number) => {
-    const project = filtered[index];
-    const article = projectRefs.current.get(project.id);
+  const scrollToProject = useCallback((projectId: string) => {
+    const project = filtered.find((item) => item.id === projectId);
+    if (!project) {
+      pendingScrollProjectRef.current = projectId;
+      setCategory('All work');
+      return;
+    }
+    const article = projectRefs.get(project.id);
     selectProject(project.id);
     article?.scrollIntoView({
       behavior: reducedMotion ? 'auto' : 'smooth',
       block: 'center',
     });
-  };
+  }, [filtered, projectRefs, reducedMotion, selectProject]);
+
+  useEffect(() => {
+    const pendingProjectId = pendingScrollProjectRef.current;
+    if (!pendingProjectId || !filtered.some((project) => project.id === pendingProjectId)) return;
+
+    pendingScrollProjectRef.current = null;
+    const frame = window.requestAnimationFrame(() => scrollToProject(pendingProjectId));
+    return () => window.cancelAnimationFrame(frame);
+  }, [filtered, scrollToProject]);
+
+  useEffect(() => {
+    const nextBridge = {
+      previewRef: activePreviewRef,
+      onPreviewChange: scrollToProject,
+    };
+    setBridge(nextBridge);
+  }, [scrollToProject, setBridge]);
+
+  useEffect(
+    () => () => {
+      setBridge((current) => (current?.previewRef === activePreviewRef ? null : current));
+    },
+    [setBridge],
+  );
 
   return (
     <div ref={archiveRef} className="v2-page v2-projects-page">
       <div className="v2-gallery-tools" aria-label="Project archive controls">
         <div className="v2-gallery-title">
           <span className="v2-eyebrow">Project archive</span>
-          <h1>Selected work</h1>
+          <h1>Projects</h1>
           <span aria-hidden="true">/ {filtered.length.toString().padStart(2, '0')}</span>
         </div>
         <div className="v2-filter-list" role="group" aria-label="Filter projects">
           {categories.map((item) => (
             <button
               key={item}
+              type="button"
               className={category === item ? 'is-active' : undefined}
               aria-pressed={category === item}
               onClick={() => setCategory(item)}
@@ -127,16 +182,23 @@ export default function ProjectsPage() {
           className="v2-project-stack"
           aria-label={`${category} projects`}
         >
-          {filtered.map((project, index) => (
-            <article
+          {filtered.map((project, index) => {
+            const isActive = project.id === activeProject?.id;
+            const setActivePreview = (node: HTMLElement | null) => {
+              if (isActive) activePreviewRef.current = node;
+              else if (activePreviewRef.current === node) activePreviewRef.current = null;
+            };
+
+            return (
+              <article
               id={`project-${project.id}`}
               className="v2-project-card"
               key={project.id}
               ref={(node) => {
-                if (node) projectRefs.current.set(project.id, node);
-                else projectRefs.current.delete(project.id);
+                if (node) projectRefs.set(project.id, node);
+                else projectRefs.delete(project.id);
               }}
-              data-active={project.id === activeProject?.id}
+              data-active={isActive}
             >
               <div className="v2-project-copy">
                 <div className="v2-project-heading">
@@ -174,31 +236,20 @@ export default function ProjectsPage() {
               </div>
 
               <a
+                ref={setActivePreview}
                 className="v2-project-preview"
                 href={project.liveUrl}
                 target="_blank"
                 rel="noreferrer"
                 aria-label={`Open the live ${project.title} project`}
               >
-                <img
-                  src={project.images[0]}
-                  alt={`${project.title} interface preview`}
-                  loading={index < 2 ? 'eager' : 'lazy'}
-                />
-                <span className="v2-project-preview-index" aria-hidden="true">
-                  {project.index}
-                </span>
+                <ProjectPreviewContent project={project} eager={index < 2} />
               </a>
             </article>
-          ))}
+            );
+          })}
         </section>
 
-        <ScrollProjectDevice
-          activeIndex={activeIndex}
-          projects={filtered}
-          onProjectSelect={scrollToProject}
-          scrollTrackRef={projectStackRef}
-        />
       </div>
     </div>
   );

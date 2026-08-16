@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en" data-theme-mode="system" data-resolved-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f2eee5" />
+    <meta name="description" content="Anchored services disclosure prototype for Jack Cao's portfolio." />
+    <title>Services — Jack Cao</title>
+    <link rel="icon" href="/favicon.svg" />
+    <script>
+      (() => {
+        try {
+          const stored = localStorage.getItem('portfolio-shell-theme');
+          const mode = ['system', 'light', 'dark'].includes(stored) ? stored : 'system';
+          const resolved = mode === 'system'
+            ? (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+            : mode;
+          document.documentElement.dataset.themeMode = mode;
+          document.documentElement.dataset.resolvedTheme = resolved;
+        } catch {
+          // The warm light palette remains usable without storage.
+        }
+      })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Besley:ital,wght@0,400..800;1,400..800&amp;family=Geologica:wght@400..800&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="../shared/raster-cursor.css" />
+    <script type="module" src="./app.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="prototype-header" data-cursor-tone="light">
+      <a href="../sensory/">← Interaction lab</a>
+      <span>Services prototype</span>
+    </header>
+
+    <main id="main">
+      <section class="service-system" aria-labelledby="page-title">
+        <div class="service-sidebar" data-cursor-tone="light">
+          <h1 id="page-title">Services</h1>
+          <nav class="service-index" aria-label="Service index">
+            <ol>
+              <li><button type="button" data-service-jump="product-engineering" aria-current="location" aria-expanded="false" aria-controls="product-engineering-details">Product engineering</button></li>
+              <li><button type="button" data-service-jump="interface-systems" aria-expanded="false" aria-controls="interface-systems-details">Interface systems</button></li>
+              <li><button type="button" data-service-jump="product-direction" aria-expanded="false" aria-controls="product-direction-details">Product direction</button></li>
+            </ol>
+            <a href="mailto:hello@jackcao.dev?subject=Project%20inquiry">Start a conversation ↗</a>
+          </nav>
+        </div>
+
+        <div class="receipt-stack">
+          <article class="service-receipt" id="product-engineering" data-service="product-engineering" data-open="false" data-cursor-tone="light">
+            <div class="receipt-edge receipt-edge-top" data-receipt-edge="top" aria-hidden="true"></div>
+            <div class="receipt-sheet">
+              <div class="receipt-trigger" aria-labelledby="product-engineering-title">
+                <span class="receipt-title">
+                  <strong id="product-engineering-title">Product engineering</strong>
+                  <span>A maintainable product slice from brief to working release.</span>
+                </span>
+              </div>
+              <div class="receipt-body" id="product-engineering-details" hidden>
+                <div class="receipt-content">
+                  <dl class="receipt-specs">
+                    <div class="receipt-spec-row"><dt>Frame</dt><dd><span>Constraints</span><span>Flows</span><span>Evidence</span></dd></div>
+                    <div class="receipt-spec-row"><dt>Prototype</dt><dd><span>Interaction</span><span>Architecture</span><span>States</span></dd></div>
+                    <div class="receipt-spec-row"><dt>Build</dt><dd><span>Implementation</span><span>Testing</span><span>Handoff</span></dd></div>
+                    <div class="receipt-spec-row"><dt>Coverage</dt><dd><span>Product UI</span><span>Design systems</span><span>Accessible interaction</span></dd></div>
+                    <div class="receipt-spec-row receipt-spec-emphasis"><dt>Duration (Weeks)</dt><dd>6–12</dd></div>
+                    <div class="receipt-spec-row receipt-spec-emphasis receipt-price"><dt>Pricing</dt><dd>From $400</dd></div>
+                  </dl>
+                </div>
+              </div>
+            </div>
+            <div class="receipt-edge receipt-edge-bottom" data-receipt-edge="bottom" aria-hidden="true"></div>
+          </article>
+
+          <article class="service-receipt" id="interface-systems" data-service="interface-systems" data-open="false" data-cursor-tone="dark">
+            <div class="receipt-edge receipt-edge-top" data-receipt-edge="top" aria-hidden="true"></div>
+            <div class="receipt-sheet">
+              <div class="receipt-trigger" aria-labelledby="interface-systems-title">
+                <span class="receipt-title">
+                  <strong id="interface-systems-title">Interface systems</strong>
+                  <span>A shared interface language teams can extend.</span>
+                </span>
+              </div>
+              <div class="receipt-body" id="interface-systems-details" hidden>
+                <div class="receipt-content">
+                  <dl class="receipt-specs">
+                    <div class="receipt-spec-row"><dt>Inventory</dt><dd><span>Patterns</span><span>Drift</span><span>Friction</span></dd></div>
+                    <div class="receipt-spec-row"><dt>Define</dt><dd><span>Tokens</span><span>Behavior</span><span>Ownership</span></dd></div>
+                    <div class="receipt-spec-row"><dt>Prove</dt><dd><span>Components</span><span>Migration</span><span>Guidance</span></dd></div>
+                    <div class="receipt-spec-row"><dt>Coverage</dt><dd><span>Interface audit</span><span>Component set</span><span>Documentation</span></dd></div>
+                    <div class="receipt-spec-row receipt-spec-emphasis"><dt>Duration (Weeks)</dt><dd>4–8</dd></div>
+                    <div class="receipt-spec-row receipt-spec-emphasis receipt-price"><dt>Pricing</dt><dd>From $250</dd></div>
+                  </dl>
+                </div>
+              </div>
+            </div>
+            <div class="receipt-edge receipt-edge-bottom" data-receipt-edge="bottom" aria-hidden="true"></div>
+          </article>
+
+          <article class="service-receipt" id="product-direction" data-service="product-direction" data-open="false" data-cursor-tone="light">
+            <div class="receipt-edge receipt-edge-top" data-receipt-edge="top" aria-hidden="true"></div>
+            <div class="receipt-sheet">
+              <div class="receipt-trigger" aria-labelledby="product-direction-title">
+                <span class="receipt-title">
+                  <strong id="product-direction-title">Product direction</strong>
+                  <span>A tested direction ready for commitment.</span>
+                </span>
+              </div>
+              <div class="receipt-body" id="product-direction-details" hidden>
+                <div class="receipt-content">
+                  <dl class="receipt-specs">
+                    <div class="receipt-spec-row"><dt>Clarify</dt><dd><span>Opportunity</span><span>Audience</span><span>Risk</span></dd></div>
+                    <div class="receipt-spec-row"><dt>Explore</dt><dd><span>Flows</span><span>Form</span><span>Alternatives</span></dd></div>
+                    <div class="receipt-spec-row"><dt>Decide</dt><dd><span>Prototype</span><span>Evidence</span><span>Next steps</span></dd></div>
+                    <div class="receipt-spec-row"><dt>Coverage</dt><dd><span>Decision rationale</span><span>Risk map</span><span>Build recommendation</span></dd></div>
+                    <div class="receipt-spec-row receipt-spec-emphasis"><dt>Duration (Weeks)</dt><dd>2–4</dd></div>
+                    <div class="receipt-spec-row receipt-spec-emphasis receipt-price"><dt>Pricing</dt><dd>Custom quote</dd></div>
+                  </dl>
+                </div>
+              </div>
+            </div>
+            <div class="receipt-edge receipt-edge-bottom" data-receipt-edge="bottom" aria-hidden="true"></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="closing-block" aria-labelledby="closing-title" data-cursor-tone="accent">
+        <h2 id="closing-title">Have a different shape in mind?</h2>
+        <a href="mailto:hello@jackcao.dev?subject=Project%20inquiry">Tell me what you are building ↗</a>
+      </section>
+    </main>
+
+    <nav class="primary-dock" aria-label="Portfolio navigation" data-cursor-tone="light">
+      <button class="dock-search" type="button" data-command-open aria-label="Search portfolio">
+        <svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"></circle><path d="m16 16 4 4"></path></svg>
+      </button>
+      <a href="../work/">Work</a>
+      <a href="#main" aria-current="page">Services</a>
+      <a href="../shell/#about">About</a>
+      <a href="../shell/#contact">Contact</a>
+    </nav>
+
+    <div class="utility-stack" aria-label="Display preferences" data-cursor-tone="light">
+      <button class="utility-button" type="button" data-theme-toggle aria-label="Theme: system">
+        <svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"></circle><path d="M12 5v14A7 7 0 0 0 12 5Z"></path></svg>
+        <span class="utility-tooltip" data-theme-label>Theme: system</span>
+      </button>
+      <button class="utility-button" type="button" data-sound-toggle aria-pressed="true" aria-label="Interface sounds on">
+        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 10v4h3l4 3V7L8 10H5Z"></path><path class="sound-wave" d="M16 9c1.3 1.7 1.3 4.3 0 6M19 6.5c3.2 3.1 3.2 7.9 0 11"></path><path class="sound-slash" d="M4 4l16 16"></path></svg>
+        <span class="utility-tooltip" data-sound-label>Sound on</span>
+      </button>
+    </div>
+
+    <dialog class="command-dialog" aria-labelledby="command-title" data-command-dialog>
+      <div class="command-header">
+        <h2 id="command-title">Search</h2>
+        <button type="button" data-command-close aria-label="Close search">Esc</button>
+      </div>
+      <label class="command-input-wrap">
+        <span class="sr-only">Search portfolio</span>
+        <input type="search" autocomplete="off" placeholder="Search portfolio…" data-command-input />
+      </label>
+      <div class="command-list" role="listbox" aria-label="Portfolio results">
+        <button type="button" role="option" data-command-option data-href="../work/" data-search="work projects" aria-selected="true"><span>Work</span><kbd>W</kbd></button>
+        <button type="button" role="option" data-command-option data-service-command="product-engineering" data-search="product engineering build"><span>Product engineering</span><kbd>P</kbd></button>
+        <button type="button" role="option" data-command-option data-service-command="interface-systems" data-search="interface systems design"><span>Interface systems</span><kbd>I</kbd></button>
+        <button type="button" role="option" data-command-option data-service-command="product-direction" data-search="product direction prototype"><span>Product direction</span><kbd>D</kbd></button>
+        <button type="button" role="option" data-command-option data-href="../shell/#about" data-search="about biography"><span>About</span><kbd>A</kbd></button>
+        <button type="button" role="option" data-command-option data-href="../shell/#contact" data-search="contact email"><span>Contact</span><kbd>C</kbd></button>
+      </div>
+      <div class="command-empty" data-command-empty hidden>No match</div>
+      <div class="command-footer"><span><kbd>↑</kbd><kbd>↓</kbd> Move</span><span><kbd>Enter</kbd> Open</span></div>
+    </dialog>
+
+    <div class="toast" role="status" aria-live="polite" aria-atomic="true" data-toast></div>
+  </body>
+</html>

@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en" data-theme-mode="system" data-resolved-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f2eee5" />
+    <meta name="description" content="Accessible project media viewer prototype for Jack Cao's portfolio." />
+    <title>Credify — Jack Cao</title>
+    <link rel="icon" href="/favicon.svg" />
+    <script>
+      (() => {
+        try {
+          const stored = localStorage.getItem("portfolio-shell-theme");
+          const mode = ["system", "light", "dark"].includes(stored) ? stored : "system";
+          const resolved = mode === "system"
+            ? (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
+            : mode;
+          document.documentElement.dataset.themeMode = mode;
+          document.documentElement.dataset.resolvedTheme = resolved;
+        } catch {
+          // The light default remains usable without local storage.
+        }
+      })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Besley:ital,wght@0,400..800;1,400..800&amp;family=Geologica:wght@400..800&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="../shared/raster-cursor.css" />
+    <script type="module" src="./app.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to project</a>
+
+    <div class="page-shell" data-page-shell>
+      <header class="prototype-header">
+        <a href="../work/">← Work</a>
+      </header>
+
+      <main id="main">
+        <section class="project-intro" aria-labelledby="project-title">
+          <div>
+            <h1 id="project-title">Credify</h1>
+          </div>
+          <dl class="project-meta">
+            <div><dt>Role</dt><dd>Product engineering</dd></div>
+            <div><dt>Duration</dt><dd>8 weeks</dd></div>
+          </dl>
+        </section>
+
+        <section class="media-section" aria-labelledby="media-title">
+          <header class="section-heading">
+            <h2 id="media-title">Product states</h2>
+          </header>
+
+          <div class="media-grid">
+            <button class="media-card media-card-wide" type="button" data-media-index="0" aria-label="Open application overview">
+              <figure>
+                <div class="media-card-frame" data-cursor-intent="media" data-cursor-tone="dark">
+                  <img src="/screenshots/credify.svg" alt="Dark credit application dashboard with green status accents" />
+                </div>
+                <figcaption><span>Application overview</span><span>01</span></figcaption>
+              </figure>
+            </button>
+
+            <button class="media-card" type="button" data-media-index="1" aria-label="Open eligibility details">
+              <figure>
+                <div class="media-card-frame" data-cursor-intent="media" data-cursor-tone="dark">
+                  <img src="/screenshots/smartnest.svg" alt="Dark eligibility details interface with violet status accents" />
+                </div>
+                <figcaption><span>Eligibility details</span><span>02</span></figcaption>
+              </figure>
+            </button>
+
+            <button class="media-card" type="button" data-media-index="2" aria-label="Play decision flow motion study">
+              <figure>
+                <div class="media-card-frame media-card-video" data-cursor-intent="media" data-cursor-tone="dark">
+                  <img src="/screenshots/stock-tracker.svg" alt="Decision flow interface used as the motion-study poster" />
+                  <span aria-hidden="true">Play</span>
+                </div>
+                <figcaption><span>Decision flow</span><span>Motion</span></figcaption>
+              </figure>
+            </button>
+
+            <button class="media-card" type="button" data-media-index="3" aria-label="Open review state">
+              <figure>
+                <div class="media-card-frame" data-cursor-intent="media" data-cursor-tone="dark">
+                  <img src="/screenshots/citizen-voice.svg" alt="Review state interface with amber status accents" />
+                </div>
+                <figcaption><span>Review state</span><span>04</span></figcaption>
+              </figure>
+            </button>
+
+            <button class="media-card media-card-wide" type="button" data-media-index="4" aria-label="Open completion handoff">
+              <figure>
+                <div class="media-card-frame" data-cursor-intent="media" data-cursor-tone="dark">
+                  <img src="/screenshots/munky.svg" alt="Completion handoff interface with rose status accents" />
+                </div>
+                <figcaption><span>Completion handoff</span><span>05</span></figcaption>
+              </figure>
+            </button>
+          </div>
+        </section>
+
+        <footer class="project-footer">
+          <a href="#main">Return to top ↑</a>
+          <a href="../work/">View all work →</a>
+        </footer>
+      </main>
+
+      <nav class="back-dock" aria-label="Project navigation">
+        <a href="../work/">← Back to Work</a>
+      </nav>
+
+      <div class="utility-stack" aria-label="Page preferences">
+        <button class="utility-button" type="button" data-back-to-top aria-label="Back to top">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="m6 10 6-6 6 6"></path><path d="M12 4v16"></path></svg>
+        </button>
+        <button class="utility-button" type="button" data-theme-toggle aria-label="Theme: system">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 3v2M12 19v2M3 12h2M19 12h2"></path><circle cx="12" cy="12" r="4"></circle><path d="m5.6 5.6 1.4 1.4M17 17l1.4 1.4M18.4 5.6 17 7M7 17l-1.4 1.4"></path></svg>
+        </button>
+        <button class="utility-button" type="button" data-sound-toggle aria-label="Sound on" aria-pressed="true">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 10v4h3l4 3V7l-4 3H5Z"></path><path class="sound-wave" d="M15 9.2c.8.7 1.2 1.6 1.2 2.8s-.4 2.1-1.2 2.8M17.6 7c1.4 1.3 2.1 3 2.1 5s-.7 3.7-2.1 5"></path><path class="sound-slash" d="m5 5 14 14"></path></svg>
+        </button>
+      </div>
+    </div>
+
+    <dialog class="media-dialog" data-media-dialog aria-labelledby="viewer-title">
+      <div class="viewer-shell">
+        <header class="viewer-header">
+          <div>
+            <span data-viewer-counter aria-live="polite">01 / 05</span>
+            <h2 id="viewer-title" data-viewer-title>Application overview</h2>
+          </div>
+          <button class="viewer-close" type="button" data-viewer-close aria-label="Close media viewer"><span aria-hidden="true">×</span></button>
+        </header>
+
+        <div class="viewer-stage" data-viewer-stage>
+          <button class="viewer-side viewer-side-previous" type="button" data-viewer-previous aria-label="Previous media">
+            <span aria-hidden="true">←</span>
+          </button>
+
+          <figure class="viewer-figure">
+            <div class="viewer-media" data-viewer-media data-cursor-intent="drag" data-cursor-tone="dark">
+              <div class="viewer-slot" data-viewer-slot></div>
+              <span class="drag-label" aria-hidden="true">Drag</span>
+            </div>
+          </figure>
+
+          <button class="viewer-side viewer-side-next" type="button" data-viewer-next aria-label="Next media">
+            <span aria-hidden="true">→</span>
+          </button>
+        </div>
+
+        <nav class="viewer-filmstrip" aria-label="Choose project media" data-viewer-filmstrip></nav>
+      </div>
+    </dialog>
+
+    <div class="toast" role="status" aria-live="polite" aria-atomic="true" data-toast></div>
+  </body>
+</html>

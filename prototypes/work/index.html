@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en" data-theme-mode="system" data-resolved-theme="light" data-view="index">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f2eee5" />
+    <meta name="description" content="Tactile project index prototype for Jack Cao's portfolio." />
+    <title>Work — Jack Cao</title>
+    <link rel="icon" href="/favicon.svg" />
+    <script>
+      (() => {
+        try {
+          const stored = localStorage.getItem('portfolio-shell-theme');
+          const mode = ['system', 'light', 'dark'].includes(stored) ? stored : 'system';
+          const resolved = mode === 'system'
+            ? (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+            : mode;
+          document.documentElement.dataset.themeMode = mode;
+          document.documentElement.dataset.resolvedTheme = resolved;
+        } catch {
+          // The light default remains usable when storage is unavailable.
+        }
+      })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Besley:ital,wght@0,400..800;1,400..800&amp;family=Geologica:wght@400..800&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="../shared/raster-cursor.css" />
+    <script type="module" src="./app.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <main id="main">
+      <section class="index-view" data-page-view="index" aria-labelledby="work-title">
+        <header class="index-masthead">
+          <a class="identity" href="../shell/" aria-label="Jack Cao, open shell prototype">
+            <span class="identity-mark" aria-hidden="true">JC</span>
+            <span>Jack Cao</span>
+          </a>
+          <span>Product engineer who designs</span>
+        </header>
+
+        <div class="work-heading">
+          <h1 id="work-title">Work</h1>
+          <div class="work-view-switch" role="group" aria-label="Project layout">
+            <button type="button" data-work-view="list" aria-pressed="true" aria-label="List view">
+              <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 7h14M5 12h14M5 17h14"></path></svg>
+              <span class="view-tooltip">List</span>
+            </button>
+            <button type="button" data-work-view="showcase" aria-pressed="false" aria-label="Showcase view">
+              <svg aria-hidden="true" viewBox="0 0 24 24"><rect x="4.5" y="4.5" width="5.5" height="5.5" rx="1"></rect><rect x="14" y="4.5" width="5.5" height="5.5" rx="1"></rect><rect x="4.5" y="14" width="5.5" height="5.5" rx="1"></rect><rect x="14" y="14" width="5.5" height="5.5" rx="1"></rect></svg>
+              <span class="view-tooltip">Showcase</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="work-collection" data-work-collection data-layout="list" data-expanded="false">
+        <div class="work-list" data-work-list>
+          <article class="work-row">
+            <div class="work-row-inner">
+            <button class="project-thumbnail" type="button" data-project-preview="credify" aria-label="Open Credify case study">
+              <span class="media-stack" aria-hidden="true">
+                <span class="stack-frame stack-frame-back"><img src="/screenshots/credify.svg" alt="" /></span>
+                <span class="stack-frame stack-frame-middle"><img src="/screenshots/credify.svg" alt="" /></span>
+                <span class="stack-frame stack-frame-front"><img src="/screenshots/credify.svg" alt="" /></span>
+              </span>
+            </button>
+            <a class="project-title-link" href="?project=credify" data-project-link="credify"><strong>Credify</strong></a>
+              <time class="project-year" datetime="2024-10">Oct 2024</time>
+            </div>
+          </article>
+
+          <article class="work-row">
+            <div class="work-row-inner">
+            <button class="project-thumbnail" type="button" data-project-preview="citizenvoice" aria-label="Open CitizenVoice case study">
+              <span class="media-stack" aria-hidden="true">
+                <span class="stack-frame stack-frame-back"><img src="/screenshots/citizen-voice.svg" alt="" /></span>
+                <span class="stack-frame stack-frame-middle"><img src="/screenshots/citizen-voice.svg" alt="" /></span>
+                <span class="stack-frame stack-frame-front"><img src="/screenshots/citizen-voice.svg" alt="" /></span>
+              </span>
+            </button>
+            <a class="project-title-link" href="?project=citizenvoice" data-project-link="citizenvoice"><strong>CitizenVoice</strong></a>
+              <time class="project-year" datetime="2024-09">Sep 2024</time>
+            </div>
+          </article>
+
+          <article class="work-row">
+            <div class="work-row-inner">
+            <button class="project-thumbnail" type="button" data-project-preview="smartnest" aria-label="Open Smartnest case study">
+              <span class="media-stack" aria-hidden="true">
+                <span class="stack-frame stack-frame-back"><img src="/screenshots/smartnest.svg" alt="" /></span>
+                <span class="stack-frame stack-frame-middle"><img src="/screenshots/smartnest.svg" alt="" /></span>
+                <span class="stack-frame stack-frame-front"><img src="/screenshots/smartnest.svg" alt="" /></span>
+              </span>
+            </button>
+            <a class="project-title-link" href="?project=smartnest" data-project-link="smartnest"><strong>Smartnest</strong></a>
+              <time class="project-year" datetime="2024-06">Jun 2024</time>
+            </div>
+          </article>
+
+          <article class="work-row work-more-row" data-more-row>
+            <div class="work-row-inner">
+            <button class="project-thumbnail" type="button" data-project-preview="stock-tracker" data-more-thumbnail aria-label="Open Stock Tracker case study" disabled>
+              <span class="media-stack" aria-hidden="true">
+                <span class="stack-frame stack-frame-back"><img src="/screenshots/stock-tracker.svg" alt="" /></span>
+                <span class="stack-frame stack-frame-middle"><img src="/screenshots/stock-tracker.svg" alt="" /></span>
+                <span class="stack-frame stack-frame-front"><img src="/screenshots/stock-tracker.svg" alt="" /></span>
+              </span>
+            </button>
+            <a class="project-title-link project-title-swap" href="?project=stock-tracker" data-project-link="stock-tracker" data-more-projects aria-label="Show more projects">
+              <strong><span data-more-label>More</span><span data-project-label aria-hidden="true">Stock Tracker</span></strong>
+            </a>
+            <span class="more-row-meta">
+              <span class="more-arrow" aria-hidden="true">›</span>
+              <time class="project-year more-project-year" datetime="2024-05">May 2024</time>
+            </span>
+            </div>
+          </article>
+
+          <article class="work-row work-row-revealed" data-more-project hidden>
+            <div class="work-row-inner">
+            <button class="project-thumbnail" type="button" data-project-preview="munky" aria-label="Open $Munky case study">
+              <span class="media-stack" aria-hidden="true">
+                <span class="stack-frame stack-frame-back"><img src="/screenshots/munky.svg" alt="" /></span>
+                <span class="stack-frame stack-frame-middle"><img src="/screenshots/munky.svg" alt="" /></span>
+                <span class="stack-frame stack-frame-front"><img src="/screenshots/munky.svg" alt="" /></span>
+              </span>
+            </button>
+            <a class="project-title-link" href="?project=munky" data-project-link="munky"><strong>$Munky</strong></a>
+              <time class="project-year" datetime="2025-01">Jan 2025</time>
+            </div>
+          </article>
+        </div>
+
+        <div class="work-showcase" data-work-showcase hidden></div>
+        </div>
+
+        <footer class="index-footer">
+          <a href="#main">Back to top ↑</a>
+        </footer>
+      </section>
+
+      <article class="project-view" data-page-view="project" aria-labelledby="project-title" tabindex="-1" hidden>
+        <header class="project-header">
+          <p data-project-meta>Product system · Oct 2024</p>
+          <h1 id="project-title" data-project-title>Credify</h1>
+        </header>
+
+        <figure class="project-hero" data-transition-media>
+          <img src="/screenshots/credify.svg" alt="Credify interface preview" data-project-media />
+        </figure>
+
+        <div class="project-layout">
+          <nav class="project-toc" aria-label="Case study sections">
+            <a href="#context" aria-current="location">Context</a>
+            <a href="#decisions">Decisions</a>
+            <a href="#outcome">Outcome</a>
+          </nav>
+
+          <div class="project-story">
+            <section id="context" data-project-section>
+              <h2>Context</h2>
+              <p data-project-context></p>
+            </section>
+            <section id="decisions" data-project-section>
+              <h2>Decisions</h2>
+              <p data-project-decisions></p>
+            </section>
+            <section id="outcome" data-project-section>
+              <h2>Outcome</h2>
+              <p data-project-outcome></p>
+            </section>
+          </div>
+        </div>
+
+        <button class="next-project" type="button" data-next-project>
+          <span>Next project</span>
+          <strong data-next-project-title>CitizenVoice</strong>
+          <span class="next-arrow" aria-hidden="true">↗</span>
+        </button>
+      </article>
+    </main>
+
+    <nav class="primary-dock" aria-label="Portfolio navigation">
+      <div class="dock-index" data-dock-index>
+        <button class="primary-dock-search" type="button" data-command-open aria-label="Search portfolio">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"></circle><path d="m16 16 4 4"></path></svg>
+          <span class="dock-tooltip">Search · Ctrl K</span>
+        </button>
+        <a href="#work" aria-current="page">Work</a>
+        <a href="../capabilities/">Services</a>
+        <a href="../shell/#about">About</a>
+        <a href="../shell/#contact">Contact</a>
+      </div>
+      <button class="dock-project-back" type="button" data-dock-project data-close-project hidden>
+        <span aria-hidden="true">←</span> Back to index
+      </button>
+    </nav>
+
+    <div class="utility-stack" aria-label="Display preferences">
+      <button class="utility-button" type="button" data-project-only data-scroll-top aria-label="Back to top" hidden>
+        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="m6 10 6-6 6 6M12 4v16"></path></svg>
+        <span class="utility-tooltip">Back to top</span>
+      </button>
+      <button class="utility-button" type="button" data-theme-toggle aria-label="Theme follows system">
+        <svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+        <span class="utility-tooltip" data-theme-label>Theme: system</span>
+      </button>
+      <button class="utility-button" type="button" data-sound-toggle aria-pressed="true" aria-label="Interface sounds on">
+        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 10v4h3l4 3V7L8 10H5Z"></path><path class="sound-wave" d="M16 9c1.3 1.7 1.3 4.3 0 6M19 6.5c3.2 3.1 3.2 7.9 0 11"></path><path class="sound-slash" d="M4 4l16 16"></path></svg>
+        <span class="utility-tooltip" data-sound-label>Sound on</span>
+      </button>
+    </div>
+
+    <dialog class="project-preview-dialog" data-project-preview-dialog aria-labelledby="project-preview-title">
+      <button class="project-preview-close" type="button" data-project-preview-close aria-label="Close project preview">
+        <span aria-hidden="true">←</span>
+      </button>
+      <figure class="project-preview-figure">
+        <div class="project-preview-frame" data-project-preview-frame data-cursor-intent="media" data-cursor-tone="dark">
+          <img src="/screenshots/credify.svg" alt="" data-project-preview-image />
+        </div>
+        <figcaption id="project-preview-title" data-project-preview-title>Credify</figcaption>
+      </figure>
+    </dialog>
+
+    <dialog class="command-dialog" aria-labelledby="command-title" data-command-dialog>
+      <div class="command-header">
+        <h2 id="command-title">Search</h2>
+        <button class="dialog-close" type="button" data-command-close aria-label="Close search">Esc</button>
+      </div>
+
+      <label class="command-input-wrap">
+        <svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"></circle><path d="m16 16 4 4"></path></svg>
+        <span class="sr-only">Search portfolio</span>
+        <input type="search" autocomplete="off" placeholder="Search projects and routes…" data-command-input />
+      </label>
+
+      <p class="command-count" aria-live="polite" data-command-count>8 results</p>
+      <div class="command-results" role="listbox" aria-label="Search results" data-command-results>
+        <button role="option" type="button" data-command-item data-search="work project index" data-target="#work">
+          <span class="command-kind">Route</span><strong>Work</strong><span aria-hidden="true">↵</span>
+        </button>
+        <button role="option" type="button" data-command-item data-search="services capabilities" data-href="../capabilities/">
+          <span class="command-kind">Route</span><strong>Services</strong><span aria-hidden="true">↵</span>
+        </button>
+        <button role="option" type="button" data-command-item data-search="about biography" data-href="../shell/#about">
+          <span class="command-kind">Route</span><strong>About</strong><span aria-hidden="true">↵</span>
+        </button>
+        <button role="option" type="button" data-command-item data-search="contact email" data-href="../shell/#contact">
+          <span class="command-kind">Route</span><strong>Contact</strong><span aria-hidden="true">↵</span>
+        </button>
+        <button role="option" type="button" data-command-item data-search="credify" data-project="credify">
+          <span class="command-kind">Project</span><strong>Credify</strong><span aria-hidden="true">↗</span>
+        </button>
+        <button role="option" type="button" data-command-item data-search="citizenvoice civic" data-project="citizenvoice">
+          <span class="command-kind">Project</span><strong>CitizenVoice</strong><span aria-hidden="true">↗</span>
+        </button>
+        <button role="option" type="button" data-command-item data-search="smartnest health" data-project="smartnest">
+          <span class="command-kind">Project</span><strong>Smartnest</strong><span aria-hidden="true">↗</span>
+        </button>
+        <button role="option" type="button" data-command-item data-search="theme appearance" data-action="theme">
+          <span class="command-kind">Action</span><strong>Cycle theme</strong><span aria-hidden="true">◐</span>
+        </button>
+      </div>
+      <div class="command-empty" hidden data-command-empty><strong>No match</strong></div>
+      <div class="command-footer">
+        <span><kbd>↑</kbd><kbd>↓</kbd> Move</span>
+        <span><kbd>Enter</kbd> Open</span>
+        <span><kbd>Esc</kbd> Close</span>
+      </div>
+    </dialog>
+
+    <div class="toast" role="status" aria-live="polite" aria-atomic="true" data-toast></div>
+  </body>
+</html>

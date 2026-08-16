@@ -1,0 +1,20 @@
+{
+  "method": "EBU R128 two-pass loudness normalization",
+  "reference": {
+    "library": "Cuelume 0.2.2",
+    "cues": ["whisper", "page", "droplet"],
+    "masterVolume": 0.22,
+    "measuredMedianLufs": -48.95,
+    "derivedSourceTargetLufs": -35.8
+  },
+  "playbackMasterVolume": 0.22,
+  "files": {
+    "paper-rustle-1.mp3": { "integratedLufs": -35.71, "truePeakDbtp": -18.09 },
+    "paper-rustle-2.mp3": { "integratedLufs": -35.8, "truePeakDbtp": -12.16 },
+    "paper-slide.mp3": { "integratedLufs": -35.97, "truePeakDbtp": -26.18 },
+    "pencil-scribble-1.mp3": { "integratedLufs": -35.25, "truePeakDbtp": -21.31 },
+    "pencil-scribble-2.mp3": { "integratedLufs": -35.57, "truePeakDbtp": -20.67 },
+    "pencil-scribble-3.mp3": { "integratedLufs": -35.34, "truePeakDbtp": -19.67 },
+    "pencil-scribble-4.mp3": { "integratedLufs": -35.33, "truePeakDbtp": -21.78 }
+  }
+}

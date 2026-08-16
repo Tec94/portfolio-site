@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en" data-cursor-mode="raster" data-sound-engine="cuelume" data-sound-enabled="true">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f2eee5" />
+    <meta name="description" content="Cursor and interaction-sound comparison prototype for Jack Cao's portfolio." />
+    <title>Jack Cao — Sensory prototype</title>
+    <link rel="icon" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Besley:ital,wght@0,400..800;1,400..800&amp;family=Geologica:wght@400..800&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+    <script type="module" src="./app.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="prototype-header">
+      <a href="../work/">← Work prototype</a>
+      <span>Stage 3</span>
+    </header>
+
+    <main id="main">
+      <section class="intro" aria-labelledby="page-title" data-cursor-tone="light">
+        <h1 id="page-title">Cursor &amp; sound</h1>
+        <div class="rights-note" role="note">
+          <span>Raster · rights pending</span>
+          <span>Cuelume · 22%</span>
+        </div>
+      </section>
+
+      <section class="control-panel" aria-label="Sensory controls" data-cursor-tone="light">
+        <div class="control-row">
+          <span class="control-label">Cursor</span>
+          <div class="segmented-control" role="group" aria-label="Cursor variant">
+            <button type="button" data-cursor-choice="raster" aria-pressed="true">Raster</button>
+          </div>
+        </div>
+
+        <div class="control-row">
+          <span class="control-label">Sound</span>
+          <div class="segmented-control" role="group" aria-label="Sound engine">
+            <button type="button" data-engine-choice="cuelume" aria-pressed="true">Cuelume</button>
+          </div>
+        </div>
+
+        <div class="control-row volume-row">
+          <label class="control-label" for="volume">Volume</label>
+          <input id="volume" type="range" min="0" max="1" step="0.01" value="0.22" data-volume />
+          <output for="volume" data-volume-output>22%</output>
+        </div>
+
+        <div class="control-row">
+          <span class="control-label">Playback</span>
+          <button class="sound-toggle" type="button" data-sound-toggle aria-pressed="true">Disable sound</button>
+          <span class="engine-status" role="status" aria-live="polite" data-engine-status>Tap a cue to load</span>
+        </div>
+        <div class="control-row">
+          <span class="control-label">Typing</span>
+          <strong>Zen · 30%</strong>
+        </div>
+      </section>
+
+      <section class="surface-section" aria-labelledby="surface-title">
+        <h2 id="surface-title">Surfaces</h2>
+        <div class="surface-grid">
+          <article class="test-surface surface-paper" data-cursor-tone="light">
+            <div class="surface-meta"><span>Paper</span><span>Link</span></div>
+            <a href="#cues" class="surface-link" data-cursor-intent="link" data-audio-hover>
+              Open the index <span aria-hidden="true">→</span>
+            </a>
+          </article>
+
+          <article class="test-surface surface-ink" data-cursor-tone="dark">
+            <div class="surface-meta"><span>Ink</span><span>Button</span></div>
+            <button type="button" class="surface-button" data-cursor-intent="link" data-audio-hover data-cue="release">
+              Make contact <span aria-hidden="true">→</span>
+            </button>
+          </article>
+
+          <article class="test-surface surface-neutral" data-cursor-tone="neutral">
+            <div class="surface-meta"><span>Neutral</span><span>Drag · silent</span></div>
+            <button class="drag-object" type="button" data-cursor-intent="drag" aria-label="Drag the sample card">
+              <span aria-hidden="true">◇</span>
+              Drag
+            </button>
+          </article>
+
+          <figure class="test-surface surface-media" data-cursor-tone="accent" data-cursor-intent="media" data-project-preview>
+            <img src="/screenshots/credify.svg" alt="Credify interface preview" />
+            <figcaption class="surface-meta"><span>Media</span><span>View · silent</span></figcaption>
+          </figure>
+
+          <label class="test-surface surface-text" data-cursor-tone="light" data-cursor-intent="text">
+            <span class="surface-meta"><span>Text</span><span>Input · silent</span></span>
+            <input type="text" value="Product engineer who designs" aria-label="Cursor text-input test" />
+          </label>
+
+          <article class="test-surface surface-accent" data-cursor-tone="accent">
+            <div class="surface-meta"><span>Accent</span><span>Toggle</span></div>
+            <button class="sample-toggle" type="button" aria-pressed="false" data-cursor-intent="link" data-sample-toggle>
+              <span>Available</span><span class="switch-track" aria-hidden="true"><span></span></span>
+            </button>
+          </article>
+        </div>
+      </section>
+
+      <section class="cue-section" id="cues" aria-labelledby="cue-title">
+        <h2 id="cue-title">Cues</h2>
+        <div class="cue-grid">
+          <button class="cue-button" type="button" data-cursor-intent="link" data-press-release>
+            <span>Press / release</span><code data-cue-name="press">press · release</code>
+          </button>
+          <button class="cue-button" type="button" data-cursor-intent="link" data-audio-hover>
+            <span>Hover</span><code data-cue-name="hover">tick</code>
+          </button>
+          <button class="cue-button" type="button" data-cursor-intent="link" data-cue="expansion" data-expand-test aria-expanded="false">
+            <span>Expansion</span><code data-cue-name="expansion">whisper</code>
+          </button>
+          <button class="cue-button" type="button" data-cursor-intent="link" data-page-open>
+            <span>Navigation</span><code data-cue-name="navigation">page</code>
+          </button>
+          <button class="cue-button" type="button" data-cursor-intent="link" data-cue="success">
+            <span>Success</span><code data-cue-name="success">success</code>
+          </button>
+          <button class="cue-button" type="button" data-cursor-intent="link" data-cue="error">
+            <span>Error</span><code data-cue-name="error">error</code>
+          </button>
+        </div>
+        <div class="expansion-sample" data-expansion-sample hidden>
+          <span>Role</span><strong>Product engineer</strong>
+          <span>Duration</span><strong>8 weeks</strong>
+        </div>
+      </section>
+
+      <section class="command-section" aria-labelledby="command-section-title">
+        <h2 id="command-section-title">Command menu</h2>
+        <button class="command-launcher" type="button" data-command-open data-cursor-intent="link">
+          Open command menu <kbd>Ctrl K</kbd>
+        </button>
+      </section>
+    </main>
+
+    <footer class="prototype-footer">
+      <a href="https://cuelume-site.pages.dev/" target="_blank" rel="noreferrer">Cuelume ↗</a>
+      <a href="https://uisfx.com/" target="_blank" rel="noreferrer">UI SFX · Zen typing ↗</a>
+    </footer>
+
+    <button class="persistent-sound" type="button" data-sound-toggle aria-pressed="true">
+      <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 10v4h3l4 3V7L8 10H5Z"></path><path class="sound-wave" d="M16 9c1.3 1.7 1.3 4.3 0 6M19 6.5c3.2 3.1 3.2 7.9 0 11"></path><path class="sound-slash" d="M4 4l16 16"></path></svg>
+      <span data-persistent-sound-label>Sound on</span>
+    </button>
+
+    <div class="custom-cursor" data-custom-cursor data-mode="raster" data-tone="light" data-intent="default" hidden aria-hidden="true">
+      <div class="cursor-raster" data-cursor-raster>
+        <img src="/src/assets/cursors/default.png" alt="" data-raster-image />
+      </div>
+      <div class="cursor-vector" data-cursor-vector>
+        <svg viewBox="0 0 34 34">
+          <path class="vector-shadow" d="M3 4 29 17 18 21 13 31Z"></path>
+          <path class="vector-core" d="M3 3 29 16 18 20 13 30Z"></path>
+          <path class="vector-cut" d="m8 8 15 8-8 2-3 8Z"></path>
+        </svg>
+      </div>
+      <span class="cursor-intent-label" data-cursor-label></span>
+    </div>
+
+    <dialog class="paper-dialog" aria-labelledby="paper-dialog-title" data-page-dialog>
+      <div class="dialog-bar"><span>Case study</span><button type="button" data-page-close aria-label="Close page">Close</button></div>
+      <h2 id="paper-dialog-title">A page should feel placed, not spawned.</h2>
+      <figure><img src="/screenshots/citizen-voice.svg" alt="CitizenVoice interface preview" /></figure>
+    </dialog>
+
+    <dialog class="command-dialog" aria-labelledby="command-title" data-command-dialog>
+      <div class="command-header"><h2 id="command-title">Search</h2><button type="button" data-command-close aria-label="Close command menu">Esc</button></div>
+      <label class="command-input-wrap">
+        <span class="sr-only">Search portfolio</span>
+        <input type="search" value="" placeholder="Search portfolio…" data-command-input />
+      </label>
+      <div class="command-list" role="listbox" aria-label="Portfolio results">
+        <button type="button" role="option" data-command-option aria-selected="true"><span>Work</span><kbd>W</kbd></button>
+        <button type="button" role="option" data-command-option aria-selected="false"><span>Services</span><kbd>S</kbd></button>
+        <button type="button" role="option" data-command-option aria-selected="false"><span>About</span><kbd>A</kbd></button>
+        <button type="button" role="option" data-command-option aria-selected="false"><span>Contact</span><kbd>C</kbd></button>
+      </div>
+      <div class="command-footer"><span><kbd>↑</kbd><kbd>↓</kbd> Move</span><span><kbd>Enter</kbd> Open</span></div>
+    </dialog>
+
+    <div class="toast" role="status" aria-live="polite" aria-atomic="true" data-toast></div>
+  </body>
+</html>

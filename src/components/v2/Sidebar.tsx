@@ -1,36 +1,32 @@
-import { motion } from 'framer-motion';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { domAnimation, LazyMotion, m } from 'framer-motion';
+import { useCallback, useEffect, useMemo, useRef, useState, type RefObject } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Drawer } from '@base-ui/react/drawer';
 import {
   ArrowRight,
   ArrowUpRight,
-  Code2,
-  Gauge,
   Github,
-  Layers3,
   Linkedin,
   Mail,
   Menu,
-  PenTool,
-  Wrench,
   X,
 } from 'lucide-react';
-import { profile } from '../../data/portfolioData';
+import { profile, projects } from '../../data/portfolioData';
 import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion';
 import DitherWorldMap, { type MapLocationId } from './DitherWorldMap';
+import OmnitrixController, { type ProjectOption } from './OmnitrixController';
+import ProjectGlyph from './ProjectGlyph';
+import { useProjectGallery } from './ProjectGalleryContext';
 import { SocialActionBar, type SocialAction } from './SocialActionBar';
 
 const READOUT_EASE = [0.16, 1, 0.3, 1] as const;
 
 const navItems = [
-  { index: '01', label: 'Selected Work', path: '/' },
+  { index: '01', label: 'Projects', path: '/' },
   { index: '02', label: 'Services', path: '/services' },
   { index: '03', label: 'About / Notes', path: '/about' },
   { index: '04', label: 'Contact', path: '/contact' },
 ] as const;
-
-const expertiseIcons = [Code2, Layers3, PenTool, Gauge, Wrench];
 
 const mapLocations = {
   texas: {
@@ -43,15 +39,6 @@ const mapLocations = {
   },
 } satisfies Record<MapLocationId, { label: string; timeZone: string }>;
 
-function Mark() {
-  return (
-    <span className="v2-mark" aria-hidden="true">
-      <span>J</span>
-      <span>C</span>
-    </span>
-  );
-}
-
 function SocialIcon({ label }: { label: string }) {
   if (label === 'GitHub') return <Github size={15} />;
   if (label === 'LinkedIn') return <Linkedin size={15} />;
@@ -60,9 +47,15 @@ function SocialIcon({ label }: { label: string }) {
 
 interface SidebarContentProps {
   onNavigate?: () => void;
+  reserveOmnitrix?: boolean;
+  omnitrixAnchorRef?: RefObject<HTMLDivElement>;
 }
 
-function SidebarContent({ onNavigate }: SidebarContentProps) {
+function SidebarContent({
+  onNavigate,
+  reserveOmnitrix = false,
+  omnitrixAnchorRef,
+}: SidebarContentProps) {
   const [now, setNow] = useState(() => new Date());
   const [activeMapLocation, setActiveMapLocation] = useState<MapLocationId>('texas');
   const reducedMotion = usePrefersReducedMotion();
@@ -120,7 +113,6 @@ function SidebarContent({ onNavigate }: SidebarContentProps) {
   return (
     <div className="v2-sidebar-content">
       <header className="v2-identity">
-        <Mark />
         <p className="v2-identity-name">{profile.name}</p>
         <p className="v2-identity-role">{profile.title}</p>
         <div className="v2-availability">
@@ -148,51 +140,46 @@ function SidebarContent({ onNavigate }: SidebarContentProps) {
         </ol>
       </nav>
 
-      <section className="v2-sidebar-section" aria-labelledby="expertise-label">
-        <h2 id="expertise-label">Expertise</h2>
-        <ul>
-          {profile.expertise.map((item, index) => {
-            const Icon = expertiseIcons[index];
-            return (
-              <li key={item}>
-                <Icon size={14} aria-hidden="true" />
-                {item}
-              </li>
-            );
-          })}
-        </ul>
-      </section>
+      {reserveOmnitrix ? (
+        <div
+          ref={omnitrixAnchorRef}
+          className="v2-omnitrix-reserved-space"
+          aria-hidden="true"
+        />
+      ) : null}
 
       <section className="v2-sidebar-section v2-local-time" aria-labelledby="local-time-label">
         <h2 id="local-time-label">Local time</h2>
         <DitherWorldMap onActiveLocationChange={setActiveMapLocation} />
-        <div className="v2-local-time__readout" aria-live="polite" aria-atomic="true">
-          <motion.p
-            key={`${activeMapLocation}-location`}
-            initial={animateReadout ? { opacity: 0, y: 2 } : false}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{
-              duration: animateReadout ? 0.16 : 0,
-              ease: READOUT_EASE,
-            }}
-          >
-            {mapLocation.label}
-          </motion.p>
-          <motion.div
-            key={`${activeMapLocation}-details`}
-            className="v2-local-time__details"
-            initial={animateReadout ? { opacity: 0, y: 2 } : false}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{
-              duration: animateReadout ? 0.16 : 0,
-              delay: animateReadout ? 0.035 : 0,
-              ease: READOUT_EASE,
-            }}
-          >
-            <time dateTime={now.toISOString()}>{localTime}</time>
-            <span>{localDate}</span>
-          </motion.div>
-        </div>
+        <LazyMotion features={domAnimation}>
+          <div className="v2-local-time__readout" aria-live="polite" aria-atomic="true">
+            <m.p
+              key={`${activeMapLocation}-location`}
+              initial={animateReadout ? { opacity: 0, y: 2 } : false}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: animateReadout ? 0.16 : 0,
+                ease: READOUT_EASE,
+              }}
+            >
+              {mapLocation.label}
+            </m.p>
+            <m.div
+              key={`${activeMapLocation}-details`}
+              className="v2-local-time__details"
+              initial={animateReadout ? { opacity: 0, y: 2 } : false}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: animateReadout ? 0.16 : 0,
+                delay: animateReadout ? 0.035 : 0,
+                ease: READOUT_EASE,
+              }}
+            >
+              <time dateTime={now.toISOString()}>{localTime}</time>
+              <span>{localDate}</span>
+            </m.div>
+          </div>
+        </LazyMotion>
       </section>
 
       <div className="v2-sidebar-actions">
@@ -211,16 +198,43 @@ function SidebarContent({ onNavigate }: SidebarContentProps) {
 export default function Sidebar() {
   const [open, setOpen] = useState(false);
   const triggerRef = useRef<HTMLButtonElement>(null);
+  const omnitrixAnchorRef = useRef<HTMLDivElement>(null);
+  const reducedMotion = usePrefersReducedMotion();
+  const {
+    bridge,
+    controllerRef,
+    selectedId,
+    revealProject,
+    setSelectorOpen,
+  } = useProjectGallery();
+  const projectOptions = useMemo<ProjectOption[]>(
+    () =>
+      projects.map((project) => ({
+        id: project.id,
+        label: project.title,
+        glyph: <ProjectGlyph name={project.glyph} />,
+      })),
+    [],
+  );
+
+  const confirmProject = useCallback((projectId: string) => {
+    const project = projects.find((item) => item.id === projectId);
+    if (!project) return;
+    const opened = window.open(project.liveUrl, '_blank', 'noopener,noreferrer');
+    if (opened) opened.opener = null;
+  }, []);
 
   return (
     <>
       <aside className="v2-desktop-sidebar" aria-label="Profile and site navigation">
-        <SidebarContent />
+        <SidebarContent
+          reserveOmnitrix
+          omnitrixAnchorRef={omnitrixAnchorRef}
+        />
       </aside>
 
       <header className="v2-mobile-bar">
-        <NavLink to="/" className="v2-mobile-brand" aria-label="Jack Cao, selected work">
-          <Mark />
+        <NavLink to="/" className="v2-mobile-brand" aria-label="Jack Cao, projects">
           <span>
             <strong>{profile.name}</strong>
             <small>Product engineer</small>
@@ -260,6 +274,20 @@ export default function Sidebar() {
           </Drawer.Portal>
         </Drawer.Root>
       </header>
+
+      {projectOptions.length ? (
+        <OmnitrixController
+          ref={controllerRef}
+          projects={projectOptions}
+          selectedId={selectedId}
+          onPreviewChange={revealProject}
+          onConfirm={confirmProject}
+          onSelectorOpenChange={setSelectorOpen}
+          anchorRef={omnitrixAnchorRef}
+          previewRef={bridge?.previewRef}
+          reducedMotion={reducedMotion}
+        />
+      ) : null}
     </>
   );
 }
