@@ -9,6 +9,7 @@ import Scanlines from './components/Scanlines';
 import ErrorBoundary from './components/ErrorBoundary';
 import CustomCursorManager from './components/CustomCursorManager';
 import { lazyWithRetry } from './lib/lazyWithRetry';
+import { isLegacyAppRoute } from './portfolio/routeOwnership';
 
 // Lazy load components for better performance
 const Portfolio = lazyWithRetry(() => import('./components/Portfolio'), 'classic');
@@ -20,6 +21,10 @@ const ProjectsPage = lazyWithRetry(() => import('./components/v2/ProjectsPage'),
 const ServicesPage = lazyWithRetry(() => import('./components/v2/ServicesPage'), 'services');
 const AboutPage = lazyWithRetry(() => import('./components/v2/AboutPage'), 'about');
 const ContactPage = lazyWithRetry(() => import('./components/v2/ContactPage'), 'contact');
+const PreviewPortfolio = lazyWithRetry(
+  () => import('./portfolio/PreviewPortfolio'),
+  'portfolio-preview',
+);
 const enableVercelInsights = Boolean(import.meta.env.VITE_VERCEL_ENV);
 
 const LoadingScreen = () => (
@@ -50,10 +55,10 @@ function AppContent() {
       <Suspense fallback={<LoadingScreen />}>
         <Routes>
           <Route element={<V2Layout />}>
-            <Route path="/" element={<ProjectsPage />} />
-            <Route path="/services" element={<ServicesPage />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/contact" element={<ContactPage />} />
+            <Route path="/v2" element={<ProjectsPage />} />
+            <Route path="/v2/services" element={<ServicesPage />} />
+            <Route path="/v2/about" element={<AboutPage />} />
+            <Route path="/v2/contact" element={<ContactPage />} />
           </Route>
           <Route path="/classic" element={<Portfolio />} />
           <Route path="/services/:slug" element={<ServiceDetailPage />} />
@@ -66,18 +71,27 @@ function AppContent() {
 }
 
 function App() {
+  const location = useLocation();
+  const isLegacyRoute = isLegacyAppRoute(location.pathname);
+
   return (
     <ErrorBoundary>
-      <StatsigWrapper>
-        <ThemeProvider>
-          <BackgroundProvider>
-            <CustomCursorManager />
-            <AppContent />
-            {enableVercelInsights ? <Analytics /> : null}
-            {enableVercelInsights ? <SpeedInsights /> : null}
-          </BackgroundProvider>
-        </ThemeProvider>
-      </StatsigWrapper>
+      {isLegacyRoute ? (
+        <StatsigWrapper>
+          <ThemeProvider>
+            <BackgroundProvider>
+              <CustomCursorManager />
+              <AppContent />
+            </BackgroundProvider>
+          </ThemeProvider>
+        </StatsigWrapper>
+      ) : (
+        <Suspense fallback={<LoadingScreen />}>
+          <PreviewPortfolio />
+        </Suspense>
+      )}
+      {enableVercelInsights ? <Analytics /> : null}
+      {enableVercelInsights ? <SpeedInsights /> : null}
     </ErrorBoundary>
   );
 }

@@ -7,8 +7,6 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import Scanlines from '../components/Scanlines';
 import ArrowLeft from 'lucide-react/dist/esm/icons/arrow-left';
-import Check from 'lucide-react/dist/esm/icons/check';
-import TerminalTyping from '../components/TerminalTyping';
 import BlurReveal from '../components/BlurReveal';
 import AOS from 'aos';
 
@@ -46,7 +44,7 @@ export default function ServiceDetailPage() {
 
   if (!service) {
     return (
-      <div className="min-h-screen bg-black flex items-center justify-center">
+      <main className="min-h-screen bg-black flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-2xl text-green-300 font-mono mb-4">Service not found</h1>
           <Link
@@ -56,7 +54,7 @@ export default function ServiceDetailPage() {
             {'< '}Back to Home
           </Link>
         </div>
-      </div>
+      </main>
     );
   }
 
@@ -67,7 +65,7 @@ export default function ServiceDetailPage() {
       <Scanlines />
       <Navbar />
 
-      <div className="pt-20 pb-20 relative">
+      <main className="pt-20 pb-20 relative">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Back button */}
           <motion.div
@@ -330,7 +328,7 @@ export default function ServiceDetailPage() {
             </div>
           </BlurReveal>
         </div>
-      </div>
+      </main>
 
       <Footer />
     </div>

@@ -39,9 +39,9 @@ export default function V2Layout() {
       if (!projects.some((project) => project.id === projectId)) return;
 
       setSelectedId(projectId);
-      if (location.pathname !== '/') {
+      if (location.pathname !== '/v2') {
         setPendingRevealId(projectId);
-        navigate({ pathname: '/', search: `?project=${encodeURIComponent(projectId)}` });
+        navigate({ pathname: '/v2', search: `?project=${encodeURIComponent(projectId)}` });
         return;
       }
 

@@ -1,0 +1,311 @@
+@media (min-width: 56rem) {
+  .portfolio-selected {
+    height: calc(100vh + 300vh);
+  }
+
+  .portfolio-selected__sticky {
+    position: sticky;
+    top: 0;
+    display: grid;
+    height: 100vh;
+    grid-template-columns: minmax(11rem, 0.45fr) minmax(0, 1.55fr);
+    grid-template-rows: 1fr;
+    align-items: center;
+    gap: 2rem clamp(2rem, 6vw, 7rem);
+    padding-block: 3rem 5rem;
+    overflow: hidden;
+  }
+
+  .portfolio-selected__heading {
+    grid-column: 1;
+    grid-row: 1;
+    align-self: start;
+    padding-block-start: 0;
+  }
+
+  .portfolio-selected__heading h2 {
+    font-size: clamp(2rem, 3.2vw, 3.4rem);
+  }
+
+  .portfolio-selected__stage {
+    position: relative;
+    grid-column: 2;
+    grid-row: 1;
+    align-self: start;
+    justify-self: stretch;
+    height: min(68vh, 44rem);
+    margin: 3.25rem 0 0;
+  }
+
+  .portfolio-selected__panel {
+    position: absolute;
+    inset: 0;
+    visibility: hidden;
+  }
+
+  .portfolio-selected__panel:first-child {
+    visibility: visible;
+  }
+
+  .portfolio-selected__link {
+    height: 100%;
+    grid-template-rows: minmax(0, 1fr) auto;
+  }
+
+  .portfolio-selected__media {
+    height: 100%;
+  }
+
+  .portfolio-selected__locator {
+    display: block;
+    grid-column: 2;
+    grid-row: 1;
+    align-self: start;
+    margin: 0;
+  }
+
+}
+
+@media (max-width: 55.99rem) {
+  .portfolio-selected__panel {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+  }
+
+  .portfolio-overview-section {
+    grid-template-columns: 1fr;
+  }
+
+  .portfolio-overview-section > .portfolio-section-heading,
+  .portfolio-work-archive__sticky {
+    position: static;
+  }
+
+  .portfolio-work-archive {
+    grid-template-columns: 1fr;
+  }
+
+  .portfolio-work-archive__header {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+  }
+
+  .portfolio-work-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .portfolio-services {
+    grid-template-columns: 1fr;
+  }
+
+  .portfolio-services__sidebar {
+    position: static;
+  }
+
+  .portfolio-services__index {
+    position: static;
+  }
+
+  .portfolio-services__index ol {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .portfolio-services__index button {
+    min-height: 3.25rem;
+    background: var(--portfolio-bg-soft);
+    text-align: center;
+  }
+
+  .portfolio-services__index > a {
+    display: none;
+  }
+
+  .portfolio-overview-section > .portfolio-inline-link,
+  .portfolio-about-overview__body,
+  .portfolio-experience {
+    grid-column: 1;
+  }
+}
+
+@media (max-width: 48rem) {
+  .portfolio-hero,
+  .portfolio-work-archive,
+  .portfolio-overview-section,
+  .portfolio-services {
+    margin-inline: var(--portfolio-content-inset);
+  }
+
+  .portfolio-hero {
+    padding-block-start: 4.5rem;
+  }
+
+  .portfolio-selected__sticky {
+    padding-inline: var(--portfolio-content-inset);
+  }
+
+  .portfolio-work-row,
+  .portfolio-more-row {
+    grid-template-columns: 4.85rem minmax(0, 1fr) auto;
+    min-height: 6.5rem;
+    gap: 0.8rem;
+  }
+
+  .portfolio-media-stack {
+    width: 4.55rem;
+    height: 3.6rem;
+  }
+
+  .portfolio-media-stack__frame {
+    width: 3.8rem;
+    height: 2.55rem;
+  }
+
+  .portfolio-work-row strong,
+  .portfolio-more-row > span {
+    font-size: 1.25rem;
+  }
+
+  .portfolio-showcase-card__footer {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .portfolio-showcase-card__footer time {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .portfolio-showcase-card__actions {
+    grid-column: 1 / -1;
+  }
+
+  .portfolio-experience > div {
+    grid-template-columns: 1fr auto;
+  }
+
+  .portfolio-experience span {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+
+  .portfolio-receipt-trigger {
+    min-height: 7.8rem;
+    padding-inline: 1.25rem;
+  }
+}
+
+@media (max-width: 34rem) {
+  .portfolio-hero__identity {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .portfolio-hero__socials {
+    grid-column: 2;
+  }
+
+  .portfolio-services__index ol {
+    grid-template-columns: 1fr;
+  }
+
+  .portfolio-services__index button {
+    text-align: start;
+  }
+
+  .portfolio-about-overview__details {
+    grid-template-columns: 1fr;
+  }
+
+  .portfolio-receipt-content {
+    padding-inline: 1rem;
+  }
+
+  .portfolio-receipt-spec-row {
+    grid-template-columns: 1fr;
+    gap: 0.35rem;
+  }
+
+  .portfolio-receipt-spec-row dd {
+    text-align: start;
+  }
+
+  .portfolio-receipt-spec-row.is-emphasis {
+    grid-template-columns: 1fr auto;
+  }
+
+  .portfolio-receipt-spec-row.is-emphasis dd {
+    text-align: end;
+  }
+}
+
+@media (max-width: 24rem) {
+  .portfolio-work-row {
+    grid-template-columns: 4.85rem minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    gap: 0.3rem 0.8rem;
+    padding-block: 0.75rem;
+  }
+
+  .portfolio-work-row .portfolio-media-stack {
+    grid-row: 1 / span 2;
+  }
+
+  .portfolio-work-row strong {
+    align-self: end;
+  }
+
+  .portfolio-work-row time {
+    grid-column: 2;
+    grid-row: 2;
+    align-self: start;
+    justify-self: start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portfolio-selected {
+    height: auto;
+  }
+
+  .portfolio-selected__sticky {
+    position: static;
+    display: block;
+    height: auto;
+    overflow: visible;
+  }
+
+  .portfolio-selected__stage {
+    position: static;
+    display: grid;
+    height: auto;
+    gap: 2rem;
+    margin-block-start: 2rem;
+  }
+
+  .portfolio-selected__panel {
+    position: static;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+  }
+
+  .portfolio-selected__locator {
+    display: none;
+  }
+
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation-duration: 0.01ms !important;
+  }
+}
+
+/* Route-specific spacing overrides must follow the homepage section rules. */
+.portfolio-route-page.portfolio-services-page {
+  padding: 0 0 11rem;
+}
+
+.portfolio-services-page .portfolio-services {
+  padding-block-start: clamp(8rem, 14vh, 10rem);
+}

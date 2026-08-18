@@ -1,0 +1,237 @@
+.portfolio-services {
+  display: grid;
+  grid-template-columns: minmax(10rem, 0.45fr) minmax(0, 1.55fr);
+  gap: clamp(2rem, 6vw, 7rem);
+  padding-block: 9rem;
+}
+
+.portfolio-services__sidebar {
+  position: sticky;
+  inset-block-start: 4rem;
+  align-self: start;
+}
+
+.portfolio-services__sidebar h1,
+.portfolio-services__sidebar h2 {
+  margin: 0;
+  font-family: var(--portfolio-display);
+  font-size: clamp(2rem, 3.2vw, 3.4rem);
+  font-weight: 620;
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+}
+
+.portfolio-services__index {
+  display: grid;
+  gap: 3rem;
+}
+
+.portfolio-services__index ol {
+  display: grid;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.portfolio-services__index button {
+  width: 100%;
+  min-height: 2.75rem;
+  padding-inline: 0.75rem;
+  border: 0;
+  border-radius: 0.45rem;
+  background: transparent;
+  color: var(--portfolio-ink-soft);
+  text-align: start;
+  font-size: 0.72rem;
+  font-weight: 650;
+}
+
+.portfolio-services__index button[aria-expanded='true'] {
+  background: var(--portfolio-surface-strong);
+  color: var(--portfolio-ink);
+}
+
+.portfolio-services__index > a {
+  width: fit-content;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.portfolio-services__receipts {
+  display: grid;
+  align-content: start;
+  gap: clamp(2.5rem, 6vw, 5rem);
+}
+
+.portfolio-service-receipt {
+  --receipt-bg: oklch(0.86 0.008 72);
+  --receipt-ink: oklch(0.2 0.012 60);
+  --receipt-muted: oklch(0.47 0.01 60);
+  --receipt-rule: oklch(0.58 0.01 60);
+  position: relative;
+  min-width: 0;
+  scroll-margin-block-start: 1rem;
+}
+
+.portfolio-service-receipt:nth-child(even) {
+  --receipt-bg: oklch(0.105 0.006 58);
+  --receipt-ink: oklch(0.96 0.006 78);
+  --receipt-muted: oklch(0.68 0.01 72);
+  --receipt-rule: oklch(0.48 0.01 65);
+}
+
+.portfolio-receipt-sheet {
+  position: relative;
+  background: var(--receipt-bg);
+  color: var(--receipt-ink);
+  box-shadow: 0 1.25rem 3rem var(--portfolio-shadow);
+}
+
+.portfolio-receipt-edge {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(var(--portfolio-receipt-notch-count, 1), 1rem);
+  justify-content: space-evenly;
+  height: 0.5rem;
+  overflow: hidden;
+  background: var(--receipt-bg);
+}
+
+.portfolio-receipt-edge svg {
+  display: block;
+  width: 1rem;
+  height: 0.5rem;
+  max-width: none;
+  fill: var(--portfolio-bg);
+}
+
+.portfolio-receipt-edge.is-top svg {
+  align-self: start;
+}
+
+.portfolio-receipt-edge.is-bottom svg {
+  align-self: end;
+}
+
+.portfolio-receipt-trigger {
+  position: relative;
+  z-index: 2;
+  isolation: isolate;
+  display: grid;
+  min-height: 8.6rem;
+  padding: 1.65rem 2rem;
+  place-items: center;
+  background: var(--receipt-bg);
+  color: var(--receipt-ink);
+  text-align: center;
+}
+
+.portfolio-receipt-trigger::before {
+  position: absolute;
+  inset: auto 0 100%;
+  height: 3rem;
+  opacity: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    color-mix(in oklch, var(--receipt-bg) 88%, transparent)
+  );
+  content: '';
+  backdrop-filter: blur(0.55rem);
+  mask-image: linear-gradient(to bottom, transparent, black 68%);
+  transition: opacity 180ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.portfolio-service-receipt[data-open='true'] .portfolio-receipt-trigger {
+  position: sticky;
+  inset-block-start: 1rem;
+}
+
+.portfolio-service-receipt[data-stuck='true'] .portfolio-receipt-trigger::before {
+  opacity: 1;
+}
+
+.portfolio-receipt-title {
+  display: grid;
+  gap: 0.35rem;
+  min-width: 0;
+  justify-items: center;
+}
+
+.portfolio-receipt-title strong {
+  font-size: clamp(1.45rem, 2.4vw, 2rem);
+  font-weight: 750;
+  line-height: 1.15;
+  letter-spacing: -0.035em;
+}
+
+.portfolio-receipt-title > span {
+  max-width: 42ch;
+  color: var(--receipt-muted);
+  font-size: 0.86rem;
+  line-height: 1.4;
+  text-wrap: balance;
+}
+
+.portfolio-receipt-body {
+  overflow: hidden;
+}
+
+.portfolio-receipt-content {
+  padding: 0 1.55rem 1.5rem;
+}
+
+.portfolio-receipt-specs {
+  display: grid;
+  margin: 0;
+  font-family: ui-monospace, 'Cascadia Code', 'SFMono-Regular', monospace;
+}
+
+.portfolio-receipt-spec-row {
+  display: grid;
+  grid-template-columns: minmax(8rem, 1fr) minmax(11rem, 1.3fr);
+  gap: 1.5rem;
+  align-items: start;
+  padding-block: 0.75rem;
+  border-block-start: 1px dashed var(--receipt-rule);
+}
+
+.portfolio-receipt-spec-row dt {
+  font-size: 0.76rem;
+  font-weight: 750;
+}
+
+.portfolio-receipt-spec-row dd {
+  display: grid;
+  margin: 0;
+  color: var(--receipt-muted);
+  font-size: 0.74rem;
+  line-height: 1.35;
+  text-align: end;
+}
+
+.portfolio-receipt-spec-row.is-emphasis {
+  align-items: end;
+  padding-block: 0.5rem;
+}
+
+.portfolio-receipt-spec-row.is-emphasis dt {
+  font-weight: 500;
+}
+
+.portfolio-receipt-spec-row.is-emphasis dd {
+  color: var(--receipt-ink);
+  font-family: var(--portfolio-body);
+  font-size: clamp(1.55rem, 3.2vw, 2.15rem);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.045em;
+  white-space: nowrap;
+}
+
+.portfolio-receipt-spec-row.is-price {
+  border-block-end: 1px dashed var(--receipt-rule);
+}

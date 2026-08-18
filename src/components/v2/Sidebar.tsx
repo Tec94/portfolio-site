@@ -22,10 +22,10 @@ import { SocialActionBar, type SocialAction } from './SocialActionBar';
 const READOUT_EASE = [0.16, 1, 0.3, 1] as const;
 
 const navItems = [
-  { index: '01', label: 'Projects', path: '/' },
-  { index: '02', label: 'Services', path: '/services' },
-  { index: '03', label: 'About / Notes', path: '/about' },
-  { index: '04', label: 'Contact', path: '/contact' },
+  { index: '01', label: 'Projects', path: '/v2' },
+  { index: '02', label: 'Services', path: '/v2/services' },
+  { index: '03', label: 'About / Notes', path: '/v2/about' },
+  { index: '04', label: 'Contact', path: '/v2/contact' },
 ] as const;
 
 const mapLocations = {
@@ -127,7 +127,7 @@ function SidebarContent({
             <li key={item.path}>
               <NavLink
                 to={item.path}
-                end={item.path === '/'}
+                end={item.path === '/v2'}
                 onClick={onNavigate}
                 className={({ isActive }) => (isActive ? 'is-active' : undefined)}
               >
@@ -183,7 +183,7 @@ function SidebarContent({
       </section>
 
       <div className="v2-sidebar-actions">
-        <NavLink className="v2-button v2-button-primary" to="/contact" onClick={onNavigate}>
+        <NavLink className="v2-button v2-button-primary" to="/v2/contact" onClick={onNavigate}>
           Let&apos;s build something <ArrowUpRight size={16} aria-hidden="true" />
         </NavLink>
         <a className="v2-button v2-button-secondary" href={`mailto:${profile.email}?subject=Resume request`}>
@@ -234,7 +234,7 @@ export default function Sidebar() {
       </aside>
 
       <header className="v2-mobile-bar">
-        <NavLink to="/" className="v2-mobile-brand" aria-label="Jack Cao, projects">
+        <NavLink to="/v2" className="v2-mobile-brand" aria-label="Jack Cao, archived projects">
           <span>
             <strong>{profile.name}</strong>
             <small>Product engineer</small>

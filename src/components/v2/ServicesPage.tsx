@@ -72,7 +72,7 @@ export default function ServicesPage() {
             same room.
           </p>
         </div>
-        <NavLink className="v2-button v2-button-primary" to={`/contact?projectType=${active.id}`}>
+        <NavLink className="v2-button v2-button-primary" to={`/v2/contact?projectType=${active.id}`}>
           Discuss a project <ArrowRight size={17} aria-hidden="true" />
         </NavLink>
       </header>
@@ -106,7 +106,7 @@ export default function ServicesPage() {
                   <ul>
                     {service.deliverables.map((item) => <li key={item}>{item}</li>)}
                   </ul>
-                  <NavLink to={`/contact?projectType=${service.id}`}>
+                  <NavLink to={`/v2/contact?projectType=${service.id}`}>
                     Start with {service.title.toLowerCase()} <ArrowRight size={15} />
                   </NavLink>
                 </div>
@@ -137,7 +137,7 @@ export default function ServicesPage() {
               <ul>{active.principles.map((item) => <li key={item}>{item}</li>)}</ul>
             </div>
           </div>
-          <NavLink className="v2-button v2-button-primary" to={`/contact?projectType=${active.id}`}>
+          <NavLink className="v2-button v2-button-primary" to={`/v2/contact?projectType=${active.id}`}>
             Start with this capability <ArrowRight size={17} />
           </NavLink>
         </aside>

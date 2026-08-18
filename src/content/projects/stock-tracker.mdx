@@ -1,0 +1,61 @@
+---
+slug: stock-tracker
+title: Stock Tracker
+summary: A Bubble dashboard that displays congressional trading data.
+year: 2024
+completedAt: 2024-05
+role: Product engineer
+duration: "March–May 2024"
+categories:
+  - Product engineering
+  - Financial data
+  - No-code
+technologies:
+  - Bubble
+selectedWorkOrder: 4
+links:
+  live: https://stock-tracker-41285.bubbleapps.io/version-test
+publicationState: published
+media:
+  - type: image
+    source: /screenshots/stock-tracker.svg
+    alt: Stock Tracker dashboard placeholder
+    aspectRatio:
+      width: 16
+      height: 10
+    narrativeRole: hero
+---
+
+## Context
+
+Stock Tracker is a Bubble dashboard created between March and May 2024. The public application presents congressional trading activity with transaction ranges, politicians, dates, and profit-and-loss values.
+
+## Problem
+
+Public trading disclosures are difficult to scan when the reader has to move between records and manually compare people, dates, and transaction ranges. The dashboard organizes those records into a single browsing surface.
+
+## Decisions
+
+### Prioritize the table as the source of truth
+
+The transaction list carries the most precise information, so filters and summary views support it rather than replacing it with an ambiguous chart.
+
+### Design explicit data states
+
+Loading, empty, populated, and unavailable chart states need distinct treatment. A dashboard should not make an empty visualization look like a successful query.
+
+### Use Bubble for iteration speed
+
+Bubble allowed interface, data, and workflow changes to stay in one editor while the product shape was still changing.
+
+## Implementation
+
+The public deployment verifies the Bubble interface and congressional-trade presentation. The original source repository is unavailable, so this case study intentionally avoids undocumented API, workflow, uptime, and performance claims.
+
+## Outcome
+
+The current deployment remains inspectable as a working dashboard surface. It demonstrates data organization and no-code product composition without implying that unverified historical scale or automation metrics are current.
+
+## Lessons
+
+Dashboard quality depends on state clarity. Filters, rows, summaries, and charts must agree about what data is present; otherwise visual polish can make an incomplete result look more certain than it is.

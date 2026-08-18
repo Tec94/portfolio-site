@@ -269,6 +269,12 @@ export const notes: Note[] = [
 
 export const experiences = [
   {
+    company: 'Congero Technology Group',
+    role: 'Software Engineering Intern',
+    location: 'Remote',
+    period: 'June–August 2026',
+  },
+  {
     company: 'QT-Data Group',
     role: 'Web Development Intern',
     location: 'Ho Chi Minh City, Vietnam',
@@ -276,17 +282,29 @@ export const experiences = [
   },
   {
     company: 'Portlogics JSC',
-    role: 'Engineering Intern',
+    role: 'Intern',
     location: 'Ho Chi Minh City, Vietnam',
     period: 'June–August 2023',
   },
-  {
-    company: 'Hotel Link Solutions',
-    role: 'Back-End Engineering Intern',
-    location: 'Remote',
-    period: 'September–December 2022',
-  },
 ];
+
+export const education = {
+  school: 'University of Texas at Dallas',
+  degree: 'B.S. in Computer Science',
+  location: 'Dallas, Texas',
+  period: 'August 2024–May 2028',
+} as const;
+
+export const toolbox = [
+  'TypeScript',
+  'React',
+  'Python',
+  'C',
+  'SQL',
+  'Node.js',
+  'PostgreSQL',
+  'Vite',
+] as const;
 
 export const profile = {
   name: 'Jack Cao',
@@ -295,14 +313,7 @@ export const profile = {
   location: 'Texas, United States',
   timeZone: 'America/Chicago',
   email: 'hello@jackcao.dev',
-  resumeAvailable: false,
-  expertise: [
-    'Web Development',
-    'Product Engineering',
-    'UI / UX Design',
-    'Performance & SEO',
-    'Technical Consulting',
-  ],
+  resumeUrl: 'https://assets.jackcao.dev/resume/jack-cao-resume.pdf',
   socialLinks: [
     { label: 'GitHub', href: 'https://github.com/Tec94' },
     { label: 'LinkedIn', href: 'https://www.linkedin.com/in/jackcao' },

@@ -1,0 +1,72 @@
+import { useEffect, useState, type CSSProperties } from 'react';
+import type { PreviewProjectRecord } from '../content/manifest';
+import { projectTransitionName } from './projectPresentation';
+
+interface ProjectImageProps {
+  project: PreviewProjectRecord;
+  className?: string;
+  decorative?: boolean;
+  transition?: boolean;
+  activeTransition?: boolean;
+}
+
+export function ProjectImage({
+  project,
+  className,
+  decorative = false,
+  transition = false,
+  activeTransition = false,
+}: ProjectImageProps) {
+  const [failed, setFailed] = useState(false);
+  const media = project.media[0];
+
+  useEffect(() => setFailed(false), [media.source]);
+
+  const style = activeTransition
+    ? ({ viewTransitionName: projectTransitionName(project.slug, 'media') } as CSSProperties)
+    : undefined;
+
+  return (
+    <span
+      className={className}
+      data-media-failed={failed || undefined}
+      data-project-transition={transition ? 'media' : undefined}
+      style={style}
+    >
+      {failed ? (
+        <span className="portfolio-project-image__fallback" aria-hidden={decorative || undefined}>
+          {project.title}
+        </span>
+      ) : (
+        <img
+          src={media.source}
+          alt={decorative ? '' : media.alt}
+          aria-hidden={decorative || undefined}
+          loading="lazy"
+          draggable={false}
+          onError={() => setFailed(true)}
+        />
+      )}
+    </span>
+  );
+}
+
+export function MediaStack({
+  project,
+  transition = false,
+}: {
+  project: PreviewProjectRecord;
+  transition?: boolean;
+}) {
+  return (
+    <span className="portfolio-media-stack" data-cursor-intent="media" data-cursor-tone="dark">
+      <ProjectImage project={project} className="portfolio-media-stack__frame is-back" decorative />
+      <ProjectImage project={project} className="portfolio-media-stack__frame is-middle" decorative />
+      <ProjectImage
+        project={project}
+        className="portfolio-media-stack__frame is-front"
+        transition={transition}
+      />
+    </span>
+  );
+}

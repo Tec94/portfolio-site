@@ -1,0 +1,72 @@
+---
+slug: credify
+title: Credify
+summary: A location-aware card recommendation prototype built at HackUTA 7.
+year: 2025
+completedAt: 2025-10
+role: Product and front-end engineer on a three-person hackathon team
+duration: "October 4–5, 2025"
+categories:
+  - Product engineering
+  - Financial technology
+  - Hackathon
+technologies:
+  - React
+  - TypeScript
+  - Express
+  - PostgreSQL
+  - Plaid
+  - Gemini
+  - Mapbox
+  - Auth0
+selectedWorkOrder: 1
+links:
+  live: https://hack-uta.vercel.app/
+  repository: https://github.com/Tec94/hack-uta
+  devpost: https://devpost.com/software/credify-zck3je
+publicationState: published
+media:
+  - type: image
+    source: /screenshots/credify.svg
+    alt: Credify product interface placeholder
+    aspectRatio:
+      width: 16
+      height: 10
+    narrativeRole: hero
+---
+
+## Context
+
+Credify was built during HackUTA 7 on October 4–5, 2025. The three-person team explored a simple question: could a card recommendation become more useful when it understood both the customer’s accounts and the place they were about to spend?
+
+My work centered on the product interface, Plaid setup, nearby-map interactions, responsive states, and deployment. The public repository also records work across notifications, theme behavior, and the final interaction pass.
+
+## Problem
+
+Credit-card rewards are difficult to compare at the moment of purchase. The useful information is fragmented across issuer rules, account data, merchant categories, and location. A recommendation interface had to make that complexity legible without asking someone to study a spreadsheet before every transaction.
+
+## Decisions
+
+### Make location part of the recommendation
+
+The nearby view placed relevant merchants on a map, keeping the decision close to a real spending moment instead of presenting rewards as an abstract table.
+
+### Keep account linking bounded
+
+Plaid was treated as a distinct connection state with clear entry, success, and recovery paths. The interface did not imply that every institution or transaction state would always be available during a hackathon prototype.
+
+### Separate insight from action
+
+Gemini-supported guidance was presented as an explanation layer around the card recommendation. The selected card and the reason for selecting it remained visually distinct.
+
+## Implementation
+
+The client used React and TypeScript with Zustand and motion utilities. Express and PostgreSQL supported application data, while Plaid, Gemini, Mapbox, and Auth0 supplied the external product boundaries. The repository records interface, integration, responsive, and deployment work completed during the event.
+
+## Outcome
+
+The team shipped a public prototype, repository, and Devpost submission within the event window. The result demonstrates a connected product slice: account linking, card selection, recommendations, budgets, notifications, and nearby context can be inspected as one system.
+
+## Lessons
+
+The strongest prototype decisions were not additional features. They were the seams between services: what to show before an account connects, how a recommendation explains itself, and how the product remains understandable when an external dependency is incomplete.

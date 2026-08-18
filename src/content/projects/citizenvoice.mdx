@@ -1,0 +1,69 @@
+---
+slug: citizenvoice
+title: CitizenVoice
+summary: A civic proposal and road-reporting prototype built at HackRice 15.
+year: 2025
+completedAt: 2025-09
+role: Product and front-end engineer on a three-person hackathon team
+duration: "September 19–21, 2025"
+categories:
+  - Product engineering
+  - Civic technology
+  - Hackathon
+technologies:
+  - React
+  - TypeScript
+  - Supabase
+  - PostGIS
+  - Auth0
+selectedWorkOrder: 2
+links:
+  live: https://hack-rice-nine.vercel.app/
+  repository: https://github.com/Tec94/Hack-Rice
+  devpost: https://devpost.com/software/cityvoice
+publicationState: published
+media:
+  - type: image
+    source: /screenshots/citizen-voice.svg
+    alt: CitizenVoice product interface placeholder
+    aspectRatio:
+      width: 16
+      height: 10
+    narrativeRole: hero
+---
+
+## Context
+
+CitizenVoice was built by a three-person team during HackRice 15 on September 19–21, 2025. Event materials use the name CityVoice; this portfolio uses the approved canonical name CitizenVoice.
+
+My work covered the product interface, Supabase implementation, proposal and voting flows, Auth0 configuration, and deployment. The public event gallery lists the project as a winner.
+
+## Problem
+
+Local civic reports often disappear into disconnected forms, inboxes, and meeting records. The prototype needed to make proposals visible, place road reports on a map, and give residents an understandable way to respond.
+
+## Decisions
+
+### Lead with shared proposals
+
+The proposal index made public issues the primary object. Voting and detail states sat next to the proposal instead of becoming a separate, opaque process.
+
+### Use the map for place-specific reports
+
+Road reports and geographic context needed a different interaction from general proposals. PostGIS and the map interface gave those reports an explicit location without forcing every civic issue into the same shape.
+
+### Treat authentication as a product boundary
+
+Auth0 and Supabase were integrated around submission and participation states. The case study avoids broader security guarantees because the public prototype’s policies were designed for an event build, not a production municipality.
+
+## Implementation
+
+The interface was built with React and TypeScript. Supabase supplied data storage, PostGIS supported geographic queries, and Auth0 handled identity. The public commit history records UI, voting, Supabase, authentication, and deployment work.
+
+## Outcome
+
+The team shipped a working event prototype and an award-recognized submission. The public deployment currently has incomplete proposal data, so the case study uses the interface and repository as implementation evidence rather than presenting the live data state as production-ready.
+
+## Lessons
+
+Civic interfaces need to show who can act, what changed, and where information came from. A visually convincing map is not enough; empty, loading, permission, and failed-data states are part of the civic experience.
