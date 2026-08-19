@@ -56,12 +56,9 @@
     <div id="root"></div>
     <script>
       (function () {
-        const isLocalhost =
-          window.location.hostname === 'localhost' ||
-          window.location.hostname === '127.0.0.1';
-        const cleanupKey = 'dev-service-worker-cleanup-v3';
+        const cleanupKey = 'portfolio-service-worker-cleanup-v4';
 
-        if (!isLocalhost || !('serviceWorker' in navigator)) {
+        if (!('serviceWorker' in navigator)) {
           return;
         }
 
