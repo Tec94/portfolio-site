@@ -6,8 +6,7 @@ import {
   type CSSProperties,
   type PointerEventHandler,
 } from 'react';
-import { Link } from 'react-router-dom';
-import { usePortfolioSound } from '../providers/SoundProvider';
+import { profile } from '../../data/portfolioData';
 
 interface ServiceDefinition {
   slug: string;
@@ -98,11 +97,15 @@ function ServiceReceipt({
   open,
   onPointerEnter,
   onPointerLeave,
+  onFocus,
+  onBlur,
 }: {
   service: ServiceDefinition;
   open: boolean;
   onPointerEnter: PointerEventHandler<HTMLElement>;
   onPointerLeave: PointerEventHandler<HTMLElement>;
+  onFocus: () => void;
+  onBlur: () => void;
 }) {
   const articleRef = useRef<HTMLElement>(null);
   const triggerRef = useRef<HTMLDivElement>(null);
@@ -144,7 +147,15 @@ function ServiceReceipt({
     >
       <ReceiptEdge position="top" />
       <div className="portfolio-receipt-sheet">
-        <div ref={triggerRef} className="portfolio-receipt-trigger">
+        <div
+          ref={triggerRef}
+          className="portfolio-receipt-trigger"
+          tabIndex={0}
+          aria-expanded={open}
+          aria-controls={detailsId}
+          onFocus={onFocus}
+          onBlur={onBlur}
+        >
           <span className="portfolio-receipt-title">
             <strong>{service.title}</strong>
             <span>{service.summary}</span>
@@ -188,49 +199,25 @@ function ServiceReceipt({
 
 export function ServicesReceipts({ standalone = false }: { standalone?: boolean }) {
   const [openSlug, setOpenSlug] = useState<string | null>(null);
-  const sound = usePortfolioSound();
-
-  const openFromIndex = (slug: string) => {
-    setOpenSlug(slug);
-    sound.play('expansion');
-    window.requestAnimationFrame(() => {
-      document.getElementById(`portfolio-service-${slug}`)?.scrollIntoView({
-        behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
-        block: 'center',
-      });
-    });
-  };
 
   return (
     <section
       id="services"
-      className="portfolio-services"
+      className="portfolio-content-shell portfolio-split-layout portfolio-services"
       data-portfolio-section="services"
       aria-labelledby="portfolio-services-heading"
     >
       <div className="portfolio-services__sidebar">
-        <nav className="portfolio-services__index" aria-label="Services">
+        <div className="portfolio-services__index">
           {standalone ? (
             <h1 id="portfolio-services-heading">Services</h1>
           ) : (
             <h2 id="portfolio-services-heading">Services</h2>
           )}
-          <ol>
-            {services.map((service) => (
-              <li key={service.slug}>
-                <button
-                  type="button"
-                  aria-expanded={openSlug === service.slug}
-                  aria-controls={`portfolio-${service.slug}-details`}
-                  onClick={() => openFromIndex(service.slug)}
-                >
-                  {service.title}
-                </button>
-              </li>
-            ))}
-          </ol>
-          <Link to="/contact">Start a conversation ↗</Link>
-        </nav>
+          <a className="portfolio-services__booking" href={profile.calUrl} target="_blank" rel="noreferrer">
+            Book a call ↗
+          </a>
+        </div>
       </div>
       <div className="portfolio-services__receipts">
         {services.map((service) => (
@@ -246,6 +233,10 @@ export function ServicesReceipts({ standalone = false }: { standalone?: boolean 
                 current === service.slug ? null : current
               ));
             }}
+            onFocus={() => setOpenSlug(service.slug)}
+            onBlur={() => setOpenSlug((current) => (
+              current === service.slug ? null : current
+            ))}
           />
         ))}
       </div>

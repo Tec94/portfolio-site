@@ -8,11 +8,11 @@ import {
   type ReactNode,
 } from 'react';
 
-export type ThemeMode = 'system' | 'light' | 'dark';
-export type ResolvedTheme = 'light' | 'dark';
+export type ThemeMode = 'light' | 'dark';
+export type ResolvedTheme = ThemeMode;
 
 const THEME_STORAGE_KEY = 'portfolio-shell-theme';
-const themeModes: ThemeMode[] = ['system', 'light', 'dark'];
+const themeModes: ThemeMode[] = ['light', 'dark'];
 
 interface ThemeContextValue {
   mode: ThemeMode;
@@ -27,26 +27,19 @@ export function isThemeMode(value: unknown): value is ThemeMode {
   return typeof value === 'string' && themeModes.includes(value as ThemeMode);
 }
 
-export function resolveTheme(mode: ThemeMode, systemPrefersDark: boolean): ResolvedTheme {
-  if (mode === 'system') return systemPrefersDark ? 'dark' : 'light';
-  return mode;
-}
-
 function readStoredTheme(): ThemeMode {
   try {
     const stored = window.localStorage.getItem(THEME_STORAGE_KEY);
-    return isThemeMode(stored) ? stored : 'system';
+    if (isThemeMode(stored)) return stored;
   } catch {
-    return 'system';
+    // The initial theme can still follow the operating system without storage.
   }
+  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 }
 
 export function PortfolioThemeProvider({ children }: { children: ReactNode }) {
   const [mode, setModeState] = useState<ThemeMode>(readStoredTheme);
-  const [systemPrefersDark, setSystemPrefersDark] = useState(
-    () => window.matchMedia('(prefers-color-scheme: dark)').matches,
-  );
-  const resolvedTheme = resolveTheme(mode, systemPrefersDark);
+  const resolvedTheme = mode;
 
   const setMode = useCallback((nextMode: ThemeMode) => {
     setModeState(nextMode);
@@ -62,19 +55,11 @@ export function PortfolioThemeProvider({ children }: { children: ReactNode }) {
   }, [mode, setMode]);
 
   useEffect(() => {
-    const systemTheme = window.matchMedia('(prefers-color-scheme: dark)');
-    const handleChange = (event: MediaQueryListEvent) => setSystemPrefersDark(event.matches);
-    systemTheme.addEventListener('change', handleChange);
-    return () => systemTheme.removeEventListener('change', handleChange);
-  }, []);
-
-  useEffect(() => {
     const root = document.documentElement;
     const previousMode = root.dataset.portfolioThemeMode;
     const previousResolved = root.dataset.portfolioResolvedTheme;
     const themeColor = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
     const previousThemeColor = themeColor?.content;
-
     root.dataset.portfolioThemeMode = mode;
     root.dataset.portfolioResolvedTheme = resolvedTheme;
     themeColor?.setAttribute('content', resolvedTheme === 'dark' ? '#211e1b' : '#f2eee5');
@@ -101,4 +86,3 @@ export function usePortfolioTheme() {
   if (!context) throw new Error('usePortfolioTheme must be used inside PortfolioThemeProvider.');
   return context;
 }
-

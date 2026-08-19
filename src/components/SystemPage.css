@@ -1,0 +1,184 @@
+.portfolio-system-page {
+  --system-bg: oklch(0.958 0.012 78);
+  --system-surface: oklch(0.982 0.008 82);
+  --system-ink: oklch(0.218 0.022 56);
+  --system-muted: oklch(0.43 0.029 57);
+  --system-line: oklch(0.79 0.027 68);
+  --system-accent: oklch(0.51 0.135 36);
+  display: grid;
+  min-width: 20rem;
+  min-height: 100vh;
+  padding: clamp(2rem, 8vw, 8rem);
+  place-items: center;
+  background:
+    radial-gradient(circle at 18% 22%, color-mix(in oklch, var(--system-ink) 7%, transparent) 0 0.045rem, transparent 0.055rem) 0 0 / 0.7rem 0.7rem,
+    var(--system-bg);
+  color: var(--system-ink);
+  font-family: 'Geologica', 'Segoe UI', sans-serif;
+}
+
+html[data-portfolio-resolved-theme='dark'] .portfolio-system-page {
+  --system-bg: oklch(0.185 0.014 57);
+  --system-surface: oklch(0.25 0.019 58);
+  --system-ink: oklch(0.932 0.016 76);
+  --system-muted: oklch(0.735 0.025 72);
+  --system-line: oklch(0.385 0.026 62);
+  --system-accent: oklch(0.76 0.12 51);
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not([data-portfolio-resolved-theme]) .portfolio-system-page {
+    --system-bg: oklch(0.185 0.014 57);
+    --system-surface: oklch(0.25 0.019 58);
+    --system-ink: oklch(0.932 0.016 76);
+    --system-muted: oklch(0.735 0.025 72);
+    --system-line: oklch(0.385 0.026 62);
+    --system-accent: oklch(0.76 0.12 51);
+  }
+}
+
+.portfolio-system-card {
+  display: grid;
+  width: min(100%, 48rem);
+  gap: 1.35rem;
+  padding: clamp(2rem, 6vw, 4.5rem);
+  border: 1px solid var(--system-line);
+  border-radius: 0.85rem;
+  background: var(--system-surface);
+}
+
+.portfolio-system-icon {
+  display: grid;
+  width: 2.75rem;
+  aspect-ratio: 1;
+  place-items: center;
+  border: 1px solid var(--system-line);
+  border-radius: 0.55rem;
+  color: var(--system-accent);
+}
+
+.portfolio-system-icon svg {
+  width: 1.15rem;
+  height: 1.15rem;
+}
+
+.portfolio-system-eyebrow,
+.portfolio-system-description {
+  margin: 0;
+}
+
+.portfolio-system-eyebrow {
+  color: var(--system-accent);
+  font-size: 0.7rem;
+  font-weight: 750;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.portfolio-system-card h1 {
+  max-width: 13ch;
+  margin: 0;
+  font-family: 'Besley', Georgia, serif;
+  font-size: clamp(2.2rem, 6vw, 4.8rem);
+  font-weight: 620;
+  line-height: 0.98;
+  letter-spacing: -0.045em;
+  text-wrap: balance;
+}
+
+.portfolio-system-description {
+  max-width: 48ch;
+  color: var(--system-muted);
+}
+
+.portfolio-system-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-block-start: 0.35rem;
+}
+
+.portfolio-system-actions a,
+.portfolio-system-actions button {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  gap: 0.5rem;
+  padding-inline: 1rem;
+  border: 1px solid var(--system-line);
+  border-radius: 999px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 0.76rem;
+  font-weight: 720;
+  text-decoration: none;
+  transition: background-color 160ms ease, color 160ms ease;
+}
+
+.portfolio-system-actions a:first-child,
+.portfolio-system-actions button:first-child,
+.portfolio-system-actions a:hover,
+.portfolio-system-actions a:focus-visible,
+.portfolio-system-actions button:hover,
+.portfolio-system-actions button:focus-visible {
+  background: var(--system-ink);
+  color: var(--system-bg);
+}
+
+.portfolio-system-actions svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.portfolio-system-details {
+  padding-block-start: 1rem;
+  border-block-start: 1px solid var(--system-line);
+  color: var(--system-muted);
+  font-size: 0.72rem;
+}
+
+.portfolio-system-details summary {
+  width: fit-content;
+}
+
+.portfolio-system-details pre {
+  overflow: auto;
+  margin-block-end: 0;
+  white-space: pre-wrap;
+}
+
+.portfolio-system-path {
+  margin: 0;
+  color: var(--system-muted);
+  font-size: 0.72rem;
+  overflow-wrap: anywhere;
+}
+
+.portfolio-system-path code {
+  color: var(--system-ink);
+}
+
+.portfolio-system-page :focus-visible {
+  outline: 0.18rem solid var(--system-accent);
+  outline-offset: 0.2rem;
+}
+
+@media (max-width: 40rem) {
+  .portfolio-system-page {
+    padding: 1rem;
+  }
+
+  .portfolio-system-card {
+    padding: 1.5rem;
+  }
+
+  .portfolio-system-actions {
+    display: grid;
+  }
+
+  .portfolio-system-actions a,
+  .portfolio-system-actions button {
+    justify-content: center;
+  }
+}

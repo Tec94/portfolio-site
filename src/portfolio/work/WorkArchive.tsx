@@ -1,7 +1,8 @@
-import { useMemo, useState, type PointerEvent } from 'react';
+import { useMemo, useState, type MouseEvent, type PointerEvent } from 'react';
+import { flushSync } from 'react-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Github, Globe2, Grid2X2, List } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { previewProjectManifest } from '../content/manifest';
 import { usePortfolioSound } from '../providers/SoundProvider';
 import { MediaStack, ProjectImage } from './ProjectMedia';
@@ -20,6 +21,7 @@ export function WorkArchive({ standalone = false }: { standalone?: boolean }) {
   const [view, setView] = useState<ArchiveView>('list');
   const [filter, setFilter] = useState<WorkFilter>('all');
   const [expanded, setExpanded] = useState(false);
+  const navigate = useNavigate();
   const sound = usePortfolioSound();
   const projects = useMemo(
     () => filterPreviewProjects(previewProjectManifest, filter),
@@ -32,6 +34,29 @@ export function WorkArchive({ standalone = false }: { standalone?: boolean }) {
     if (event.pointerType === 'mouse') sound.playProjectPreview();
   };
 
+  const openProject = (
+    event: MouseEvent<HTMLElement>,
+    href: string,
+    slug: string,
+  ) => {
+    prepareProjectTransition(event.currentTarget, slug);
+    sound.playPageOpen();
+    const isPlainPrimaryClick = (
+      event.button === 0 &&
+      !event.metaKey &&
+      !event.ctrlKey &&
+      !event.shiftKey &&
+      !event.altKey
+    );
+    if (!isPlainPrimaryClick || typeof document.startViewTransition !== 'function') return;
+
+    event.preventDefault();
+    document.startViewTransition(() => {
+      flushSync(() => navigate(href));
+      window.scrollTo({ top: 0, behavior: 'auto' });
+    });
+  };
+
   const changeView = (next: ArchiveView) => {
     if (next === view) return;
     setView(next);
@@ -39,14 +64,16 @@ export function WorkArchive({ standalone = false }: { standalone?: boolean }) {
   };
 
   const changeFilter = (next: WorkFilter) => {
+    if (next === filter) return;
     setFilter(next);
     setExpanded(false);
-    sound.play('toggle');
+    sound.play('press');
   };
 
   return (
     <section
-      className={`portfolio-work-archive${standalone ? ' is-standalone' : ''}`}
+      id="work"
+      className={`portfolio-content-shell portfolio-split-layout portfolio-work-archive${standalone ? ' is-standalone' : ''}`}
       data-portfolio-section="work"
       aria-labelledby={standalone ? 'work-page-heading' : 'work-archive-heading'}
     >
@@ -128,10 +155,7 @@ export function WorkArchive({ standalone = false }: { standalone?: boolean }) {
                       viewTransition
                       className="portfolio-work-row"
                       onPointerEnter={previewSound}
-                      onClick={(event) => {
-                        prepareProjectTransition(event.currentTarget, project.slug);
-                        sound.playPageOpen();
-                      }}
+                      onClick={(event) => openProject(event, project.href, project.slug)}
                     >
                       <MediaStack project={project} transition />
                       <strong data-project-transition="title">
@@ -169,10 +193,7 @@ export function WorkArchive({ standalone = false }: { standalone?: boolean }) {
                     viewTransition
                     className="portfolio-showcase-card__media-link"
                     onPointerEnter={previewSound}
-                    onClick={(event) => {
-                      prepareProjectTransition(event.currentTarget, project.slug);
-                      sound.playPageOpen();
-                    }}
+                    onClick={(event) => openProject(event, project.href, project.slug)}
                   >
                     <ProjectImage
                       project={project}
@@ -185,10 +206,7 @@ export function WorkArchive({ standalone = false }: { standalone?: boolean }) {
                       <Link
                         to={project.href}
                         viewTransition
-                        onClick={(event) => {
-                          prepareProjectTransition(event.currentTarget, project.slug);
-                          sound.playPageOpen();
-                        }}
+                        onClick={(event) => openProject(event, project.href, project.slug)}
                         data-project-transition="title"
                       >
                         {project.title}

@@ -34,6 +34,12 @@ const LoadingScreen = () => (
   </div>
 );
 
+const PortfolioLoadingScreen = () => (
+  <div className="portfolio-loading-screen" role="status" aria-busy="true">
+    <span>Loading portfolio</span>
+  </div>
+);
+
 function AppContent() {
   const location = useLocation();
   const isPaymentRoute = location.pathname === '/payment';
@@ -86,7 +92,7 @@ function App() {
           </ThemeProvider>
         </StatsigWrapper>
       ) : (
-        <Suspense fallback={<LoadingScreen />}>
+        <Suspense fallback={<PortfolioLoadingScreen />}>
           <PreviewPortfolio />
         </Suspense>
       )}

@@ -1,19 +1,74 @@
-import { useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { education, experiences, toolbox } from '../../data/portfolioData';
+import { usePortfolioSound } from '../providers/SoundProvider';
 
 export function OverviewAbout() {
   const [expanded, setExpanded] = useState(false);
+  const [atPageEnd, setAtPageEnd] = useState(false);
+  const atPageEndRef = useRef(false);
+  const headingRef = useRef<HTMLElement>(null);
+  const previousHeadingTop = useRef<number>();
+  const sound = usePortfolioSound();
   const compactExperiences = experiences.slice(0, 2);
   const additionalExperiences = experiences.slice(2);
+
+  useEffect(() => {
+    if (!expanded) {
+      atPageEndRef.current = false;
+      setAtPageEnd(false);
+      return undefined;
+    }
+
+    const updateEndState = () => {
+      const page = document.documentElement;
+      const nextAtPageEnd = window.scrollY + window.innerHeight >= page.scrollHeight - 1;
+      if (atPageEndRef.current === nextAtPageEnd) return;
+      previousHeadingTop.current = headingRef.current?.getBoundingClientRect().top;
+      atPageEndRef.current = nextAtPageEnd;
+      setAtPageEnd(nextAtPageEnd);
+    };
+
+    const frame = window.requestAnimationFrame(updateEndState);
+    window.addEventListener('scroll', updateEndState, { passive: true });
+    window.addEventListener('resize', updateEndState);
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.removeEventListener('scroll', updateEndState);
+      window.removeEventListener('resize', updateEndState);
+    };
+  }, [expanded]);
+
+  useLayoutEffect(() => {
+    const heading = headingRef.current;
+    const previousTop = previousHeadingTop.current;
+    previousHeadingTop.current = undefined;
+    if (
+      !heading ||
+      previousTop === undefined ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
+      typeof heading.animate !== 'function'
+    ) return undefined;
+
+    const currentTop = heading.getBoundingClientRect().top;
+    const animation = heading.animate(
+      [
+        { transform: `translateY(${previousTop - currentTop}px)` },
+        { transform: 'translateY(0)' },
+      ],
+      { duration: 280, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' },
+    );
+    return () => animation.cancel();
+  }, [atPageEnd]);
 
   return (
     <section
       id="about"
-      className="portfolio-overview-section portfolio-about-overview"
+      className="portfolio-content-shell portfolio-split-layout portfolio-overview-section portfolio-about-overview"
       data-portfolio-section="about"
+      data-at-end={atPageEnd || undefined}
     >
-      <header className="portfolio-section-heading">
+      <header ref={headingRef} className="portfolio-section-heading">
         <h2>About</h2>
       </header>
 
@@ -72,7 +127,10 @@ export function OverviewAbout() {
           className="portfolio-inline-link portfolio-about-overview__toggle"
           aria-expanded={expanded}
           aria-controls="portfolio-about-details"
-          onClick={() => setExpanded((current) => !current)}
+          onClick={() => {
+            setExpanded((current) => !current);
+            sound.play('press');
+          }}
         >
           {expanded ? 'Show less' : 'More about me'}
           <ChevronDown aria-hidden="true" />

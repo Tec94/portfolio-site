@@ -1,6 +1,6 @@
-import { useEffect, useState, type CSSProperties } from 'react';
+import { useEffect, useState } from 'react';
 import type { PreviewProjectRecord } from '../content/manifest';
-import { projectTransitionName } from './projectPresentation';
+import { projectTransitionStyle } from './projectPresentation';
 
 interface ProjectImageProps {
   project: PreviewProjectRecord;
@@ -8,6 +8,7 @@ interface ProjectImageProps {
   decorative?: boolean;
   transition?: boolean;
   activeTransition?: boolean;
+  priority?: boolean;
 }
 
 export function ProjectImage({
@@ -16,6 +17,7 @@ export function ProjectImage({
   decorative = false,
   transition = false,
   activeTransition = false,
+  priority = false,
 }: ProjectImageProps) {
   const [failed, setFailed] = useState(false);
   const media = project.media[0];
@@ -23,7 +25,7 @@ export function ProjectImage({
   useEffect(() => setFailed(false), [media.source]);
 
   const style = activeTransition
-    ? ({ viewTransitionName: projectTransitionName(project.slug, 'media') } as CSSProperties)
+    ? projectTransitionStyle(project.slug, 'media')
     : undefined;
 
   return (
@@ -42,7 +44,8 @@ export function ProjectImage({
           src={media.source}
           alt={decorative ? '' : media.alt}
           aria-hidden={decorative || undefined}
-          loading="lazy"
+          loading={priority ? 'eager' : 'lazy'}
+          {...(priority ? { fetchpriority: 'high' } : {})}
           draggable={false}
           onError={() => setFailed(true)}
         />

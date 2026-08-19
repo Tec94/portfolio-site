@@ -1,5 +1,9 @@
 # Sound design with Cuelume
 
+> **Decision status:** The owner selected Cuelume at 22 percent, enabled sound
+> by default with a persistent mute preference, the Zen typing set, Whisper for
+> expansion, and normalized paper sounds for media and page transitions.
+
 [Cuelume](https://cuelume-site.pages.dev/) can add a material response layer to
 the portfolio, but only if sound remains semantic and sparse. The goal is not to
 sonify the page. It is to let a few meaningful actions acquire the same tactile
@@ -112,9 +116,9 @@ contact. Toggling sound is the clearest place to play a demonstration cue becaus
 the visitor has explicitly requested audio. The control needs visible text or an
 accessible label, selected state, and stored preference.
 
-The owner's next-session annotation must decide the initial sound state. This
-research does not invent a default. Regardless of that decision, browser audio
-unlock and a durable mute control are required.
+The implemented preference begins enabled and keeps a durable mute control.
+Browser audio unlock still requires a qualifying visitor gesture, so the site
+does not promise an unsolicited arrival cue on initial load.
 
 ### Project navigation
 
@@ -198,10 +202,10 @@ Avoid preloading fabricated progress or delaying a route to make a cue audible.
 The interface action owns the schedule. Sound participates only when ready and
 drops out silently when it cannot meet that schedule.
 
-## Audition protocol for the next phase
+## Audition protocol
 
-The owner should listen to each candidate cue in context rather than selecting
-by name. The audition should compare the same interaction with sound off and on,
+Future cue changes should be auditioned in context rather than selected by name.
+The audition should compare the same interaction with sound off and on,
 using speakers and headphones, pointer and keyboard, repeated navigation, and a
 quiet reduced-motion mode.
 

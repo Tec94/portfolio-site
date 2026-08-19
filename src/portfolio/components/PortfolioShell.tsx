@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
-import { ArrowUp, Monitor, Search, Volume2, VolumeX } from 'lucide-react';
+import { ArrowUp, Moon, Search, Sun, Volume2, VolumeX } from 'lucide-react';
 import { Link, useLocation, useMatch } from 'react-router-dom';
 import { CommandMenu } from './CommandMenu';
 import { usePortfolioSound } from '../providers/SoundProvider';
@@ -38,19 +38,19 @@ export function PortfolioShell({ children }: { children: ReactNode }) {
   }, []);
 
   useEffect(() => {
-    if (location.pathname === '/' && location.hash) {
-      const frame = window.requestAnimationFrame(() => {
-        document.getElementById(location.hash.slice(1))?.scrollIntoView({
-          behavior: 'auto',
-          block: 'start',
-        });
+    if (location.pathname !== '/' || !location.hash) return undefined;
+    const frame = window.requestAnimationFrame(() => {
+      document.getElementById(location.hash.slice(1))?.scrollIntoView?.({
+        behavior: 'auto',
+        block: 'start',
       });
-      return () => window.cancelAnimationFrame(frame);
-    }
-
-    window.scrollTo({ top: 0, behavior: 'auto' });
-    return undefined;
+    });
+    return () => window.cancelAnimationFrame(frame);
   }, [location.hash, location.pathname]);
+
+  useEffect(() => {
+    if (location.pathname !== '/') window.scrollTo({ top: 0, behavior: 'auto' });
+  }, [location.pathname]);
 
   useEffect(() => {
     if (location.pathname !== '/') {
@@ -72,7 +72,7 @@ export function PortfolioShell({ children }: { children: ReactNode }) {
           const section = parseLandingSection(
             visible?.target.getAttribute('data-portfolio-section') ?? '',
           );
-          if (!section) return;
+          if (!section || window.location.pathname !== '/') return;
 
           setActiveSection(section);
           const sectionUrl = getLandingSectionUrl(section);
@@ -113,7 +113,11 @@ export function PortfolioShell({ children }: { children: ReactNode }) {
           <Search aria-hidden="true" />
         </button>
         {projectMatch ? (
-          <Link className="portfolio-dock__back" to="/work" onClick={sound.playPageClose}>
+          <Link
+            className="portfolio-dock__back"
+            to={getLandingSectionUrl('work')}
+            onClick={sound.playPageClose}
+          >
             Back to index
           </Link>
         ) : (
@@ -123,7 +127,10 @@ export function PortfolioShell({ children }: { children: ReactNode }) {
                 key={item.href}
                 to={item.href}
                 className={(
-                  (location.pathname === '/' && activeSection === item.section) ||
+                  (location.pathname === '/' && (
+                    activeSection === item.section ||
+                    (item.section === 'work' && activeSection === 'featured')
+                  )) ||
                   (location.pathname !== '/' && location.pathname.startsWith(item.route))
                 ) ? 'is-active' : undefined}
                 onClick={() => sound.play('navigation')}
@@ -141,7 +148,10 @@ export function PortfolioShell({ children }: { children: ReactNode }) {
             type="button"
             className="portfolio-icon-button"
             aria-label="Back to top"
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            onClick={() => {
+              sound.play('arrival');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
           >
             <ArrowUp aria-hidden="true" />
           </button>
@@ -149,13 +159,16 @@ export function PortfolioShell({ children }: { children: ReactNode }) {
         <button
           type="button"
           className="portfolio-icon-button"
-          aria-label={`Theme: ${theme.mode}${theme.mode === 'system' ? `, currently ${theme.resolvedTheme}` : ''}`}
+          aria-label={`Theme: ${theme.mode}; switch to ${theme.mode === 'light' ? 'dark' : 'light'}`}
           onClick={() => {
             theme.cycleMode();
             sound.play('toggle');
           }}
         >
-          <Monitor aria-hidden="true" />
+          <span className="portfolio-theme-icon" aria-hidden="true">
+            <Sun data-active={theme.mode === 'light' || undefined} />
+            <Moon data-active={theme.mode === 'dark' || undefined} />
+          </span>
         </button>
         <button
           type="button"

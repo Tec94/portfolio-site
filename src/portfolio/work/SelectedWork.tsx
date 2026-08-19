@@ -21,51 +21,69 @@ export function SelectedWork() {
         const panels = gsap.utils.toArray<HTMLElement>('.portfolio-selected__panel');
         if (panels.length < 2) return undefined;
 
-        gsap.set(panels, { autoAlpha: 0, yPercent: 0, scale: 0.96 });
-        gsap.set(panels[0], { autoAlpha: 1, scale: 1 });
+        const panelImages = panels
+          .map((panel) => panel.querySelector<HTMLElement>('.portfolio-selected__media img'))
+          .map((image) => image ?? null);
+        const panelCopies = panels.map((panel) => panel.querySelector<HTMLElement>('.portfolio-selected__copy'));
+        const progressFill = scope.current?.querySelector<HTMLElement>('.portfolio-selected__progress-fill');
+        const lastIndex = panels.length - 1;
 
-        const timeline = gsap.timeline({
-          defaults: { ease: 'none' },
-          scrollTrigger: {
-            trigger: scope.current,
-            start: 'top top',
-            end: 'bottom bottom',
-            scrub: 0.5,
-            snap: {
-              snapTo: 'labelsDirectional',
-              duration: { min: 0.12, max: 0.24 },
-              delay: 0.08,
-              ease: 'power1.out',
-            },
-            invalidateOnRefresh: true,
-            onUpdate: (self) => {
-              gsap.set('.portfolio-selected__progress-fill', { scaleX: self.progress });
-            },
+        const renderStack = (progress: number) => {
+          const position = progress * lastIndex;
+
+          panels.forEach((panel, index) => {
+            const distance = index - position;
+            const depth = Math.abs(distance);
+            const isPrevious = distance < 0;
+            const opacityStep = isPrevious ? 0.28 : 0.34;
+            const opacity = gsap.utils.clamp(0, 1, 1 - depth * opacityStep);
+            const yPercent = distance * (isPrevious ? 7 : 11.5);
+            const scale = 1 - Math.min(depth, 3) * 0.022;
+
+            gsap.set(panel, {
+              autoAlpha: opacity,
+              yPercent,
+              scale,
+              zIndex: Math.round(1000 - depth * 100 + (distance >= 0 ? 1 : 0)),
+            });
+
+            const image = panelImages[index];
+            if (image) {
+              gsap.set(image, {
+                yPercent: gsap.utils.clamp(-6, 6, distance * -3),
+              });
+            }
+
+            const copy = panelCopies[index];
+            if (copy) {
+              const copyOpacity = distance < 0
+                ? gsap.utils.clamp(0, 1, 1 + distance * 2.5)
+                : opacity;
+              gsap.set(copy, { autoAlpha: copyOpacity });
+            }
+          });
+
+          if (progressFill) gsap.set(progressFill, { scaleX: progress });
+        };
+
+        renderStack(0);
+
+        const scrollTrigger = ScrollTrigger.create({
+          trigger: scope.current,
+          start: 'top top',
+          end: 'bottom bottom',
+          snap: {
+            snapTo: (progress) => Math.round(progress * lastIndex) / lastIndex,
+            duration: { min: 0.12, max: 0.24 },
+            delay: 0.08,
+            ease: 'power1.out',
           },
+          invalidateOnRefresh: true,
+          onRefresh: (self) => renderStack(self.progress),
+          onUpdate: (self) => renderStack(self.progress),
         });
 
-        timeline.addLabel('project-0', 0);
-
-        panels.slice(1).forEach((panel, index) => {
-          const previous = panels[index];
-          timeline
-            .to(previous, { autoAlpha: 0, scale: 0.965, duration: 0.45 })
-            .fromTo(
-              panel,
-              { autoAlpha: 0, scale: 0.96 },
-              { autoAlpha: 1, scale: 1, duration: 0.55 },
-              '<0.15',
-            )
-            .fromTo(
-              panel.querySelector('.portfolio-selected__media img'),
-              { yPercent: 4 },
-              { yPercent: -4, duration: 0.55 },
-              '<',
-            );
-          timeline.addLabel(`project-${index + 1}`);
-        });
-
-        return () => timeline.kill();
+        return () => scrollTrigger.kill();
       });
       return () => media.revert();
     },
@@ -75,16 +93,12 @@ export function SelectedWork() {
   return (
     <section
       ref={scope}
-      id="work"
+      id="featured"
       className="portfolio-selected"
-      data-portfolio-section="work"
-      aria-labelledby="selected-work-heading"
+      data-portfolio-section="featured"
+      aria-label="Featured projects"
     >
-      <div className="portfolio-selected__sticky">
-        <header className="portfolio-section-heading portfolio-selected__heading">
-          <h2 id="selected-work-heading">My Projects</h2>
-        </header>
-
+      <div className="portfolio-content-shell portfolio-selected__sticky">
         <div className="portfolio-selected__locator" aria-hidden="true">
           <span className="portfolio-selected__progress">
             <span className="portfolio-selected__progress-fill" />
@@ -92,7 +106,7 @@ export function SelectedWork() {
         </div>
 
         <div className="portfolio-selected__stage">
-          {previewProjectManifest.map((project) => (
+          {previewProjectManifest.map((project, index) => (
             <article className="portfolio-selected__panel" key={project.slug}>
               <Link
                 to={project.href}
@@ -103,7 +117,12 @@ export function SelectedWork() {
                   sound.playPageOpen();
                 }}
               >
-                <ProjectImage project={project} className="portfolio-selected__media" transition />
+                <ProjectImage
+                  project={project}
+                  className="portfolio-selected__media"
+                  transition
+                  priority={index === 0}
+                />
                 <span className="portfolio-selected__copy">
                   <strong data-project-transition="title">
                     {project.title}
@@ -113,7 +132,6 @@ export function SelectedWork() {
             </article>
           ))}
         </div>
-
       </div>
     </section>
   );

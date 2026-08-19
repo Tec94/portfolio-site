@@ -1,5 +1,10 @@
 # Stages 9–15 pause checkpoint
 
+> **Historical record:** Work resumed after this checkpoint and the tactile
+> portfolio now owns the public root routes. Use `README.md`, `.impeccable.md`,
+> and `docs/roadmap.md` for current implementation guidance. The instructions
+> below are preserved as the August 17 handoff record.
+
 Paused at the owner’s request on August 17, 2026. Do not restart the implementation from scratch.
 
 ## Contract

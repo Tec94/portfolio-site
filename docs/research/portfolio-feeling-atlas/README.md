@@ -1,5 +1,9 @@
 # Portfolio feeling atlas
 
+> **Research record:** The owner completed the annotation and prototype passes.
+> The active tactile editorial direction now lives in `.impeccable.md`; this
+> atlas remains the provenance for the adopted decisions.
+
 This atlas records how the reference portfolios look, move, respond, and
 organize attention. It is research, not a redesign specification. The working
 hypothesis is that the preferred direction will use the warm, tactile restraint
@@ -159,9 +163,9 @@ relevant artifact.
 - [Browser audit helper](../../../scripts/audit-reference-portfolio.js) retains
   the repeatable public-page inspection used in this pass.
 
-## Next steps
+## Outcome
 
-The next step is the owner's annotation pass. After those reactions are
-captured, the research can be converted into a single design direction,
-interaction principles, and a scoped implementation plan for the existing
-portfolio checkout.
+The rebuild adopted warm tactile editorial as its material center, quiet
+design-engineering documentation as its precision layer, and a restrained
+spatial featured-work sequence. Later implementation decisions are authoritative
+in `.impeccable.md`; this document continues to explain their research basis.

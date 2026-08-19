@@ -6,10 +6,11 @@ import { portfolioManifest, previewProjectManifest } from '../portfolio/content/
 import { searchPortfolio } from '../portfolio/content/search';
 import { inferCursorIntent } from '../portfolio/providers/CursorProvider';
 import { readSoundPreference } from '../portfolio/providers/SoundProvider';
-import { isThemeMode, resolveTheme } from '../portfolio/providers/ThemeProvider';
+import { isThemeMode } from '../portfolio/providers/ThemeProvider';
 import {
   filterPreviewProjects,
   formatProjectDate,
+  projectTransitionStyle,
 } from '../portfolio/work/projectPresentation';
 import { ProjectImage } from '../portfolio/work/ProjectMedia';
 
@@ -53,10 +54,21 @@ describe('portfolio foundation', () => {
     expect(screen.getByText('Credify')).toBeInTheDocument();
   });
 
+  it('allows the first featured image to bypass lazy loading', () => {
+    render(createElement(ProjectImage, {
+      project: previewProjectManifest[0],
+      priority: true,
+    }));
+    const image = screen.getByRole('img', { name: /Credify product interface/i });
+    expect(image).toHaveAttribute('loading', 'eager');
+    expect(image).toHaveAttribute('fetchpriority', 'high');
+  });
+
   it('ranks exact route titles ahead of supporting copy', () => {
     const [result] = searchPortfolio('Work');
     expect(result.title).toBe('Work');
     expect(result.kind).toBe('route');
+    expect(result.href).toBe('/#work');
   });
 
   it('validates the complete project media contract', () => {
@@ -86,12 +98,22 @@ describe('portfolio foundation', () => {
     expect(parsed.success).toBe(true);
   });
 
-  it('uses system theme until a valid explicit mode is chosen', () => {
-    expect(isThemeMode('system')).toBe(true);
+  it('only accepts explicit light and dark theme modes', () => {
+    expect(isThemeMode('light')).toBe(true);
+    expect(isThemeMode('dark')).toBe(true);
+    expect(isThemeMode('system')).toBe(false);
     expect(isThemeMode('sepia')).toBe(false);
-    expect(resolveTheme('system', true)).toBe('dark');
-    expect(resolveTheme('system', false)).toBe('light');
-    expect(resolveTheme('light', true)).toBe('light');
+  });
+
+  it('gives project media and titles matched view-transition identities', () => {
+    expect(projectTransitionStyle('credify', 'media')).toEqual({
+      viewTransitionName: 'portfolio-media-credify',
+      viewTransitionClass: 'portfolio-project-media-transition',
+    });
+    expect(projectTransitionStyle('credify', 'title')).toEqual({
+      viewTransitionName: 'portfolio-title-credify',
+      viewTransitionClass: 'portfolio-project-title-transition',
+    });
   });
 
   it('enables sound by default and respects an explicit mute', () => {

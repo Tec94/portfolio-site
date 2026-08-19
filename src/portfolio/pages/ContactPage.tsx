@@ -78,8 +78,8 @@ export function ContactPage() {
       </header>
 
       <section className="portfolio-contact-quick" aria-label="Contact options">
-        <a href="https://cal.com/jack-cao/30min" target="_blank" rel="noreferrer">
-          <CalendarDays aria-hidden="true" /><span><strong>Book a call</strong><small>30 minutes on Cal.com</small></span><ArrowUpRight aria-hidden="true" />
+        <a href={profile.calUrl} target="_blank" rel="noreferrer">
+          <CalendarDays aria-hidden="true" /><span><strong>Book a call</strong><small>15 minutes on Cal.com</small></span><ArrowUpRight aria-hidden="true" />
         </a>
         <a href={`mailto:${profile.email}`}>
           <Mail aria-hidden="true" /><span><strong>Email</strong><small>{profile.email}</small></span><ArrowUpRight aria-hidden="true" />

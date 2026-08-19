@@ -25,7 +25,7 @@ const routeEntries: SearchEntry[] = [
     kind: 'route',
     title: 'Work',
     summary: 'Selected work and project archive',
-    href: '/work',
+    href: '/#work',
     tags: ['projects', 'case studies', 'archive'],
     headings: [],
     body: '',

@@ -1,6 +1,8 @@
+import { createRef } from 'react';
 import { act, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { describe, expect, it, vi } from 'vitest';
+import ErrorBoundary from '../components/ErrorBoundary';
 import { MediaViewer } from '../portfolio/components/MediaViewer';
 import { ContactPage } from '../portfolio/pages/ContactPage';
 import PreviewPortfolio from '../portfolio/PreviewPortfolio';
@@ -47,6 +49,25 @@ describe('portfolio cutover routes', () => {
   });
 });
 
+describe('portfolio system pages', () => {
+  it('renders fatal errors in the current tactile system', () => {
+    const boundary = createRef<ErrorBoundary>();
+
+    render(
+      <ErrorBoundary ref={boundary}>
+        <p>Ready</p>
+      </ErrorBoundary>,
+    );
+    act(() => boundary.current?.setState({ hasError: true, error: new Error('test failure') }));
+
+    expect(screen.getByRole('heading', {
+      name: 'This page stopped before it was ready.',
+    })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Reload page' })).toBeInTheDocument();
+    expect(document.querySelector('.v2-system-page')).not.toBeInTheDocument();
+  });
+});
+
 describe('portfolio overview shell', () => {
   it('keeps primary navigation centered around Work, Services, and About', () => {
     render(
@@ -58,10 +79,20 @@ describe('portfolio overview shell', () => {
     expect(screen.getByRole('heading', { level: 1, name: 'Jack Cao' })).toBeInTheDocument();
     expect(document.querySelector('.portfolio-masthead')).not.toBeInTheDocument();
     expect(document.querySelector('[data-portfolio-section="contact"]')).not.toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Start a conversation.' })).toHaveAttribute('href', '/contact');
-    expect(screen.getByRole('link', { name: 'Resume (PDF)' })).toHaveAttribute(
+    expect(screen.queryByText('Product engineer who designs')).not.toBeInTheDocument();
+    expect(document.querySelector('.portfolio-hero__availability')).not.toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'resume' })).toHaveAttribute(
       'href',
       'https://assets.jackcao.dev/resume/jack-cao-resume.pdf',
+    );
+    expect(screen.getByRole('link', { name: 'GitHub' })).toHaveAttribute('href', 'https://github.com/Tec94');
+    expect(screen.getByRole('link', { name: 'LinkedIn' })).toHaveAttribute(
+      'href',
+      'https://www.linkedin.com/in/jackcao',
+    );
+    expect(screen.getByRole('link', { name: 'Book a 15-minute call' })).toHaveAttribute(
+      'href',
+      'https://cal.com/jack-cao/15min',
     );
 
     const dock = screen.getByRole('navigation', { name: 'Portfolio' });
@@ -77,11 +108,28 @@ describe('portfolio overview shell', () => {
     ]);
     expect(within(dock).getByRole('button', { name: 'Search portfolio' })).toHaveTextContent('');
     expect(document.getElementById('overview')).toHaveAttribute('data-portfolio-section', 'overview');
+    expect(document.getElementById('featured')).toHaveAttribute('data-portfolio-section', 'featured');
     expect(document.getElementById('work')).toHaveAttribute('data-portfolio-section', 'work');
+    expect(screen.queryByRole('heading', { name: 'My Projects' })).not.toBeInTheDocument();
     expect(document.getElementById('services')).toHaveAttribute('data-portfolio-section', 'services');
     expect(document.getElementById('about')).toHaveAttribute('data-portfolio-section', 'about');
+    expect(document.getElementById('work')).toHaveClass('portfolio-content-shell', 'portfolio-split-layout');
+    expect(document.getElementById('services')).toHaveClass('portfolio-content-shell', 'portfolio-split-layout');
+    expect(document.getElementById('about')).toHaveClass('portfolio-content-shell', 'portfolio-split-layout');
     expect(document.querySelector('.portfolio-work-archive__sticky .portfolio-work-filters')).toBeInTheDocument();
-    expect(document.querySelector('.portfolio-services__index #portfolio-services-heading')).toBeInTheDocument();
+    const servicesIndex = document.querySelector<HTMLElement>('.portfolio-services__index');
+    expect(servicesIndex?.querySelector('#portfolio-services-heading')).toBeInTheDocument();
+    expect(servicesIndex?.querySelector('ol')).not.toBeInTheDocument();
+    expect(within(servicesIndex!).getByRole('link', { name: 'Book a call ↗' })).toHaveAttribute(
+      'href',
+      'https://cal.com/jack-cao/15min',
+    );
+
+    const themeToggle = screen.getByRole('button', { name: /Theme: (light|dark); switch to/ });
+    const initialTheme = themeToggle.getAttribute('aria-label');
+    expect(initialTheme).not.toContain('system');
+    fireEvent.click(themeToggle);
+    expect(themeToggle.getAttribute('aria-label')).not.toBe(initialTheme);
 
     const aboutToggle = screen.getByRole('button', { name: 'More about me' });
     expect(aboutToggle).toHaveAttribute('aria-expanded', 'false');
@@ -93,8 +141,73 @@ describe('portfolio overview shell', () => {
     expect(screen.getByText('University of Texas at Dallas')).toBeInTheDocument();
   });
 
+  it('uses the landing Work section as the only work index', async () => {
+    const projectView = render(
+      <MemoryRouter initialEntries={['/work/credify']}>
+        <PreviewPortfolio />
+      </MemoryRouter>,
+    );
+
+    expect(screen.getByRole('link', { name: 'Back to index' })).toHaveAttribute('href', '/#work');
+    expect(screen.getByRole('link', { name: 'Work index' })).toHaveAttribute('href', '/#work');
+    projectView.unmount();
+
+    const redirectedView = render(
+      <MemoryRouter initialEntries={['/work']}>
+        <PreviewPortfolio />
+      </MemoryRouter>,
+    );
+    expect(await within(redirectedView.container).findByRole('heading', { level: 1, name: 'Jack Cao' }))
+      .toBeInTheDocument();
+    redirectedView.unmount();
+  });
+
+  it('opens a project from the full list row with matched transition names', async () => {
+    const play = vi.spyOn(HTMLMediaElement.prototype, 'play').mockResolvedValue();
+    const originalStartViewTransition = document.startViewTransition;
+    const startViewTransition = vi.fn((callback: () => void) => {
+      callback();
+      return {
+        finished: Promise.resolve(),
+        ready: Promise.resolve(),
+        updateCallbackDone: Promise.resolve(),
+        skipTransition: vi.fn(),
+      } as ViewTransition;
+    });
+    Object.defineProperty(document, 'startViewTransition', {
+      configurable: true,
+      value: startViewTransition,
+    });
+    const view = render(
+      <MemoryRouter initialEntries={['/#work']}>
+        <PreviewPortfolio />
+      </MemoryRouter>,
+    );
+
+    const projectRow = within(view.container).getByRole('link', { name: /Credify.*Oct 2025/i });
+    fireEvent.click(projectRow);
+    expect(startViewTransition).toHaveBeenCalledOnce();
+
+    const projectHeading = await within(view.container).findByRole('heading', { level: 1, name: 'Credify' });
+    expect(projectHeading.style.viewTransitionName).toBe('portfolio-title-credify');
+    expect(view.container.querySelector<HTMLElement>('.portfolio-project-preview__media')?.style.viewTransitionName)
+      .toBe('portfolio-media-credify');
+    view.unmount();
+    play.mockRestore();
+    if (originalStartViewTransition) {
+      Object.defineProperty(document, 'startViewTransition', {
+        configurable: true,
+        value: originalStartViewTransition,
+      });
+    } else {
+      delete (document as unknown as { startViewTransition?: Document['startViewTransition'] })
+        .startViewTransition;
+    }
+  });
+
   it('maps observed landing sections to stable URLs', () => {
     expect(getLandingSectionUrl('overview')).toBe('/');
+    expect(getLandingSectionUrl('featured')).toBe('/#featured');
     expect(getLandingSectionUrl('work')).toBe('/#work');
     expect(getLandingSectionUrl('services')).toBe('/#services');
     expect(getLandingSectionUrl('about')).toBe('/#about');

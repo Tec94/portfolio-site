@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { ArrowLeft, ArrowUpRight, Github } from 'lucide-react';
+import { ArrowLeft, ArrowUpRight, Compass, Github } from 'lucide-react';
 import { Link, useParams } from 'react-router-dom';
+import { SystemPage } from '../components/SystemPage';
 import { ContentNavigation } from './components/ContentNavigation';
 import { MediaViewer } from './components/MediaViewer';
 import {
@@ -10,7 +11,8 @@ import {
   portfolioManifest,
 } from './content/manifest';
 import { ProjectImage } from './work/ProjectMedia';
-import { formatProjectDate, projectTransitionName } from './work/projectPresentation';
+import { formatProjectDate, projectTransitionStyle } from './work/projectPresentation';
+import { getLandingSectionUrl } from './routeOwnership';
 
 export function ProjectBoundaryPage() {
   const { slug = '' } = useParams();
@@ -26,7 +28,7 @@ export function ProjectBoundaryPage() {
         <article>
           <header className="portfolio-project-preview__header">
             <time dateTime={previewProject.completedAt}>{formatProjectDate(previewProject.completedAt)}</time>
-            <h1 style={{ viewTransitionName: projectTransitionName(previewProject.slug, 'title') }}>
+            <h1 style={projectTransitionStyle(previewProject.slug, 'title')}>
               {previewProject.title}
             </h1>
             <p>{previewProject.role}</p>
@@ -47,11 +49,11 @@ export function ProjectBoundaryPage() {
     <main id="portfolio-main" className="portfolio-case-study">
       <article>
         <header className="portfolio-case-study__hero">
-          <Link className="portfolio-text-link" to="/work"><ArrowLeft aria-hidden="true" /> Work index</Link>
+          <Link className="portfolio-text-link" to={getLandingSectionUrl('work')}><ArrowLeft aria-hidden="true" /> Work index</Link>
           <div className="portfolio-case-study__title-row">
             <div>
               <time dateTime={current.completedAt}>{formatProjectDate(current.completedAt)}</time>
-              <h1 style={{ viewTransitionName: projectTransitionName(current.slug, 'title') }}>{current.title}</h1>
+              <h1 style={projectTransitionStyle(current.slug, 'title')}>{current.title}</h1>
               <p>{current.summary}</p>
             </div>
             <div className="portfolio-case-study__actions" aria-label="Project links">
@@ -119,10 +121,17 @@ export function ArticleBoundaryPage() {
 
 export function MissingContentPage({ label = 'page' }: { label?: string }) {
   return (
-    <main id="portfolio-main" className="portfolio-page portfolio-missing">
-      <p className="portfolio-kicker">Not found</p>
-      <h1>This {label} is unavailable.</h1>
-      <Link to="/work">Back to work</Link>
-    </main>
+    <SystemPage
+      mainId="portfolio-main"
+      eyebrow="404 / Content not found"
+      title={`This ${label} is unavailable.`}
+      description="The address may be outdated, or this content is not published."
+      icon={<Compass />}
+      actions={(
+        <Link to={getLandingSectionUrl('work')}>
+          Work archive <ArrowUpRight aria-hidden="true" />
+        </Link>
+      )}
+    />
   );
 }

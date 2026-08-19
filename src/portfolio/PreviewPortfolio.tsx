@@ -4,7 +4,7 @@ import { ArticleBoundaryPage, MissingContentPage, ProjectBoundaryPage } from './
 import { AboutPage } from './pages/AboutPage';
 import { ContactPage } from './pages/ContactPage';
 import { LabPage } from './pages/LabPage';
-import { OverviewPage, WorkPage } from './pages/OverviewPage';
+import { OverviewPage } from './pages/OverviewPage';
 import { ServicesPage } from './pages/ServicesPage';
 import { WritingPage } from './pages/WritingPage';
 import { PortfolioProviders } from './providers/PortfolioProviders';
@@ -20,7 +20,7 @@ export default function PreviewPortfolio() {
       <PortfolioShell>
         <Routes>
           <Route path="/" element={<OverviewPage />} />
-          <Route path="/work" element={<WorkPage />} />
+          <Route path="/work" element={<Navigate to="/#work" replace />} />
           <Route path="/work/:slug" element={<ProjectBoundaryPage />} />
           <Route path="/services" element={<ServicesPage />} />
           <Route path="/about" element={<AboutPage />} />

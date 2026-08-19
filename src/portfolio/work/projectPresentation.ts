@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react';
 import type { PreviewProjectRecord } from '../content/manifest';
 
 export type WorkFilter = 'all' | 'hackathons' | 'sites' | 'data';
@@ -22,9 +23,20 @@ export function projectTransitionName(slug: string, part: 'media' | 'title') {
   return `portfolio-${part}-${slug.replace(/[^a-z0-9-]/gi, '-')}`;
 }
 
+export function projectTransitionStyle(
+  slug: string,
+  part: 'media' | 'title',
+): CSSProperties & { viewTransitionClass: string } {
+  return {
+    viewTransitionName: projectTransitionName(slug, part),
+    viewTransitionClass: `portfolio-project-${part}-transition`,
+  };
+}
+
 export function prepareProjectTransition(root: HTMLElement, slug: string) {
   document.querySelectorAll<HTMLElement>('[data-project-transition]').forEach((element) => {
     element.style.removeProperty('view-transition-name');
+    element.style.removeProperty('view-transition-class');
   });
   const transitionElements = [
     ...(root.matches('[data-project-transition]') ? [root] : []),
@@ -34,6 +46,7 @@ export function prepareProjectTransition(root: HTMLElement, slug: string) {
     const part = element.dataset.projectTransition;
     if (part === 'media' || part === 'title') {
       element.style.setProperty('view-transition-name', projectTransitionName(slug, part));
+      element.style.setProperty('view-transition-class', `portfolio-project-${part}-transition`);
     }
   });
 }

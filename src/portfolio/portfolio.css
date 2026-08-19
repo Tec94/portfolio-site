@@ -13,7 +13,8 @@
   --portfolio-accent: oklch(0.51 0.135 36);
   --portfolio-focus: oklch(0.48 0.16 250);
   --portfolio-shadow: oklch(0.28 0.025 55 / 0.16);
-  --portfolio-content-inset: clamp(1.5rem, 8vw, 7.5rem);
+  --portfolio-media-frame: oklch(0.62 0.092 55);
+  --portfolio-content-inset: 26rem;
   --portfolio-chrome-inset: clamp(0.75rem, 2vw, 1.5rem);
   min-width: 20rem;
   min-height: 100vh;
@@ -38,6 +39,11 @@ html[data-portfolio-resolved-theme='dark'] .portfolio-root {
   --portfolio-accent: oklch(0.76 0.12 51);
   --portfolio-focus: oklch(0.78 0.13 245);
   --portfolio-shadow: oklch(0.08 0.01 55 / 0.44);
+  --portfolio-media-frame: oklch(0.955 0.012 78);
+}
+
+html[data-portfolio-theme-mode] {
+  overscroll-behavior-y: none;
 }
 
 .portfolio-root::before {
@@ -189,13 +195,6 @@ html[data-portfolio-resolved-theme='dark'] .portfolio-root {
   font-size: 0.875rem;
 }
 
-.portfolio-missing a {
-  display: inline-block;
-  margin-block-start: 1.5rem;
-  font-size: 0.875rem;
-  font-weight: 650;
-}
-
 .portfolio-mdx {
   max-width: 48rem;
 }
@@ -321,6 +320,31 @@ html[data-portfolio-resolved-theme='dark'] .portfolio-root {
   width: 1.05rem;
   height: 1.05rem;
   stroke-width: 1.8;
+}
+
+.portfolio-theme-icon {
+  position: relative;
+  display: grid;
+  width: 1.05rem;
+  height: 1.05rem;
+  place-items: center;
+}
+
+.portfolio-theme-icon svg {
+  position: absolute;
+  opacity: 0;
+  filter: blur(4px);
+  transform: scale(0.25);
+  transition:
+    opacity 180ms ease,
+    filter 180ms ease,
+    transform 180ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.portfolio-theme-icon svg[data-active='true'] {
+  opacity: 1;
+  filter: blur(0);
+  transform: scale(1);
 }
 
 .portfolio-command {
@@ -503,17 +527,13 @@ html[data-portfolio-cursor-ready='true'] .portfolio-root * {
   cursor: none !important;
 }
 
-@media (min-width: 80rem) {
+@media (max-width: 80rem) {
   .portfolio-root {
-    --portfolio-content-inset: max(20rem, calc((100vw - 68rem) / 2));
+    --portfolio-content-inset: max(1.875rem, calc((100vw - 28rem) / 2));
   }
 }
 
 @media (max-width: 48rem) {
-  .portfolio-root {
-    --portfolio-content-inset: 1.875rem;
-  }
-
   .portfolio-page {
     padding-block-start: 5rem;
   }
@@ -763,12 +783,15 @@ html[data-portfolio-cursor-ready='true'] .portfolio-root * {
   padding-block: 0.3rem;
   color: var(--portfolio-ink-soft);
   font-size: 0.72rem;
+  font-weight: 700;
   text-decoration: none;
 }
 
 .portfolio-content-nav a[aria-current='location'] {
   color: var(--portfolio-ink);
-  font-weight: 700;
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
 }
 
 .portfolio-case-study__content {

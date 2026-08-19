@@ -314,6 +314,7 @@ export const profile = {
   timeZone: 'America/Chicago',
   email: 'hello@jackcao.dev',
   resumeUrl: 'https://assets.jackcao.dev/resume/jack-cao-resume.pdf',
+  calUrl: 'https://cal.com/jack-cao/15min',
   socialLinks: [
     { label: 'GitHub', href: 'https://github.com/Tec94' },
     { label: 'LinkedIn', href: 'https://www.linkedin.com/in/jackcao' },

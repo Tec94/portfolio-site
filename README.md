@@ -1,7 +1,7 @@
 # Jack Cao portfolio
 
-This repository contains the current React portfolio, its classic experience,
-the v2 portfolio shell, a payment demonstration, and the Supabase contact
+This repository contains Jack Cao's current tactile editorial portfolio, two
+preserved legacy experiences, a payment demonstration, and the Supabase contact
 submission function.
 
 ## Development
@@ -51,11 +51,23 @@ documentation in separate locations:
 Generated builds, browser captures, automation state, logs, local environment
 files, and dependency folders are excluded through `.gitignore`.
 
+## Routes
+
+The current portfolio owns `/`, the landing-page section anchors, project case
+studies under `/work/:slug`, and the Services, About, Writing, Lab, and Contact
+routes. `/preview/*` redirects to the equivalent public route.
+
+The preserved experiences remain available at `/v2/*` and `/classic`.
+`/payment` and the legacy `/services/:slug` demonstrations remain separate.
+
 ## Current status
 
-The portfolio is under active visual development. Read the
-[product polish roadmap](docs/roadmap.md) before you change page structure,
-motion, typography, accessibility, or color.
+The tactile portfolio is active at the root and remains under visual and
+content refinement. Read the [product polish roadmap](docs/roadmap.md) and
+[active design direction](.impeccable.md) before changing page structure,
+motion, typography, accessibility, or color. The latest supplied performance
+evidence is recorded in the
+[August 2026 performance audit](docs/performance-audit-2026-08-18.md).
 
 ## Next steps
 

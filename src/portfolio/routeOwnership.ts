@@ -13,7 +13,7 @@ export function getPreviewRedirect(pathname: string, search = '') {
   return `${destination}${search}`;
 }
 
-const landingSections = ['overview', 'work', 'services', 'about', 'writing'] as const;
+const landingSections = ['overview', 'featured', 'work', 'services', 'about', 'writing'] as const;
 
 export type LandingSection = (typeof landingSections)[number];
 

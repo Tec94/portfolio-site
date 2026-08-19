@@ -1,50 +1,47 @@
 # Product polish roadmap
 
-This document records the visible product work that remains after the current
-portfolio redesign. It prevents completed technical experiments from being
-mistaken for finished interface work.
+The tactile editorial portfolio is active at the root. This document records
+remaining product work without treating the preserved v2 and classic routes as
+part of the new portfolio's visual system.
 
-> **Note:** This is a preview feature currently under active development.
+## Current foundation
 
-## Project-device motion
+- `/` owns the introduction, featured work, archive, Services, About, and
+  Writing teaser.
+- Published case studies live under `/work/:slug`.
+- Services, About, Writing, Lab, and Contact have dedicated routes.
+- `/v2/*`, `/classic`, `/payment`, and legacy service demonstrations remain
+  available without defining the current design direction.
+- The landing page uses one content shell and split-grid alignment contract.
+- Loading, missing-content, and fatal-error states use the tactile portfolio
+  palette instead of the v2 system skin.
 
-The project-device watch uses a scroll-scrubbed reference video, but the final
-animation is not fully realized. The remaining work must address timing,
-continuity, visual ownership, scroll reversal, responsive framing, and the
-reduced-motion presentation.
+## Remaining content work
 
-The final motion must feel like part of the portfolio rather than an embedded
-reference clip. It must remain legible at narrow widths and must not compete
-with project content.
+Replace audited preview SVG files with final product media as owner-approved
+captures become available. Keep project roles, outcomes, and qualitative claims
+evidence-safe until the owner completes the case-study wording pass.
 
-## Page-wide refinement
+Publish Writing entries only after their content is approved. Draft MDX must
+remain excluded from routes and search.
 
-Every route still needs a deliberate review and rework pass. The review must
-cover the v2 pages, classic portfolio, service details, payment demonstration,
-not-found page, loading states, and error states.
+## Performance evidence
 
-Each pass must address these areas:
+The August 18 supplied Lighthouse run used the Vite development server and a
+Chrome profile with performance-affecting extensions. Its score is not a
+production baseline. The trace did reveal one actionable issue: the first
+featured image was a lazy-loaded LCP candidate. The implementation now gives
+that image eager, high-priority loading while leaving later media lazy.
 
-- Typography hierarchy, measure, wrapping, rhythm, and responsive scale.
-- Accessibility semantics, keyboard order, focus visibility, labels, contrast,
-  reduced motion, and screen-reader announcements.
-- Layout grouping, spacing, alignment, density, overflow, and breakpoint
-  behavior.
-- Color roles, contrast, surface separation, state colors, and the removal of
-  inconsistent legacy accents.
-- Motion purpose, interruption, loading feedback, and input-method support.
-- Content clarity, real links, accurate states, and consistent calls to action.
+See [the performance audit](performance-audit-2026-08-18.md) for the measured
+values and environment limits.
 
 ## Completion criteria
 
-A page is ready only when its desktop and mobile layouts are coherent, its
-keyboard path is complete, its reduced-motion behavior is intentional, and its
-loading and error states match the final visual system.
+A change is ready when its desktop and mobile layouts are coherent, its keyboard
+path is complete, reduced motion remains useful, and loading, missing-content,
+and error states match the active visual system. Automated checks support, but
+do not replace, visual and interaction review.
 
-Automated checks must pass, but they do not replace visual, interaction, and
-content review.
-
-## Next steps
-
-Finish the project-device motion direction first. Then review one route at a
-time and record its remaining issues before changing shared styles.
+Review one bounded route or system at a time. Preserve the legacy routes unless
+a separate task explicitly changes them.

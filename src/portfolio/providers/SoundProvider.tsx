@@ -17,6 +17,7 @@ export type SoundEvent =
   | 'toggle'
   | 'navigation'
   | 'expansion'
+  | 'arrival'
   | 'success'
   | 'error';
 
@@ -42,11 +43,13 @@ const soundMap: Record<SoundEvent, Parameters<typeof playCuelume>[0]> = {
   toggle: 'toggle',
   navigation: 'page',
   expansion: 'whisper',
+  arrival: 'arrival',
   success: 'success',
   error: 'error',
 };
 
 const projectPreviewSound = '/audio/normalized/paper-slide.mp3';
+const projectPreviewVolume = BASE_SOUND_VOLUME * 0.325;
 const pageOpenSounds = [
   '/audio/normalized/pencil-scribble-1.mp3',
   '/audio/normalized/pencil-scribble-2.mp3',
@@ -75,6 +78,7 @@ function isTypingKey(event: KeyboardEvent | React.KeyboardEvent) {
 export function PortfolioSoundProvider({ children }: { children: ReactNode }) {
   const [enabled, setEnabledState] = useState(readSoundPreference);
   const audioPlayers = useRef(new Map<string, HTMLAudioElement>());
+  const projectPreviewVoices = useRef(new Set<HTMLAudioElement>());
   const pageOpenIndex = useRef(0);
   const pageCloseIndex = useRef(0);
   const [typingPlayer] = useState(() =>
@@ -89,9 +93,13 @@ export function PortfolioSoundProvider({ children }: { children: ReactNode }) {
       if (!nextEnabled) typingPlayer.stopAll();
       if (!nextEnabled) {
         audioPlayers.current.forEach((audio) => {
-          audio.pause();
+          if (!audio.paused) audio.pause();
           audio.currentTime = 0;
         });
+        projectPreviewVoices.current.forEach((audio) => {
+          if (!audio.paused) audio.pause();
+        });
+        projectPreviewVoices.current.clear();
       }
       try {
         window.localStorage.setItem(SOUND_STORAGE_KEY, nextEnabled ? 'on' : 'off');
@@ -132,19 +140,29 @@ export function PortfolioSoundProvider({ children }: { children: ReactNode }) {
       if (!enabled) return;
       const player = getAudioPlayer(source);
       if (!restart && !player.paused && !player.ended) return;
-      if (restart) player.pause();
+      if (restart && !player.paused) player.pause();
       player.currentTime = 0;
-      void player.play().catch(() => {
+      const playback = player.play();
+      void playback?.catch(() => {
         // Browsers may reject playback before their first user gesture.
       });
     },
     [enabled, getAudioPlayer],
   );
 
-  const playProjectPreview = useCallback(
-    () => playCustomSound(projectPreviewSound, false),
-    [playCustomSound],
-  );
+  const playProjectPreview = useCallback(() => {
+    if (!enabled) return;
+    const voice = getAudioPlayer(projectPreviewSound).cloneNode(true) as HTMLAudioElement;
+    voice.volume = projectPreviewVolume;
+    projectPreviewVoices.current.add(voice);
+    const release = () => {
+      if (!voice.paused) voice.pause();
+      projectPreviewVoices.current.delete(voice);
+    };
+    voice.addEventListener('ended', release, { once: true });
+    const playback = voice.play();
+    void playback?.catch(release);
+  }, [enabled, getAudioPlayer]);
 
   const playPageOpen = useCallback(() => {
     const source = pageOpenSounds[pageOpenIndex.current % pageOpenSounds.length];
@@ -160,7 +178,9 @@ export function PortfolioSoundProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     setVolume(BASE_SOUND_VOLUME);
+    getAudioPlayer(projectPreviewSound);
     const players = audioPlayers.current;
+    const previewVoices = projectPreviewVoices.current;
     const unlock = () => void typingPlayer.unlock();
     window.addEventListener('pointerdown', unlock, { capture: true, once: true });
     window.addEventListener('keydown', unlock, { capture: true, once: true });
@@ -169,14 +189,17 @@ export function PortfolioSoundProvider({ children }: { children: ReactNode }) {
       window.removeEventListener('keydown', unlock, true);
       setCuelumeEnabled(false);
       players.forEach((audio) => {
-        audio.pause();
+        if (!audio.paused) audio.pause();
         audio.removeAttribute('src');
-        audio.load();
       });
       players.clear();
+      previewVoices.forEach((audio) => {
+        if (!audio.paused) audio.pause();
+      });
+      previewVoices.clear();
       void typingPlayer.destroy();
     };
-  }, [typingPlayer]);
+  }, [getAudioPlayer, typingPlayer]);
 
   useEffect(() => {
     setCuelumeEnabled(enabled);

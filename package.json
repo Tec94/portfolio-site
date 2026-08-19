@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "npm run validate:portfolio-content && vite build",
     "lint": "eslint .",
-    "lint:portfolio": "eslint src/App.tsx src/main.tsx src/components/CustomCursorManager.tsx src/components/v2 src/portfolio src/data/portfolioData.ts src/lib/contactSubmissions.ts src/hooks/usePrefersReducedMotion.ts src/test scripts/validate-portfolio-content.ts portfolioMdxSourcePlugin.ts vite.config.ts vitest.config.ts",
+    "lint:portfolio": "eslint src/App.tsx src/main.tsx src/components/CustomCursorManager.tsx src/components/ErrorBoundary.tsx src/components/SystemPage.tsx src/components/v2 src/pages/NotFound.tsx src/portfolio src/data/portfolioData.ts src/lib/contactSubmissions.ts src/hooks/usePrefersReducedMotion.ts src/test scripts/validate-portfolio-content.ts portfolioMdxSourcePlugin.ts vite.config.ts vitest.config.ts",
     "type-check:portfolio": "npm run validate:portfolio-content && tsc -p tsconfig.portfolio.json --noEmit",
     "validate:portfolio-content": "tsx scripts/validate-portfolio-content.ts",
     "test": "vitest run",
