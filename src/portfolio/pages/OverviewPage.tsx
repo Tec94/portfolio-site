@@ -1,8 +1,4 @@
-import {
-  ArrowUpRight,
-  CalendarDays,
-} from 'lucide-react';
-import type { CSSProperties } from 'react';
+import { ArrowUpRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { profile } from '../../data/portfolioData';
 import { OverviewAbout } from '../components/OverviewAbout';
@@ -10,24 +6,6 @@ import { ServicesReceipts } from '../components/ServicesReceipts';
 import { SelectedWork } from '../work/SelectedWork';
 import { WorkArchive } from '../work/WorkArchive';
 import { usePortfolioSound } from '../providers/SoundProvider';
-
-const heroLinkIcons = {
-  projects: '/projects.svg',
-  github: '/github.svg',
-  linkedin: '/linkedin.svg',
-  mail: '/mail.svg',
-  resume: '/resume.svg',
-} as const;
-
-function HeroLinkIcon({ src }: { src: string }) {
-  return (
-    <span
-      aria-hidden="true"
-      className="portfolio-hero__link-icon"
-      style={{ '--portfolio-inline-icon': `url("${src}")` } as CSSProperties}
-    />
-  );
-}
 
 export function OverviewPage() {
   const sound = usePortfolioSound();
@@ -39,49 +17,42 @@ export function OverviewPage() {
         data-portfolio-section="overview"
         aria-labelledby="portfolio-hero-heading"
       >
-        <header className="portfolio-hero__identity">
-          <span className="portfolio-hero__monogram" aria-hidden="true">{profile.initials}</span>
-          <h1 id="portfolio-hero-heading">{profile.name}</h1>
-        </header>
-        <div className="portfolio-hero__copy">
-          <p>
-            I’m a product engineer in Texas. I shape useful software from the interface inward—designing flows, states, and systems, then building them into working products.
-          </p>
-          <p>
-            Explore my{' '}
-            <Link className="portfolio-hero__text-link" to="/#work">
-              <HeroLinkIcon src={heroLinkIcons.projects} />
-              <span className="portfolio-hero__text-label">projects</span>
-            </Link>
-            , see my code on{' '}
-            <a className="portfolio-hero__text-link" href="https://github.com/Tec94" target="_blank" rel="noreferrer">
-              <HeroLinkIcon src={heroLinkIcons.github} />
-              <span className="portfolio-hero__text-label">GitHub</span>
-            </a>
-            , connect on{' '}
-            <a className="portfolio-hero__text-link" href="https://www.linkedin.com/in/jackcao" target="_blank" rel="noreferrer">
-              <HeroLinkIcon src={heroLinkIcons.linkedin} />
-              <span className="portfolio-hero__text-label">LinkedIn</span>
-            </a>
-            , send me an{' '}
-            <a className="portfolio-hero__text-link" href={`mailto:${profile.email}`}>
-              <HeroLinkIcon src={heroLinkIcons.mail} />
-              <span className="portfolio-hero__text-label">email</span>
-            </a>
-            , or read my{' '}
-            <a className="portfolio-hero__text-link" href={profile.resumeUrl} target="_blank" rel="noreferrer">
-              <HeroLinkIcon src={heroLinkIcons.resume} />
-              <span className="portfolio-hero__text-label">resume</span>
-            </a>
-            .
-          </p>
+        <div className="portfolio-hero__statement">
+          <h1 id="portfolio-hero-heading">
+            <span>{profile.name} is a product engineer in Texas.</span>
+            <strong>He designs the interface, shapes the system, and builds the product.</strong>
+          </h1>
+
+          <div className="portfolio-hero__copy">
+            <p>
+              Explore my{' '}
+              <Link className="portfolio-hero__text-link" to="/#work">projects</Link>
+              , see my code on{' '}
+              <a className="portfolio-hero__text-link" href="https://github.com/Tec94" target="_blank" rel="noreferrer">GitHub</a>
+              , connect on{' '}
+              <a className="portfolio-hero__text-link" href="https://www.linkedin.com/in/jackcao" target="_blank" rel="noreferrer">LinkedIn</a>
+              , or read my{' '}
+              <a className="portfolio-hero__text-link" href={profile.resumeUrl} target="_blank" rel="noreferrer">resume</a>
+              .
+            </p>
+            <p>
+              Have something useful in mind?{' '}
+              <a className="portfolio-hero__text-link" href={`mailto:${profile.email}`}>Email me</a>
+              {' '}or{' '}
+              <a className="portfolio-hero__text-link" href={profile.calUrl} target="_blank" rel="noreferrer">Book a 15-minute call</a>
+              .
+            </p>
+          </div>
         </div>
-        <div className="portfolio-hero__actions">
-          <a href={`mailto:${profile.email}`}>Email me</a>
-          <a href={profile.calUrl} target="_blank" rel="noreferrer">
-            <CalendarDays aria-hidden="true" /> Book a 15-minute call
-          </a>
-        </div>
+
+        <Link
+          className="portfolio-hero__scroll-cue"
+          to="/#featured"
+          onClick={() => sound.play('navigation')}
+        >
+          <span>Selected work</span>
+          <span aria-hidden="true">↓</span>
+        </Link>
       </section>
 
       <SelectedWork />

@@ -76,7 +76,7 @@ describe('portfolio overview shell', () => {
       </MemoryRouter>,
     );
 
-    expect(screen.getByRole('heading', { level: 1, name: 'Jack Cao' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 1, name: /^Jack Cao is a product engineer/ })).toBeInTheDocument();
     expect(document.querySelector('.portfolio-masthead')).not.toBeInTheDocument();
     expect(document.querySelector('[data-portfolio-section="contact"]')).not.toBeInTheDocument();
     expect(screen.queryByText('Product engineer who designs')).not.toBeInTheDocument();
@@ -157,7 +157,7 @@ describe('portfolio overview shell', () => {
         <PreviewPortfolio />
       </MemoryRouter>,
     );
-    expect(await within(redirectedView.container).findByRole('heading', { level: 1, name: 'Jack Cao' }))
+    expect(await within(redirectedView.container).findByRole('heading', { level: 1, name: /^Jack Cao is a product engineer/ }))
       .toBeInTheDocument();
     redirectedView.unmount();
   });

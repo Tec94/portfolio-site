@@ -102,7 +102,7 @@
 
 @media (max-width: 48rem) {
   .portfolio-hero {
-    padding-block-start: 4.5rem;
+    padding-block: 5rem 9rem;
   }
 
   .portfolio-work-row,
@@ -156,8 +156,20 @@
 }
 
 @media (max-width: 34rem) {
-  .portfolio-hero__identity {
-    grid-template-columns: auto minmax(0, 1fr);
+  .portfolio-hero {
+    width: calc(100% - 2.5rem);
+  }
+
+  .portfolio-hero h1 {
+    font-size: clamp(1.35rem, 7vw, 1.65rem);
+  }
+
+  .portfolio-hero__copy {
+    font-size: clamp(1.02rem, 5.4vw, 1.2rem);
+  }
+
+  .portfolio-hero__scroll-cue {
+    font-size: 0.55rem;
   }
 
   .portfolio-about-overview__details {
