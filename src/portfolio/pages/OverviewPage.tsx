@@ -20,7 +20,6 @@ export function OverviewPage() {
         <div className="portfolio-hero__statement">
           <h1 id="portfolio-hero-heading">
             <span>{profile.name} is a product engineer in Texas.</span>
-            <strong>He designs the interface, shapes the system, and builds the product.</strong>
           </h1>
 
           <div className="portfolio-hero__copy">
