@@ -39,7 +39,16 @@ export default function Projects() {
       ],
       github: "Tec94/Hack-Rice",
       demoUrl: "https://hack-rice-nine.vercel.app/",
-      screenshot: "/screenshots/citizen-voice-gif.gif",
+      screenshots: [
+        "https://assets.jackcao.dev/projects/citizenvoice/citizenvoice_1.png",
+        "https://assets.jackcao.dev/projects/citizenvoice/citizenvoice_2.png",
+        "https://assets.jackcao.dev/projects/citizenvoice/citizenvoice_3.png",
+        "https://assets.jackcao.dev/projects/citizenvoice/citizenvoice_4.png",
+        "https://assets.jackcao.dev/projects/citizenvoice/citizenvoice_5.png",
+        "https://assets.jackcao.dev/projects/citizenvoice/citizenvoice_6.png",
+        "https://assets.jackcao.dev/projects/citizenvoice/citizenvoice_7.png",
+        "https://assets.jackcao.dev/projects/citizenvoice/citizenvoice_8.png"
+      ],
       metrics: [
         { label: "Features", value: "3" },
         { label: "DB Tables", value: "8+" },
