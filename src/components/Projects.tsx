@@ -15,12 +15,22 @@ export default function Projects() {
       github: "Tec94/hack-uta",
       demoUrl: "https://hack-uta.vercel.app/",
       screenshots: [
-        "/screenshots/credify-landing-page.png",
-        "/screenshots/credify-budget-manager.png",
-        "/screenshots/credify-cards.png",
-        "/screenshots/credify-transfer.png",
-        "/screenshots/credify-settings.png",
-        "/screenshots/credify-wallet.png"
+        "https://assets.jackcao.dev/projects/credify/credify_4.png",
+        "https://assets.jackcao.dev/projects/credify/credify_1.png",
+        "https://assets.jackcao.dev/projects/credify/credify_2.png",
+        "https://assets.jackcao.dev/projects/credify/credify_3.png",
+        "https://assets.jackcao.dev/projects/credify/credify_5.png",
+        "https://assets.jackcao.dev/projects/credify/credify_6.png",
+        "https://assets.jackcao.dev/projects/credify/credify_7.png",
+        "https://assets.jackcao.dev/projects/credify/credify_8.png",
+        "https://assets.jackcao.dev/projects/credify/credify_9.png",
+        "https://assets.jackcao.dev/projects/credify/credify_10.png",
+        "https://assets.jackcao.dev/projects/credify/credify_11.png",
+        "https://assets.jackcao.dev/projects/credify/credify_12.png",
+        "https://assets.jackcao.dev/projects/credify/credify_13.png",
+        "https://assets.jackcao.dev/projects/credify/credify_14.png",
+        "https://assets.jackcao.dev/projects/credify/credify_15.png",
+        "https://assets.jackcao.dev/projects/credify/credify_16.png"
       ],
       metrics: [
         { label: "Credit Cards", value: "15" },
