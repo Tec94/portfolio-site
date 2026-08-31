@@ -1,7 +1,5 @@
 import { Suspense } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
-import { Analytics } from '@vercel/analytics/react';
-import { SpeedInsights } from '@vercel/speed-insights/react';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { BackgroundProvider } from './contexts/BackgroundContext';
 import { StatsigWrapper } from './contexts/StatsigContext';
@@ -25,7 +23,6 @@ const PreviewPortfolio = lazyWithRetry(
   () => import('./portfolio/PreviewPortfolio'),
   'portfolio-preview',
 );
-const enableVercelInsights = Boolean(import.meta.env.VITE_VERCEL_ENV);
 
 const LoadingScreen = () => (
   <div className="v2-loading" role="status" aria-busy="true">
@@ -96,8 +93,6 @@ function App() {
           <PreviewPortfolio />
         </Suspense>
       )}
-      {enableVercelInsights ? <Analytics /> : null}
-      {enableVercelInsights ? <SpeedInsights /> : null}
     </ErrorBoundary>
   );
 }

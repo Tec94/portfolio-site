@@ -23,8 +23,6 @@
     "@mdx-js/react": "^3.1.1",
     "@statsig/react-bindings": "^3.26.0",
     "@supabase/supabase-js": "^2.110.8",
-    "@vercel/analytics": "^1.5.0",
-    "@vercel/speed-insights": "^1.2.0",
     "aos": "^2.3.4",
     "cuelume": "^0.2.2",
     "framer-motion": "^12.23.22",
