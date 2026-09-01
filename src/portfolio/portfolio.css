@@ -412,6 +412,11 @@ html[data-portfolio-theme-mode] {
   color: inherit;
 }
 
+.portfolio-command__input-row input:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+
 .portfolio-command__input-row input::placeholder {
   color: var(--portfolio-ink-soft);
 }

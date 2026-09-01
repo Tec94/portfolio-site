@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { profile } from '../../data/portfolioData';
 import { OverviewAbout } from '../components/OverviewAbout';
 import { ServicesReceipts } from '../components/ServicesReceipts';
-import { SelectedWork } from '../work/SelectedWork';
 import { WorkArchive } from '../work/WorkArchive';
 import { usePortfolioSound } from '../providers/SoundProvider';
 
@@ -46,15 +45,14 @@ export function OverviewPage() {
 
         <Link
           className="portfolio-hero__scroll-cue"
-          to="/#featured"
+          to="/#work"
           onClick={() => sound.play('navigation')}
         >
-          <span>Selected work</span>
+          <span>Work</span>
           <span aria-hidden="true">↓</span>
         </Link>
       </section>
 
-      <SelectedWork />
       <WorkArchive />
 
       <ServicesReceipts />

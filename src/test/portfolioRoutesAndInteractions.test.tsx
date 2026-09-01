@@ -106,9 +106,11 @@ describe('portfolio overview shell', () => {
       '/#services',
       '/#about',
     ]);
-    expect(within(dock).getByRole('button', { name: 'Search portfolio' })).toHaveTextContent('');
+    const searchButton = within(dock).getByRole('button', { name: 'Search portfolio' });
+    expect(searchButton).toHaveTextContent('');
     expect(document.getElementById('overview')).toHaveAttribute('data-portfolio-section', 'overview');
-    expect(document.getElementById('featured')).toHaveAttribute('data-portfolio-section', 'featured');
+    expect(document.getElementById('featured')).not.toBeInTheDocument();
+    expect(document.querySelector('.portfolio-hero__scroll-cue')).toHaveAttribute('href', '/#work');
     expect(document.getElementById('work')).toHaveAttribute('data-portfolio-section', 'work');
     expect(screen.queryByRole('heading', { name: 'My Projects' })).not.toBeInTheDocument();
     expect(document.getElementById('services')).toHaveAttribute('data-portfolio-section', 'services');
@@ -124,6 +126,24 @@ describe('portfolio overview shell', () => {
       'href',
       'https://cal.com/jack-cao/15min',
     );
+
+    fireEvent.click(searchButton);
+    const commandResults = screen.getByRole('listbox');
+    expect(screen.getByPlaceholderText('Type a page or action')).toBeInTheDocument();
+    const routeResults = commandResults.querySelectorAll('[id^="portfolio-command-route-"]');
+    expect(routeResults).toHaveLength(6);
+    routeResults.forEach((result) => {
+      expect(result.querySelector('small')).toBeNull();
+      expect(result.querySelector('.portfolio-command__kind')).toBeNull();
+    });
+    const actionResults = commandResults.querySelectorAll('[id^="portfolio-command-action-"]');
+    expect(actionResults).toHaveLength(2);
+    actionResults.forEach((result) => {
+      expect(result.querySelector('small')).toBeNull();
+      expect(result.querySelector('.portfolio-command__kind')).toBeNull();
+    });
+    expect(commandResults.querySelectorAll('[id^="portfolio-command-project-"]')).toHaveLength(0);
+    fireEvent.click(screen.getByRole('button', { name: 'Close search' }));
 
     const themeToggle = screen.getByRole('button', { name: /Theme: (light|dark); switch to/ });
     const initialTheme = themeToggle.getAttribute('aria-label');

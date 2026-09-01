@@ -27,7 +27,10 @@ export function CommandMenu({ open, onClose, returnFocusRef }: CommandMenuProps)
   const navigate = useNavigate();
   const theme = usePortfolioTheme();
   const sound = usePortfolioSound();
-  const results = useMemo(() => searchPortfolio(query), [query]);
+  const results = useMemo(
+    () => searchPortfolio(query).filter((result) => result.kind !== 'project'),
+    [query],
+  );
   const activeResult = results[activeIndex];
 
   const close = () => {
@@ -117,7 +120,7 @@ export function CommandMenu({ open, onClose, returnFocusRef }: CommandMenuProps)
               setActiveIndex(0);
             }}
             onKeyDown={handleInputKeyDown}
-            placeholder="Type a page, project, or action"
+            placeholder="Type a page or action"
             autoComplete="off"
             aria-controls="portfolio-command-results"
             aria-activedescendant={activeResult ? `portfolio-command-${activeResult.id}` : undefined}
@@ -139,9 +142,11 @@ export function CommandMenu({ open, onClose, returnFocusRef }: CommandMenuProps)
             >
               <span>
                 <strong>{result.title}</strong>
-                <small>{result.summary}</small>
+                {result.kind === 'article' ? <small>{result.summary}</small> : null}
               </span>
-              <span className="portfolio-command__kind">{result.kind}</span>
+              {result.kind === 'article' ? (
+                <span className="portfolio-command__kind">{result.kind}</span>
+              ) : null}
             </button>
           ))}
           {results.length === 0 ? <p className="portfolio-command__empty">No match</p> : null}
