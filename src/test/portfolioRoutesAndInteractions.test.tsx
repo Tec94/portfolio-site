@@ -183,6 +183,7 @@ describe('portfolio overview shell', () => {
     expect(view.container.querySelector('.portfolio-case-study__facts')).toBeNull();
     expect(view.container.querySelector('.portfolio-case-study__actions')).toBeNull();
     fireEvent.click(screen.getByRole('button', { name: /Open .* media viewer/ }));
+    expect(view.container.querySelector('.portfolio-viewer__stage')).toHaveClass('is-single');
     expect(view.container.querySelector('video')).toHaveAttribute('src', expect.stringContaining(`/projects/${slug}/`));
     fireEvent.click(screen.getByRole('button', { name: 'Close media viewer' }));
     expect(view.container.querySelector('video')).toBeNull();

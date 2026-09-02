@@ -106,7 +106,7 @@ export function MediaViewer({
           </button>
         </header>
         <div
-          className="portfolio-viewer__stage"
+          className={`portfolio-viewer__stage${hasMultiple ? '' : ' is-single'}`}
           data-cursor-intent={hasMultiple ? 'drag' : 'media'}
           onPointerDown={handlePointerDown}
           onPointerUp={handlePointerUp}

@@ -937,6 +937,10 @@ html[data-portfolio-cursor-ready='true'] .portfolio-root * {
   padding: 1rem;
 }
 
+.portfolio-viewer__stage.is-single {
+  grid-template-columns: minmax(0, 1fr);
+}
+
 .portfolio-viewer__media img,
 .portfolio-viewer__media video {
   display: block;
