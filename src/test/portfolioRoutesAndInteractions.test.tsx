@@ -168,6 +168,26 @@ describe('portfolio overview shell', () => {
     view.unmount();
   });
 
+  it.each(['smartnest', 'stock-tracker', 'munky'])('removes the %s project route', (slug) => {
+    const view = render(<MemoryRouter initialEntries={[`/work/${slug}`]}><PreviewPortfolio /></MemoryRouter>);
+    expect(within(view.container).getByRole('heading', { level: 1, name: 'This project is unavailable.' })).toBeInTheDocument();
+    view.unmount();
+  });
+
+  it('shows Slack Agent in the Hackathons filter without removed projects', async () => {
+    const view = render(<MemoryRouter initialEntries={['/']}><PreviewPortfolio /></MemoryRouter>);
+    const archive = within(view.container.querySelector<HTMLElement>('#work')!);
+    fireEvent.click(archive.getByRole('button', { name: 'Show 2 more projects' }));
+    for (const title of ['Smartnest', 'Stock Tracker', '$Munky']) {
+      expect(archive.queryByText(title)).not.toBeInTheDocument();
+    }
+    fireEvent.click(archive.getByRole('button', { name: 'Hackathons' }));
+    expect(await archive.findByText('Slack Agent')).toBeInTheDocument();
+    expect(archive.getByText('Credify')).toBeInTheDocument();
+    expect(archive.getByText('CitizenVoice')).toBeInTheDocument();
+    view.unmount();
+  });
+
   it('uses a simple Writing header and replaces the Lab link with Work', () => {
     const view = render(<MemoryRouter initialEntries={['/writing']}><PreviewPortfolio /></MemoryRouter>);
     expect(screen.getByRole('heading', { level: 1, name: 'Writing' })).toBeInTheDocument();

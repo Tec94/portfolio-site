@@ -16,7 +16,7 @@ import { ProjectImage } from '../portfolio/work/ProjectMedia';
 
 describe('portfolio foundation', () => {
   it('keeps draft MDX out of the published manifest and search', () => {
-    expect(portfolioManifest.projects).toHaveLength(8);
+    expect(portfolioManifest.projects).toHaveLength(5);
     expect(portfolioManifest.articles).toHaveLength(0);
     expect(searchPortfolio('Ship small, learn fast')).toEqual([]);
     expect(searchPortfolio('Credify')[0]).toMatchObject({
@@ -30,9 +30,6 @@ describe('portfolio foundation', () => {
     expect(previewProjectManifest.map(({ title }) => title)).toEqual([
       'Credify',
       'CitizenVoice',
-      'Smartnest',
-      'Stock Tracker',
-      '$Munky',
       'Artist Platform',
       'Nexora Landing Page',
       'Slack Agent',
@@ -42,13 +39,17 @@ describe('portfolio foundation', () => {
 
   it('filters approved project metadata and publishes evidence-safe case studies', () => {
     expect(filterPreviewProjects(previewProjectManifest, 'hackathons').map(({ title }) => title))
-      .toEqual(['Credify', 'CitizenVoice']);
+      .toEqual(['Credify', 'CitizenVoice', 'Slack Agent']);
     expect(filterPreviewProjects(previewProjectManifest, 'sites').map(({ title }) => title))
-      .toEqual(['Smartnest', '$Munky', 'Nexora Landing Page']);
+      .toEqual(['Nexora Landing Page']);
     expect(searchPortfolio('CitizenVoice')[0]).toMatchObject({
       title: 'CitizenVoice',
       href: '/work/citizenvoice',
     });
+  });
+
+  it.each(['Smartnest', 'Stock Tracker', '$Munky'])('removes %s from search', (title) => {
+    expect(searchPortfolio(title)).toEqual([]);
   });
 
   it.each([

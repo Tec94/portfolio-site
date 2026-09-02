@@ -9,7 +9,12 @@ describe('project view URL state', () => {
   });
 
   it('restores the shared project id', () => {
-    const result = parseProjectView(new URLSearchParams('project=munky'));
-    expect(result.project.id).toBe('munky');
+    const result = parseProjectView(new URLSearchParams('project=citizenvoice'));
+    expect(result.project.id).toBe('citizenvoice');
+  });
+
+  it.each(['smartnest', 'stock-tracker', 'munky'])('does not restore the removed project %s', (slug) => {
+    expect(projects.some((project) => project.id === slug)).toBe(false);
+    expect(parseProjectView(new URLSearchParams(`project=${slug}`)).project.id).toBe(projects[0].id);
   });
 });
