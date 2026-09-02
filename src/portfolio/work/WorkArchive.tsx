@@ -161,7 +161,7 @@ export function WorkArchive({ standalone = false }: { standalone?: boolean }) {
                       <strong data-project-transition="title">
                         {project.title}
                       </strong>
-                      <time dateTime={project.completedAt}>{formatProjectDate(project.completedAt)}</time>
+                      {project.completedAt ? <time dateTime={project.completedAt}>{formatProjectDate(project.completedAt)}</time> : null}
                     </Link>
                   </motion.div>
                 ))}
@@ -211,9 +211,9 @@ export function WorkArchive({ standalone = false }: { standalone?: boolean }) {
                       >
                         {project.title}
                       </Link>
-                      <span>{project.role}</span>
+                      {project.role ? <span>{project.role}</span> : null}
                     </div>
-                    <time dateTime={project.completedAt}>{formatProjectDate(project.completedAt)}</time>
+                    {project.completedAt ? <time dateTime={project.completedAt}>{formatProjectDate(project.completedAt)}</time> : null}
                     <div className="portfolio-showcase-card__actions">
                       {project.links.live ? (
                         <a

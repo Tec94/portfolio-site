@@ -16,7 +16,7 @@ import { ProjectImage } from '../portfolio/work/ProjectMedia';
 
 describe('portfolio foundation', () => {
   it('keeps draft MDX out of the published manifest and search', () => {
-    expect(portfolioManifest.projects).toHaveLength(5);
+    expect(portfolioManifest.projects).toHaveLength(8);
     expect(portfolioManifest.articles).toHaveLength(0);
     expect(searchPortfolio('Ship small, learn fast')).toEqual([]);
     expect(searchPortfolio('Credify')[0]).toMatchObject({
@@ -33,19 +33,41 @@ describe('portfolio foundation', () => {
       'Smartnest',
       'Stock Tracker',
       '$Munky',
+      'Artist Platform',
+      'Nexora Landing Page',
+      'Slack Agent',
     ]);
-    expect(formatProjectDate(previewProjectManifest[0].completedAt)).toBe('Oct 2025');
+    expect(formatProjectDate(previewProjectManifest[0].completedAt!)).toBe('Oct 2025');
   });
 
   it('filters approved project metadata and publishes evidence-safe case studies', () => {
     expect(filterPreviewProjects(previewProjectManifest, 'hackathons').map(({ title }) => title))
       .toEqual(['Credify', 'CitizenVoice']);
     expect(filterPreviewProjects(previewProjectManifest, 'sites').map(({ title }) => title))
-      .toEqual(['Smartnest', '$Munky']);
+      .toEqual(['Smartnest', '$Munky', 'Nexora Landing Page']);
     expect(searchPortfolio('CitizenVoice')[0]).toMatchObject({
       title: 'CitizenVoice',
       href: '/work/citizenvoice',
     });
+  });
+
+  it.each([
+    ['artist-platform', 'journey_hover.mp4'],
+    ['nexora-landing-page', 'landing_demo.mp4'],
+    ['slack-agent', 'slack_demo.mp4'],
+  ])('maps %s to its own video and poster without invented metadata', (slug, filename) => {
+    const project = portfolioManifest.projects.find((entry) => entry.slug === slug)!;
+    expect(project.media[0]).toMatchObject({
+      type: 'video',
+      source: expect.stringContaining(`https://assets.jackcao.dev/projects/${slug}/${filename}?v=`),
+      poster: expect.stringContaining(`https://assets.jackcao.dev/projects/${slug}/poster.jpg?v=`),
+    });
+    expect(project.completedAt).toBeUndefined();
+    expect(project.role).toBeUndefined();
+    expect(project.links).toEqual({});
+    const view = render(createElement(ProjectImage, { project }));
+    expect(screen.getByRole('img')).toHaveAttribute('src', project.media[0].poster);
+    view.unmount();
   });
 
   it('keeps project navigation understandable when preview media fails', () => {
@@ -96,6 +118,11 @@ describe('portfolio foundation', () => {
       ],
     });
     expect(parsed.success).toBe(true);
+    if (parsed.success) {
+      expect(projectFrontmatterSchema.safeParse({ ...parsed.data, completedAt: undefined }).success).toBe(false);
+      expect(projectFrontmatterSchema.safeParse({ ...parsed.data, links: {} }).success).toBe(false);
+      expect(projectFrontmatterSchema.safeParse({ ...parsed.data, technologies: undefined }).success).toBe(false);
+    }
   });
 
   it('only accepts explicit light and dark theme modes', () => {

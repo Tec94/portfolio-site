@@ -52,6 +52,7 @@ export function MediaViewer({
   useEffect(() => {
     if (!open) return undefined;
     const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.target instanceof HTMLVideoElement) return;
       if (event.key === 'ArrowLeft' && hasMultiple) {
         event.preventDefault();
         previous();
@@ -68,6 +69,7 @@ export function MediaViewer({
   if (!item) return null;
 
   const handlePointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (item.type === 'video') return;
     dragStartRef.current = event.clientX;
     event.currentTarget.setPointerCapture(event.pointerId);
   };
@@ -119,9 +121,7 @@ export function MediaViewer({
           ) : null}
           <div className="portfolio-viewer__media">
             {item.type === 'video' ? (
-              <video controls playsInline preload="metadata" poster={item.poster}>
-                <source src={item.source} />
-              </video>
+              open ? <video key={item.source} src={item.source} controls playsInline preload="metadata" poster={item.poster} aria-label={item.alt} /> : null
             ) : (
               <img src={item.source} alt={item.alt} draggable={false} />
             )}

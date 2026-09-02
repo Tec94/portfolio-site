@@ -61,16 +61,6 @@ const routeEntries: SearchEntry[] = [
     body: '',
   },
   {
-    id: 'route-lab',
-    kind: 'route',
-    title: 'Lab',
-    summary: 'Experiments and curated statistics',
-    href: '/lab',
-    tags: ['experiments', 'omnitrix'],
-    headings: [],
-    body: '',
-  },
-  {
     id: 'route-contact',
     kind: 'route',
     title: 'Contact',
@@ -109,7 +99,7 @@ function projectEntry(project: ProjectRecord): SearchEntry {
     title: project.title,
     summary: project.summary,
     href: project.href,
-    tags: [...project.categories, ...project.technologies, project.role],
+    tags: [...project.categories, ...project.technologies, ...(project.role ? [project.role] : [])],
     headings: project.headings.map((heading) => heading.text),
     body: project.bodyText,
   };

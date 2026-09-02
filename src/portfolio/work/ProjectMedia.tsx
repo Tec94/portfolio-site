@@ -21,8 +21,9 @@ export function ProjectImage({
 }: ProjectImageProps) {
   const [failed, setFailed] = useState(false);
   const media = project.media[0];
+  const previewSource = media.type === 'video' ? media.poster : media.source;
 
-  useEffect(() => setFailed(false), [media.source]);
+  useEffect(() => setFailed(false), [previewSource]);
 
   const style = activeTransition
     ? projectTransitionStyle(project.slug, 'media')
@@ -35,13 +36,13 @@ export function ProjectImage({
       data-project-transition={transition ? 'media' : undefined}
       style={style}
     >
-      {failed ? (
+      {failed || !previewSource ? (
         <span className="portfolio-project-image__fallback" aria-hidden={decorative || undefined}>
           {project.title}
         </span>
       ) : (
         <img
-          src={media.source}
+          src={previewSource}
           alt={decorative ? '' : media.alt}
           aria-hidden={decorative || undefined}
           loading={priority ? 'eager' : 'lazy'}

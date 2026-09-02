@@ -131,7 +131,8 @@ describe('portfolio overview shell', () => {
     const commandResults = screen.getByRole('listbox');
     expect(screen.getByPlaceholderText('Type a page or action')).toBeInTheDocument();
     const routeResults = commandResults.querySelectorAll('[id^="portfolio-command-route-"]');
-    expect(routeResults).toHaveLength(6);
+    expect(routeResults).toHaveLength(5);
+    expect(within(commandResults).queryByRole('option', { name: 'Lab' })).not.toBeInTheDocument();
     routeResults.forEach((result) => {
       expect(result.querySelector('small')).toBeNull();
       expect(result.querySelector('.portfolio-command__kind')).toBeNull();
@@ -159,6 +160,33 @@ describe('portfolio overview shell', () => {
     expect(screen.getByRole('button', { name: 'Show less' })).toHaveAttribute('aria-expanded', 'true');
     expect(document.getElementById('portfolio-about-details')).toHaveAttribute('aria-hidden', 'false');
     expect(screen.getByText('University of Texas at Dallas')).toBeInTheDocument();
+  });
+
+  it.each(['/lab', '/preview/lab'])('disables direct access to %s', (path) => {
+    const view = render(<MemoryRouter initialEntries={[path]}><PreviewPortfolio /></MemoryRouter>);
+    expect(screen.getByRole('heading', { level: 1, name: 'This page is unavailable.' })).toBeInTheDocument();
+    view.unmount();
+  });
+
+  it('uses a simple Writing header and replaces the Lab link with Work', () => {
+    const view = render(<MemoryRouter initialEntries={['/writing']}><PreviewPortfolio /></MemoryRouter>);
+    expect(screen.getByRole('heading', { level: 1, name: 'Writing' })).toBeInTheDocument();
+    expect(screen.queryByText('Notes from the work.')).not.toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'View work' })).toHaveAttribute('href', '/#work');
+    expect(document.querySelector('a[href="/lab"]')).toBeNull();
+    view.unmount();
+  });
+
+  it.each(['artist-platform', 'nexora-landing-page', 'slack-agent'])('opens the %s demo without empty case-study facts', (slug) => {
+    const view = render(<MemoryRouter initialEntries={[`/work/${slug}`]}><PreviewPortfolio /></MemoryRouter>);
+    expect(screen.getByText('Watch demo')).toBeInTheDocument();
+    expect(view.container.querySelector('.portfolio-case-study__facts')).toBeNull();
+    expect(view.container.querySelector('.portfolio-case-study__actions')).toBeNull();
+    fireEvent.click(screen.getByRole('button', { name: /Open .* media viewer/ }));
+    expect(view.container.querySelector('video')).toHaveAttribute('src', expect.stringContaining(`/projects/${slug}/`));
+    fireEvent.click(screen.getByRole('button', { name: 'Close media viewer' }));
+    expect(view.container.querySelector('video')).toBeNull();
+    view.unmount();
   });
 
   it('uses the landing Work section as the only work index', async () => {

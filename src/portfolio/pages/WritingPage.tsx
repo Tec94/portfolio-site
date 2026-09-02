@@ -6,8 +6,7 @@ export function WritingPage() {
   return (
     <main id="portfolio-main" className="portfolio-route-page portfolio-writing-page">
       <header className="portfolio-route-header">
-        <p className="portfolio-kicker">Writing</p>
-        <h1>Notes from the work.</h1>
+        <h1>Writing</h1>
       </header>
 
       {portfolioManifest.articles.length ? (
@@ -24,7 +23,7 @@ export function WritingPage() {
       ) : (
         <section className="portfolio-empty-state">
           <h2>No published notes yet.</h2>
-          <Link to="/lab">Visit the Lab <ArrowUpRight aria-hidden="true" /></Link>
+          <Link to="/#work">View work <ArrowUpRight aria-hidden="true" /></Link>
         </section>
       )}
     </main>

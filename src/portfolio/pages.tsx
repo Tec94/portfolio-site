@@ -27,11 +27,11 @@ export function ProjectBoundaryPage() {
       <main id="portfolio-main" className="portfolio-page portfolio-project-preview">
         <article>
           <header className="portfolio-project-preview__header">
-            <time dateTime={previewProject.completedAt}>{formatProjectDate(previewProject.completedAt)}</time>
+            {previewProject.completedAt ? <time dateTime={previewProject.completedAt}>{formatProjectDate(previewProject.completedAt)}</time> : null}
             <h1 style={projectTransitionStyle(previewProject.slug, 'title')}>
               {previewProject.title}
             </h1>
-            <p>{previewProject.role}</p>
+            {previewProject.role ? <p>{previewProject.role}</p> : null}
           </header>
           <ProjectImage project={previewProject} className="portfolio-project-preview__media" transition activeTransition />
           <p className="portfolio-project-preview__state">Case study in review.</p>
@@ -52,33 +52,33 @@ export function ProjectBoundaryPage() {
           <Link className="portfolio-text-link" to={getLandingSectionUrl('work')}><ArrowLeft aria-hidden="true" /> Work index</Link>
           <div className="portfolio-case-study__title-row">
             <div>
-              <time dateTime={current.completedAt}>{formatProjectDate(current.completedAt)}</time>
+              {current.completedAt ? <time dateTime={current.completedAt}>{formatProjectDate(current.completedAt)}</time> : null}
               <h1 style={projectTransitionStyle(current.slug, 'title')}>{current.title}</h1>
               <p>{current.summary}</p>
             </div>
-            <div className="portfolio-case-study__actions" aria-label="Project links">
+            {Object.values(current.links).some(Boolean) ? <div className="portfolio-case-study__actions" aria-label="Project links">
               {current.links.live ? <a href={current.links.live} target="_blank" rel="noreferrer">Live site <ArrowUpRight aria-hidden="true" /></a> : null}
               {current.links.repository ? <a href={current.links.repository} target="_blank" rel="noreferrer"><Github aria-hidden="true" /> Repository</a> : null}
               {current.links.devpost ? <a href={current.links.devpost} target="_blank" rel="noreferrer">Devpost <ArrowUpRight aria-hidden="true" /></a> : null}
-            </div>
+            </div> : null}
           </div>
-          <dl className="portfolio-case-study__facts">
-            <div><dt>Role</dt><dd>{current.role}</dd></div>
-            <div><dt>Duration</dt><dd>{current.duration}</dd></div>
-            <div><dt>Stack</dt><dd>{current.technologies.join(', ')}</dd></div>
-          </dl>
+          {current.role || current.duration || current.technologies.length ? <dl className="portfolio-case-study__facts">
+            {current.role ? <div><dt>Role</dt><dd>{current.role}</dd></div> : null}
+            {current.duration ? <div><dt>Duration</dt><dd>{current.duration}</dd></div> : null}
+            {current.technologies.length ? <div><dt>Stack</dt><dd>{current.technologies.join(', ')}</dd></div> : null}
+          </dl> : null}
           <button className="portfolio-case-study__media-trigger" type="button" onClick={() => setViewerOpen(true)} aria-label={`Open ${current.title} media viewer`}>
             <ProjectImage project={current} className="portfolio-project-preview__media" transition activeTransition />
-            <span>Open media</span>
+            <span>{current.media[0].type === 'video' ? 'Watch demo' : 'Open media'}</span>
           </button>
         </header>
 
-        <div className="portfolio-case-study__body">
+        {current.bodyText ? <div className="portfolio-case-study__body">
           <ContentNavigation headings={current.headings} />
           <div className="portfolio-mdx portfolio-case-study__content">
             <Content />
           </div>
-        </div>
+        </div> : null}
 
         {nextProject ? (
           <footer className="portfolio-next-project">

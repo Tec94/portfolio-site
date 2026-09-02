@@ -69,7 +69,6 @@ export function AboutPage() {
         <a href="https://github.com/Tec94" target="_blank" rel="noreferrer"><Github aria-hidden="true" /> GitHub</a>
         <a href={profile.resumeUrl} target="_blank" rel="noreferrer"><FileText aria-hidden="true" /> Résumé</a>
         <Link to="/writing">Writing <ArrowUpRight aria-hidden="true" /></Link>
-        <Link to="/lab">Lab <ArrowUpRight aria-hidden="true" /></Link>
       </section>
     </main>
   );
