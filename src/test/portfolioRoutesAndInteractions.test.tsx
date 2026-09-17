@@ -88,7 +88,7 @@ describe('portfolio overview shell', () => {
     expect(screen.getByRole('link', { name: 'GitHub' })).toHaveAttribute('href', 'https://github.com/Tec94');
     expect(screen.getByRole('link', { name: 'LinkedIn' })).toHaveAttribute(
       'href',
-      'https://www.linkedin.com/in/jackcao',
+      'https://www.linkedin.com/in/khiet-cao-95b545393/',
     );
     expect(screen.getByRole('link', { name: 'Book a 15-minute call' })).toHaveAttribute(
       'href',
@@ -152,13 +152,7 @@ describe('portfolio overview shell', () => {
     fireEvent.click(themeToggle);
     expect(themeToggle.getAttribute('aria-label')).not.toBe(initialTheme);
 
-    const aboutToggle = screen.getByRole('button', { name: 'More about me' });
-    expect(aboutToggle).toHaveAttribute('aria-expanded', 'false');
-    expect(document.getElementById('portfolio-about-details')).toHaveAttribute('aria-hidden', 'true');
-
-    fireEvent.click(aboutToggle);
-    expect(screen.getByRole('button', { name: 'Show less' })).toHaveAttribute('aria-expanded', 'true');
-    expect(document.getElementById('portfolio-about-details')).toHaveAttribute('aria-hidden', 'false');
+    expect(screen.getByRole('list', { name: 'Experience and education' })).toBeInTheDocument();
     expect(screen.getByText('University of Texas at Dallas')).toBeInTheDocument();
   });
 
@@ -177,11 +171,14 @@ describe('portfolio overview shell', () => {
   it('shows Slack Agent in the Hackathons filter without removed projects', async () => {
     const view = render(<MemoryRouter initialEntries={['/']}><PreviewPortfolio /></MemoryRouter>);
     const archive = within(view.container.querySelector<HTMLElement>('#work')!);
-    fireEvent.click(archive.getByRole('button', { name: 'Show 2 more projects' }));
+    const expandProjects = archive.queryByRole('button', { name: /^Show \d+ more projects?$/ });
+    if (expandProjects) fireEvent.click(expandProjects);
     for (const title of ['Smartnest', 'Stock Tracker', '$Munky']) {
       expect(archive.queryByText(title)).not.toBeInTheDocument();
     }
     fireEvent.click(archive.getByRole('button', { name: 'Hackathons' }));
+    const expandFilteredProjects = archive.queryByRole('button', { name: /^Show \d+ more projects?$/ });
+    if (expandFilteredProjects) fireEvent.click(expandFilteredProjects);
     expect(await archive.findByText('Slack Agent')).toBeInTheDocument();
     expect(archive.getByText('Credify')).toBeInTheDocument();
     expect(archive.getByText('CitizenVoice')).toBeInTheDocument();
@@ -253,6 +250,8 @@ describe('portfolio overview shell', () => {
       </MemoryRouter>,
     );
 
+    const expandProjects = within(view.container).queryByRole('button', { name: /^Show \d+ more projects?$/ });
+    if (expandProjects) fireEvent.click(expandProjects);
     const projectRow = within(view.container).getByRole('link', { name: /Credify.*Oct 2025/i });
     fireEvent.click(projectRow);
     expect(startViewTransition).toHaveBeenCalledOnce();

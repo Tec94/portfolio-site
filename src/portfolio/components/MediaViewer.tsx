@@ -1,3 +1,4 @@
+import pageCopy from '../../content/site/MediaViewer.json';
 import {
   useCallback,
   useEffect,
@@ -142,7 +143,7 @@ export function MediaViewer({
                 aria-current={entryIndex === index ? 'true' : undefined}
                 onClick={() => setIndex(entryIndex)}
               >
-                {entry.type === 'image' ? <img src={entry.source} alt="" /> : <span>Video</span>}
+                {entry.type === 'image' ? <img src={entry.source} alt="" /> : <span>{pageCopy["video"]}</span>}
               </button>
             ))}
           </div>

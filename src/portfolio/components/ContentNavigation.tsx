@@ -1,3 +1,4 @@
+import pageCopy from '../../content/site/ContentNavigation.json';
 import { useEffect, useMemo, useState } from 'react';
 import type { ContentHeading } from '../content/manifest';
 
@@ -27,7 +28,7 @@ export function ContentNavigation({ headings }: { headings: ContentHeading[] }) 
 
   return (
     <nav className="portfolio-content-nav" aria-label="On this page">
-      <span className="portfolio-content-nav__label">On this page</span>
+      <span className="portfolio-content-nav__label">{pageCopy["on_this_page"]}</span>
       <ol>
         {navigable.map((heading) => (
           <li key={heading.id} data-level={heading.level}>

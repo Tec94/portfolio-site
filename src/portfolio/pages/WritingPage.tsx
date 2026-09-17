@@ -1,3 +1,4 @@
+import pageCopy from '../../content/site/WritingPage.json';
 import { ArrowUpRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { portfolioManifest } from '../content/manifest';
@@ -6,7 +7,7 @@ export function WritingPage() {
   return (
     <main id="portfolio-main" className="portfolio-route-page portfolio-writing-page">
       <header className="portfolio-route-header">
-        <h1>Writing</h1>
+        <h1>{pageCopy["writing"]}</h1>
       </header>
 
       {portfolioManifest.articles.length ? (
@@ -22,8 +23,8 @@ export function WritingPage() {
         </div>
       ) : (
         <section className="portfolio-empty-state">
-          <h2>No published notes yet.</h2>
-          <Link to="/#work">View work <ArrowUpRight aria-hidden="true" /></Link>
+          <h2>{pageCopy["no_published_notes_yet"]}</h2>
+          <Link to="/#work">{pageCopy["view_work"]}<ArrowUpRight aria-hidden="true" /></Link>
         </section>
       )}
     </main>

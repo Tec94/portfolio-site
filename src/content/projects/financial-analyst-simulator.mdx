@@ -1,0 +1,71 @@
+---
+slug: financial-analyst-simulator
+title: Financial Analyst Simulator
+summary: >-
+  Learn to read the market without paying for your mistakes. Make your call,
+  check your reasoning, then see what happened.
+presentation: demo
+year: 2026
+completedAt: 2026-09
+role: Backend architect and Designer
+categories:
+  - Hackathon
+  - Web app
+technologies:
+  - Better Auth
+  - PostgreSQL
+  - Cloudflare
+  - Tailwind CSS
+  - Next.js
+  - TypeScript
+selectedWorkOrder: 1
+links:
+  live: 'https://chartroom-tlps.onrender.com/'
+  repository: 'https://github.com/Tec94/2026-hackrice'
+publicationState: published
+media:
+  - type: image
+    source: >-
+      /assets/studio/e4213219848c99f368d15d470c44eac57aaf29b73b48c5e2674eaebbb34a5245.png
+    alt: >-
+      FIanal.sim landing page with a historical SOL/USDT chart and the
+      hidden-outcome learning workflow.
+    aspectRatio:
+      width: 1644
+      height: 941
+    narrativeRole: hero
+  - type: image
+    source: >-
+      /assets/studio/0ef4f4ce4218b3da98d03af13789f579f0ac0dea6e91d5da28b860eb0f2b0e8f.png
+    alt: >-
+      Historical SOL/USDT replay workspace with candlestick chart, EMA, verified
+      coach statistics, and an unsubmitted analysis example.
+    aspectRatio:
+      width: 1644
+      height: 941
+    narrativeRole: detail
+  - type: image
+    source: >-
+      /assets/studio/3b39e135687efdb7503be80ec125b9a0e4b35613a8194b1e92f0b673289a6cd6.png
+    alt: >-
+      Expanded SOL/USDT chart with EMA 21, RSI 14, volume, and a shaded hidden
+      future beyond the replay boundary.
+    aspectRatio:
+      width: 1644
+      height: 941
+    narrativeRole: detail
+---
+## Context
+We built FIanal.sim to help people practice reading the market without risking real money. Tutorials can explain the basics, but they don’t give you many chances to make your own call. Looking at historical charts also feels easier when you already know what happened next.
+We wanted users to study a chart, explain their thinking, and commit to a decision before seeing the outcome. The goal was to build better reasoning, not just reward a lucky prediction.
+
+## Process
+We built the app with Next.js and React, backed by a TypeScript API using Fastify and PostgreSQL. It uses historical SOL/USDT candles, with the backend withholding future data until the user completes the required steps. Each analysis is tied to a saved chart snapshot so the evidence checks match exactly what the user saw.
+We connected Deepgram and ElevenLabs to a voice coach that helps users talk through the chart and turn their reasoning into an editable analysis draft. Numerical answers come from server calculations. Keeping the coach helpful without revealing future prices or making decisions for the user was one of our biggest challenges.
+We also worked through interrupted audio, delayed responses, and chart changes so answers stayed connected to the right snapshot. Alongside that, we made drawings, indicators, feedback, and session history persist across navigation and reloads. Optional Backboard learning memory and Solana devnet receipts added ways to carry learning forward and record proof of an analysis.
+
+<ProjectDetails />
+
+## Outcome
+FIanal.sim brings chart exploration, voice coaching, evidence checks, and reflection into one replay workflow. Users can make a call, see what happened next, and revisit their reasoning later. They can also filter unfinished sessions, archive old ones, and restore them.
+Building it taught us how much an AI product depends on the code around the model. Reliable calculations, saved state, and clear failure handling matter just as much as the conversation. It also reinforced the idea behind the project: getting a prediction right and reasoning well are two different things.

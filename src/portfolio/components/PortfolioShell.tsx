@@ -1,3 +1,4 @@
+import pageCopy from '../../content/site/PortfolioShell.json';
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { ArrowUp, Moon, Search, Sun, Volume2, VolumeX } from 'lucide-react';
 import { Link, useLocation, useMatch } from 'react-router-dom';
@@ -97,7 +98,7 @@ export function PortfolioShell({ children }: { children: ReactNode }) {
 
   return (
     <div className="portfolio-root">
-      <a className="portfolio-skip-link" href="#portfolio-main">Skip to main content</a>
+      <a className="portfolio-skip-link" href={pageCopy["portfolio_main"]}>{pageCopy["skip_to_main_content"]}</a>
 
       {children}
 
@@ -117,9 +118,7 @@ export function PortfolioShell({ children }: { children: ReactNode }) {
             className="portfolio-dock__back"
             to={getLandingSectionUrl('work')}
             onClick={sound.playPageClose}
-          >
-            Back to index
-          </Link>
+          >{pageCopy["back_to_index"]}</Link>
         ) : (
           <div className="portfolio-dock__links">
             {navigation.map((item) => (

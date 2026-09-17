@@ -1,0 +1,125 @@
+[
+  {
+    "slug": "product-engineering",
+    "title": "Product engineering",
+    "summary": "A maintainable product slice from brief to working release.",
+    "rows": [
+      {
+        "label": "Frame",
+        "values": [
+          "Constraints",
+          "Flows",
+          "Evidence"
+        ]
+      },
+      {
+        "label": "Prototype",
+        "values": [
+          "Interaction",
+          "Architecture",
+          "States"
+        ]
+      },
+      {
+        "label": "Build",
+        "values": [
+          "Implementation",
+          "Testing",
+          "Handoff"
+        ]
+      },
+      {
+        "label": "Coverage",
+        "values": [
+          "Product UI",
+          "Design systems",
+          "Accessible interaction"
+        ]
+      }
+    ],
+    "duration": "6–12",
+    "price": "From $400"
+  },
+  {
+    "slug": "interface-systems",
+    "title": "Interface systems",
+    "summary": "A shared interface language teams can extend.",
+    "rows": [
+      {
+        "label": "Inventory",
+        "values": [
+          "Patterns",
+          "Drift",
+          "Friction"
+        ]
+      },
+      {
+        "label": "Define",
+        "values": [
+          "Tokens",
+          "Behavior",
+          "Ownership"
+        ]
+      },
+      {
+        "label": "Prove",
+        "values": [
+          "Components",
+          "Migration",
+          "Guidance"
+        ]
+      },
+      {
+        "label": "Coverage",
+        "values": [
+          "Interface audit",
+          "Component set",
+          "Documentation"
+        ]
+      }
+    ],
+    "duration": "4–8",
+    "price": "From $250"
+  },
+  {
+    "slug": "product-direction",
+    "title": "Product direction",
+    "summary": "A tested direction ready for commitment.",
+    "rows": [
+      {
+        "label": "Clarify",
+        "values": [
+          "Opportunity",
+          "Audience",
+          "Risk"
+        ]
+      },
+      {
+        "label": "Explore",
+        "values": [
+          "Flows",
+          "Form",
+          "Alternatives"
+        ]
+      },
+      {
+        "label": "Decide",
+        "values": [
+          "Prototype",
+          "Evidence",
+          "Next steps"
+        ]
+      },
+      {
+        "label": "Coverage",
+        "values": [
+          "Decision rationale",
+          "Risk map",
+          "Build recommendation"
+        ]
+      }
+    ],
+    "duration": "2–4",
+    "price": "Custom quote"
+  }
+]

@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="studio-token" content="__SESSION_TOKEN__" />
+  <title>Portfolio Studio</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="/__studio/style.css" />
+  <link rel="stylesheet" href="/__studio/project-editor.css" />
+</head>
+<body>
+  <aside class="sidebar">
+    <a class="brand" href="/__studio/"><span class="brand-mark">J.</span><span>Portfolio<br><strong>Studio</strong></span></a>
+    <div class="local"><i></i> LOCAL WORKSPACE</div>
+    <nav aria-label="Content collections" id="navigation"></nav>
+    <div class="sidebar-note">Your work, in your words.<br>Save here. Publish when ready.</div>
+    <a class="preview-link" href="/" target="_blank" rel="noopener">Open portfolio preview ↗</a>
+  </aside>
+  <main>
+    <header class="topbar"><span id="breadcrumb">Content / Projects</span><span id="save-state">Local files</span></header>
+    <div id="message" role="status" aria-live="polite"></div>
+    <div id="workspace"></div>
+  </main>
+  <dialog id="picker"><div class="dialog-head"><h2>Choose media</h2><button id="close-picker" aria-label="Close media picker">×</button></div><div id="picker-content"></div></dialog>
+  <script type="module" src="/__studio/app.js"></script>
+</body>
+</html>

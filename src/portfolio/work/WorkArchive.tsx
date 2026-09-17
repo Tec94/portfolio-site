@@ -1,3 +1,4 @@
+import pageCopy from '../../content/site/WorkArchive.json';
 import { useMemo, useState, type MouseEvent, type PointerEvent } from 'react';
 import { flushSync } from 'react-dom';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -20,15 +21,17 @@ const viewTransition = { duration: 0.28, ease: [0.22, 1, 0.36, 1] as const };
 export function WorkArchive({ standalone = false }: { standalone?: boolean }) {
   const [view, setView] = useState<ArchiveView>('list');
   const [filter, setFilter] = useState<WorkFilter>('all');
-  const [expanded, setExpanded] = useState(false);
   const navigate = useNavigate();
   const sound = usePortfolioSound();
   const projects = useMemo(
-    () => filterPreviewProjects(previewProjectManifest, filter),
+    () => {
+      const latestYear = Math.max(...previewProjectManifest.flatMap((project) => project.year ? [project.year] : []));
+      return filterPreviewProjects(previewProjectManifest, filter).slice().sort(
+        (a, b) => (b.year ?? latestYear) - (a.year ?? latestYear),
+      );
+    },
     [filter],
   );
-  const visibleProjects = expanded ? projects : projects.slice(0, 3);
-  const hiddenCount = projects.length - visibleProjects.length;
 
   const previewSound = (event: PointerEvent<HTMLElement>) => {
     if (event.pointerType === 'mouse') sound.playProjectPreview();
@@ -66,7 +69,6 @@ export function WorkArchive({ standalone = false }: { standalone?: boolean }) {
   const changeFilter = (next: WorkFilter) => {
     if (next === filter) return;
     setFilter(next);
-    setExpanded(false);
     sound.play('press');
   };
 
@@ -81,11 +83,12 @@ export function WorkArchive({ standalone = false }: { standalone?: boolean }) {
         <header className="portfolio-work-archive__header">
           <div>
             {standalone ? (
-              <h1 id="work-page-heading">Work</h1>
+              <h1 id="work-page-heading">{pageCopy["work"]}</h1>
             ) : (
-              <h2 id="work-archive-heading">Work</h2>
+              <h2 id="work-archive-heading">{pageCopy["work_"]}</h2>
             )}
           </div>
+          <p className="portfolio-work-archive__intro">{previewProjectManifest.length} projects since {Math.min(...previewProjectManifest.flatMap((project) => project.year ? [project.year] : []))}, from hackathon builds to product sites.</p>
           <div className="portfolio-work-archive__controls">
             <div className="portfolio-view-switch" aria-label="Project view">
               <button
@@ -140,7 +143,7 @@ export function WorkArchive({ standalone = false }: { standalone?: boolean }) {
           {view === 'list' ? (
             <div className="portfolio-work-list">
               <AnimatePresence initial={false}>
-                {visibleProjects.map((project) => (
+                {projects.map((project, index) => (
                   <motion.div
                     key={project.slug}
                     layout
@@ -150,6 +153,7 @@ export function WorkArchive({ standalone = false }: { standalone?: boolean }) {
                     transition={viewTransition}
                     className="portfolio-work-list__item"
                   >
+                    {index > 0 && project.year && project.year !== projects[index - 1].year ? <div className="portfolio-work-year">{project.year}</div> : null}
                     <Link
                       to={project.href}
                       viewTransition
@@ -158,31 +162,16 @@ export function WorkArchive({ standalone = false }: { standalone?: boolean }) {
                       onClick={(event) => openProject(event, project.href, project.slug)}
                     >
                       <MediaStack project={project} transition />
-                      <strong data-project-transition="title">
-                        {project.title}
-                      </strong>
+                      <span className="portfolio-work-row__copy">
+                        <strong data-project-transition="title">{project.title}</strong>
+                        <span>{[project.role, ...project.categories].filter(Boolean).join(" · ")}</span>
+                      </span>
                       {project.completedAt ? <time dateTime={project.completedAt}>{formatProjectDate(project.completedAt)}</time> : null}
                     </Link>
                   </motion.div>
                 ))}
               </AnimatePresence>
 
-              {hiddenCount > 0 ? (
-                <button
-                  type="button"
-                  className="portfolio-more-row"
-                  onPointerEnter={previewSound}
-                  onClick={() => {
-                    setExpanded(true);
-                    sound.play('expansion');
-                  }}
-                  aria-label={`Show ${hiddenCount} more project${hiddenCount === 1 ? '' : 's'}`}
-                >
-                  <MediaStack project={projects[visibleProjects.length]} />
-                  <span>More</span>
-                  <span className="portfolio-more-row__arrow" aria-hidden="true">›</span>
-                </button>
-              ) : null}
             </div>
           ) : (
             <div className="portfolio-work-showcase">

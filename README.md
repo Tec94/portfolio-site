@@ -15,6 +15,16 @@ npm run dev
 
 Vite serves the site from `http://localhost:5173`.
 
+## Local content editor
+
+Run `npm run studio` and open the local URL printed in the terminal. Portfolio
+Studio edits projects, process writing, articles, site copy, profile details,
+services, and media. Save and preview locally, then use **Publish saved changes**
+to build and deploy to Cloudflare without an AI prompt.
+
+See [the Studio guide](docs/portfolio-studio.md) for publishing, drafts, media,
+authentication, and recovery details.
+
 ## Quality checks
 
 Run these commands before you submit a change:

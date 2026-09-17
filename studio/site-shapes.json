@@ -1,0 +1,227 @@
+{
+  "AboutPage": {
+    "about": "string",
+    "a_product_engineer_who_designs": "string",
+    "i_work_from_the_interface_inward_shaping_the_system_states_and_implementation_until_a_product_is_useful_in_someone_s_hands": "string",
+    "experience": "string",
+    "milestones": "string",
+    "toolbox": "string",
+    "https_github_com_tec94": "string",
+    "github": "string",
+    "r_sum": "string",
+    "writing": "string"
+  },
+  "CommandMenu": {
+    "search": "string",
+    "search_portfolio": "string",
+    "type_a_page_or_action": "string",
+    "esc": "string",
+    "no_match": "string",
+    "navigate": "string",
+    "enter": "string",
+    "open": "string"
+  },
+  "ContactPage": {
+    "contact": "string",
+    "let_s_make_the_next_useful_thing": "string",
+    "book_a_call": "string",
+    "15_minutes_on_cal_com": "string",
+    "email": "string",
+    "name": "string",
+    "email_": "string",
+    "project_type": "string",
+    "choose_a_project_type": "string",
+    "product_engineering": "string",
+    "interface_systems": "string",
+    "product_direction": "string",
+    "something_else": "string",
+    "timeline": "string",
+    "choose_a_timeline": "string",
+    "as_soon_as_possible": "string",
+    "within_1_3_months": "string",
+    "within_3_6_months": "string",
+    "flexible": "string",
+    "budget": "string",
+    "choose_a_budget": "string",
+    "under_1_000": "string",
+    "not_decided": "string",
+    "project_details": "string",
+    "website": "string",
+    "your_message_goes_only_to_the_private_project_inquiry_inbox_you_can_use_direct_email_instead": "string"
+  },
+  "ContentNavigation": {
+    "on_this_page": "string"
+  },
+  "LabPage": {
+    "lab": "string",
+    "small_systems_with_room_to_misbehave": "string",
+    "loading_viewfinder": "string",
+    "experiment_02": "string",
+    "omnitrix_project_launcher": "string",
+    "the_project_selector_from_the_archived_portfolio_now_kept_as_an_on_demand_lab_object": "string",
+    "audited_projects": "string",
+    "internship_chapters": "string",
+    "published_notes": "string",
+    "v2": "string",
+    "open_the_archived_v2_experience": "string"
+  },
+  "MediaViewer": {
+    "video": "string"
+  },
+  "OverviewAbout": {
+    "about": "string",
+    "i_m_jack_a_product_engineer_in_texas_i_care_about_the_point_where_a_good_concept_survives_contact_with_real_data_real_constraints_and_real_people": "string",
+    "education": "string",
+    "toolbox": "string"
+  },
+  "OverviewPage": {
+    "is_a_product_engineer_in_texas": "string",
+    "explore_my": "string",
+    "projects": "string",
+    "see_my_code_on": "string",
+    "https_github_com_tec94": "string",
+    "github": "string",
+    "connect_on": "string",
+    "https_www_linkedin_com_in_khiet_cao_95b545393": "string",
+    "linkedin": "string",
+    "or_read_my": "string",
+    "resume": "string",
+    "have_something_useful_in_mind": "string",
+    "email_me": "string",
+    "or": "string",
+    "book_a_15_minute_call": "string",
+    "work": "string",
+    "writing": "string",
+    "writing_": "string",
+    "back_to_top": "string"
+  },
+  "pages": {
+    "project": "string",
+    "case_study_in_review": "string",
+    "work_index": "string",
+    "live_site": "string",
+    "repository": "string",
+    "devpost": "string",
+    "role": "string",
+    "duration": "string",
+    "stack": "string",
+    "next_project": "string",
+    "article": "string",
+    "writing": "string",
+    "work_archive": "string"
+  },
+  "PocketViewfinder": {
+    "pocket_viewfinder": "string",
+    "reset": "string",
+    "open_viewfinder": "string",
+    "seed_94_camera_design_calls": "string",
+    "triangles": "string",
+    "no_post": "string"
+  },
+  "PortfolioShell": {
+    "portfolio_main": "string",
+    "skip_to_main_content": "string",
+    "back_to_index": "string"
+  },
+  "profile": {
+    "profile": {
+      "name": "string",
+      "initials": "string",
+      "title": "string",
+      "location": "string",
+      "timeZone": "string",
+      "email": "string",
+      "resumeUrl": "string",
+      "calUrl": "string",
+      "socialLinks": [
+        {
+          "label": "string",
+          "href": "string"
+        }
+      ]
+    },
+    "experiences": [
+      {
+        "company": "string",
+        "role": "string",
+        "location": "string",
+        "period": "string"
+      }
+    ],
+    "education": {
+      "school": "string",
+      "degree": "string",
+      "location": "string",
+      "period": "string"
+    },
+    "toolbox": [
+      "string"
+    ],
+    "timeline": [
+      {
+        "year": "string",
+        "title": "string",
+        "badge": "string",
+        "summary": "string",
+        "notes": [
+          {
+            "title": "string",
+            "date": "string",
+            "tag": "string"
+          }
+        ]
+      }
+    ]
+  },
+  "services": [
+    {
+      "slug": "string",
+      "title": "string",
+      "summary": "string",
+      "rows": [
+        {
+          "label": "string",
+          "values": [
+            "string"
+          ]
+        }
+      ],
+      "duration": "string",
+      "price": "string"
+    }
+  ],
+  "ServicesReceipts": {
+    "duration_weeks": "string",
+    "pricing": "string",
+    "services": "string",
+    "services_": "string",
+    "book_a_call": "string"
+  },
+  "WorkArchive": {
+    "work": "string",
+    "work_": "string",
+    "more": "string"
+  },
+  "WritingPage": {
+    "writing": "string",
+    "no_published_notes_yet": "string",
+    "view_work": "string"
+  },
+  "seo": {
+    "title": "string",
+    "description": "string",
+    "keywords": "string",
+    "author": "string",
+    "og_type": "string",
+    "og_url": "string",
+    "og_title": "string",
+    "og_description": "string",
+    "og_image": "string",
+    "twitter_card": "string",
+    "twitter_url": "string",
+    "twitter_title": "string",
+    "twitter_description": "string",
+    "twitter_image": "string",
+    "canonical": "string"
+  }
+}

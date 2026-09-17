@@ -1,0 +1,17 @@
+{
+  "title": "Jack Cao",
+  "description": "Full-stack developer specializing in React, TypeScript, and Python. Building scalable web applications, data pipelines, and automation solutions. UT Dallas CS student available for freelance projects.",
+  "keywords": "Jack Cao, Full-Stack Developer, React Developer, TypeScript, Python, Web Development, Dallas, UT Dallas, Freelance Developer",
+  "author": "Jack Cao",
+  "og_type": "website",
+  "og_url": "https://jackcao.dev/",
+  "og_title": "Jack Cao",
+  "og_description": "Full-stack developer specializing in React, TypeScript, and Python. Building scalable web applications, data pipelines, and automation solutions.",
+  "og_image": "https://jackcao.dev/og-image.png",
+  "twitter_card": "summary_large_image",
+  "twitter_url": "https://jackcao.dev/",
+  "twitter_title": "Jack Cao",
+  "twitter_description": "Full-stack developer specializing in React, TypeScript, and Python. Building scalable web applications, data pipelines, and automation solutions.",
+  "twitter_image": "https://jackcao.dev/og-image.png",
+  "canonical": "https://jackcao.dev/"
+}

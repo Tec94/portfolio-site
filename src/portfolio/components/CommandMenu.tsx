@@ -1,3 +1,4 @@
+import pageCopy from '../../content/site/CommandMenu.json';
 import {
   useEffect,
   useMemo,
@@ -105,13 +106,13 @@ export function CommandMenu({ open, onClose, returnFocusRef }: CommandMenuProps)
       <div className="portfolio-command__sheet" data-cursor-tone="light">
         <header className="portfolio-command__header">
           <Search aria-hidden="true" />
-          <h2 id="portfolio-command-title">Search</h2>
+          <h2 id="portfolio-command-title">{pageCopy["search"]}</h2>
           <button type="button" className="portfolio-icon-button" aria-label="Close search" onClick={close}>
             <X aria-hidden="true" />
           </button>
         </header>
         <label className="portfolio-command__input-row">
-          <span className="portfolio-visually-hidden">Search portfolio</span>
+          <span className="portfolio-visually-hidden">{pageCopy["search_portfolio"]}</span>
           <input
             ref={inputRef}
             value={query}
@@ -120,12 +121,12 @@ export function CommandMenu({ open, onClose, returnFocusRef }: CommandMenuProps)
               setActiveIndex(0);
             }}
             onKeyDown={handleInputKeyDown}
-            placeholder="Type a page or action"
+            placeholder={pageCopy["type_a_page_or_action"]}
             autoComplete="off"
             aria-controls="portfolio-command-results"
             aria-activedescendant={activeResult ? `portfolio-command-${activeResult.id}` : undefined}
           />
-          <kbd>Esc</kbd>
+          <kbd>{pageCopy["esc"]}</kbd>
         </label>
         <div id="portfolio-command-results" className="portfolio-command__results" role="listbox">
           {results.map((result, index) => (
@@ -149,11 +150,11 @@ export function CommandMenu({ open, onClose, returnFocusRef }: CommandMenuProps)
               ) : null}
             </button>
           ))}
-          {results.length === 0 ? <p className="portfolio-command__empty">No match</p> : null}
+          {results.length === 0 ? <p className="portfolio-command__empty">{pageCopy["no_match"]}</p> : null}
         </div>
         <footer className="portfolio-command__footer">
-          <span><kbd>↑</kbd><kbd>↓</kbd> Navigate</span>
-          <span><kbd>Enter</kbd> Open</span>
+          <span><kbd>↑</kbd><kbd>↓</kbd>{pageCopy["navigate"]}</span>
+          <span><kbd>{pageCopy["enter"]}</kbd>{pageCopy["open"]}</span>
         </footer>
       </div>
     </dialog>

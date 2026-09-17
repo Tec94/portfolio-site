@@ -22,6 +22,7 @@ test-results/
 .playwright-cli/
 .playwright-mcp/
 .codex-tmp/
+.studio/
 .agents/
 
 # Local environment files

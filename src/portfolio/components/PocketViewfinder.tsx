@@ -1,3 +1,4 @@
+import pageCopy from '../../content/site/PocketViewfinder.json';
 import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from 'react';
 import gsap from 'gsap';
 import { RotateCcw } from 'lucide-react';
@@ -229,15 +230,15 @@ export default function PocketViewfinder() {
       </div>
       <div className="portfolio-viewfinder__copy">
         <span>{phase}</span>
-        <h2>Pocket viewfinder</h2>
+        <h2>{pageCopy["pocket_viewfinder"]}</h2>
         <p>{phase === 'opened' ? 'The Lab is open. Inspect the experiments below.' : 'A bounded Three.js object study with a fixed camera and no post-processing.'}</p>
         {phase === 'opened' ? (
-          <button type="button" onClick={resetViewfinder}><RotateCcw aria-hidden="true" /> Reset</button>
+          <button type="button" onClick={resetViewfinder}><RotateCcw aria-hidden="true" />{pageCopy["reset"]}</button>
         ) : (
-          <button type="button" onClick={openViewfinder}>Open viewfinder</button>
+          <button type="button" onClick={openViewfinder}>{pageCopy["open_viewfinder"]}</button>
         )}
       </div>
-      {debug ? <output className="portfolio-viewfinder__debug">seed 94 · camera design · calls {metrics.calls} · triangles {metrics.triangles} · no post</output> : null}
+      {debug ? <output className="portfolio-viewfinder__debug">{pageCopy["seed_94_camera_design_calls"]}{metrics.calls}{pageCopy["triangles"]}{metrics.triangles}{pageCopy["no_post"]}</output> : null}
     </section>
   );
 }

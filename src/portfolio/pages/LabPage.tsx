@@ -1,3 +1,4 @@
+import pageCopy from '../../content/site/LabPage.json';
 import { lazy, Suspense, useMemo, useState } from 'react';
 import { ArrowUpRight, Beaker, CircleDollarSign, Home, Landmark, Sparkles } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -22,19 +23,19 @@ export function LabPage() {
   return (
     <main id="portfolio-main" className="portfolio-route-page portfolio-lab-page">
       <header className="portfolio-route-header">
-        <p className="portfolio-kicker">Lab</p>
-        <h1>Small systems with room to misbehave.</h1>
+        <p className="portfolio-kicker">{pageCopy["lab"]}</p>
+        <h1>{pageCopy["small_systems_with_room_to_misbehave"]}</h1>
       </header>
 
-      <Suspense fallback={<div className="portfolio-lab-loading" role="status">Loading viewfinder…</div>}>
+      <Suspense fallback={<div className="portfolio-lab-loading" role="status">{pageCopy["loading_viewfinder"]}</div>}>
         <PocketViewfinder />
       </Suspense>
 
       <section className="portfolio-lab-experiment" aria-labelledby="omnitrix-heading">
         <div>
-          <span>Experiment 02</span>
-          <h2 id="omnitrix-heading">Omnitrix project launcher</h2>
-          <p>The project selector from the archived portfolio, now kept as an on-demand Lab object.</p>
+          <span>{pageCopy["experiment_02"]}</span>
+          <h2 id="omnitrix-heading">{pageCopy["omnitrix_project_launcher"]}</h2>
+          <p>{pageCopy["the_project_selector_from_the_archived_portfolio_now_kept_as_an_on_demand_lab_object"]}</p>
         </div>
         <div className="portfolio-lab-omnitrix" data-open={launcherOpen || undefined}>
           <div className="portfolio-lab-omnitrix__menu" aria-hidden={!launcherOpen}>
@@ -67,12 +68,12 @@ export function LabPage() {
       </section>
 
       <section className="portfolio-lab-stats" aria-label="Curated portfolio snapshots">
-        <article><strong>{portfolioManifest.projects.length}</strong><span>Audited projects</span></article>
-        <article><strong>{experiences.length}</strong><span>Internship chapters</span></article>
-        <article><strong>{portfolioManifest.articles.length}</strong><span>Published notes</span></article>
+        <article><strong>{portfolioManifest.projects.length}</strong><span>{pageCopy["audited_projects"]}</span></article>
+        <article><strong>{experiences.length}</strong><span>{pageCopy["internship_chapters"]}</span></article>
+        <article><strong>{portfolioManifest.articles.length}</strong><span>{pageCopy["published_notes"]}</span></article>
       </section>
 
-      <a className="portfolio-lab-archive" href="/v2">Open the archived v2 experience <ArrowUpRight aria-hidden="true" /></a>
+      <a className="portfolio-lab-archive" href={pageCopy["v2"]}>{pageCopy["open_the_archived_v2_experience"]}<ArrowUpRight aria-hidden="true" /></a>
     </main>
   );
 }

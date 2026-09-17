@@ -1,4 +1,6 @@
 import { createElement } from 'react';
+import { readFileSync, readdirSync } from 'node:fs';
+import matter from 'gray-matter';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import { projectFrontmatterSchema } from '../portfolio/content/contracts';
@@ -14,9 +16,22 @@ import {
 } from '../portfolio/work/projectPresentation';
 import { ProjectImage } from '../portfolio/work/ProjectMedia';
 
+const savedProjects = readdirSync('src/content/projects')
+  .filter((name) => name.endsWith('.mdx'))
+  .map((name) => projectFrontmatterSchema.parse(matter(readFileSync(`src/content/projects/${name}`, 'utf8')).data))
+  .sort((a, b) => a.selectedWorkOrder - b.selectedWorkOrder);
+const imageProject = {
+  ...previewProjectManifest[0],
+  title: 'Example project',
+  media: [{ type: 'image' as const, source: '/example.png', alt: 'Example interface',
+    aspectRatio: { width: 16, height: 10 }, narrativeRole: 'hero' as const }],
+};
+
 describe('portfolio foundation', () => {
   it('keeps draft MDX out of the published manifest and search', () => {
-    expect(portfolioManifest.projects).toHaveLength(5);
+    expect(portfolioManifest.projects.map(({ slug }) => slug)).toEqual(
+      savedProjects.filter((project) => project.publicationState === 'published').map(({ slug }) => slug),
+    );
     expect(portfolioManifest.articles).toHaveLength(0);
     expect(searchPortfolio('Ship small, learn fast')).toEqual([]);
     expect(searchPortfolio('Credify')[0]).toMatchObject({
@@ -26,22 +41,16 @@ describe('portfolio foundation', () => {
     });
   });
 
-  it('keeps the approved preview order and canonical project names', () => {
-    expect(previewProjectManifest.map(({ title }) => title)).toEqual([
-      'Credify',
-      'CitizenVoice',
-      'Artist Platform',
-      'Nexora Landing Page',
-      'Slack Agent',
-    ]);
-    expect(formatProjectDate(previewProjectManifest[0].completedAt!)).toBe('Oct 2025');
+  it('uses saved project names and ordering in the preview', () => {
+    expect(previewProjectManifest.map(({ title }) => title)).toEqual(savedProjects.map(({ title }) => title));
+    expect(formatProjectDate('2025-10')).toBe('Oct 2025');
   });
 
   it('filters approved project metadata and publishes evidence-safe case studies', () => {
     expect(filterPreviewProjects(previewProjectManifest, 'hackathons').map(({ title }) => title))
-      .toEqual(['Credify', 'CitizenVoice', 'Slack Agent']);
+      .toEqual(savedProjects.filter((project) => project.categories.includes('Hackathon')).map(({ title }) => title));
     expect(filterPreviewProjects(previewProjectManifest, 'sites').map(({ title }) => title))
-      .toEqual(['Nexora Landing Page']);
+      .toEqual(savedProjects.filter((project) => project.categories.includes('Product site')).map(({ title }) => title));
     expect(searchPortfolio('CitizenVoice')[0]).toMatchObject({
       title: 'CitizenVoice',
       href: '/work/citizenvoice',
@@ -72,17 +81,17 @@ describe('portfolio foundation', () => {
   });
 
   it('keeps project navigation understandable when preview media fails', () => {
-    render(createElement(ProjectImage, { project: previewProjectManifest[0] }));
-    fireEvent.error(screen.getByRole('img', { name: /Credify product interface/i }));
-    expect(screen.getByText('Credify')).toBeInTheDocument();
+    render(createElement(ProjectImage, { project: imageProject }));
+    fireEvent.error(screen.getByRole('img', { name: 'Example interface' }));
+    expect(screen.getByText('Example project')).toBeInTheDocument();
   });
 
   it('allows the first featured image to bypass lazy loading', () => {
     render(createElement(ProjectImage, {
-      project: previewProjectManifest[0],
+      project: imageProject,
       priority: true,
     }));
-    const image = screen.getByRole('img', { name: /Credify product interface/i });
+    const image = screen.getByRole('img', { name: 'Example interface' });
     expect(image).toHaveAttribute('loading', 'eager');
     expect(image).toHaveAttribute('fetchpriority', 'high');
   });

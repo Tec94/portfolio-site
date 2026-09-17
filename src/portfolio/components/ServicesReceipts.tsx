@@ -1,3 +1,5 @@
+import pageCopy from '../../content/site/ServicesReceipts.json';
+import serviceContent from '../../content/site/services.json';
 import { motion } from 'framer-motion';
 import {
   useEffect,
@@ -17,47 +19,7 @@ interface ServiceDefinition {
   price: string;
 }
 
-const services: ServiceDefinition[] = [
-  {
-    slug: 'product-engineering',
-    title: 'Product engineering',
-    summary: 'A maintainable product slice from brief to working release.',
-    rows: [
-      { label: 'Frame', values: ['Constraints', 'Flows', 'Evidence'] },
-      { label: 'Prototype', values: ['Interaction', 'Architecture', 'States'] },
-      { label: 'Build', values: ['Implementation', 'Testing', 'Handoff'] },
-      { label: 'Coverage', values: ['Product UI', 'Design systems', 'Accessible interaction'] },
-    ],
-    duration: '6–12',
-    price: 'From $400',
-  },
-  {
-    slug: 'interface-systems',
-    title: 'Interface systems',
-    summary: 'A shared interface language teams can extend.',
-    rows: [
-      { label: 'Inventory', values: ['Patterns', 'Drift', 'Friction'] },
-      { label: 'Define', values: ['Tokens', 'Behavior', 'Ownership'] },
-      { label: 'Prove', values: ['Components', 'Migration', 'Guidance'] },
-      { label: 'Coverage', values: ['Interface audit', 'Component set', 'Documentation'] },
-    ],
-    duration: '4–8',
-    price: 'From $250',
-  },
-  {
-    slug: 'product-direction',
-    title: 'Product direction',
-    summary: 'A tested direction ready for commitment.',
-    rows: [
-      { label: 'Clarify', values: ['Opportunity', 'Audience', 'Risk'] },
-      { label: 'Explore', values: ['Flows', 'Form', 'Alternatives'] },
-      { label: 'Decide', values: ['Prototype', 'Evidence', 'Next steps'] },
-      { label: 'Coverage', values: ['Decision rationale', 'Risk map', 'Build recommendation'] },
-    ],
-    duration: '2–4',
-    price: 'Custom quote',
-  },
-];
+const services: ServiceDefinition[] = serviceContent;
 
 function ReceiptEdge({ position }: { position: 'top' | 'bottom' }) {
   const edgeRef = useRef<HTMLDivElement>(null);
@@ -183,10 +145,10 @@ function ServiceReceipt({
                 </div>
               ))}
               <div className="portfolio-receipt-spec-row is-emphasis">
-                <dt>Duration (Weeks)</dt><dd>{service.duration}</dd>
+                <dt>{pageCopy["duration_weeks"]}</dt><dd>{service.duration}</dd>
               </div>
               <div className="portfolio-receipt-spec-row is-emphasis is-price">
-                <dt>Pricing</dt><dd>{service.price}</dd>
+                <dt>{pageCopy["pricing"]}</dt><dd>{service.price}</dd>
               </div>
             </dl>
           </motion.div>
@@ -210,13 +172,11 @@ export function ServicesReceipts({ standalone = false }: { standalone?: boolean 
       <div className="portfolio-services__sidebar">
         <div className="portfolio-services__index">
           {standalone ? (
-            <h1 id="portfolio-services-heading">Services</h1>
+            <h1 id="portfolio-services-heading">{pageCopy["services"]}</h1>
           ) : (
-            <h2 id="portfolio-services-heading">Services</h2>
+            <h2 id="portfolio-services-heading">{pageCopy["services_"]}</h2>
           )}
-          <a className="portfolio-services__booking" href={profile.calUrl} target="_blank" rel="noreferrer">
-            Book a call ↗
-          </a>
+          <a className="portfolio-services__booking" href={profile.calUrl} target="_blank" rel="noreferrer">{pageCopy["book_a_call"]}</a>
         </div>
       </div>
       <div className="portfolio-services__receipts">

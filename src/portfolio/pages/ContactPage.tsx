@@ -1,3 +1,4 @@
+import pageCopy from '../../content/site/ContactPage.json';
 import { useRef, useState, type FormEvent } from 'react';
 import { ArrowUpRight, CalendarDays, Check, Clipboard, Mail, Send } from 'lucide-react';
 import { profile } from '../../data/portfolioData';
@@ -73,16 +74,16 @@ export function ContactPage() {
   return (
     <main id="portfolio-main" className="portfolio-route-page portfolio-contact-page">
       <header className="portfolio-route-header">
-        <p className="portfolio-kicker">Contact</p>
-        <h1>Let’s make the next useful thing.</h1>
+        <p className="portfolio-kicker">{pageCopy["contact"]}</p>
+        <h1>{pageCopy["let_s_make_the_next_useful_thing"]}</h1>
       </header>
 
       <section className="portfolio-contact-quick" aria-label="Contact options">
         <a href={profile.calUrl} target="_blank" rel="noreferrer">
-          <CalendarDays aria-hidden="true" /><span><strong>Book a call</strong><small>15 minutes on Cal.com</small></span><ArrowUpRight aria-hidden="true" />
+          <CalendarDays aria-hidden="true" /><span><strong>{pageCopy["book_a_call"]}</strong><small>{pageCopy["15_minutes_on_cal_com"]}</small></span><ArrowUpRight aria-hidden="true" />
         </a>
         <a href={`mailto:${profile.email}`}>
-          <Mail aria-hidden="true" /><span><strong>Email</strong><small>{profile.email}</small></span><ArrowUpRight aria-hidden="true" />
+          <Mail aria-hidden="true" /><span><strong>{pageCopy["email"]}</strong><small>{profile.email}</small></span><ArrowUpRight aria-hidden="true" />
         </a>
         <button type="button" onClick={copyEmail}>
           {copied ? <Check aria-hidden="true" /> : <Clipboard aria-hidden="true" />}
@@ -102,50 +103,50 @@ export function ContactPage() {
 
       <div id="portfolio-inquiry" className="portfolio-inquiry" data-open={expanded || undefined} hidden={!expanded}>
         <form ref={formRef} onSubmit={handleSubmit} aria-busy={status === 'submitting'} noValidate>
-          <ContactField id="name" label="Name" error={errors.name}>
+          <ContactField id="name" label={pageCopy["name"]} error={errors.name}>
             <input id="name" name="name" autoComplete="name" value={form.name} onChange={(event) => update('name', event.target.value)} aria-invalid={Boolean(errors.name)} aria-describedby={errors.name ? 'name-error' : undefined} />
           </ContactField>
-          <ContactField id="email" label="Email" error={errors.email}>
+          <ContactField id="email" label={pageCopy["email_"]} error={errors.email}>
             <input id="email" name="email" type="email" autoComplete="email" value={form.email} onChange={(event) => update('email', event.target.value)} aria-invalid={Boolean(errors.email)} aria-describedby={errors.email ? 'email-error' : undefined} />
           </ContactField>
-          <ContactField id="projectType" label="Project type" error={errors.projectType}>
+          <ContactField id="projectType" label={pageCopy["project_type"]} error={errors.projectType}>
             <select id="projectType" name="projectType" value={form.projectType} onChange={(event) => update('projectType', event.target.value)} aria-invalid={Boolean(errors.projectType)} aria-describedby={errors.projectType ? 'projectType-error' : undefined}>
-              <option value="">Choose a project type</option>
-              <option value="product-engineering">Product engineering</option>
-              <option value="interface-systems">Interface systems</option>
-              <option value="product-direction">Product direction</option>
-              <option value="other">Something else</option>
+              <option value="">{pageCopy["choose_a_project_type"]}</option>
+              <option value="product-engineering">{pageCopy["product_engineering"]}</option>
+              <option value="interface-systems">{pageCopy["interface_systems"]}</option>
+              <option value="product-direction">{pageCopy["product_direction"]}</option>
+              <option value="other">{pageCopy["something_else"]}</option>
             </select>
           </ContactField>
-          <ContactField id="timeline" label="Timeline" error={errors.timeline}>
+          <ContactField id="timeline" label={pageCopy["timeline"]} error={errors.timeline}>
             <select id="timeline" name="timeline" value={form.timeline} onChange={(event) => update('timeline', event.target.value)} aria-invalid={Boolean(errors.timeline)} aria-describedby={errors.timeline ? 'timeline-error' : undefined}>
-              <option value="">Choose a timeline</option>
-              <option value="asap">As soon as possible</option>
-              <option value="1-3-months">Within 1–3 months</option>
-              <option value="3-6-months">Within 3–6 months</option>
-              <option value="flexible">Flexible</option>
+              <option value="">{pageCopy["choose_a_timeline"]}</option>
+              <option value="asap">{pageCopy["as_soon_as_possible"]}</option>
+              <option value="1-3-months">{pageCopy["within_1_3_months"]}</option>
+              <option value="3-6-months">{pageCopy["within_3_6_months"]}</option>
+              <option value="flexible">{pageCopy["flexible"]}</option>
             </select>
           </ContactField>
-          <ContactField id="budgetRange" label="Budget" error={errors.budgetRange}>
+          <ContactField id="budgetRange" label={pageCopy["budget"]} error={errors.budgetRange}>
             <select id="budgetRange" name="budgetRange" value={form.budgetRange} onChange={(event) => update('budgetRange', event.target.value)} aria-invalid={Boolean(errors.budgetRange)} aria-describedby={errors.budgetRange ? 'budgetRange-error' : undefined}>
-              <option value="">Choose a budget</option>
-              <option value="under-1k">Under $1,000</option>
+              <option value="">{pageCopy["choose_a_budget"]}</option>
+              <option value="under-1k">{pageCopy["under_1_000"]}</option>
               <option value="1k-5k">$1,000–$5,000</option>
               <option value="5k-15k">$5,000–$15,000</option>
               <option value="15k-plus">$15,000+</option>
-              <option value="undecided">Not decided</option>
+              <option value="undecided">{pageCopy["not_decided"]}</option>
             </select>
           </ContactField>
-          <ContactField id="message" label="Project details" error={errors.message} wide>
+          <ContactField id="message" label={pageCopy["project_details"]} error={errors.message} wide>
             <textarea id="message" name="message" maxLength={2000} value={form.message} onChange={(event) => update('message', event.target.value)} aria-invalid={Boolean(errors.message)} aria-describedby={errors.message ? 'message-error' : 'message-count'} />
             <span id="message-count">{form.message.length} / 2000</span>
           </ContactField>
-          <label className="portfolio-honeypot" aria-hidden="true">Website<input name="website" tabIndex={-1} autoComplete="off" value={form.website} onChange={(event) => update('website', event.target.value)} /></label>
+          <label className="portfolio-honeypot" aria-hidden="true">{pageCopy["website"]}<input name="website" tabIndex={-1} autoComplete="off" value={form.website} onChange={(event) => update('website', event.target.value)} /></label>
           <button className="portfolio-submit" type="submit" disabled={status === 'submitting' || status === 'confirmed'}>
             {status === 'confirmed' ? <Check aria-hidden="true" /> : <Send aria-hidden="true" />}
             {status === 'submitting' ? 'Sending…' : status === 'confirmed' ? 'Inquiry sent' : 'Send inquiry'}
           </button>
-          <p className="portfolio-contact-privacy">Your message goes only to the private project inquiry inbox. You can use direct email instead.</p>
+          <p className="portfolio-contact-privacy">{pageCopy["your_message_goes_only_to_the_private_project_inquiry_inbox_you_can_use_direct_email_instead"]}</p>
           <p className="portfolio-form-status" role={status === 'error' ? 'alert' : 'status'} aria-live="polite">{statusMessage}</p>
         </form>
       </div>

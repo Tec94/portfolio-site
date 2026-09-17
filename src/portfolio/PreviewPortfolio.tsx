@@ -12,6 +12,7 @@ import './portfolio.css';
 import './styles/overview.css';
 import './styles/services.css';
 import './styles/overview-responsive.css';
+import './styles/dossier.css';
 
 export default function PreviewPortfolio() {
   return (

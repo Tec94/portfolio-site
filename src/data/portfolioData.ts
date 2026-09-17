@@ -1,3 +1,5 @@
+import siteProfile from '../content/site/profile.json';
+
 export type ProjectCategory =
   | 'Web Apps'
   | 'Dashboards'
@@ -126,43 +128,7 @@ export interface TimelineChapter {
   notes: { title: string; date: string; tag: string }[];
 }
 
-export const timeline: TimelineChapter[] = [
-  {
-    year: '2022',
-    title: 'Back-End Intern',
-    badge: 'Started',
-    summary:
-      'At Hotel Link Solutions, I learned that performance is product work: responsive images, code splitting, and CDN tuning contributed to a 10% lift in checkout rate.',
-    notes: [{ title: 'Learning performance the hard way', date: 'Nov 2022', tag: 'Engineering' }],
-  },
-  {
-    year: '2023',
-    title: 'Engineering Intern',
-    badge: 'Growth',
-    summary:
-      'At Portlogics JSC, I rebuilt dashboard workflows in React and focused on reusable, accessible components that reduced user error and sped up review.',
-    notes: [{ title: 'Lessons from my first real client', date: 'Aug 2023', tag: 'Process' }],
-  },
-  {
-    year: '2024',
-    title: 'Hackathon Season',
-    badge: 'Turning point',
-    summary:
-      'I shipped Credify, CitizenVoice, and other full-stack MVPs under pressure—with real data, auth, caching, and users instead of presentation-only prototypes.',
-    notes: [
-      { title: 'Ship small, learn fast', date: 'Oct 2024', tag: 'Mindset' },
-      { title: 'Caching is a feature', date: 'Oct 2024', tag: 'Engineering' },
-    ],
-  },
-  {
-    year: '2025',
-    title: 'Data & Automation Intern',
-    badge: 'Current focus',
-    summary:
-      'At QT-Data Group, I engineered Python automation and LLM-assisted production pipelines that cut end-to-end content production time by 70%.',
-    notes: [{ title: 'The future is built with AI', date: 'Jul 2025', tag: 'AI' }],
-  },
-];
+export const timeline: TimelineChapter[] = siteProfile.timeline;
 
 export interface Note {
   title: string;
@@ -203,57 +169,10 @@ export const notes: Note[] = [
   },
 ];
 
-export const experiences = [
-  {
-    company: 'Congero Technology Group',
-    role: 'Software Engineering Intern',
-    location: 'Remote',
-    period: 'June–August 2026',
-  },
-  {
-    company: 'QT-Data Group',
-    role: 'Web Development Intern',
-    location: 'Ho Chi Minh City, Vietnam',
-    period: 'June–August 2025',
-  },
-  {
-    company: 'Portlogics JSC',
-    role: 'Intern',
-    location: 'Ho Chi Minh City, Vietnam',
-    period: 'June–August 2023',
-  },
-];
+export const experiences = siteProfile.experiences;
 
-export const education = {
-  school: 'University of Texas at Dallas',
-  degree: 'B.S. in Computer Science',
-  location: 'Dallas, Texas',
-  period: 'August 2024–May 2028',
-} as const;
+export const education = siteProfile.education;
 
-export const toolbox = [
-  'TypeScript',
-  'React',
-  'Python',
-  'C',
-  'SQL',
-  'Node.js',
-  'PostgreSQL',
-  'Vite',
-] as const;
+export const toolbox = siteProfile.toolbox;
 
-export const profile = {
-  name: 'Jack Cao',
-  initials: 'JC',
-  title: 'Web Developer & Product Freelancer',
-  location: 'Texas, United States',
-  timeZone: 'America/Chicago',
-  email: 'hello@jackcao.dev',
-  resumeUrl: 'https://assets.jackcao.dev/resume/jack-cao-resume.pdf',
-  calUrl: 'https://cal.com/jack-cao/15min',
-  socialLinks: [
-    { label: 'GitHub', href: 'https://github.com/Tec94' },
-    { label: 'LinkedIn', href: 'https://www.linkedin.com/in/jackcao' },
-    { label: 'Email', href: 'mailto:hello@jackcao.dev' },
-  ],
-} as const;
+export const profile = siteProfile.profile;

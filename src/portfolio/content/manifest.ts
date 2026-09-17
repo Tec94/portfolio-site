@@ -111,8 +111,9 @@ const allProjectRecords = Object.entries(projectModules)
   })
   .sort((a, b) => a.selectedWorkOrder - b.selectedWorkOrder);
 
+const studioPreview = import.meta.env.DEV && import.meta.env.VITE_STUDIO_PREVIEW === 'true';
 const publishedProjects = allProjectRecords.filter(
-  (project) => project.publicationState === 'published',
+  (project) => studioPreview || project.publicationState === 'published',
 );
 
 export const previewProjectManifest: PreviewProjectRecord[] = allProjectRecords.map((project) => ({
@@ -143,7 +144,7 @@ const publishedArticles = Object.entries(articleModules)
       Content: module.default,
     } satisfies ArticleRecord;
   })
-  .filter((article) => article.status === 'published')
+  .filter((article) => studioPreview || article.status === 'published')
   .sort((a, b) => b.publicationDate.localeCompare(a.publicationDate));
 
 export const portfolioManifest = {
