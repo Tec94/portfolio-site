@@ -1,11 +1,9 @@
 import pageCopy from '../../content/site/ServicesReceipts.json';
 import serviceContent from '../../content/site/services.json';
-import { motion } from 'framer-motion';
 import {
   useEffect,
   useRef,
   useState,
-  type CSSProperties,
   type PointerEventHandler,
 } from 'react';
 import { profile } from '../../data/portfolioData';
@@ -22,35 +20,11 @@ interface ServiceDefinition {
 const services: ServiceDefinition[] = serviceContent;
 
 function ReceiptEdge({ position }: { position: 'top' | 'bottom' }) {
-  const edgeRef = useRef<HTMLDivElement>(null);
-  const [notchCount, setNotchCount] = useState(12);
-
-  useEffect(() => {
-    const edge = edgeRef.current;
-    if (!edge) return undefined;
-    const update = (width: number) => {
-      setNotchCount(Math.max(1, Math.floor((width + 16) / 32)));
-    };
-    update(edge.clientWidth);
-    if (typeof ResizeObserver === 'undefined') return undefined;
-    const observer = new ResizeObserver(([entry]) => update(entry.contentRect.width));
-    observer.observe(edge);
-    return () => observer.disconnect();
-  }, []);
-
   return (
     <div
-      ref={edgeRef}
       className={`portfolio-receipt-edge is-${position}`}
-      style={{ '--portfolio-receipt-notch-count': notchCount } as CSSProperties}
       aria-hidden="true"
-    >
-      {Array.from({ length: notchCount }, (_, index) => (
-        <svg key={index} viewBox="0 0 16 8">
-          <circle cx="8" cy={position === 'top' ? '0' : '8'} r="8" />
-        </svg>
-      ))}
-    </div>
+    />
   );
 }
 
@@ -123,20 +97,9 @@ function ServiceReceipt({
             <span>{service.summary}</span>
           </span>
         </div>
-        <motion.div
-          id={detailsId}
-          className="portfolio-receipt-body"
-          initial={false}
-          animate={{ height: open ? 'auto' : 0 }}
-          transition={{ type: 'spring', stiffness: 360, damping: 30, mass: 0.8 }}
-          aria-hidden={!open}
-        >
-          <motion.div
-            className="portfolio-receipt-content"
-            initial={false}
-            animate={{ opacity: open ? 1 : 0, y: open ? 0 : -6 }}
-            transition={{ duration: open ? 0.28 : 0.2, ease: [0.22, 1, 0.36, 1] }}
-          >
+        <div id={detailsId} className="portfolio-receipt-body" aria-hidden={!open}>
+          <div className="portfolio-receipt-collapse">
+          <div className="portfolio-receipt-content">
             <dl className="portfolio-receipt-specs">
               {service.rows.map((row) => (
                 <div className="portfolio-receipt-spec-row" key={row.label}>
@@ -151,8 +114,9 @@ function ServiceReceipt({
                 <dt>{pageCopy["pricing"]}</dt><dd>{service.price}</dd>
               </div>
             </dl>
-          </motion.div>
-        </motion.div>
+          </div>
+          </div>
+        </div>
       </div>
       <ReceiptEdge position="bottom" />
     </article>

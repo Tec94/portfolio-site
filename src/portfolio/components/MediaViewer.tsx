@@ -8,6 +8,7 @@ import {
 } from 'react';
 import { ChevronLeft, ChevronRight, X } from 'lucide-react';
 import type { ProjectMedia } from '../content/contracts';
+import { usePortfolioSound } from '../providers/SoundProvider';
 
 interface MediaViewerProps {
   media: ProjectMedia[];
@@ -24,31 +25,42 @@ export function MediaViewer({
   initialIndex = 0,
   onClose,
 }: MediaViewerProps) {
+  const { play } = usePortfolioSound();
   const dialogRef = useRef<HTMLDialogElement>(null);
   const dragStartRef = useRef<number | null>(null);
   const [index, setIndex] = useState(initialIndex);
   const item = media[index];
   const hasMultiple = media.length > 1;
 
-  const previous = useCallback(
-    () => setIndex((current) => (current - 1 + media.length) % media.length),
-    [media.length],
-  );
-  const next = useCallback(
-    () => setIndex((current) => (current + 1) % media.length),
-    [media.length],
-  );
+  const select = useCallback((nextIndex: number) => {
+    if (nextIndex === index) return;
+    setIndex(nextIndex);
+    play('press');
+  }, [index, play]);
+  const previous = useCallback(() => select((index - 1 + media.length) % media.length), [index, media.length, select]);
+  const next = useCallback(() => select((index + 1) % media.length), [index, media.length, select]);
+  const close = () => { if (open) { play('press'); onClose(); } };
 
   useEffect(() => {
-    setIndex(Math.min(initialIndex, Math.max(media.length - 1, 0)));
+    if (open) setIndex(Math.min(initialIndex, Math.max(media.length - 1, 0)));
   }, [initialIndex, media.length, open]);
 
   useEffect(() => {
     const dialog = dialogRef.current;
     if (!dialog) return;
-    if (open && !dialog.open) dialog.showModal();
-    if (!open && dialog.open) dialog.close();
-  }, [open]);
+    if (open && !dialog.open) {
+      dialog.showModal();
+      play('press');
+    }
+    if (open || !dialog.open) return;
+    let cancelled = false;
+    const animations = dialog.getAnimations?.() ?? [];
+    if (!animations.length) dialog.close();
+    else void Promise.allSettled(animations.map((animation) => animation.finished)).then(() => {
+      if (!cancelled && dialog.open) dialog.close();
+    });
+    return () => { cancelled = true; };
+  }, [open, play]);
 
   useEffect(() => {
     if (!open) return undefined;
@@ -91,38 +103,39 @@ export function MediaViewer({
       aria-labelledby="portfolio-viewer-title"
       onCancel={(event) => {
         event.preventDefault();
-        onClose();
+        close();
       }}
-      onClose={onClose}
+      data-state={open ? 'open' : 'closing'}
+      onClose={close}
       onClick={(event) => {
-        if (event.target === event.currentTarget) onClose();
+        if (event.target === event.currentTarget) close();
       }}
     >
       <div className="portfolio-viewer__frame" data-cursor-tone="dark">
         <header className="portfolio-viewer__header">
           <span>{String(index + 1).padStart(2, '0')} / {String(media.length).padStart(2, '0')}</span>
           <strong id="portfolio-viewer-title">{projectTitle}</strong>
-          <button type="button" aria-label="Close media viewer" onClick={onClose}>
+          <button type="button" aria-label="Close media viewer" onClick={close}>
             <X aria-hidden="true" />
           </button>
         </header>
         <div
           className={`portfolio-viewer__stage${hasMultiple ? '' : ' is-single'}`}
           data-cursor-intent={hasMultiple ? 'drag' : 'media'}
-          onPointerDown={handlePointerDown}
-          onPointerUp={handlePointerUp}
-          onPointerCancel={() => {
-            dragStartRef.current = null;
-          }}
         >
           {hasMultiple ? (
             <button className="portfolio-viewer__side is-previous" type="button" aria-label="Previous media" onClick={previous}>
               <ChevronLeft aria-hidden="true" />
             </button>
           ) : null}
-          <div className="portfolio-viewer__media">
+          <div className="portfolio-viewer__media"
+            onPointerDown={handlePointerDown}
+            onPointerUp={handlePointerUp}
+            onPointerCancel={() => { dragStartRef.current = null; }}
+            onLostPointerCapture={() => { dragStartRef.current = null; }}
+          >
             {item.type === 'video' ? (
-              open ? <video key={item.source} src={item.source} controls playsInline preload="metadata" poster={item.poster} aria-label={item.alt} /> : null
+              open ? <video key={item.source} src={item.source} controls playsInline preload="metadata" poster={item.poster} aria-label={item.alt} /> : item.poster ? <img src={item.poster} alt={item.alt} /> : null
             ) : (
               <img src={item.source} alt={item.alt} draggable={false} />
             )}
@@ -141,7 +154,7 @@ export function MediaViewer({
                 type="button"
                 aria-label={`Show media ${entryIndex + 1}`}
                 aria-current={entryIndex === index ? 'true' : undefined}
-                onClick={() => setIndex(entryIndex)}
+                onClick={() => select(entryIndex)}
               >
                 {entry.type === 'image' ? <img src={entry.source} alt="" /> : <span>{pageCopy["video"]}</span>}
               </button>

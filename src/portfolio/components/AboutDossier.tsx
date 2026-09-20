@@ -1,12 +1,4 @@
-import { ArrowUpRight } from 'lucide-react';
 import { education, experiences, profile, toolbox } from '../../data/portfolioData';
-import pageCopy from '../../content/site/OverviewAbout.json';
-
-const toolGroups = [
-  { title: 'Languages', tools: ['TypeScript', 'Python', 'C', 'SQL'] },
-  { title: 'Building with', tools: ['React', 'Node.js', 'Vite'] },
-  { title: 'Data', tools: ['PostgreSQL'] },
-];
 
 export function AboutDossier() {
   const chapters = [
@@ -30,30 +22,28 @@ export function AboutDossier() {
 
   return (
     <div className="portfolio-dossier-body">
-      <p className="portfolio-dossier-intro">{pageCopy.i_m_jack_a_product_engineer_in_texas_i_care_about_the_point_where_a_good_concept_survives_contact_with_real_data_real_constraints_and_real_people}</p>
       <ol className="portfolio-dossier-ledger" aria-label="Experience and education">
         {chapters.map((chapter) => (
           <li key={chapter.title}>
-            <span className="portfolio-dossier-year">{chapter.year}{chapter.education ? '–' : ''}</span>
-            <div>
-              <div className="portfolio-dossier-entry"><h3>{chapter.title}</h3><span>{chapter.location} · {chapter.period}</span></div>
+            <div className="portfolio-dossier-date" aria-label={chapter.period}>
+              <span className="portfolio-dossier-year" aria-hidden="true">{chapter.year}{chapter.education ? '–' : ''}</span>
+              <span className="portfolio-dossier-months" aria-hidden="true">{chapter.education
+                ? `Exp. ${chapter.period.match(/\d{4}/g)?.slice(-1)[0]}`
+                : chapter.period.replace(/\s*\d{4}/g, '').replace(/[A-Za-z]+/g, (month) => month.slice(0, 3))}</span>
+            </div>
+            <div className="portfolio-dossier-entry">
+              <h3>{chapter.title}</h3>
               <p>{chapter.description}</p>
             </div>
+            <span className="portfolio-dossier-place" title={chapter.location}>{chapter.location.split(',')[0]}</span>
           </li>
         ))}
       </ol>
-      <div className="portfolio-dossier-tools">
-        {toolGroups.map((group) => (
-          <section key={group.title} aria-label={group.title}>
-            <h3>{group.title}</h3>
-            <ul>{group.tools.filter((tool) => toolbox.includes(tool)).map((tool) => <li key={tool}>{tool}</li>)}</ul>
-          </section>
-        ))}
-      </div>
-      <div className="portfolio-about-actions">
-        <a href={profile.resumeUrl} target="_blank" rel="noreferrer">Résumé<ArrowUpRight aria-hidden="true" /></a>
-        <a href={profile.calUrl} target="_blank" rel="noreferrer">Book 15 minutes</a>
-      </div>
+      <section className="portfolio-dossier-tools" aria-label="Toolbox">
+        <div className="portfolio-ledger-heading"><h3>Toolbox</h3><span aria-hidden="true" /><span>{String(toolbox.length).padStart(2, '0')}</span></div>
+        <ul>{toolbox.map((tool) => <li key={tool}>{tool}</li>)}</ul>
+      </section>
+      <a className="portfolio-inline-link portfolio-dossier-resume" href={profile.resumeUrl} target="_blank" rel="noreferrer">Résumé <span>PDF ↗</span></a>
     </div>
   );
 }

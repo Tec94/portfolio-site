@@ -241,7 +241,7 @@ Tech: Next.js, TypeScript, MongoDB, Vercel`
                 type: 'file',
                 content: JSON.stringify({
                   github: 'github.com/jackcao',
-                  linkedin: 'linkedin.com/in/khiet-cao-95b545393',
+                  linkedin: 'https://www.linkedin.com/in/khiet-jack-cao-95b545393/',
                   twitter: '@jackcao_dev',
                   portfolio: 'jackcao.dev'
                 }, null, 2)

@@ -5,6 +5,8 @@ import { describe, expect, it, vi } from 'vitest';
 import ErrorBoundary from '../components/ErrorBoundary';
 import { MediaViewer } from '../portfolio/components/MediaViewer';
 import { ContactPage } from '../portfolio/pages/ContactPage';
+import { PortfolioSoundProvider } from '../portfolio/providers/SoundProvider';
+import * as contactSubmissions from '../lib/contactSubmissions';
 import PreviewPortfolio from '../portfolio/PreviewPortfolio';
 import {
   getLandingSectionUrl,
@@ -88,7 +90,7 @@ describe('portfolio overview shell', () => {
     expect(screen.getByRole('link', { name: 'GitHub' })).toHaveAttribute('href', 'https://github.com/Tec94');
     expect(screen.getByRole('link', { name: 'LinkedIn' })).toHaveAttribute(
       'href',
-      'https://www.linkedin.com/in/khiet-cao-95b545393/',
+      'https://www.linkedin.com/in/khiet-jack-cao-95b545393/',
     );
     expect(screen.getByRole('link', { name: 'Book a 15-minute call' })).toHaveAttribute(
       'href',
@@ -189,16 +191,22 @@ describe('portfolio overview shell', () => {
     const view = render(<MemoryRouter initialEntries={['/writing']}><PreviewPortfolio /></MemoryRouter>);
     expect(screen.getByRole('heading', { level: 1, name: 'Writing' })).toBeInTheDocument();
     expect(screen.queryByText('Notes from the work.')).not.toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'View work' })).toHaveAttribute('href', '/#work');
+    expect(within(view.container).getByRole('link', { name: 'View work' })).toHaveAttribute('href', '/#work');
+    expect(screen.getByRole('link', { name: '← Back to home' })).toHaveAttribute('href', '/#writing');
+    expect(within(view.container.querySelector('main')!).getByRole('link', { name: 'Back to home' })).toHaveAttribute('href', '/#writing');
     expect(document.querySelector('a[href="/lab"]')).toBeNull();
     view.unmount();
   });
 
-  it.each(['artist-platform', 'nexora-landing-page', 'slack-agent'])('opens the %s demo without empty case-study facts', (slug) => {
+  it.each(['artist-platform', 'nexora-landing-page', 'slack-agent'])('shows %s project metadata without requiring a written case study', (slug) => {
     const view = render(<MemoryRouter initialEntries={[`/work/${slug}`]}><PreviewPortfolio /></MemoryRouter>);
     expect(screen.getByText('Watch demo')).toBeInTheDocument();
-    expect(view.container.querySelector('.portfolio-case-study__facts')).toBeNull();
-    expect(view.container.querySelector('.portfolio-case-study__actions')).toBeNull();
+    const details = within(screen.getByRole('complementary', { name: 'Project details' }));
+    expect(details.getByText('Shipped')).toBeInTheDocument();
+    expect(details.getByText('Role')).toBeInTheDocument();
+    expect(details.getByText('Stack')).toBeInTheDocument();
+    expect(view.container.querySelector('.portfolio-case-study__actions a')).toBeInTheDocument();
+    expect(view.container.querySelector('.portfolio-case-study__content')).toBeNull();
     fireEvent.click(screen.getByRole('button', { name: /Open .* media viewer/ }));
     expect(view.container.querySelector('.portfolio-viewer__stage')).toHaveClass('is-single');
     expect(view.container.querySelector('video')).toHaveAttribute('src', expect.stringContaining(`/projects/${slug}/`));
@@ -334,6 +342,20 @@ describe('portfolio overview shell', () => {
 });
 
 describe('project media viewer', () => {
+  it('keeps the dialog open until its exit animation completes', async () => {
+    let finish!: () => void;
+    const finished = new Promise<void>((resolve) => { finish = resolve; });
+    const view = render(<MediaViewer media={media} projectTitle="Exit test" open onClose={() => {}} />, { wrapper: PortfolioSoundProvider });
+    const dialog = view.container.querySelector('dialog')!;
+    Object.defineProperty(dialog, 'getAnimations', { value: () => [{ finished }] });
+    view.rerender(<MediaViewer media={media} projectTitle="Exit test" open={false} onClose={() => {}} />);
+    expect(dialog).toHaveAttribute('open');
+    expect(dialog).toHaveAttribute('data-state', 'closing');
+    await act(async () => { finish(); await finished; });
+    expect(dialog).not.toHaveAttribute('open');
+    view.unmount();
+  });
+
   it('supports keyboard navigation and dismissal', () => {
     const close = vi.fn();
     const showModal = vi.spyOn(HTMLDialogElement.prototype, 'showModal').mockImplementation(function show(this: HTMLDialogElement) {
@@ -345,7 +367,7 @@ describe('project media viewer', () => {
       this.removeAttribute('open');
     });
 
-    render(<MediaViewer media={media} projectTitle="Credify" open onClose={close} />);
+    render(<MediaViewer media={media} projectTitle="Credify" open onClose={close} />, { wrapper: PortfolioSoundProvider });
     expect(showModal).toHaveBeenCalled();
     expect(screen.getByText('01 / 02')).toBeInTheDocument();
 
@@ -360,14 +382,31 @@ describe('project media viewer', () => {
   });
 });
 
-describe('progressive contact', () => {
-  it('reveals the inquiry form and focuses the first invalid field', async () => {
-    render(<ContactPage />);
-    fireEvent.click(screen.getByRole('button', { name: 'Send a project inquiry' }));
+describe('contact ledger', () => {
+  it('shows the inquiry form and focuses the first invalid field', async () => {
+    const view = render(<ContactPage />, { wrapper: PortfolioSoundProvider });
     expect(screen.getByRole('button', { name: 'Send inquiry' })).toBeInTheDocument();
 
     fireEvent.click(screen.getByRole('button', { name: 'Send inquiry' }));
     expect(await screen.findByRole('alert')).toHaveTextContent('Review the highlighted fields.');
     await waitFor(() => expect(screen.getByLabelText('Name')).toHaveFocus());
+    view.unmount();
+  });
+
+  it('submits the three-field form through the existing inbox contract', async () => {
+    const submit = vi.spyOn(contactSubmissions, 'submitContactSubmission').mockResolvedValue({ ok: true, submissionId: 'test' });
+    const view = render(<ContactPage />, { wrapper: PortfolioSoundProvider });
+    fireEvent.change(screen.getByLabelText('Name'), { target: { value: 'Ada Lovelace' } });
+    fireEvent.change(screen.getByLabelText('Email'), { target: { value: 'ada@example.com' } });
+    fireEvent.change(screen.getByLabelText('Message'), { target: { value: 'I would like help building a useful product.' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Send inquiry' }));
+    expect(await screen.findByRole('button', { name: 'Inquiry sent' })).toBeDisabled();
+    expect(submit).toHaveBeenCalledWith(expect.objectContaining({
+      projectType: 'not specified', timeline: 'not specified', budgetRange: 'not specified',
+      name: 'Ada Lovelace', email: 'ada@example.com', message: 'I would like help building a useful product.',
+    }));
+    expect(contactSubmissions.validateContactSubmission(submit.mock.calls[0][0])).toEqual({});
+    view.unmount();
+    submit.mockRestore();
   });
 });

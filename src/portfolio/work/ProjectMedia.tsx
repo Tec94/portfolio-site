@@ -46,31 +46,12 @@ export function ProjectImage({
           alt={decorative ? '' : media.alt}
           aria-hidden={decorative || undefined}
           loading={priority ? 'eager' : 'lazy'}
+          decoding="async"
           {...(priority ? { fetchpriority: 'high' } : {})}
           draggable={false}
           onError={() => setFailed(true)}
         />
       )}
-    </span>
-  );
-}
-
-export function MediaStack({
-  project,
-  transition = false,
-}: {
-  project: PreviewProjectRecord;
-  transition?: boolean;
-}) {
-  return (
-    <span className="portfolio-media-stack" data-cursor-intent="media" data-cursor-tone="dark">
-      <ProjectImage project={project} className="portfolio-media-stack__frame is-back" decorative />
-      <ProjectImage project={project} className="portfolio-media-stack__frame is-middle" decorative />
-      <ProjectImage
-        project={project}
-        className="portfolio-media-stack__frame is-front"
-        transition={transition}
-      />
     </span>
   );
 }

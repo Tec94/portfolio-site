@@ -1,4 +1,4 @@
-import { createClient, type SupabaseClient } from '@supabase/supabase-js';
+import type { SupabaseClient } from '@supabase/supabase-js';
 
 export interface ContactSubmission {
   name: string;
@@ -22,11 +22,14 @@ export type ContactSubmissionResult =
 
 let client: SupabaseClient | null = null;
 
-function getClient() {
+async function getClient() {
   const url = import.meta.env.VITE_SUPABASE_URL;
   const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
   if (!url || !anonKey) return null;
-  client ??= createClient(url, anonKey);
+  if (!client) {
+    const { createClient } = await import('@supabase/supabase-js');
+    client ??= createClient(url, anonKey);
+  }
   return client;
 }
 
@@ -58,16 +61,16 @@ export async function submitContactSubmission(
     };
   }
 
-  const supabase = getClient();
-  if (!supabase) {
-    return {
-      ok: false,
-      code: 'configuration',
-      message: 'The inquiry service is not configured. Please use the email option.',
-    };
-  }
-
   try {
+    const supabase = await getClient();
+    if (!supabase) {
+      return {
+        ok: false,
+        code: 'configuration',
+        message: 'The inquiry service is not configured. Please use the email option.',
+      };
+    }
+
     const { data, error } = await supabase.functions.invoke('submit-contact', {
       body: submission,
     });

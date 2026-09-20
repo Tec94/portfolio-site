@@ -6,7 +6,6 @@ import { describe, expect, it } from 'vitest';
 import { projectFrontmatterSchema } from '../portfolio/content/contracts';
 import { portfolioManifest, previewProjectManifest } from '../portfolio/content/manifest';
 import { searchPortfolio } from '../portfolio/content/search';
-import { inferCursorIntent } from '../portfolio/providers/CursorProvider';
 import { readSoundPreference } from '../portfolio/providers/SoundProvider';
 import { isThemeMode } from '../portfolio/providers/ThemeProvider';
 import {
@@ -65,16 +64,17 @@ describe('portfolio foundation', () => {
     ['artist-platform', 'journey_hover.mp4'],
     ['nexora-landing-page', 'landing_demo.mp4'],
     ['slack-agent', 'slack_demo.mp4'],
-  ])('maps %s to its own video and poster without invented metadata', (slug, filename) => {
+  ])('maps %s to its video, poster, and researched metadata', (slug, filename) => {
     const project = portfolioManifest.projects.find((entry) => entry.slug === slug)!;
     expect(project.media[0]).toMatchObject({
       type: 'video',
       source: expect.stringContaining(`https://assets.jackcao.dev/projects/${slug}/${filename}?v=`),
       poster: expect.stringContaining(`https://assets.jackcao.dev/projects/${slug}/poster.jpg?v=`),
     });
-    expect(project.completedAt).toBeUndefined();
-    expect(project.role).toBeUndefined();
-    expect(project.links).toEqual({});
+    expect(project.completedAt).toMatch(/^2026-\d{2}$/);
+    expect(project.role).toBeTruthy();
+    expect(project.technologies.length).toBeGreaterThan(0);
+    expect(Object.values(project.links).some(Boolean)).toBe(true);
     const view = render(createElement(ProjectImage, { project }));
     expect(screen.getByRole('img')).toHaveAttribute('src', project.media[0].poster);
     view.unmount();
@@ -96,11 +96,11 @@ describe('portfolio foundation', () => {
     expect(image).toHaveAttribute('fetchpriority', 'high');
   });
 
-  it('ranks exact route titles ahead of supporting copy', () => {
-    const [result] = searchPortfolio('Work');
-    expect(result.title).toBe('Work');
+  it.each(['Work', 'Services', 'About', 'Writing', 'Contact'])('routes the %s search result to its section or contact page', (title) => {
+    const [result] = searchPortfolio(title);
+    expect(result.title).toBe(title);
     expect(result.kind).toBe('route');
-    expect(result.href).toBe('/#work');
+    expect(result.href).toBe(title === 'Contact' ? '/contact' : `/#${title.toLowerCase()}`);
   });
 
   it('validates the complete project media contract', () => {
@@ -158,15 +158,4 @@ describe('portfolio foundation', () => {
     expect(readSoundPreference({ getItem: () => 'off' })).toBe(false);
   });
 
-  it('resolves cursor intent from explicit regions and semantic controls', () => {
-    const media = document.createElement('div');
-    media.dataset.cursorIntent = 'media';
-    expect(inferCursorIntent(media)).toBe('media');
-
-    const button = document.createElement('button');
-    expect(inferCursorIntent(button)).toBe('link');
-
-    const input = document.createElement('input');
-    expect(inferCursorIntent(input)).toBe('text');
-  });
 });

@@ -109,7 +109,7 @@ export default function PricingTable({ plans, onSelectPlan }: PricingTableProps)
 
             {/* Features */}
             <div className="space-y-3 mb-4">
-              <p className="text-green-400 font-mono text-xs uppercase tracking-wider mb-2">Features:</p>
+              <p className="text-green-400 font-mono text-xs tracking-wider mb-2">Features:</p>
               <div className={`${!expandedPlans[plan.name] ? 'min-h-[280px]' : ''}`}>
                 <AnimatePresence initial={false}>
                   {getVisibleFeatures(plan).map((feature, i) => (
@@ -154,22 +154,22 @@ export default function PricingTable({ plans, onSelectPlan }: PricingTableProps)
             {/* Details */}
             <div className="space-y-3 mb-6 p-4 bg-green-500/5 border border-green-500/20 rounded min-h-[220px]">
               <div className="space-y-1">
-                <span className="text-green-400/80 font-mono text-xs uppercase tracking-wider">Revisions:</span>
+                <span className="text-green-400/80 font-mono text-xs tracking-wider">Revisions:</span>
                 <p className="text-green-300 font-mono text-sm font-bold">{plan.revisions}</p>
               </div>
               <div className="h-px bg-green-500/20" />
               <div className="space-y-1">
-                <span className="text-green-400/80 font-mono text-xs uppercase tracking-wider">Meetings:</span>
+                <span className="text-green-400/80 font-mono text-xs tracking-wider">Meetings:</span>
                 <p className="text-green-300 font-mono text-sm font-bold">{plan.meetings}</p>
               </div>
               <div className="h-px bg-green-500/20" />
               <div className="space-y-1">
-                <span className="text-green-400/80 font-mono text-xs uppercase tracking-wider">Timeline:</span>
+                <span className="text-green-400/80 font-mono text-xs tracking-wider">Timeline:</span>
                 <p className="text-green-300 font-mono text-sm font-bold">{plan.timeline}</p>
               </div>
               <div className="h-px bg-green-500/20" />
               <div className="space-y-1">
-                <span className="text-green-400/80 font-mono text-xs uppercase tracking-wider">Support:</span>
+                <span className="text-green-400/80 font-mono text-xs tracking-wider">Support:</span>
                 <p className="text-green-300 font-mono text-sm font-bold break-words">{plan.support}</p>
               </div>
             </div>

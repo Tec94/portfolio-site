@@ -1,12 +1,12 @@
 import pageCopy from '../../content/site/WorkArchive.json';
 import { useMemo, useState, type MouseEvent, type PointerEvent } from 'react';
 import { flushSync } from 'react-dom';
-import { AnimatePresence, motion } from 'framer-motion';
-import { Github, Globe2, Grid2X2, List } from 'lucide-react';
+import { ArrowUpRight, Github, Grid2X2, List } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { previewProjectManifest } from '../content/manifest';
 import { usePortfolioSound } from '../providers/SoundProvider';
-import { MediaStack, ProjectImage } from './ProjectMedia';
+import { transitionPortfolioPage } from '../motion';
+import { ProjectImage } from './ProjectMedia';
 import {
   filterPreviewProjects,
   formatProjectDate,
@@ -16,11 +16,11 @@ import {
 } from './projectPresentation';
 
 type ArchiveView = 'list' | 'showcase';
-const viewTransition = { duration: 0.28, ease: [0.22, 1, 0.36, 1] as const };
 
 export function WorkArchive({ standalone = false }: { standalone?: boolean }) {
   const [view, setView] = useState<ArchiveView>('list');
   const [filter, setFilter] = useState<WorkFilter>('all');
+  const [hoverView, setHoverView] = useState<ArchiveView | null>(null);
   const navigate = useNavigate();
   const sound = usePortfolioSound();
   const projects = useMemo(
@@ -32,6 +32,14 @@ export function WorkArchive({ standalone = false }: { standalone?: boolean }) {
     },
     [filter],
   );
+  const projectGroups = [...new Set(projects.map((project) => project.year))].map((year) => ({
+    label: year ? String(year) : 'More work',
+    projects: projects.filter((project) => project.year === year),
+  }));
+  const highlightedView = hoverView ?? view;
+  const moveViewKnob = (next: ArchiveView | null) => {
+    setHoverView(next);
+  };
 
   const previewSound = (event: PointerEvent<HTMLElement>) => {
     if (event.pointerType === 'mouse') sound.playProjectPreview();
@@ -43,7 +51,6 @@ export function WorkArchive({ standalone = false }: { standalone?: boolean }) {
     slug: string,
   ) => {
     prepareProjectTransition(event.currentTarget, slug);
-    sound.playPageOpen();
     const isPlainPrimaryClick = (
       event.button === 0 &&
       !event.metaKey &&
@@ -62,13 +69,13 @@ export function WorkArchive({ standalone = false }: { standalone?: boolean }) {
 
   const changeView = (next: ArchiveView) => {
     if (next === view) return;
-    setView(next);
-    sound.play('toggle');
+    transitionPortfolioPage(() => setView(next));
+    sound.play('press');
   };
 
   const changeFilter = (next: WorkFilter) => {
     if (next === filter) return;
-    setFilter(next);
+    transitionPortfolioPage(() => setFilter(next));
     sound.play('press');
   };
 
@@ -88,15 +95,19 @@ export function WorkArchive({ standalone = false }: { standalone?: boolean }) {
               <h2 id="work-archive-heading">{pageCopy["work_"]}</h2>
             )}
           </div>
-          <p className="portfolio-work-archive__intro">{previewProjectManifest.length} projects since {Math.min(...previewProjectManifest.flatMap((project) => project.year ? [project.year] : []))}, from hackathon builds to product sites.</p>
           <div className="portfolio-work-archive__controls">
-            <div className="portfolio-view-switch" aria-label="Project view">
+            <div className="portfolio-view-switch" aria-label="Project view" data-view={highlightedView}
+              onPointerLeave={() => moveViewKnob(null)}
+              onBlur={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) moveViewKnob(null); }}>
+              <span className="portfolio-view-switch__knob" aria-hidden="true" />
               <button
                 type="button"
                 aria-label="List view"
                 aria-pressed={view === 'list'}
                 data-tooltip="List"
                 onClick={() => changeView('list')}
+                onPointerEnter={(event) => { if (event.pointerType === 'mouse') moveViewKnob('list'); }}
+                onFocus={(event) => { if (event.currentTarget.matches(':focus-visible')) moveViewKnob('list'); }}
               >
                 <List aria-hidden="true" />
               </button>
@@ -106,6 +117,8 @@ export function WorkArchive({ standalone = false }: { standalone?: boolean }) {
                 aria-pressed={view === 'showcase'}
                 data-tooltip="Showcase"
                 onClick={() => changeView('showcase')}
+                onPointerEnter={(event) => { if (event.pointerType === 'mouse') moveViewKnob('showcase'); }}
+                onFocus={(event) => { if (event.currentTarget.matches(':focus-visible')) moveViewKnob('showcase'); }}
               >
                 <Grid2X2 aria-hidden="true" />
               </button>
@@ -119,63 +132,49 @@ export function WorkArchive({ standalone = false }: { standalone?: boolean }) {
               key={item.id}
               type="button"
               aria-pressed={filter === item.id}
+              aria-label={item.label}
               onClick={() => changeFilter(item.id)}
             >
-              {item.label}
+              <span>{item.label}</span>
+              <span className="portfolio-work-filter-count" aria-hidden="true">{String(filterPreviewProjects(previewProjectManifest, item.id).length).padStart(2, '0')}</span>
             </button>
           ))}
         </div>
       </div>
 
-      <AnimatePresence initial={false} mode="popLayout">
-        <motion.div
-          key={`${view}-${filter}`}
-          className={`portfolio-work-results is-${view}`}
-          initial={{ opacity: 0, clipPath: 'inset(0 0 100% 0)' }}
-          animate={{
-            opacity: 1,
-            clipPath: 'inset(0 0 0% 0)',
-            transitionEnd: { clipPath: 'none' },
-          }}
-          exit={{ opacity: 0, clipPath: 'inset(100% 0 0 0)' }}
-          transition={viewTransition}
-        >
+      <div className={`portfolio-work-results is-${view}`}>
           {view === 'list' ? (
             <div className="portfolio-work-list">
-              <AnimatePresence initial={false}>
-                {projects.map((project, index) => (
-                  <motion.div
-                    key={project.slug}
-                    layout
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: 'auto' }}
-                    exit={{ opacity: 0, height: 0 }}
-                    transition={viewTransition}
-                    className="portfolio-work-list__item"
-                  >
-                    {index > 0 && project.year && project.year !== projects[index - 1].year ? <div className="portfolio-work-year">{project.year}</div> : null}
+              {projectGroups.map((group) => (
+                <div className="portfolio-work-group" key={group.label}>
+                  <div className="portfolio-ledger-heading portfolio-work-year"><span>{group.label}</span><span aria-hidden="true" /><span>{String(group.projects.length).padStart(2, '0')}</span></div>
+                  {group.projects.map((project) => (
                     <Link
+                      key={project.slug}
                       to={project.href}
                       viewTransition
                       className="portfolio-work-row"
                       onPointerEnter={previewSound}
                       onClick={(event) => openProject(event, project.href, project.slug)}
                     >
-                      <MediaStack project={project} transition />
+                      <ProjectImage className="portfolio-work-row__frame" project={project} transition />
                       <span className="portfolio-work-row__copy">
                         <strong data-project-transition="title">{project.title}</strong>
-                        <span>{[project.role, ...project.categories].filter(Boolean).join(" · ")}</span>
+                        <span title={project.role ?? project.summary}>{project.role ?? project.summary}</span>
                       </span>
-                      {project.completedAt ? <time dateTime={project.completedAt}>{formatProjectDate(project.completedAt)}</time> : null}
+                      <span className="portfolio-work-row__meta">
+                        {project.completedAt ? <time dateTime={project.completedAt}>{formatProjectDate(project.completedAt)}</time> : null}
+                        <span title={project.categories.join(' · ')}>{project.categories.find((category) => category === 'Hackathon' || category === 'Product site') ?? project.categories[0]}</span>
+                      </span>
+                      <span className="portfolio-work-row__arrow" aria-hidden="true">→</span>
                     </Link>
-                  </motion.div>
-                ))}
-              </AnimatePresence>
-
+                  ))}
+                </div>
+              ))}
             </div>
           ) : (
             <div className="portfolio-work-showcase">
-              {projects.map((project) => (
+              {projects.map((project, index) => (
                 <article className="portfolio-showcase-card" key={project.slug}>
                   <Link
                     to={project.href}
@@ -184,6 +183,11 @@ export function WorkArchive({ standalone = false }: { standalone?: boolean }) {
                     onPointerEnter={previewSound}
                     onClick={(event) => openProject(event, project.href, project.slug)}
                   >
+                    <span className="portfolio-preview-address" aria-hidden="true">
+                      <span className="portfolio-preview-lights"><span /><span /><span /></span>
+                      <span>{project.links.live ? new URL(project.links.live).host : project.href}</span>
+                      <span>16 : 10</span>
+                    </span>
                     <ProjectImage
                       project={project}
                       className="portfolio-showcase-card__media"
@@ -192,6 +196,7 @@ export function WorkArchive({ standalone = false }: { standalone?: boolean }) {
                   </Link>
                   <div className="portfolio-showcase-card__footer">
                     <div>
+                      <p className="portfolio-showcase-card__eyebrow">{String(index + 1).padStart(2, '0')} / {project.completedAt ? `${formatProjectDate(project.completedAt)} · ` : ''}{project.categories.join(' · ')}</p>
                       <Link
                         to={project.href}
                         viewTransition
@@ -200,29 +205,29 @@ export function WorkArchive({ standalone = false }: { standalone?: boolean }) {
                       >
                         {project.title}
                       </Link>
-                      {project.role ? <span>{project.role}</span> : null}
+                      <p className="portfolio-showcase-card__description">{project.role ?? project.summary}</p>
                     </div>
-                    {project.completedAt ? <time dateTime={project.completedAt}>{formatProjectDate(project.completedAt)}</time> : null}
                     <div className="portfolio-showcase-card__actions">
-                      {project.links.live ? (
-                        <a
-                          href={project.links.live}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="is-live"
-                          aria-label={`Open ${project.title} live site`}
-                        >
-                          <Globe2 aria-hidden="true" />
-                        </a>
-                      ) : null}
                       {project.links.repository ? (
                         <a
                           href={project.links.repository}
                           target="_blank"
                           rel="noreferrer"
+                          className="portfolio-stamp portfolio-stamp--outline"
                           aria-label={`Open ${project.title} GitHub repository`}
                         >
-                          <Github aria-hidden="true" />
+                          <Github aria-hidden="true" /><span>Code</span>
+                        </a>
+                      ) : null}
+                      {project.links.live ? (
+                        <a
+                          href={project.links.live}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="portfolio-stamp"
+                          aria-label={`Open ${project.title} live site`}
+                        >
+                          <span>Live</span><span className="portfolio-stamp__clip" data-direction="external" aria-hidden="true"><span><ArrowUpRight /><ArrowUpRight /></span></span>
                         </a>
                       ) : null}
                     </div>
@@ -231,8 +236,8 @@ export function WorkArchive({ standalone = false }: { standalone?: boolean }) {
               ))}
             </div>
           )}
-        </motion.div>
-      </AnimatePresence>
+          {projects.length === 0 && <p className="portfolio-work-empty" role="status">No projects in this category yet.</p>}
+      </div>
     </section>
   );
 }

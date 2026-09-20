@@ -1,0 +1,26 @@
+:root {
+  --font-serif: 'Besley', Georgia, serif;
+  --font-sans: 'Geologica', 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  /* display (Besley) */
+  --text-display: 500 clamp(2.75rem, 4vw, 3.5rem)/1 var(--font-serif);   /* "Work." page titles, weight 620, tracking -0.045em */
+  --text-hero: 430 clamp(1.5rem, 2.25vw, 2rem)/1.2 var(--font-serif);     /* hero h1, name = 650, tracking -0.025em */
+  --text-lede: 400 clamp(1.12rem, 1.65vw, 1.45rem)/1.28 var(--font-serif);/* hero paragraph; links italic 650 */
+  --text-card-title: 600 1.0625rem/1.2 var(--font-serif);                  /* tracking -0.02em */
+
+  /* body (Geologica) */
+  --text-body: 400 1rem/1.55 var(--font-sans);
+  --text-small: 400 0.8125rem/1.45 var(--font-sans);
+  --text-nav: 650 0.75rem/1 var(--font-sans);
+
+  /* mono (JetBrains Mono) — labels, CTAs, ⌘K */
+  --text-mono-cta: 500 0.72rem/1 var(--font-mono);    /* letter-spacing .1em */
+  --text-mono-index: 400 0.78rem/1 var(--font-mono);  /* ⌘K rows, letter-spacing .02em */
+  --text-mono-label: 400 0.625rem/1 var(--font-mono); /* eyebrows + tooltips, letter-spacing .12em */
+
+  --track-tight: -0.035em;
+  --track-display: -0.045em;
+  --track-cta: 0.1em;
+  --track-label: 0.12em;
+}

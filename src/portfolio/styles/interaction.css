@@ -1,0 +1,70 @@
+/* Direction follows the destination; state icons do not travel on hover. */
+.portfolio-root :is(a, button) :is(.lucide-arrow-right, .lucide-chevron-right) { --icon-x: 2px; --icon-y: 0px; }
+.portfolio-root :is(a, button) :is(.lucide-arrow-left, .lucide-chevron-left) { --icon-x: -2px; --icon-y: 0px; }
+.portfolio-root :is(a, button) .lucide-arrow-up-right { --icon-x: 2px; --icon-y: -2px; }
+.portfolio-root :is(a, button) .lucide-arrow-up { --icon-x: 0px; --icon-y: -2px; }
+.portfolio-root :is(a, button) svg:not(.portfolio-stamp__clip svg, .portfolio-theme-icon svg, .portfolio-sound-icon svg, .portfolio-state-icon svg) {
+  transition: transform var(--dur-move) var(--ease-spring);
+}
+.portfolio-root :is(a, button):focus-visible svg:not(.portfolio-stamp__clip svg, .portfolio-theme-icon svg, .portfolio-sound-icon svg, .portfolio-state-icon svg, .lucide-chevron-down) {
+  transform: translate(var(--icon-x, 0px), var(--icon-y, 0px));
+}
+@media (hover: hover) and (pointer: fine) {
+  .portfolio-root :is(a, button):hover svg:not(.portfolio-stamp__clip svg, .portfolio-theme-icon svg, .portfolio-sound-icon svg, .portfolio-state-icon svg, .lucide-chevron-down) {
+    transform: translate(var(--icon-x, 0px), var(--icon-y, 0px));
+  }
+}
+
+.portfolio-state-icon { position: relative; display: grid; place-items: center; width: 16px; height: 16px; }
+.portfolio-state-icon svg { position: absolute; width: 16px; height: 16px; opacity: 0; transition: opacity var(--dur-color) var(--ease-out); }
+.portfolio-state-icon svg[data-active='true'] { opacity: 1; }
+
+.portfolio-viewer :is(.portfolio-viewer__header button, .portfolio-viewer__side),
+.portfolio-view-switch button {
+  transition: transform var(--dur-lift) var(--ease-spring), background-color var(--dur-color) var(--ease-out);
+}
+.portfolio-viewer :is(.portfolio-viewer__header button, .portfolio-viewer__side):focus-visible {
+  background-color: color-mix(in oklch, currentColor 12%, transparent);
+}
+@media (hover: hover) and (pointer: fine) {
+  .portfolio-viewer :is(.portfolio-viewer__header button, .portfolio-viewer__side):hover {
+    background-color: color-mix(in oklch, currentColor 12%, transparent);
+  }
+}
+.portfolio-viewer :is(.portfolio-viewer__header button, .portfolio-viewer__side):active,
+.portfolio-view-switch button:active { transform: scale(var(--press-scale)); transition-duration: var(--dur-press); }
+
+.portfolio-hero__scroll-cue > span:last-child,
+.portfolio-page-top > span { display: inline-block; transition: transform var(--dur-move) var(--ease-spring); }
+.portfolio-hero__scroll-cue:focus-visible > span:last-child { transform: translateY(2px); }
+.portfolio-page-top:focus-visible > span { transform: translateY(-2px); }
+@media (hover: hover) and (pointer: fine) {
+  .portfolio-hero__scroll-cue:hover > span:last-child { transform: translateY(2px); }
+  .portfolio-page-top:hover > span { transform: translateY(-2px); }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .portfolio-work-row__arrow { opacity: 1; transform: none; }
+  .portfolio-root .portfolio-stamp,
+  .portfolio-root .portfolio-services__booking { transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portfolio-root :is(a, button) svg:not(.lucide-chevron-down),
+  .portfolio-root .portfolio-theme-icon svg,
+  .portfolio-root .portfolio-stamp__clip > span,
+  .portfolio-root .portfolio-work-row__arrow,
+  .portfolio-root .portfolio-hero__scroll-cue > span,
+  .portfolio-root .portfolio-page-top > span,
+  .portfolio-root .portfolio-stamp,
+  .portfolio-root .portfolio-services__booking,
+  .portfolio-root .portfolio-dock__search,
+  .portfolio-root .portfolio-icon-button,
+  .portfolio-root .portfolio-view-switch button,
+  .portfolio-root .portfolio-viewer button,
+  .portfolio-root .portfolio-dock__links a { transform: none !important; }
+  .portfolio-root .portfolio-stamp__clip svg + svg { visibility: hidden; }
+  .portfolio-root .portfolio-dock__knob,
+  .portfolio-root .portfolio-utility-capsule__knob,
+  .portfolio-root .portfolio-view-switch__knob { transition: none; }
+}

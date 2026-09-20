@@ -1,0 +1,94 @@
+/* Contact 5a: paired headings, channel ledger, and a ruled inquiry form. */
+.portfolio-contact-page {
+  width: min(880px, 100%);
+  margin-inline: auto;
+  padding: 56px 56px calc(var(--control-h) + 2 * var(--dock-offset));
+}
+.portfolio-contact-layout {
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  gap: 48px 56px;
+}
+.portfolio-contact-layout h1, .portfolio-contact-lede {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-weight: 620;
+  letter-spacing: var(--track-display);
+}
+.portfolio-contact-layout h1 { font-size: 56px; line-height: 1; }
+.portfolio-contact-lede { font-size: 44px; line-height: 1.02; }
+.portfolio-contact-channels { display: flex; flex-direction: column; justify-content: space-between; gap: 28px; min-width: 0; }
+.portfolio-contact-ledger { display: grid; }
+.portfolio-contact-ledger > :is(a, button) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 16px;
+  align-items: center;
+  gap: 14px;
+  min-height: 54px;
+  margin-inline: -10px;
+  padding: 8px 10px;
+  border: 0;
+  border-bottom: 1px solid var(--border);
+  border-radius: var(--radius-paper);
+  background: transparent;
+  color: var(--text);
+  text-align: start;
+  text-decoration: none;
+  transition: background var(--dur-color) var(--ease-out);
+}
+.portfolio-contact-ledger > :last-child { border-bottom: 0; }
+.portfolio-contact-ledger > :is(a, button):is(:hover, :focus-visible) { background: var(--surface-soft); }
+.portfolio-contact-ledger > :is(a, button) > span:first-child { display: grid; gap: 4px; min-width: 0; }
+.portfolio-contact-ledger strong { font: 600 20px/1.1 var(--font-serif); letter-spacing: -0.02em; }
+.portfolio-contact-ledger small, .portfolio-contact-location > span, .portfolio-contact-rule > label, .portfolio-contact-note {
+  color: var(--text-faint);
+  font: 400 10px/1.5 var(--font-mono);
+  letter-spacing: 0.12em;
+}
+.portfolio-contact-ledger small { overflow-wrap: anywhere; }
+.portfolio-contact-arrow { display: grid; width: 16px; height: 16px; }
+.portfolio-contact-arrow svg { width: 16px; height: 16px; }
+.portfolio-contact-location { display: grid; gap: 12px; padding-bottom: 4px; }
+.portfolio-contact-location time { font: 400 22px/1 var(--font-serif); font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+.portfolio-contact-form { display: grid; align-content: start; min-width: 0; }
+.portfolio-contact-rule { display: grid; grid-template-columns: 72px minmax(0, 1fr); align-items: center; column-gap: 12px; min-height: 54px; border-bottom: 1px solid var(--border); }
+.portfolio-contact-rule :is(input, textarea) {
+  width: 100%;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--text);
+  font: 400 17px/24px var(--font-serif);
+}
+.portfolio-contact-rule input { min-height: 53px; }
+.portfolio-contact-rule :is(input, textarea)::placeholder { color: var(--text-muted); opacity: 1; }
+.portfolio-contact-rule:focus-within { border-color: var(--text); }
+.portfolio-contact-rule > p { grid-column: 2; margin: 0 0 8px; color: var(--text-muted); font-size: 12px; }
+.portfolio-contact-rule[data-field='message'] { align-items: start; min-height: 0; padding-top: 14px; border-bottom: 0; }
+.portfolio-contact-rule[data-field='message'] > label { line-height: 24px; }
+.portfolio-contact-rule textarea {
+  min-height: 48px;
+  resize: vertical;
+  overflow-y: hidden;
+  background: repeating-linear-gradient(to bottom, transparent 0 23px, color-mix(in oklch, var(--border) 60%, transparent) 23px 24px);
+}
+.portfolio-contact-form__footer { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding-top: 24px; }
+.portfolio-contact-note { flex: 1; min-width: 0; margin: 0; }
+.portfolio-contact-form__footer .portfolio-stamp { flex-shrink: 0; font: var(--text-mono-cta); }
+.portfolio-contact-form__footer .portfolio-stamp:disabled { transform: none; cursor: default; }
+
+@media (max-width: 48rem) {
+  .portfolio-contact-page { padding: 40px 24px calc(var(--control-h) + 3 * var(--dock-offset)); }
+  .portfolio-contact-layout { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  .portfolio-contact-layout h1 { font-size: 44px; }
+  .portfolio-contact-lede { font-size: clamp(32px, 6vw, 44px); }
+  .portfolio-contact-channels { gap: 24px; }
+  .portfolio-contact-location { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; }
+  .portfolio-contact-form__footer { flex-wrap: wrap; }
+  .portfolio-contact-form__footer .portfolio-stamp { margin-inline-start: auto; }
+}
+@media (hover: none) {
+  .portfolio-contact-arrow svg { transform: none; }
+}

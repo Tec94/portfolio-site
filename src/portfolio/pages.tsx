@@ -1,6 +1,6 @@
 import pageCopy from '../content/site/pages.json';
 import { useState } from 'react';
-import { ArrowLeft, ArrowUpRight, Compass, Github } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ArrowUpRight, Compass, Github } from 'lucide-react';
 import { Link, useParams } from 'react-router-dom';
 import { SystemPage } from '../components/SystemPage';
 import { ContentNavigation } from './components/ContentNavigation';
@@ -48,7 +48,7 @@ export function ProjectBoundaryPage() {
   const nextProject = portfolioManifest.projects[(currentIndex + 1) % portfolioManifest.projects.length];
 
   return (
-    <main id="portfolio-main" className="portfolio-case-study">
+    <main id="portfolio-main" className="portfolio-case-study" data-presentation={current.presentation} data-compact={!current.bodyText || undefined}>
       <article>
         <Link className="portfolio-text-link portfolio-case-study__back" to={getLandingSectionUrl('work')}><ArrowLeft aria-hidden="true" />{pageCopy["work_index"]}</Link>
         <aside className="portfolio-case-study__sidebar" aria-label="Project details">
@@ -72,8 +72,8 @@ export function ProjectBoundaryPage() {
             {current.summary ? <p className="portfolio-case-study__summary">{current.summary}</p> : null}
           </header>
           <button className="portfolio-case-study__media-trigger" type="button" onClick={() => { setViewerIndex(0); setViewerOpen(true); }} aria-label={`Open ${current.title} media viewer`}>
-            <ProjectImage project={current} className="portfolio-project-preview__media" transition activeTransition />
-            <span>{current.media[0].type === 'video' ? 'Watch demo' : 'Open media'}</span>
+            <ProjectImage project={current} className="portfolio-project-preview__media" transition activeTransition priority />
+            {current.media[0].type === 'video' ? <span className="portfolio-case-study__media-label">Watch demo</span> : null}
           </button>
 
           {current.bodyText ? <div className="portfolio-mdx portfolio-case-study__content"><Content components={{
@@ -93,7 +93,7 @@ export function ProjectBoundaryPage() {
           {nextProject && nextProject.slug !== current.slug ? (
             <footer className="portfolio-next-project">
               <Link to={nextProject.href} viewTransition>
-                <span className="portfolio-next-project__copy"><span>{pageCopy["next_project"]}</span><strong>{nextProject.title} <ArrowUpRight aria-hidden="true" /></strong></span>
+                <span className="portfolio-next-project__copy"><span>{pageCopy["next_project"]}</span><strong>{nextProject.title} <ArrowRight aria-hidden="true" /></strong></span>
                 <ProjectImage project={nextProject} className="portfolio-next-project__image" decorative />
               </Link>
             </footer>
@@ -111,20 +111,47 @@ export function ArticleBoundaryPage() {
   const article = getPublishedArticle(slug);
   if (!article) return <MissingContentPage label={pageCopy["article"]} />;
   const Content = article.Content;
+  const articles = portfolioManifest.articles;
+  const index = articles.findIndex((entry) => entry.slug === article.slug);
+  const previous = articles[index + 1];
+  const next = articles[index - 1];
+  const series = article.series
+    ? articles.filter((entry) => entry.series === article.series).reverse()
+    : [];
+  const seriesIndex = series.findIndex((entry) => entry.slug === article.slug);
 
   return (
-    <main id="portfolio-main" className="portfolio-article-page">
-      <article>
-        <header className="portfolio-article-page__header">
-          <Link className="portfolio-text-link" to="/writing"><ArrowLeft aria-hidden="true" />{pageCopy["writing"]}</Link>
-          <time dateTime={article.publicationDate}>{new Intl.DateTimeFormat('en-US', { dateStyle: 'long' }).format(new Date(`${article.publicationDate}T12:00:00`))}</time>
-          <h1>{article.title}</h1>
-          <p>{article.summary}</p>
-        </header>
-        <div className="portfolio-case-study__body">
-          <ContentNavigation headings={article.headings} />
-          <div className="portfolio-mdx portfolio-case-study__content"><Content /></div>
+    <main id="portfolio-main" className="portfolio-writing-post portfolio-writing-layout">
+      <aside className="portfolio-writing-post__sidebar" aria-label="Article details">
+        <Link className="portfolio-writing-rule-link" to="/writing">{pageCopy["writing"]}</Link>
+        <div className="portfolio-writing-post__facts">
+          <time dateTime={article.publicationDate}>{new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' }).format(new Date(`${article.publicationDate}T12:00:00`))}</time>
+          <span>{article.format}{article.readingMinutes ? ` · ${article.readingMinutes} min` : ''}</span>
+          <span>{article.tags.join(' · ')}</span>
         </div>
+      </aside>
+      <article className="portfolio-writing-post__article">
+        <header className="portfolio-writing-post__header">
+          {article.series && <div className="portfolio-writing-series">
+            <span>{article.series}</span>
+            <span className="portfolio-writing-series__dots" aria-hidden="true">
+              {series.map((entry, position) => <span key={entry.slug} data-filled={position <= seriesIndex} />)}
+            </span>
+            <span aria-label={`Part ${seriesIndex + 1} of ${series.length}`}>{String(seriesIndex + 1).padStart(2, '0')} / {String(series.length).padStart(2, '0')}</span>
+          </div>}
+          <h1>{article.title}</h1>
+        </header>
+        <div className="portfolio-writing-prose"><Content /></div>
+        {(previous || next) && <nav className="portfolio-writing-adjacent" aria-label="More writing">
+          {previous && <Link to={previous.href} rel="prev">
+            <span className="portfolio-writing-rule-link">Previous</span>
+            <span className="portfolio-writing-adjacent__title">{previous.title}</span>
+          </Link>}
+          {next && <Link to={next.href} rel="next">
+            <span className="portfolio-writing-rule-link">Next</span>
+            <span className="portfolio-writing-adjacent__title">{next.title}</span>
+          </Link>}
+        </nav>}
       </article>
     </main>
   );
@@ -139,7 +166,7 @@ export function MissingContentPage({ label = 'page' }: { label?: string }) {
       description="The address may be outdated, or this content is not published."
       icon={<Compass />}
       actions={(
-        <Link to={getLandingSectionUrl('work')}>{pageCopy["work_archive"]}<ArrowUpRight aria-hidden="true" />
+        <Link to={getLandingSectionUrl('work')}>{pageCopy["work_archive"]}<ArrowRight aria-hidden="true" />
         </Link>
       )}
     />

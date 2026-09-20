@@ -44,7 +44,7 @@ body,
   cursor: var(--cursor-default);
 }
 
-:where(
+.legacy-app :where(
   a[href],
   button:not(:disabled),
   input:is(
@@ -73,7 +73,7 @@ body,
   cursor: var(--cursor-pointer) !important;
 }
 
-:where(
+.legacy-app :where(
   input:not(
     [type="button"],
     [type="submit"],
@@ -90,7 +90,7 @@ body,
   cursor: var(--cursor-text) !important;
 }
 
-:where(
+.legacy-app :where(
   :disabled,
   [aria-disabled="true"],
   .cursor-default,

@@ -3,8 +3,6 @@ import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App.tsx';
 import './index.css';
-import './v2.css';
-import './cursors.css';
 
 const VITE_PRELOAD_RETRY_KEY = 'portfolio:vite-preload-retry';
 

@@ -1,0 +1,21 @@
+:root {
+  --radius-paper: 3px;   /* ⌘K sheet, preview card */
+  --radius-stamp: 4px;   /* CTAs, page sheet corners (6px) */
+  --radius-pill: 999px;  /* dock, capsule, tooltips, knobs */
+
+  /* elevation */
+  --shadow-sheet: 0 1px 0 oklch(1 0 0 / 0.6) inset, 0 40px 90px -30px oklch(0.2 0.02 56 / 0.45), 0 2px 6px -2px oklch(0.2 0.02 56 / 0.2);
+  --shadow-card: 0 30px 60px -30px oklch(0.2 0.02 56 / 0.45), 0 1px 3px -1px oklch(0.2 0.02 56 / 0.25);
+  --shadow-ink-pill: 0 12px 30px -14px oklch(0 0 0 / 0.7);
+  --shadow-page-rise: 0 -20px 60px -30px oklch(0.2 0.02 56 / 0.5);
+  --shadow-stamp: 4px 4px 0 var(--stamp-shadow);
+  --shadow-stamp-hover: 6px 6px 0 var(--stamp-shadow);
+  --shadow-stamp-press: 0 0 0 var(--stamp-shadow);
+
+  /* paper grain — apply as a pseudo-element at opacity .2 (page) / .35 (sheet) */
+  --grain: radial-gradient(circle at 18% 22%, oklch(0.218 0.022 56 / 0.07) 0 0.7px, transparent 1px), radial-gradient(circle at 74% 67%, oklch(0.218 0.022 56 / 0.05) 0 0.6px, transparent 0.9px);
+  --grain-size: 11px 11px, 14px 14px;
+
+  --blur-page: blur(14px) saturate(0.85);  /* page under ⌘K */
+  --hairline: 1px solid var(--border);
+}

@@ -37,6 +37,7 @@ export interface ArticleRecord extends ArticleFrontmatter {
 export type PreviewProjectRecord = Pick<
   ProjectRecord,
   | 'slug'
+  | 'summary'
   | 'title'
   | 'year'
   | 'completedAt'
@@ -118,6 +119,7 @@ const publishedProjects = allProjectRecords.filter(
 
 export const previewProjectManifest: PreviewProjectRecord[] = allProjectRecords.map((project) => ({
   slug: project.slug,
+  summary: project.summary,
   title: project.title,
   year: project.year,
   completedAt: project.completedAt,

@@ -8,11 +8,7 @@ import { ServicesPage } from './pages/ServicesPage';
 import { WritingPage } from './pages/WritingPage';
 import { PortfolioProviders } from './providers/PortfolioProviders';
 import { getPreviewRedirect } from './routeOwnership';
-import './portfolio.css';
-import './styles/overview.css';
-import './styles/services.css';
-import './styles/overview-responsive.css';
-import './styles/dossier.css';
+import './styles.css';
 
 export default function PreviewPortfolio() {
   return (

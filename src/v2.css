@@ -139,7 +139,6 @@
   color: var(--v2-blue-bright);
   font: 650 0.7rem/1.2 "Mozilla Text", sans-serif;
   letter-spacing: 0.09em;
-  text-transform: uppercase;
 }
 
 .v2-lede {
@@ -256,7 +255,6 @@
   font-size: 0.58rem;
   font-weight: 650;
   letter-spacing: 0.09em;
-  text-transform: uppercase;
 }
 
 .v2-availability > span {
@@ -344,7 +342,6 @@
   color: var(--v2-subtle);
   font: 650 0.55rem/1.2 "Mozilla Text", sans-serif;
   letter-spacing: 0.11em;
-  text-transform: uppercase;
 }
 
 .v2-sidebar-section ul {
@@ -698,7 +695,6 @@
   font: 600 0.72rem/1 "Mozilla Text", sans-serif;
   letter-spacing: 0.1em;
   text-align: center;
-  text-transform: uppercase;
 }
 
 .v2-loading-mark {
@@ -892,7 +888,6 @@
   color: var(--v2-subtle);
   font-size: 0.56rem;
   letter-spacing: 0.07em;
-  text-transform: uppercase;
 }
 
 .v2-project-heading h2 {
@@ -928,7 +923,6 @@
   color: var(--v2-subtle);
   font-size: 0.52rem;
   letter-spacing: 0.05em;
-  text-transform: uppercase;
 }
 
 .v2-project-metrics dd {
@@ -1002,7 +996,6 @@
   font-size: 0.56rem;
   font-weight: 600;
   letter-spacing: 0.09em;
-  text-transform: uppercase;
 }
 
 .v2-status-bar > span:nth-child(2) {
@@ -1019,7 +1012,6 @@
   background: transparent;
   color: inherit;
   cursor: pointer;
-  text-transform: uppercase;
 }
 
 .v2-status-bar i {
@@ -1058,7 +1050,6 @@
   color: var(--v2-green);
   font-size: 0.72rem;
   letter-spacing: 0.08em;
-  text-transform: uppercase;
 }
 
 .v2-device {
@@ -1182,7 +1173,6 @@
   font-size: 0.58rem;
   font-style: normal;
   letter-spacing: 0.05em;
-  text-transform: uppercase;
 }
 
 .v2-device-previous,
@@ -1237,7 +1227,6 @@
   color: var(--v2-subtle);
   font-size: 0.52rem;
   letter-spacing: 0.08em;
-  text-transform: uppercase;
 }
 
 .v2-device-copy {
@@ -1492,7 +1481,6 @@
   color: var(--v2-subtle);
   font-size: 0.54rem;
   letter-spacing: 0.08em;
-  text-transform: uppercase;
 }
 
 .v2-device-dock dd {
@@ -1626,7 +1614,6 @@
   color: var(--v2-subtle);
   font-size: 0.58rem;
   letter-spacing: 0.09em;
-  text-transform: uppercase;
 }
 
 .v2-blueprint-heading strong {
@@ -1668,7 +1655,6 @@
   font-size: 0.65rem;
   font-weight: 650;
   letter-spacing: 0.07em;
-  text-transform: uppercase;
 }
 
 .v2-blueprint-flow i {
@@ -1702,7 +1688,6 @@
   color: var(--v2-subtle);
   font-size: 0.58rem;
   letter-spacing: 0.08em;
-  text-transform: uppercase;
 }
 
 .v2-blueprint-columns ul {
@@ -1777,7 +1762,6 @@
   color: var(--v2-blue-bright);
   font-size: 0.61rem;
   font-weight: 650;
-  text-transform: uppercase;
 }
 
 .v2-featured-note > svg {
@@ -1977,7 +1961,6 @@
   font-size: 0.57rem;
   font-weight: 650;
   letter-spacing: 0.08em;
-  text-transform: uppercase;
 }
 
 .v2-chapter-copy h2 {
@@ -1997,7 +1980,6 @@
   color: var(--v2-subtle);
   font-size: 0.55rem;
   letter-spacing: 0.08em;
-  text-transform: uppercase;
 }
 
 .v2-chapter-notes > div {
@@ -2072,7 +2054,6 @@
   justify-content: space-between;
   color: var(--v2-subtle);
   font-size: 0.54rem;
-  text-transform: uppercase;
 }
 
 .v2-note-list h3 {
@@ -2155,7 +2136,6 @@
   color: var(--v2-subtle);
   font-size: 0.56rem;
   letter-spacing: 0.08em;
-  text-transform: uppercase;
 }
 
 /* Contact */
@@ -3376,7 +3356,6 @@
   color: var(--v2-subtle);
   font-size: 0.49rem;
   letter-spacing: 0.04em;
-  text-transform: uppercase;
 }
 
 .v2-scroll-watch {
@@ -3412,7 +3391,6 @@
   color: var(--v2-subtle);
   font-size: 0.5rem;
   letter-spacing: 0.08em;
-  text-transform: uppercase;
 }
 
 .v2-project-device-caption i {

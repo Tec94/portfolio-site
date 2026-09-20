@@ -46,6 +46,7 @@
 
 .portfolio-services__receipts {
   display: grid;
+  min-width: 0;
   align-content: start;
   gap: clamp(2.5rem, 6vw, 5rem);
 }
@@ -76,36 +77,12 @@
 .portfolio-receipt-edge {
   position: relative;
   z-index: 1;
-  display: grid;
-  grid-template-columns: repeat(var(--portfolio-receipt-notch-count, 1), 1rem);
-  justify-content: space-evenly;
   height: 0.5rem;
-  overflow: hidden;
-  background: var(--receipt-bg);
-}
-
-.portfolio-receipt-edge svg {
-  display: block;
-  width: 1rem;
-  height: 0.5rem;
-  max-width: none;
-  fill: var(--portfolio-bg);
-}
-
-.portfolio-receipt-edge.is-top svg {
-  align-self: start;
-}
-
-.portfolio-receipt-edge.is-top {
-  margin-block-end: -1px;
-}
-
-.portfolio-receipt-edge.is-bottom svg {
-  align-self: end;
+  background: radial-gradient(circle at 50% 0, transparent 0.5rem, var(--receipt-bg) calc(0.5rem + 0.5px)) 0 0 / 2rem 100% repeat-x;
 }
 
 .portfolio-receipt-edge.is-bottom {
-  margin-block-start: -1px;
+  transform: scaleY(-1);
 }
 
 .portfolio-receipt-trigger {
@@ -170,11 +147,26 @@
 }
 
 .portfolio-receipt-body {
+  display: grid;
+  grid-template-rows: 0fr;
   overflow: hidden;
+  transition: grid-template-rows var(--dur-lift) var(--ease-spring);
+}
+
+.portfolio-service-receipt[data-open='true'] .portfolio-receipt-body { grid-template-rows: 1fr; }
+.portfolio-receipt-collapse { min-height: 0; overflow: hidden; }
+.portfolio-service-receipt[data-open='true'] .portfolio-receipt-content { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .portfolio-receipt-body { transition: none; }
+  .portfolio-receipt-body .portfolio-receipt-content { transform: none; }
 }
 
 .portfolio-receipt-content {
   padding: 0 1.55rem 1.5rem;
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: opacity var(--dur-move) var(--ease-out), transform var(--dur-move) var(--ease-spring);
 }
 
 .portfolio-receipt-specs {
@@ -185,7 +177,7 @@
 
 .portfolio-receipt-spec-row {
   display: grid;
-  grid-template-columns: minmax(8rem, 1fr) minmax(11rem, 1.3fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr);
   gap: 1.5rem;
   align-items: start;
   padding-block: 0.75rem;
