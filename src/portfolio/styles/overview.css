@@ -61,9 +61,33 @@
 }
 
 .portfolio-hero h1 .portfolio-hero__name {
+  position: relative;
+  display: inline-block;
   color: var(--name-accent);
   font-weight: 650;
   white-space: nowrap;
+  transition-property: none;
+}
+
+.portfolio-hero__name-ink {
+  display: none;
+}
+
+@keyframes portfolio-name-reveal {
+  from { clip-path: inset(0 0 0 0); }
+  to { clip-path: inset(0 0 0 100%); }
+}
+
+@media (prefers-reduced-motion: no-preference) and (forced-colors: none) {
+  .portfolio-hero__name-ink {
+    position: absolute;
+    inset: 0;
+    display: block;
+    color: var(--portfolio-ink);
+    pointer-events: none;
+    user-select: none;
+    animation: portfolio-name-reveal 700ms var(--ease-out) 600ms both;
+  }
 }
 
 .portfolio-hero__statement {

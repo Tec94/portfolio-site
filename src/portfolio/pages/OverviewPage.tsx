@@ -22,7 +22,7 @@ export function OverviewPage() {
       >
         <div className="portfolio-hero__statement">
           <h1 id="portfolio-hero-heading">
-            <span><strong className="portfolio-hero__name">{profile.name}</strong>{pageCopy["is_a_product_engineer_in_texas"]}</span>
+            <span><strong className="portfolio-hero__name">{profile.name}<span className="portfolio-hero__name-ink" aria-hidden="true">{profile.name}</span></strong>{pageCopy["is_a_product_engineer_in_texas"]}</span>
           </h1>
 
           <div className="portfolio-hero__copy">
