@@ -26,6 +26,13 @@ function renderWriting(path = '/') {
 }
 
 describe('writing screens', () => {
+  it.each([0, 1, 2, 3])('hides All writing when all %i posts fit on home', (count) => {
+    portfolioManifest.articles.splice(count);
+    renderWriting();
+    expect(screen.queryByRole('link', { name: 'All writing' })).not.toBeInTheDocument();
+    expect(document.querySelectorAll('.portfolio-writing-row')).toHaveLength(count);
+  });
+
   it('shows only the latest three on home and opens the full index directly', async () => {
     const user = userEvent.setup();
     renderWriting();

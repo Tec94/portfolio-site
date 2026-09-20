@@ -34,7 +34,7 @@ html[data-portfolio-resolved-theme='dark'] { --portfolio-cursor: url('/cursors/l
   background: var(--text);
   box-shadow: var(--shadow-ink-pill);
 }
-.portfolio-dock__links { grid-template-columns: repeat(3, 1fr); }
+.portfolio-dock__links { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 .portfolio-dock__knob, .portfolio-utility-capsule__knob {
   position: absolute;
   top: var(--control-pad);
@@ -45,7 +45,9 @@ html[data-portfolio-resolved-theme='dark'] { --portfolio-cursor: url('/cursors/l
   pointer-events: none;
   transition: transform var(--dur-lift) var(--ease-spring);
 }
-.portfolio-dock__knob { width: calc((100% - 2 * var(--control-pad)) / 3); }
+.portfolio-dock__knob {
+  width: calc((100% - 2 * var(--control-pad)) / 4);
+}
 .portfolio-dock__links a, .portfolio-dock__back {
   position: relative;
   display: grid;
@@ -57,7 +59,7 @@ html[data-portfolio-resolved-theme='dark'] { --portfolio-cursor: url('/cursors/l
   letter-spacing: var(--track-cta);
   transition: color var(--dur-color) var(--ease-out), transform var(--dur-lift) var(--ease-spring);
 }
-.portfolio-dock__links a { padding: 0; color: var(--bg); }
+.portfolio-dock__links a { padding: 0 var(--space-2); white-space: nowrap; color: var(--bg); }
 .portfolio-dock__links a[data-highlighted='true'] { color: var(--text); }
 .portfolio-dock__links a:active { transform: scale(var(--press-scale-soft)); transition-duration: var(--dur-press); }
 .portfolio-root .portfolio-dock__back { height: var(--control-h); background: var(--text); color: var(--bg); box-shadow: var(--shadow-ink-pill); }
@@ -243,7 +245,10 @@ html[data-portfolio-resolved-theme='dark'] { --portfolio-cursor: url('/cursors/l
 
 /* Centre dock clearance for the 88px capsule: 300 + 2 * (20 + 88 + 20). */
 @media (max-width: 556px) {
-  .portfolio-dock { width: min(var(--dock-w), calc(100vw - 2 * (var(--dock-offset) + var(--control-h) + var(--space-2)))); }
+  .portfolio-dock {
+    width: min(var(--dock-w), calc(100vw - 2 * var(--dock-offset) - var(--control-h) - var(--space-2)));
+    left: calc(50% + (var(--control-h) + var(--space-2)) / 2);
+  }
   .portfolio-utilities { top: max(var(--dock-offset), env(safe-area-inset-top)); bottom: auto; display: flex; align-items: center; }
   .portfolio-utility-tooltip { top: calc(100% + var(--space-2)); bottom: auto; left: auto; right: 0; transform: none; animation-name: washIn; }
   .portfolio-dock__links a { font-size: 10px; letter-spacing: 0.05em; }
@@ -252,6 +257,11 @@ html[data-portfolio-resolved-theme='dark'] { --portfolio-cursor: url('/cursors/l
   .portfolio-command__sheet { padding: var(--space-4); }
   .portfolio-command__input-row input { font-size: 16px; }
   .portfolio-command__input-row > span:last-child { display: none; }
+}
+/* 300px dock + 44px search + 8px gap + two 20px page insets. */
+@media (max-width: 392px) {
+  .portfolio-dock { left: 50%; width: min(var(--dock-w), calc(100vw - 2 * var(--dock-offset))); }
+  .portfolio-dock__search { top: auto; right: auto; left: 0; bottom: calc(100% + var(--space-2)); }
 }
 @media (prefers-reduced-motion: reduce) {
   .portfolio-root *, .portfolio-root *::before, .portfolio-root *::after { transition-timing-function: ease !important; }

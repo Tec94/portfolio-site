@@ -18,6 +18,7 @@
 }
 .portfolio-writing-results { min-width: 0; }
 .portfolio-writing-teaser { align-items: start; }
+.portfolio-writing-teaser[data-empty] { grid-template-columns: minmax(0, 1fr); row-gap: var(--space-6); }
 .portfolio-writing-filters { display: grid; justify-items: start; gap: 14px; }
 .portfolio-writing-filters button {
   display: flex;
@@ -85,8 +86,10 @@
 .portfolio-writing-rule-link:is(:hover, :focus-visible)::before,
 .portfolio-writing-adjacent a:is(:hover, :focus-visible) .portfolio-writing-rule-link::before { width: 28px; }
 .portfolio-writing-rule-link svg { width: 12px; height: 12px; }
-.portfolio-writing-empty { padding-block: 18px; border-bottom: var(--hairline); }
-.portfolio-writing-empty p { margin: 0 0 18px; color: var(--text-muted); font: var(--text-small); }
+.portfolio-writing-empty { display: grid; justify-items: start; gap: var(--space-3); }
+.portfolio-writing-empty p { margin: 0; color: var(--text-muted); font: var(--text-body); }
+.portfolio-writing-empty .portfolio-writing-rule-link { font: var(--text-mono-cta); color: var(--text); }
+.portfolio-writing-empty .portfolio-writing-rule-link::before { content: none; }
 .portfolio-writing-more {
   width: fit-content;
   margin-top: 24px;

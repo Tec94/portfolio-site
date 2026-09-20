@@ -14,6 +14,7 @@ const navigation = [
   { label: 'Work', href: getLandingSectionUrl('work'), route: '/work', section: 'work' },
   { label: 'Services', href: getLandingSectionUrl('services'), route: '/services', section: 'services' },
   { label: 'About', href: getLandingSectionUrl('about'), route: '/about', section: 'about' },
+  { label: 'Writing', href: getLandingSectionUrl('writing'), route: '/writing', section: 'writing' },
 ] satisfies ReadonlyArray<{
   label: string;
   href: string;
@@ -31,6 +32,7 @@ export function PortfolioShell({ children }: { children: ReactNode }) {
   const projectMatch = useMatch('/work/:slug');
   const writingMatch = useMatch('/writing/*');
   const location = useLocation();
+  const previousRouteRef = useRef(`${location.pathname}${location.hash}`);
   const theme = usePortfolioTheme();
   const sound = usePortfolioSound();
   const navigate = useNavigate();
@@ -71,15 +73,18 @@ export function PortfolioShell({ children }: { children: ReactNode }) {
   }, []);
 
   useLayoutEffect(() => {
+    const route = `${location.pathname}${location.hash}`;
+    const routeChanged = previousRouteRef.current !== route;
+    previousRouteRef.current = route;
     if (location.hash) {
       document.getElementById(location.hash.slice(1))?.scrollIntoView?.({
         behavior: 'auto',
         block: 'start',
       });
-    } else {
+    } else if (routeChanged) {
       window.scrollTo({ top: 0, behavior: 'auto' });
     }
-  }, [location.hash, location.pathname]);
+  }, [location.hash, location.pathname, location.key]);
 
   useEffect(() => {
     if (location.pathname !== '/') {

@@ -15,6 +15,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "generate:previews": "node scripts/generate-project-previews.cjs",
+    "generate:work-thumbnails": "node scripts/generate-work-thumbnails.mjs",
     "generate:world-map": "node scripts/generate-world-map-data.mjs",
     "preview": "vite preview"
   },
@@ -59,6 +60,7 @@
     "rehype-slug": "^6.0.0",
     "remark-frontmatter": "^5.0.0",
     "remark-mdx-frontmatter": "^5.2.0",
+    "sharp": "^0.35.4",
     "tailwindcss": "^3.4.1",
     "tsx": "^4.23.12",
     "typescript": "^5.5.3",

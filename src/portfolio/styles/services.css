@@ -86,6 +86,10 @@
 }
 
 .portfolio-receipt-trigger {
+  width: 100%;
+  border: 0;
+  border-radius: 0;
+  font: inherit;
   position: relative;
   z-index: 2;
   isolation: isolate;

@@ -25,7 +25,8 @@ export function AboutDossier() {
       <ol className="portfolio-dossier-ledger" aria-label="Experience and education">
         {chapters.map((chapter) => (
           <li key={chapter.title}>
-            <div className="portfolio-dossier-date" aria-label={chapter.period}>
+            <div className="portfolio-dossier-date">
+              <span className="sr-only">{chapter.period}</span>
               <span className="portfolio-dossier-year" aria-hidden="true">{chapter.year}{chapter.education ? '–' : ''}</span>
               <span className="portfolio-dossier-months" aria-hidden="true">{chapter.education
                 ? `Exp. ${chapter.period.match(/\d{4}/g)?.slice(-1)[0]}`

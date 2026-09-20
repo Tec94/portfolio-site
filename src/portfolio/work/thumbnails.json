@@ -1,0 +1,32 @@
+{
+  "https://assets.jackcao.dev/projects/artist-platform/poster.jpg?v=d282ad65cc6c2d64dbfe589a22ad3532": {
+    "source": "/assets/work-thumbnails/artist-platform-ffe2e5c58b86769850d9e5b37edfa762cc985e76abf0f830ed2bf49845b87db8.webp",
+    "width": 312,
+    "height": 248
+  },
+  "https://assets.jackcao.dev/projects/citizenvoice/citizenvoice_1.png": {
+    "source": "/assets/work-thumbnails/citizenvoice-55cea8ddaa8a53f51c0370cdead6453c4c3cd82f13fca3a1930a06fad3aba05a.webp",
+    "width": 312,
+    "height": 187
+  },
+  "https://assets.jackcao.dev/projects/credify/credify_4.png": {
+    "source": "/assets/work-thumbnails/credify-ba1f424760aba41e94c07b11a58b407cf70fce74ce5cd59a29aa2821a819f675.webp",
+    "width": 312,
+    "height": 189
+  },
+  "/assets/studio/e4213219848c99f368d15d470c44eac57aaf29b73b48c5e2674eaebbb34a5245.png": {
+    "source": "/assets/work-thumbnails/financial-analyst-simulator-64d3a414f66d92dda95b07a3f98ceed1dd5a481698ff532c869109caf0032f55.webp",
+    "width": 312,
+    "height": 178
+  },
+  "https://assets.jackcao.dev/projects/nexora-landing-page/poster.jpg?v=94a3c143b87de41b55aeefb6bbbc1315": {
+    "source": "/assets/work-thumbnails/nexora-landing-page-9c37f6a9d4dda4a521e31cd142a52183e56427673b24d0cb760503b7fe67dc51.webp",
+    "width": 312,
+    "height": 188
+  },
+  "https://assets.jackcao.dev/projects/slack-agent/poster.jpg?v=5d77ff91d2fb1473a21902e836908864": {
+    "source": "/assets/work-thumbnails/slack-agent-62c5e1551085ff21a803c06bdeaed8ad0b0c93f7f59ca642811da73bf15b87ba.webp",
+    "width": 312,
+    "height": 213
+  }
+}

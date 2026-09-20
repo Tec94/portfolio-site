@@ -71,7 +71,32 @@ describe('portfolio system pages', () => {
 });
 
 describe('portfolio overview shell', () => {
-  it('keeps primary navigation centered around Work, Services, and About', () => {
+  it('scrolls to Work each time the hero cue is activated, even at the same hash', () => {
+    const play = vi.spyOn(HTMLMediaElement.prototype, 'play').mockResolvedValue();
+    const view = render(
+      <MemoryRouter initialEntries={['/']}>
+        <PreviewPortfolio />
+      </MemoryRouter>,
+    );
+    try {
+      const work = view.container.querySelector<HTMLElement>('#work')!;
+      const scrollIntoView = vi.fn();
+      work.scrollIntoView = scrollIntoView;
+      const cue = view.container.querySelector<HTMLAnchorElement>('.portfolio-hero__scroll-cue')!;
+
+      fireEvent.click(cue);
+      expect(scrollIntoView).toHaveBeenCalledWith({ behavior: 'auto', block: 'start' });
+      scrollIntoView.mockClear();
+
+      fireEvent.click(cue);
+      expect(scrollIntoView).toHaveBeenCalledWith({ behavior: 'auto', block: 'start' });
+    } finally {
+      view.unmount();
+      play.mockRestore();
+    }
+  });
+
+  it('links primary navigation to the Work, Services, About, and Writing home sections', () => {
     render(
       <MemoryRouter initialEntries={['/']}>
         <PreviewPortfolio />
@@ -102,11 +127,13 @@ describe('portfolio overview shell', () => {
       'Work',
       'Services',
       'About',
+      'Writing',
     ]);
     expect(within(dock).getAllByRole('link').map((link) => link.getAttribute('href'))).toEqual([
       '/#work',
       '/#services',
       '/#about',
+      '/#writing',
     ]);
     const searchButton = within(dock).getByRole('button', { name: 'Search portfolio' });
     expect(searchButton).toHaveTextContent('');
@@ -178,7 +205,7 @@ describe('portfolio overview shell', () => {
     for (const title of ['Smartnest', 'Stock Tracker', '$Munky']) {
       expect(archive.queryByText(title)).not.toBeInTheDocument();
     }
-    fireEvent.click(archive.getByRole('button', { name: 'Hackathons' }));
+    fireEvent.click(archive.getByRole('button', { name: 'Hackathons 04' }));
     const expandFilteredProjects = archive.queryByRole('button', { name: /^Show \d+ more projects?$/ });
     if (expandFilteredProjects) fireEvent.click(expandFilteredProjects);
     expect(await archive.findByText('Slack Agent')).toBeInTheDocument();
@@ -353,6 +380,20 @@ describe('project media viewer', () => {
     expect(dialog).toHaveAttribute('data-state', 'closing');
     await act(async () => { finish(); await finished; });
     expect(dialog).not.toHaveAttribute('open');
+    view.unmount();
+  });
+
+  it('exposes service disclosures as buttons and includes visible filter counts in their names', () => {
+    const view = render(<MemoryRouter initialEntries={['/']}><PreviewPortfolio /></MemoryRouter>);
+    const page = within(view.container);
+    const receipt = page.getByRole('button', { name: /Product engineering A maintainable product slice/ });
+    expect(receipt).toHaveAttribute('aria-expanded', 'false');
+    fireEvent.click(receipt);
+    expect(receipt).toHaveAttribute('aria-expanded', 'true');
+    fireEvent.click(receipt);
+    expect(receipt).toHaveAttribute('aria-expanded', 'false');
+    expect(page.getByRole('button', { name: 'All 06' })).toBeInTheDocument();
+    expect(page.getByText('June–August 2026')).toHaveClass('sr-only');
     view.unmount();
   });
 

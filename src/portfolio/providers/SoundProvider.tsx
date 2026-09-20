@@ -6,7 +6,7 @@ import { createUISFX } from 'uisfx';
 
 export type SoundEvent = 'press' | 'navigation' | 'success' | 'error';
 export const BASE_SOUND_VOLUME = 0.22;
-export const TYPING_SOUND_VOLUME = 0.6;
+export const TYPING_SOUND_VOLUME = 1;
 const SOUND_STORAGE_KEY = 'portfolio-workshop-sound-v1';
 const PAPER_SLIDE = '/audio/normalized/paper-slide.mp3';
 

@@ -35,13 +35,13 @@ export function RecentWriting() {
   // The homepage shows the three most recent posts; the manifest is newest first.
   const articles = portfolioManifest.articles.slice(0, 3);
   return (
-    <section id="writing" className="portfolio-content-shell portfolio-split-layout portfolio-overview-section portfolio-writing-teaser" data-portfolio-section="writing" aria-labelledby="portfolio-writing-heading">
+    <section id="writing" className="portfolio-content-shell portfolio-split-layout portfolio-overview-section portfolio-writing-teaser" data-empty={articles.length === 0 || undefined} data-portfolio-section="writing" aria-labelledby="portfolio-writing-heading">
       <header className="portfolio-writing-index">
         <h2 id="portfolio-writing-heading">{pageCopy.writing}</h2>
       </header>
       <div className="portfolio-writing-results">
         {articles.length ? <WritingList articles={articles} /> : <WritingEmptyState />}
-        <Link className="portfolio-writing-more" to="/writing">All writing <ArrowRight aria-hidden="true" /></Link>
+        {portfolioManifest.articles.length > 3 && <Link className="portfolio-writing-more" to="/writing">All writing <ArrowRight aria-hidden="true" /></Link>}
       </div>
     </section>
   );

@@ -7,6 +7,7 @@ import {
   type PointerEventHandler,
 } from 'react';
 import { profile } from '../../data/portfolioData';
+import { usePortfolioSound } from '../providers/SoundProvider';
 
 interface ServiceDefinition {
   slug: string;
@@ -35,6 +36,7 @@ function ServiceReceipt({
   onPointerLeave,
   onFocus,
   onBlur,
+  onToggle,
 }: {
   service: ServiceDefinition;
   open: boolean;
@@ -42,9 +44,10 @@ function ServiceReceipt({
   onPointerLeave: PointerEventHandler<HTMLElement>;
   onFocus: () => void;
   onBlur: () => void;
+  onToggle: () => void;
 }) {
   const articleRef = useRef<HTMLElement>(null);
-  const triggerRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
   const [stuck, setStuck] = useState(false);
 
   useEffect(() => {
@@ -83,20 +86,21 @@ function ServiceReceipt({
     >
       <ReceiptEdge position="top" />
       <div className="portfolio-receipt-sheet">
-        <div
+        <button
           ref={triggerRef}
+          type="button"
           className="portfolio-receipt-trigger"
-          tabIndex={0}
           aria-expanded={open}
           aria-controls={detailsId}
-          onFocus={onFocus}
+          onFocus={(event) => { if (event.currentTarget.matches(':focus-visible')) onFocus(); }}
           onBlur={onBlur}
+          onClick={onToggle}
         >
           <span className="portfolio-receipt-title">
             <strong>{service.title}</strong>
             <span>{service.summary}</span>
           </span>
-        </div>
+        </button>
         <div id={detailsId} className="portfolio-receipt-body" aria-hidden={!open}>
           <div className="portfolio-receipt-collapse">
           <div className="portfolio-receipt-content">
@@ -125,6 +129,7 @@ function ServiceReceipt({
 
 export function ServicesReceipts({ standalone = false }: { standalone?: boolean }) {
   const [openSlug, setOpenSlug] = useState<string | null>(null);
+  const sound = usePortfolioSound();
 
   return (
     <section
@@ -158,6 +163,10 @@ export function ServicesReceipts({ standalone = false }: { standalone?: boolean 
               ));
             }}
             onFocus={() => setOpenSlug(service.slug)}
+            onToggle={() => {
+              setOpenSlug((current) => current === service.slug ? null : service.slug);
+              sound.play('press');
+            }}
             onBlur={() => setOpenSlug((current) => (
               current === service.slug ? null : current
             ))}

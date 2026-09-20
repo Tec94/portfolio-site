@@ -61,6 +61,12 @@ documentation in separate locations:
 Generated builds, browser captures, automation state, logs, local environment
 files, and dependency folders are excluded through `.gitignore`.
 
+Run `npm run generate:work-thumbnails` after replacing project cover images or
+video posters. It writes content-hashed WebP list previews and their source map;
+commit both `public/assets/work-thumbnails/` and
+`src/portfolio/work/thumbnails.json`. Showcase and detail views retain the
+original images. A changed or new source uses its original until regenerated.
+
 ## Routes
 
 The current portfolio owns `/`, the landing-page section anchors, project case
@@ -77,7 +83,7 @@ content refinement. Read the [product polish roadmap](docs/roadmap.md) and
 [active design direction](.impeccable.md) before changing page structure,
 motion, typography, accessibility, or color. The latest supplied performance
 evidence is recorded in the
-[August 2026 performance audit](docs/performance-audit-2026-08-18.md).
+[September 2026 performance audit](docs/performance-audit-2026-09-20.md).
 
 ## Next steps
 

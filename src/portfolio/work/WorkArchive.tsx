@@ -5,7 +5,6 @@ import { ArrowUpRight, Github, Grid2X2, List } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { previewProjectManifest } from '../content/manifest';
 import { usePortfolioSound } from '../providers/SoundProvider';
-import { transitionPortfolioPage } from '../motion';
 import { ProjectImage } from './ProjectMedia';
 import {
   filterPreviewProjects,
@@ -69,13 +68,13 @@ export function WorkArchive({ standalone = false }: { standalone?: boolean }) {
 
   const changeView = (next: ArchiveView) => {
     if (next === view) return;
-    transitionPortfolioPage(() => setView(next));
+    setView(next);
     sound.play('press');
   };
 
   const changeFilter = (next: WorkFilter) => {
     if (next === filter) return;
-    transitionPortfolioPage(() => setFilter(next));
+    setFilter(next);
     sound.play('press');
   };
 
@@ -132,17 +131,16 @@ export function WorkArchive({ standalone = false }: { standalone?: boolean }) {
               key={item.id}
               type="button"
               aria-pressed={filter === item.id}
-              aria-label={item.label}
               onClick={() => changeFilter(item.id)}
             >
               <span>{item.label}</span>
-              <span className="portfolio-work-filter-count" aria-hidden="true">{String(filterPreviewProjects(previewProjectManifest, item.id).length).padStart(2, '0')}</span>
+              <span className="portfolio-work-filter-count">{String(filterPreviewProjects(previewProjectManifest, item.id).length).padStart(2, '0')}</span>
             </button>
           ))}
         </div>
       </div>
 
-      <div className={`portfolio-work-results is-${view}`}>
+      <div key={`${view}-${filter}`} className={`portfolio-work-results is-${view}`}>
           {view === 'list' ? (
             <div className="portfolio-work-list">
               {projectGroups.map((group) => (
@@ -157,7 +155,7 @@ export function WorkArchive({ standalone = false }: { standalone?: boolean }) {
                       onPointerEnter={previewSound}
                       onClick={(event) => openProject(event, project.href, project.slug)}
                     >
-                      <ProjectImage className="portfolio-work-row__frame" project={project} transition />
+                      <ProjectImage className="portfolio-work-row__frame" project={project} transition thumbnail />
                       <span className="portfolio-work-row__copy">
                         <strong data-project-transition="title">{project.title}</strong>
                         <span title={project.role ?? project.summary}>{project.role ?? project.summary}</span>
