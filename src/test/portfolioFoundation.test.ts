@@ -3,7 +3,7 @@ import { readFileSync, readdirSync } from 'node:fs';
 import matter from 'gray-matter';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import { projectFrontmatterSchema } from '../portfolio/content/contracts';
+import { articleFrontmatterSchema, projectFrontmatterSchema } from '../portfolio/content/contracts';
 import { portfolioManifest, previewProjectManifest } from '../portfolio/content/manifest';
 import { searchPortfolio } from '../portfolio/content/search';
 import { readSoundPreference } from '../portfolio/providers/SoundProvider';
@@ -19,6 +19,10 @@ const savedProjects = readdirSync('src/content/projects')
   .filter((name) => name.endsWith('.mdx'))
   .map((name) => projectFrontmatterSchema.parse(matter(readFileSync(`src/content/projects/${name}`, 'utf8')).data))
   .sort((a, b) => a.selectedWorkOrder - b.selectedWorkOrder);
+const savedArticles = readdirSync('src/content/writing')
+  .filter((name) => name.endsWith('.mdx'))
+  .map((name) => articleFrontmatterSchema.parse(matter(readFileSync(`src/content/writing/${name}`, 'utf8')).data))
+  .sort((a, b) => b.publicationDate.localeCompare(a.publicationDate));
 const imageProject = {
   ...previewProjectManifest[0],
   title: 'Example project',
@@ -29,10 +33,17 @@ const imageProject = {
 describe('portfolio foundation', () => {
   it('keeps draft MDX out of the published manifest and search', () => {
     expect(portfolioManifest.projects.map(({ slug }) => slug)).toEqual(
-      savedProjects.filter((project) => project.publicationState === 'published').map(({ slug }) => slug),
+      savedProjects.filter((project) => project.presentation !== 'brief' && project.publicationState === 'published').map(({ slug }) => slug),
     );
-    expect(portfolioManifest.articles).toHaveLength(0);
-    expect(searchPortfolio('Ship small, learn fast')).toEqual([]);
+    expect(portfolioManifest.articles.map(({ slug }) => slug)).toEqual(
+      savedArticles.filter((article) => article.status === 'published').map(({ slug }) => slug),
+    );
+    expect(searchPortfolio('The dropdown test')).toEqual([]);
+    expect(searchPortfolio('Ship small, learn fast')[0]).toMatchObject({
+      href: '/writing/ship-small-learn-fast', kind: 'article',
+    });
+    // Held claims live in MDX comments and must never become searchable text.
+    expect(searchPortfolio('150% increase in page interactions')).toEqual([]);
     expect(searchPortfolio('Credify')[0]).toMatchObject({
       title: 'Credify',
       href: '/work/credify',
@@ -56,7 +67,7 @@ describe('portfolio foundation', () => {
     });
   });
 
-  it.each(['Smartnest', 'Stock Tracker', '$Munky'])('removes %s from search', (title) => {
+  it.each(['$Munky'])('removes the retired %s name from search', (title) => {
     expect(searchPortfolio(title)).toEqual([]);
   });
 
@@ -66,9 +77,9 @@ describe('portfolio foundation', () => {
     ['slack-agent', 'slack_demo.mp4'],
   ])('maps %s to its video, poster, and researched metadata', (slug, filename) => {
     const project = portfolioManifest.projects.find((entry) => entry.slug === slug)!;
-    expect(project.media[0]).toMatchObject({
+    expect(project.media[0]).toMatchObject({ type: 'video', narrativeRole: 'hero', source: expect.stringMatching(/^\/assets\/studio\/.+\.mp4$/) });
+    expect(project.media.find((media) => media.source.includes(`/projects/${slug}/${filename}?v=`))).toMatchObject({
       type: 'video',
-      source: expect.stringContaining(`https://assets.jackcao.dev/projects/${slug}/${filename}?v=`),
       poster: expect.stringContaining(`https://assets.jackcao.dev/projects/${slug}/poster.jpg?v=`),
     });
     expect(project.completedAt).toMatch(/^2026-\d{2}$/);

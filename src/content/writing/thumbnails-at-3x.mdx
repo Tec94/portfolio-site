@@ -1,0 +1,52 @@
+---
+slug: thumbnails-at-3x
+title: Thumbnails at three times the frame
+summary: A short sharp script that took six work-list images from 974 KB down to 45 KB.
+publicationDate: "2026-10-03"
+format: Note
+series: Small fixes
+tags:
+  - Performance
+  - Images
+status: published
+---
+
+The work list on my homepage shows a little preview next to each project. The frame is 104 CSS pixels wide, but it was loading the full cover image every time. Six covers added up to 974,145 bytes, just for thumbnails.
+
+<figure>
+  <img src="/assets/writing/thumbnails-at-3x/work-list.webp" alt="The Work section of the portfolio with small project thumbnails on each row." loading="lazy" />
+</figure>
+
+So I wrote a build script. It reads each project's first image, resizes it to 312 pixels wide, and saves it as WebP. 312 is 104 times 3, which covers high-density screens.
+
+```js
+const { data: thumbnail, info } = await sharp(original)
+  .resize({ width: 104 * 3, withoutEnlargement: true })
+  .webp()
+  .toBuffer({ resolveWithObject: true });
+```
+
+A couple of small things I made sure to handle:
+
+- For video projects, it uses the poster image.
+- `withoutEnlargement` leaves small images alone instead of blowing them up.
+- The file name includes a hash of the thumbnail, so when I change a cover, the URL changes too and nothing serves a stale cached copy.
+
+The script writes a little manifest keyed by the original image path. The list component looks up the thumbnail there and falls back to the original if it can't find one.
+
+Here's what that looks like for one project:
+
+<div className="portfolio-writing-pair">
+  <figure>
+    <img src="/assets/writing/thumbnails-at-3x/original.png" alt="Full-size FIanal.sim cover image." loading="lazy" />
+    <figcaption>Original PNG, 91,079 bytes</figcaption>
+  </figure>
+  <figure>
+    <img src="/assets/writing/thumbnails-at-3x/thumbnail.webp" alt="The same cover as a small WebP thumbnail." loading="lazy" />
+    <figcaption>312px WebP, 4,082 bytes</figcaption>
+  </figure>
+</div>
+
+When I made the change I had six projects in the list, and all six thumbnails together came out to 44,520 bytes. The project pages still load the full-size originals, since that's where you actually want the detail.
+
+If I change a cover, I rerun it with `npm run generate:work-thumbnails`. {/* TODO: if you ever wire this into the build or Studio, mention it. */}

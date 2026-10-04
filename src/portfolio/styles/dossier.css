@@ -72,6 +72,7 @@
 .portfolio-case-study__main { display: grid; gap: var(--space-5); min-width: 0; }
 .portfolio-case-study__hero { gap: 1rem; }
 .portfolio-case-study h1 { max-width: none; font-size: 3.25rem; line-height: 1.02; letter-spacing: -0.04em; }
+.portfolio-case-study__highlights { display: grid; gap: 10px; max-width: 68ch; margin: 2rem 0 0; padding-left: 1.1em; color: var(--portfolio-ink-soft); font-size: 0.9375rem; line-height: 1.55; }
 .portfolio-case-study__summary { margin: 0; color: var(--portfolio-ink-soft); font-size: 1.25rem; line-height: 1.45; }
 .portfolio-case-study .portfolio-case-study__content { max-width: none; }
 .portfolio-case-study .portfolio-mdx h2 { margin: 3.5rem 0 0.875rem; font: 620 1.875rem/1.1 var(--portfolio-display); }

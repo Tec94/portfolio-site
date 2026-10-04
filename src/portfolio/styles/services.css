@@ -20,7 +20,7 @@
 
 .portfolio-services__index {
   display: grid;
-  gap: 3rem;
+  gap: var(--section-heading-gap);
 }
 
 .portfolio-services__booking {

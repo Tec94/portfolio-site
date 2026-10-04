@@ -2,10 +2,10 @@ import type { ArticleRecord } from '../../portfolio/content/manifest';
 
 function FixturePost() {
   return <>
-    <p>I spent a year treating the database as a place to put things and a place to get things. A nearby-reports query changed how I thought about that boundary.</p>
     <aside><small>01</small>Sample margin note for checking the article layout.</aside>
-    <pre><code>{'select id, title\nfrom reports\nwhere ST_DWithin(\n  geom::geography,\n  ST_MakePoint(-96.797, 32.7767)::geography,\n  120\n);'}</code></pre>
+    <p>I spent a year treating the database as a place to put things and a place to get things. A nearby-reports query changed how I thought about that boundary.</p>
     <aside><small>02</small>The <code>::geography</code> cast makes the units explicit.</aside>
+    <pre><code>{'select id, title\nfrom reports\nwhere ST_DWithin(\n  geom::geography,\n  ST_MakePoint(-96.797, 32.7767)::geography,\n  120\n);'}</code></pre>
     <p>The interesting part was moving the question closer to the data.</p>
   </>;
 }

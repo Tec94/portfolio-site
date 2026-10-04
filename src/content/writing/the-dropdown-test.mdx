@@ -1,0 +1,50 @@
+---
+slug: the-dropdown-test
+title: The dropdown test
+summary: Building a multi-select the way design engineer interviews test it, and every edge case I ran into.
+publicationDate: "2026-10-03"
+format: Write-up
+tags:
+  - Interaction design
+  - Accessibility
+  - Components
+status: draft
+---
+
+{/* SKELETON: build the component first, then write this while it's fresh. Record a short clip for each section as you go. The prompts below are what each section should answer. */}
+
+Brian Lovin wrote about an interview exercise he used when hiring design-minded frontend engineers. You build a multi-select dropdown. That's it. The candidates who stood out were the ones who started thinking about things like the order of selected items and keyboard control without anyone asking.
+
+I read that and kind of wanted to see how I'd do. So I built one, and I'm going to write down every decision I hit along the way.
+
+{/* MEDIA: live demo or a looping video of the finished component at the top. */}
+
+## Selection order
+
+{/* When you pick an item, does it jump to the top, stay where it is, or turn into a chip? What happens to the thing under your mouse when the list reorders? Show both options in short clips and say which one you picked and why. */}
+
+## Keyboard
+
+{/* Arrow keys, Home and End, typing to jump, Space vs Enter, Escape closing without losing what you picked, Backspace removing the last chip. A small table of key and behavior works well here. */}
+
+```tsx
+// TODO: paste the key handler once it exists.
+```
+
+## Screen readers
+
+{/* Which role did you use, listbox with aria-multiselectable or combobox, and why? What does it announce when you select and unselect? Test with NVDA or VoiceOver and write down exactly what you heard. */}
+
+## Search and empty states
+
+{/* Filtering, no results, creating a new option, really long labels, a list with hundreds of options. Screenshots of each. */}
+
+## Motion
+
+{/* How fast it opens and closes, where it grows from, and reduced motion. Emil Kowalski's rule is a good one to test: don't animate things the keyboard opens. */}
+
+## What I missed the first time
+
+{/* The honest list. Each one with what broke and how you fixed it. This is the part people will actually remember. */}
+
+Reference: [Hiring design-minded frontend engineers](https://brianlovin.com/writing/hiring-design-minded-frontend-engineers-61rbXSV) by Brian Lovin.

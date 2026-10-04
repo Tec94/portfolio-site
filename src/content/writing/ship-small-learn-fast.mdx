@@ -1,22 +1,55 @@
 ---
 slug: ship-small-learn-fast
 title: Ship small, learn fast
-summary: Notes on defining the smallest useful product slice before adding surface area.
+summary: What four hackathons taught me about picking the first slice, and where "ship small" stops working.
 publicationDate: "2026-05-25"
 tags:
   - Product engineering
   - Process
-status: draft
+status: published
 ---
 
-## Start with the decision
+{/* REWORK NOTE: rewritten from your three-heading draft. Update publicationDate when you publish. Every TODO needs your real example; the post doesn't work without them. */}
 
-A useful first release should answer one meaningful product question.
+I've built four projects at hackathons so far: CitizenVoice at HackRice 15 and Credify at HackUTA 7 in 2025, then the Slack Agent and FIanal.sim this year, the second one at HackRice 16. A hackathon makes you ship small whether you want to or not. What it doesn't do is tell you which small thing to build, and I've gotten that wrong more than once.
 
-## Keep the seams visible
+<div className="portfolio-writing-pair">
+  <figure>
+    <img src="https://assets.jackcao.dev/projects/citizenvoice/citizenvoice_1.png" alt="CitizenVoice, a civic proposal and road reporting prototype." loading="lazy" />
+    <figcaption>CitizenVoice, HackRice 15</figcaption>
+  </figure>
+  <figure>
+    <img src="https://assets.jackcao.dev/projects/credify/credify_4.png" alt="Credify, a location-aware card recommendation prototype with a map." loading="lazy" />
+    <figcaption>Credify, HackUTA 7</figcaption>
+  </figure>
+</div>
 
-Authentication, data, loading, and failure states are part of the product slice.
+## Pick one question first
 
-## Record what changed
+The way I think about it now, your first release should answer one question you can't answer just by talking about it. Everything else can wait.
 
-The next iteration should be based on observed behavior rather than the size of the original backlog.
+For FIanal.sim, the question was pretty much: will people actually write down their reasoning before they see what happened, or will they just skip to guessing? {/* TODO: check this was the real question. Swap in yours if not. */} Once we had that, it was easier to say no to stuff. Anything that didn't help answer it went on the later list.
+
+{/* TODO: a time you didn't do this. A hackathon where you built three half-features instead of one whole one. That story is the hook of this post. */}
+
+## The boring parts are part of the slice
+
+It's really tempting to skip sign-in, saving, loading states, and error handling, because they're not the fun part and they don't show up in the demo. But if you leave them out, you're testing a demo, and people give a demo way more slack than they'd give a tool they actually depend on.
+
+{/* TODO: one example. A judge or tester who hit an unhandled state, or a time the saved state is what made the demo work. */}
+
+## Write down what people did
+
+Before planning the next version, write down what people actually did with this one. Your backlog is mostly guesses you made before anyone touched the thing. What people did shows you which of those guesses were right.
+
+{/* TODO: what does this look like for you? A notes file, GitHub issues, a section in the case study? */}
+
+## Where this stops working
+
+This is the part I didn't get at first. Shipping small works great when you're building something people can't do at all right now. It kind of falls apart when there are already good tools for it.
+
+Linear wrote about this in [Rethinking the startup MVP](https://linear.app/now/rethinking-the-startup-mvp-building-a-competitive-product). If someone can compare your thin first version to a mature product, they'll just pick the mature product, and your test doesn't tell you anything.
+
+So in a crowded space, I think your first slice has to beat the existing tool at one specific thing your users care about. It's still one slice. You just have to build that slice a lot better.
+
+{/* TODO: tie this back to your work. Credify went up against established card recommendation apps. Did your slice beat them at anything? Would you scope it differently now? */}

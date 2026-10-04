@@ -1,0 +1,149 @@
+---
+slug: hiding-the-future
+title: Hiding the future from the user
+summary: Building a market practice app at HackRice 16 where the browser can't cheat, and the coach can talk but can't make up numbers.
+publicationDate: "2026-10-03"
+format: Write-up
+tags:
+  - Product engineering
+  - Case study
+  - Backend
+status: published
+---
+
+<figure>
+  <img src="/assets/writing/hiding-the-future/landing.webp" alt="FIanal.sim landing page with a historical SOL/USDT chart and the hidden-outcome learning workflow." />
+  <figcaption>FIanal.sim, built over a weekend at HackRice 16.</figcaption>
+</figure>
+
+If you've ever looked at an old stock chart, you know the problem. Everything looks obvious once you can see what happened next. Of course it broke out there. Of course that was the top. You can't really practice reading a chart if you already know the ending.
+
+That was the whole idea behind FIanal.sim, which my teammate and I built at HackRice 16 in September. {/* TODO: name and link your teammate if they're okay with it. */} You get a real SOL/USDT chart that stops at some point in the past. You study it, you write down your reasoning, you commit to a call, and only then do you get to see what the market actually did.
+
+I was the backend architect and the designer on a team of two. The funny thing about this project is that the most important design decision didn't live in the interface at all. It lived in the API.
+
+## The browser never gets the future
+
+The easy way to build this would be to send the whole chart to the browser and cover the right side with a gray box. That works fine until someone opens DevTools, and then the answer is sitting right there in the network tab. Same thing for any browser extension, or our own AI coach if it could read the page.
+
+So the future just never leaves the server. Every session stores a private cutoff time that the client never sees, and every candle the API sends back is described as an offset from that cutoff. Zero is the cutoff, negative numbers are the past.
+
+<figure>
+  <img src="/assets/writing/hiding-the-future/chart.webp" alt="Expanded SOL/USDT chart with EMA 21, RSI 14, volume, and a shaded hidden future beyond the replay boundary." loading="lazy" />
+  <figcaption>The shaded area on the right is a real gap. The browser doesn't have that data.</figcaption>
+</figure>
+
+Here's the function that decides what the browser is allowed to see:
+
+```ts
+async bars(userId: string, sessionId: string, query: z.infer<typeof C.BarsQuery>) {
+  const state = await this.store.read(userId, sessionId);
+  const horizon = ["revealed", "completed"].includes(state.public.status)
+    ? C.timeframeMinutes[state.public.predictionHorizon]
+    : 0;
+  const source = await this.store.candles(state.datasetId);
+  const completeHorizon = Math.floor(horizon / C.timeframeMinutes[query.timeframe]) * C.timeframeMinutes[query.timeframe];
+  const visible = source.filter((c) => c.closeTimeMs <= state.cutoffTimeMs + completeHorizon * minute);
+  // ...aggregate, then convert to offsets with no real timestamps
+}
+```
+
+Until your session is revealed, the horizon is zero. Nothing past the cutoff gets through the filter.
+
+The part I'm happiest with is the test. I wrote a helper that walks every single API response and fails if it finds anything that could leak the answer: the cutoff time, the dataset ID, real timestamps, any positive offset, even the literal date string of the dataset. Then it asks the API for the future directly, `from=0&to=60`, and expects an empty list.
+
+```js
+// apps/api/test/integration.test.mjs
+const forbidden = ["cutoffTimeMs", "datasetId", "datasetDigest", "source",
+  "openTimeMs", "closeTimeMs", "salt", "payload", "proof", "horizonClose", "observedDirection"];
+```
+
+{/* TODO: paste the actual assertBlind() helper here if you want the full thing. It's at apps/api/test/integration.test.mjs:73-89. */}
+
+## You have to commit before you can see
+
+Getting the future is a little more involved than clicking a button, and that was on purpose.
+
+<figure>
+  <img src="/assets/writing/hiding-the-future/unlock-sequence.svg" alt="Four session states in a row: exploring, submitted, receipt confirmed, revealed. Future candles leave the server only in the revealed state." loading="lazy" />
+</figure>
+
+When you submit your analysis, the server hashes it with a salt and stores that commitment. A background job writes the hash to Solana devnet as a memo transaction. The reveal endpoint refuses to do anything until that receipt is confirmed and matches what's stored:
+
+```ts
+const receiptValid = receiptAllowsReveal(state.receipt)
+  && state.receipt?.commitment === state.commitment?.hash;
+if (state.public.status !== "submitted" || (!receiptValid && !this.receiptBypassEnabled))
+  return fail("state_conflict", 409);
+```
+
+I want to be careful about what that receipt actually proves, because it's easy to oversell. It doesn't prove your analysis was good, and it doesn't prove who you are. It proves that this exact submission existed before the reveal, so you can't go back and quietly edit your reasoning after you see the outcome. That's all, but for a practice tool that's the promise that matters.
+
+There's also a bypass flag for testing, because waiting on devnet during a hackathon demo is not fun. It's locked off in production builds.
+
+## Every answer points at a snapshot
+
+<figure>
+  <img src="/assets/writing/hiding-the-future/workspace.webp" alt="Historical SOL/USDT replay workspace with candlestick chart, EMA, verified coach statistics, and an unsubmitted analysis example." loading="lazy" />
+  <figcaption>The replay workspace, with the coach on the right.</figcaption>
+</figure>
+
+People move the chart around a lot. They switch timeframes, turn on EMA or RSI, draw trend lines. If the app checked your reasoning against whatever the chart looked like at the moment you hit submit, it could grade you on a view you never actually looked at.
+
+So every time you ask a question or talk to the coach, the frontend saves a snapshot of your current view first, and the answer is tied to that snapshot's ID. The evidence check at the end works the same way. If you write something like `rsi 14 <= 70`, the server calculates RSI on your snapshot and tells you whether that held up:
+
+```ts
+const comparison = /^(.+?)\s*(>=|<=|>|<|=)\s*(.+)$/.exec(claim);
+// ...
+const fact = calculateIntent(intent, input);
+const order = new Decimal(fact.value).comparedTo(rightFact?.value ?? comparison[3]!.trim());
+findings.push({ category: "evidence", status: supported ? "supported" : "contradicted", /* ... */ });
+```
+
+Stuff like "buyers look stronger" can't be checked with math, so it comes back as not assessable instead of getting a made-up grade. And a claim about the future price, like `close > future price`, also comes back as not assessable. There's no formula for a number the server won't give out.
+
+## The coach can pick words, but it can't pick numbers
+
+We used Deepgram for speech and ElevenLabs for the voice. The coach helps you talk through the chart and turns what you say into a draft you can edit.
+
+A language model that confidently guesses an RSI value is worse than no coach at all, because it teaches you the wrong thing. So the rule we wrote down was that every number the coach says has to come from the server. There's a comment in the voice code that pretty much sums it up:
+
+```ts
+// The model may choose words; it may not choose numbers.
+```
+
+Here's what's actually enforced by code, and what isn't, because I think that difference matters:
+
+- **Enforced:** the calculator only ever sees candles before the cutoff. The model doesn't get raw candles at all, just server-computed values.
+- **Enforced:** any fact the coach cites has to belong to the snapshot for that turn, or the reply gets swapped for a fixed refusal.
+- **Enforced:** audio is held back until the sentence is approved. If the coach says a number that nobody gave it, the turn fails before any sound comes out.
+- **Not enforced:** whether the model refuses things like "should I buy?" when it answers without calling a tool. That part depends on the prompt.
+- **A gap I know about:** once a tool call approves a turn, the rest of that turn skips the number check. The idea was that the turn already spoke a value the server computed, but it does mean we trust the model for the rest of that answer.
+
+## Where I was wrong
+
+{/* TODO: this section is written from the git history. Read it and rewrite anything that doesn't match how it felt to you. */}
+
+My original plan for the coach was really strict. In the backend design doc I wrote on the first night, I said we should not let a hosted model drive the conversation, because it would create a speech path we couldn't control. The first version I built did exactly that. The coach's reply was rendered straight from the calculator's output. It was safe, but it was also kind of stiff.
+
+About ten hours later my teammate swapped in a hosted model to carry the conversation. The reason in the commit was that a pattern matcher could never keep up with follow-ups, pronouns, and all the ways people phrase a question. And honestly, that was right. A day later we hit the same wall from the other side: questions about shape or trend that didn't match a formula just got refused, and the commit message put it well. We'd "made a calculator out of something meant to be a coach."
+
+What I got wrong was treating "never let the model say anything we didn't compute" as the goal. The real goal was "never let the model make up a number." Once we split it that way, the model could handle the conversation, and the server could still guard the numbers with the allowlist and the audio gate. The trade-off is that refusing advice questions now depends on the prompt, and that's a weaker promise than the one I started with. I'd rather say that out loud than pretend it isn't there.
+
+## Who did what
+
+{/* TODO: check this against your memory. Pulled from git blame and commit history. */}
+
+- **Me:** the backend design doc, the Fastify API, idempotency and account isolation, the replay boundary and reveal flow, Solana receipts, snapshots and the calculator, the original controlled voice path, the integration tests, the Chartroom redesign and design system, and the Render deploy.
+- **My teammate:** the first frontend, the switch from push-to-talk to continuous conversation, the hosted conversational model and number allowlist, analysis-form filling, coach memory, the rater, and the "describe the chart" fallback.
+
+## What I'd change
+
+{/* TODO: pick one or two. Some honest candidates from the repo:
+- The API docs still describe the old voice design. I'd update them so they match what shipped.
+- The frontend RSI returns 50 on flat prices, the backend returns null. Small, but it's the kind of thing that confuses a user.
+- Was Solana worth it, or would a server-signed timestamp have proven the same thing? */}
+
+The biggest thing I took away is how much an AI product depends on the boring code around the model. The calculator, the saved state, the tests that walk every response looking for leaks: that's what made the coach trustworthy. The model just made it nicer to talk to.
+
+[Try FIanal.sim](https://chartroom-tlps.onrender.com/) or [read the code](https://github.com/Tec94/2026-hackrice).

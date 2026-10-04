@@ -12,7 +12,8 @@ await mkdir(output, { recursive: true });
 for (const file of await readdir(path.join(root, 'src/content/projects'))) {
   if (!file.endsWith('.mdx')) continue;
   const { data } = matter(await readFile(path.join(root, 'src/content/projects', file), 'utf8'));
-  const media = data.media[0];
+  const media = data.media?.[0];
+  if (!media) continue;
   const source = media.type === 'video' ? media.poster : media.source;
   if (!source) continue;
   let original;

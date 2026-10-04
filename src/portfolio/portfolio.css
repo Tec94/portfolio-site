@@ -387,17 +387,6 @@ html[data-portfolio-theme-mode] {
   text-align: start;
 }
 
-.portfolio-case-study__media-label {
-  position: absolute;
-  inset: auto 1rem 1rem auto;
-  padding: 0.45rem 0.65rem;
-  border-radius: 999px;
-  background: var(--portfolio-ink);
-  color: var(--portfolio-bg);
-  font-size: 0.65rem;
-  font-weight: 700;
-}
-
 .portfolio-case-study__media-trigger .portfolio-project-preview__media {
   width: 100%;
 }

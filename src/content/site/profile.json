@@ -28,19 +28,54 @@
       "company": "Congero Technology Group",
       "role": "Software Engineering Intern",
       "location": "Remote",
-      "period": "June–August 2026"
+      "period": "June–August 2026",
+      "highlights": [
+        "Implemented custom Oracle BRM opcodes in C for account provisioning, resource lookup, and real-time AI usage rating across prompt-, token-, and USD-based balances",
+        "Built a React + TypeScript reporting dashboard backed by SQL queries to surface customer transactions, revenue, usage statistics, balance impacts, and billing records from Oracle BRM",
+        "Wrote testnap validation flows to provision accounts, simulate usage events, and verify pre/post-rating balances, generated events, and standardized error handling in a non-production Oracle BRM environment"
+      ]
     },
     {
       "company": "QT-Data Group",
       "role": "Web Development Intern",
       "location": "Ho Chi Minh City, Vietnam",
-      "period": "June–August 2025"
+      "period": "June–August 2025",
+      "highlights": [
+        "Built a Python scraping pipeline (Selenium, BeautifulSoup) collecting daily records from short and long-form content, with rate limiting, pagination, record validation, and scheduled deduplication checks",
+        "Automated YouTube script, narration, and thumbnail generation with LLM agents orchestrated over REST APIs in Python, cutting production time by 70%",
+        "Scraped and analyzed profiles of Gen Z billionaires across multiple sources to surface generational wealth trends"
+      ]
     },
     {
       "company": "Portlogics JSC",
       "role": "Intern",
       "location": "Ho Chi Minh City, Vietnam",
-      "period": "June–August 2023"
+      "period": "June–August 2023",
+      "highlights": [
+        "Rebuilt dashboard UI in React with reusable components and accessibility-minded patterns (keyboard focus, ARIA roles); reduced user error by 19% from QA reports",
+        "Integrated REST endpoints via Axios with client-side validation and error boundaries; improved detection accuracy by 35% through refining data labeling UX",
+        "Led a 3-member frontend team on the object recognition UI, designing dashboard components in Figma before building them"
+      ]
+    },
+    {
+      "company": "Hotel Link Solutions",
+      "role": "Back-end Engineering Intern",
+      "location": "Remote",
+      "period": "September–December 2022",
+      "highlights": [
+        "Profiled and optimized site performance using Lighthouse, implementing image lazy-loading, srcset, code-splitting, and CDN caching; raised Core Web Vitals and boosted checkout conversion by 10%",
+        "Improved response times by reducing API payloads and adding caching strategies, resulting in an 18% improvement in task efficiency; worked alongside senior engineers to tighten API/UX alignment"
+      ]
+    },
+    {
+      "company": "Vinacapital Foundation",
+      "role": "Data and Research Analyst Intern",
+      "location": "Ho Chi Minh City, Vietnam",
+      "period": "June–August 2022",
+      "highlights": [
+        "Managed a data collection project involving over 500 families receiving financial assistance for heart surgery, achieving a 95% participation rate through detailed interviews",
+        "Helped visualize a 55% quality-of-life improvement in post-surgery families"
+      ]
     }
   ],
   "education": {

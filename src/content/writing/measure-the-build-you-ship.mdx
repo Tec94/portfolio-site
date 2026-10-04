@@ -1,0 +1,81 @@
+---
+slug: measure-the-build-you-ship
+title: Measure the build you ship
+summary: Lighthouse gave my site a 63 and I almost started cutting code. Then I noticed it had tested the wrong build.
+publicationDate: "2026-10-03"
+format: Write-up
+tags:
+  - Performance
+  - Product engineering
+status: published
+---
+
+In September I ran Lighthouse on my portfolio and got a 63 for performance. That's not great for a site that's mostly text and a few images, so my first instinct was to start looking for JavaScript to cut. {/* TODO: confirm this was your instinct. */}
+
+Then I scrolled to the top of the report and looked at what it had actually tested. It was the Vite dev server on `localhost:5173`, running in my normal Chrome profile, with all my extensions on. The "unused JavaScript" list was full of extension scripts and unminified dev modules.
+
+So the 63 was a score for my development setup, which nobody visiting my site ever loads.
+
+## Getting a number I could trust
+
+I built the site with `npm run build`, served it on `localhost:4173`, and ran Lighthouse in a separate Chrome profile with every extension turned off. Desktop used Lighthouse's desktop preset, and mobile used the default mobile preset with a 4x CPU slowdown.
+
+The real production build started at 96. Here's where it ended up after the fixes below:
+
+<table>
+  <thead><tr><th>Metric</th><th>Desktop before</th><th>Desktop after</th><th>Mobile after</th></tr></thead>
+  <tbody>
+    <tr><td>Performance</td><td>96</td><td>100</td><td>85</td></tr>
+    <tr><td>Accessibility</td><td>91</td><td>100</td><td>100</td></tr>
+    <tr><td>SEO</td><td>92</td><td>100</td><td>100</td></tr>
+    <tr><td>First Contentful Paint</td><td>1.1 s</td><td>0.5 s</td><td>2.3 s</td></tr>
+    <tr><td>Largest Contentful Paint</td><td>1.1 s</td><td>0.7 s</td><td>3.3 s</td></tr>
+    <tr><td>Total Blocking Time</td><td>0 ms</td><td>10 ms</td><td>270 ms</td></tr>
+    <tr><td>Cumulative Layout Shift</td><td>0.012</td><td>0</td><td>0</td></tr>
+  </tbody>
+</table>
+
+You'll notice mobile has no "before" column. I forgot to run it before I started changing things, which is a mistake I'll try not to make again.
+
+## What the trace pointed at
+
+### The work list was loading full-size covers
+
+<figure>
+  <img src="/assets/writing/thumbnails-at-3x/work-list.webp" alt="The Work section of the portfolio, a list of projects with small thumbnail images on the left of each row." loading="lazy" />
+  <figcaption>Each thumbnail in this list is 104 CSS pixels wide.</figcaption>
+</figure>
+
+Each row in my work list shows a tiny preview, 104 pixels wide. And each one was loading the full cover image. I wrote a script with sharp that makes 312-pixel WebP thumbnails instead.
+
+<figure>
+  <img src="/assets/writing/measure-the-build-you-ship/thumbnail-bytes.svg" alt="Bar chart. Full covers total 974,145 bytes. The 312 pixel WebP thumbnails total 44,520 bytes." loading="lazy" />
+</figure>
+
+That took six images from 974,145 bytes down to 44,520, a 95.4% cut. [I wrote up the script here.](/writing/thumbnails-at-3x)
+
+### Google Fonts was in the way
+
+My fonts were coming from a Google Fonts stylesheet, which meant the browser had to go to another server for the CSS before it could even start downloading a font. I moved the same three families onto my own server and preloaded the one face the big heading uses. [Notes on that, including the attribute that's easy to forget.](/writing/preload-one-font)
+
+### A scroll reset was running for no reason
+
+My router shell reset the scroll position on first load. The page was already at the top, so it did nothing, but it still forced the browser to calculate layout before the first paint. Skipping it on first load cleared Lighthouse's forced-reflow warning on mobile. [The fix is a few lines.](/writing/skip-the-first-scroll-reset)
+
+### Some accessibility stuff I'd missed
+
+While I was in there, I fixed a few accessibility problems too. The service receipt toggles became real `button` elements with a proper expanded state. The date ranges on my About page now read out the full period to screen readers. The filter buttons include the visible count in their names. And my `robots.txt` was returning the app's HTML, so I replaced it with a real one.
+
+## What's still not great
+
+Mobile still has 270 ms of blocking time on a throttled run, and the main CSS file still blocks rendering. On desktop, the trace blames 87.6 ms of forced layout on my favicon code, which I haven't dug into yet. {/* TODO: if you fix it, link the fix. */}
+
+Coverage also says there's unused code on the homepage. I left that alone, because code that's unused on one page might run on another, and I didn't have proof either way.
+
+I should also be honest that these are lab numbers from single runs on my own machine. There's no real user data behind them, and they don't say anything about how Cloudflare caches the site in production.
+
+{/* TODO: after the next deploy, add a production Lighthouse run or field Core Web Vitals here. */}
+
+## The habit I'm keeping
+
+Before you act on a performance report, look at the URL it tested. If it says `localhost:5173`, or your browser is full of extensions, you're about to optimize a build that nobody visits.

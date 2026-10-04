@@ -32,7 +32,7 @@ export const projectFrontmatterSchema = z
     slug: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
     title: z.string().min(1),
     summary: z.string().min(1),
-    presentation: z.enum(['case-study', 'demo']).default('case-study'),
+    presentation: z.enum(['case-study', 'demo', 'brief']).default('case-study'),
     year: z.number().int().min(2000).optional(),
     completedAt: z.string().regex(/^\d{4}-(0[1-9]|1[0-2])$/).optional(),
     role: z.string().min(1).optional(),
@@ -42,10 +42,20 @@ export const projectFrontmatterSchema = z
     selectedWorkOrder: z.number().int().positive(),
     links: projectLinksSchema.default({}),
     publicationState: publicationStateSchema,
-    media: z.array(projectMediaSchema).min(1),
+    highlights: z.array(z.string().min(1)).default([]),
+    media: z.array(projectMediaSchema).default([]),
   })
   .strict()
   .superRefine((project, context) => {
+    if (project.presentation === 'brief') {
+      if (!project.highlights.length) {
+        context.addIssue({ code: 'custom', path: ['highlights'], message: 'Required for a brief.' });
+      }
+      return;
+    }
+    if (!project.media.length) {
+      context.addIssue({ code: 'custom', path: ['media'], message: 'At least one media item is required.' });
+    }
     if (project.presentation !== 'case-study') return;
     for (const field of ['year', 'completedAt', 'role', 'duration'] as const) {
       if (project[field] === undefined) {

@@ -8,6 +8,7 @@
   --space-8: 2rem;
   --space-10: 2.5rem;
   --space-12: 3rem;
+  --section-heading-gap: 1.75rem;
 
   /* fixed chrome */
   --control-h: 44px;          /* dock, capsule, CTA, search button */

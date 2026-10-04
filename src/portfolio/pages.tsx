@@ -11,6 +11,7 @@ import {
   getPublishedProject,
   portfolioManifest,
 } from './content/manifest';
+import { WritingTags } from './components/WritingIndex';
 import { ProjectImage } from './work/ProjectMedia';
 import { formatProjectDate, projectTransitionStyle } from './work/projectPresentation';
 import { getLandingSectionUrl } from './routeOwnership';
@@ -72,9 +73,14 @@ export function ProjectBoundaryPage() {
             {current.summary ? <p className="portfolio-case-study__summary">{current.summary}</p> : null}
           </header>
           <button className="portfolio-case-study__media-trigger" type="button" onClick={() => { setViewerIndex(0); setViewerOpen(true); }} aria-label={`Open ${current.title} media viewer`}>
-            <ProjectImage project={current} className="portfolio-project-preview__media" transition activeTransition priority />
-            {current.media[0].type === 'video' ? <span className="portfolio-case-study__media-label">Watch demo</span> : null}
+            <ProjectImage project={current} className="portfolio-project-preview__media" transition activeTransition priority loop />
           </button>
+
+          {current.highlights.length ? (
+            <ul className="portfolio-case-study__highlights">
+              {current.highlights.map((highlight) => <li key={highlight}>{highlight}</li>)}
+            </ul>
+          ) : null}
 
           {current.bodyText ? <div className="portfolio-mdx portfolio-case-study__content"><Content components={{
             ProjectDetails: () => (
@@ -122,14 +128,7 @@ export function ArticleBoundaryPage() {
 
   return (
     <main id="portfolio-main" className="portfolio-writing-post portfolio-writing-layout">
-      <aside className="portfolio-writing-post__sidebar" aria-label="Article details">
-        <Link className="portfolio-writing-rule-link" to="/writing">{pageCopy["writing"]}</Link>
-        <div className="portfolio-writing-post__facts">
-          <time dateTime={article.publicationDate}>{new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' }).format(new Date(`${article.publicationDate}T12:00:00`))}</time>
-          <span>{article.format}{article.readingMinutes ? ` · ${article.readingMinutes} min` : ''}</span>
-          <span>{article.tags.join(' · ')}</span>
-        </div>
-      </aside>
+      <Link className="portfolio-writing-rule-link" to="/writing">{pageCopy["writing"]}</Link>
       <article className="portfolio-writing-post__article">
         <header className="portfolio-writing-post__header">
           {article.series && <div className="portfolio-writing-series">
@@ -140,6 +139,11 @@ export function ArticleBoundaryPage() {
             <span aria-label={`Part ${seriesIndex + 1} of ${series.length}`}>{String(seriesIndex + 1).padStart(2, '0')} / {String(series.length).padStart(2, '0')}</span>
           </div>}
           <h1>{article.title}</h1>
+          <aside className="portfolio-writing-post__facts" aria-label="Article details">
+            <time dateTime={article.publicationDate}>{new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' }).format(new Date(`${article.publicationDate}T12:00:00`))}</time>
+            <span>{article.format}{article.readingMinutes ? ` · ${article.readingMinutes} min` : ''}</span>
+            {article.tags.length ? <WritingTags tags={article.tags} /> : null}
+          </aside>
         </header>
         <div className="portfolio-writing-prose"><Content /></div>
         {(previous || next) && <nav className="portfolio-writing-adjacent" aria-label="More writing">

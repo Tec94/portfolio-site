@@ -1,0 +1,49 @@
+---
+slug: skip-the-first-scroll-reset
+title: Skip the scroll reset on first load
+summary: My router reset scroll on mount, which forced a layout before first paint. A ref fixed it.
+publicationDate: "2026-10-03"
+format: Note
+series: Small fixes
+tags:
+  - Performance
+  - React
+status: published
+---
+
+In a single-page app, you have to reset the scroll yourself when the route changes. Otherwise you click a link and the new page opens halfway down. My shell handled that in a `useLayoutEffect`:
+
+```tsx
+useLayoutEffect(() => {
+  if (location.hash) {
+    document.getElementById(location.hash.slice(1))?.scrollIntoView?.({ behavior: 'auto', block: 'start' });
+  } else {
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  }
+}, [location.hash, location.pathname]);
+```
+
+That looks fine, but the effect also runs on the very first load. And on first load, the page is already at the top. So `scrollTo` wasn't doing anything useful, but it still made the browser calculate layout before the first paint. Lighthouse's forced-reflow audit caught it.
+
+The fix was to remember the last route in a ref and only reset when it actually changes:
+
+```tsx
+const previousRouteRef = useRef(`${location.pathname}${location.hash}`);
+
+useLayoutEffect(() => {
+  const route = `${location.pathname}${location.hash}`;
+  const routeChanged = previousRouteRef.current !== route;
+  previousRouteRef.current = route;
+  if (location.hash) {
+    document.getElementById(location.hash.slice(1))?.scrollIntoView?.({ behavior: 'auto', block: 'start' });
+  } else if (routeChanged) {
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  }
+}, [location.hash, location.pathname, location.key]);
+```
+
+The ref starts out holding the current route, so on the first run nothing has changed and the reset gets skipped. Hash links still scroll to their section, even on first load.
+
+I also added `location.key` to the dependency list. React Router gives every navigation a new key, even if you click the same link twice. Without it, clicking the scroll cue on my hero a second time didn't do anything, because the hash hadn't changed. {/* TODO: confirm that's the bug location.key fixed. The commit says "hero cue repeat scroll behavior". */}
+
+After this, the mobile forced-reflow audit came back empty.

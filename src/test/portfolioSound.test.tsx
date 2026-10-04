@@ -104,6 +104,17 @@ describe('portfolio sound hierarchy', () => {
     expect(paper).toHaveLength(0);
   });
 
+  it('uses press for About disclosure controls', () => {
+    renderSite('/about');
+    fireEvent.click(screen.getByRole('button', { name: /View more/ }));
+    fireEvent.click(screen.getByRole('button', { name: 'View less' }));
+    const highlights = screen.getAllByText('Highlights')[0].closest('details')!;
+    highlights.open = true;
+    fireEvent(highlights, new Event('toggle'));
+    expect(cues.cuelume.mock.calls).toEqual([['press'], ['press'], ['press']]);
+    expect(paper).toHaveLength(0);
+  });
+
   it('reuses the preview voice, replaces it on navigation, and respects mute in retained callbacks', () => {
     let sound!: ReturnType<typeof usePortfolioSound>;
     function Probe() { sound = usePortfolioSound(); return null; }

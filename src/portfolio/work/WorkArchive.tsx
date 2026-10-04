@@ -1,7 +1,7 @@
 import pageCopy from '../../content/site/WorkArchive.json';
 import { useMemo, useState, type MouseEvent, type PointerEvent } from 'react';
 import { flushSync } from 'react-dom';
-import { Grid2X2, List } from 'lucide-react';
+import { ArrowUpRight, Github, Grid2X2, List } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { previewProjectManifest, type PreviewProjectRecord } from '../content/manifest';
 import { usePortfolioSound } from '../providers/SoundProvider';
@@ -17,6 +17,9 @@ import {
 
 type ArchiveView = 'list' | 'showcase';
 
+const projectsPerYear = 3;
+
+const mediaProjects = previewProjectManifest.filter((project) => project.presentation !== 'brief');
 const rowCategory = (project: PreviewProjectRecord) =>
   project.categories.find((category) => category === 'Hackathon' || category === 'Product site') ?? project.categories[0];
 
@@ -24,17 +27,20 @@ export function WorkArchive({ standalone = false }: { standalone?: boolean }) {
   const [view, setView] = useState<ArchiveView>('list');
   const [filter, setFilter] = useState<WorkFilter>('all');
   const [hoverView, setHoverView] = useState<ArchiveView | null>(null);
+  const [expandedGroups, setExpandedGroups] = useState<string[]>([]);
   const navigate = useNavigate();
   const sound = usePortfolioSound();
   const reducedMotion = usePrefersReducedMotion();
+  // Briefs have no media, so the image-led showcase leaves them out.
+  const archiveProjects = view === 'showcase' ? mediaProjects : previewProjectManifest;
   const projects = useMemo(
     () => {
       const latestYear = Math.max(...previewProjectManifest.flatMap((project) => project.year ? [project.year] : []));
-      return filterPreviewProjects(previewProjectManifest, filter).slice().sort(
+      return filterPreviewProjects(archiveProjects, filter).slice().sort(
         (a, b) => (b.year ?? latestYear) - (a.year ?? latestYear),
       );
     },
-    [filter],
+    [archiveProjects, filter],
   );
   const projectGroups = [...new Set(projects.map((project) => project.year))].map((year) => ({
     label: year ? String(year) : 'More work',
@@ -144,7 +150,7 @@ export function WorkArchive({ standalone = false }: { standalone?: boolean }) {
               onClick={() => changeFilter(item.id)}
             >
               <span>{item.label}</span>
-              <span className="portfolio-work-filter-count">{String(filterPreviewProjects(previewProjectManifest, item.id).length).padStart(2, '0')}</span>
+              <span className="portfolio-work-filter-count">{String(filterPreviewProjects(archiveProjects, item.id).length).padStart(2, '0')}</span>
             </button>
           ))}
         </div>
@@ -156,7 +162,40 @@ export function WorkArchive({ standalone = false }: { standalone?: boolean }) {
               {projectGroups.map((group) => (
                 <div className="portfolio-work-group" key={group.label}>
                   <div className="portfolio-ledger-heading portfolio-work-year"><span>{group.label}</span><span aria-hidden="true" /><span>{String(group.projects.length).padStart(2, '0')}</span></div>
-                  {group.projects.map((project) => (
+                  {(expandedGroups.includes(group.label) ? group.projects : group.projects.slice(0, projectsPerYear)).map((project) => project.presentation === 'brief' ? (
+                    <details key={project.slug} className="portfolio-work-brief" onToggle={() => sound.play('press')}>
+                      <summary className="portfolio-work-row">
+                        <span className="portfolio-work-row__frame portfolio-work-row__frame--brief" aria-hidden="true">Brief</span>
+                        <span className="portfolio-work-row__copy">
+                          <strong>{project.title}</strong>
+                          <span title={project.summary}>{project.summary}</span>
+                        </span>
+                        <span className="portfolio-work-row__meta">
+                          {project.completedAt ? <time dateTime={project.completedAt}>{formatProjectDate(project.completedAt)}</time> : <span>{project.duration}</span>}
+                          <span title={project.categories.join(' · ')}>{rowCategory(project)}</span>
+                        </span>
+                        <span className="portfolio-work-row__arrow" aria-hidden="true">+</span>
+                      </summary>
+                      <div className="portfolio-work-brief__body">
+                        <ul>{project.highlights.map((highlight) => <li key={highlight}>{highlight}</li>)}</ul>
+                        <p>{project.technologies.join(' · ')}</p>
+                        {project.links.repository || project.links.live ? (
+                          <div className="portfolio-showcase-card__actions">
+                            {project.links.repository ? (
+                              <a href={project.links.repository} target="_blank" rel="noreferrer" className="portfolio-stamp portfolio-stamp--outline" aria-label={`Open ${project.title} GitHub repository`}>
+                                <Github aria-hidden="true" /><span>Code</span>
+                              </a>
+                            ) : null}
+                            {project.links.live ? (
+                              <a href={project.links.live} target="_blank" rel="noreferrer" className="portfolio-stamp" aria-label={`Open ${project.title} live site`}>
+                                <span>Live</span><span className="portfolio-stamp__clip" data-direction="external" aria-hidden="true"><span><ArrowUpRight /><ArrowUpRight /></span></span>
+                              </a>
+                            ) : null}
+                          </div>
+                        ) : null}
+                      </div>
+                    </details>
+                  ) : (
                     <Link
                       key={project.slug}
                       to={project.href}
@@ -172,11 +211,21 @@ export function WorkArchive({ standalone = false }: { standalone?: boolean }) {
                       </span>
                       <span className="portfolio-work-row__meta">
                         {project.completedAt ? <time dateTime={project.completedAt}>{formatProjectDate(project.completedAt)}</time> : null}
-                        <span title={project.categories.join(' · ')}>{project.categories.find((category) => category === 'Hackathon' || category === 'Product site') ?? project.categories[0]}</span>
+                        <span title={project.categories.join(' · ')}>{rowCategory(project)}</span>
                       </span>
                       <span className="portfolio-work-row__arrow" aria-hidden="true">→</span>
                     </Link>
                   ))}
+                  {group.projects.length > projectsPerYear && !expandedGroups.includes(group.label) ? (
+                    <button
+                      type="button"
+                      className="portfolio-dossier-toggle portfolio-work-more"
+                      aria-label={`Show ${group.projects.length - projectsPerYear} more projects from ${group.label}`}
+                      onClick={() => { setExpandedGroups([...expandedGroups, group.label]); sound.play('press'); }}
+                    >
+                      View more · {String(group.projects.length - projectsPerYear).padStart(2, '0')}
+                    </button>
+                  ) : null}
                 </div>
               ))}
             </div>

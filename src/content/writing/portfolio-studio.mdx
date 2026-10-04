@@ -1,0 +1,110 @@
+---
+slug: portfolio-studio
+title: A CMS in 900 lines
+summary: I built a little editor for this site that edits files in my repo, keeps every old version, and ships to Cloudflare from one button.
+publicationDate: "2026-10-03"
+format: Write-up
+tags:
+  - Product engineering
+  - Tooling
+  - Process
+status: published
+---
+
+<figure>
+  <img src="/assets/writing/portfolio-studio/projects.webp" alt="Portfolio Studio's Projects screen, a list of portfolio projects with drag handles, thumbnails, and published badges." />
+  <figcaption>Portfolio Studio. It runs on my laptop and nowhere else.</figcaption>
+</figure>
+
+Every project, post, and line of copy on this site goes through a small editor I wrote for myself. I call it Portfolio Studio. It edits the files in my repo, keeps every old version, uploads images to Cloudflare R2, and deploys the site to Cloudflare Pages when I hit Publish. The whole thing is about 900 lines, tests included.
+
+{/* TODO: why you built it. Say it how you'd say it to a friend. Something like: "I got tired of opening VS Code and committing every time I wanted to fix a typo," or whatever the real reason was. */}
+
+## The content is just files
+
+I didn't want a database for this. My projects live in `src/content/projects` as MDX, posts live in `src/content/writing`, and all the page copy lives in JSON under `src/content/site`. Studio reads and writes those exact files, so the normal dev server picks up every save.
+
+<figure>
+  <img src="/assets/writing/portfolio-studio/editor.webp" alt="The Studio project editor for Financial Analyst Simulator, with fields for project name, description, page type, year, completion month, and role." loading="lazy" />
+  <figcaption>Editing a project. Every field maps to frontmatter in an MDX file.</figcaption>
+</figure>
+
+I like this setup because nothing is locked in. If Studio breaks one day, I can open the MDX in my editor and keep going. And the site build already knew how to read these files, so Studio didn't have to add anything between the editor and the site.
+
+Studio also compiles your MDX before it saves it. If you typo a curly brace in a post, it tells you right there instead of letting you find out when the build fails.
+
+```ts
+try { await compile(body); }
+catch (error) { throw new StudioError(`Writing cannot compile: ${String(error)}`); }
+```
+
+## Saves you can take back
+
+Every time I save, the old version gets copied into `.studio/history/` first. There's a **Show saved revisions** button that loads an older version back into the editor. Deleting something moves it to `.studio/trash/` instead of actually deleting it.
+
+The part I'm most glad I built is the conflict check. Say I edit a post in VS Code, forget about it, and then hit Save on an old Studio tab. Studio notices the file changed underneath it and refuses to overwrite it:
+
+```ts
+const old = await exists(file) ? await readFile(file, 'utf8') : null;
+if ((old === null ? null : revision(old)) !== expected)
+  throw new StudioError('This record changed in another tab or editor. Reload it before saving.', 409);
+```
+
+{/* TODO: did this ever save you? A one-line story here would be great. */}
+
+## What happens when I hit Publish
+
+<figure>
+  <img src="/assets/writing/portfolio-studio/publish-pipeline.svg" alt="Five steps in a row: freeze, build, upload, deploy, verify. Dashed red lines under build and upload mark where a failure stops the job." loading="lazy" />
+</figure>
+
+Publish is one job with five steps, and the order is the important part:
+
+1. **Freeze.** Copy the saved files into `.studio/releases/<id>`, so the build uses exactly what I had when I clicked the button.
+2. **Build.** Validate the content, then run the Vite build on that frozen copy.
+3. **Upload.** Push any new media to R2.
+4. **Deploy.** Run `wrangler pages deploy` on the build.
+5. **Verify.** Fetch the new deployment and check that it's actually the build I just made.
+
+If the build fails, nothing gets uploaded. If an upload fails, nothing gets deployed. The last step is my favorite. Before deploying, Studio drops a tiny file with a random ID into the build, and afterward it fetches that file from the live URL and compares the ID:
+
+```ts
+await writeFile(path.join(release, 'dist', '__studio-release.json'), JSON.stringify({ id }));
+// ...deploy...
+const response = await request(`${url}/__studio-release.json`);
+if (!response.ok || (await response.json()).id !== id)
+  throw new StudioError(`Deployment was created at ${url}, but verification failed. Check that URL before publishing again.`);
+```
+
+So "Published" in Studio means I actually saw my build come back from Cloudflare, and not just that a command exited without an error. If the check fails, `.studio/last-publish.json` keeps the deployment URL so I can go look at it before trying again.
+
+## Keeping images out of the bundle
+
+When I upload an image, Studio stores it in `public/assets/studio/` with a name based on a hash of the file. During a production build, Vite swaps those local paths for public R2 URLs and leaves the files out of the Pages bundle. So I get local previews on my laptop, and visitors load images from R2.
+
+{/* TODO: one number would make this land. How big is the Pages bundle with and without the Studio media? */}
+
+## Treating a local tool like a real server
+
+Studio can write to my repo and deploy my site, so I didn't want to be lazy about it just because it runs on my own laptop.
+
+- It only listens on `127.0.0.1`.
+- It checks the `Host` header on every request, so a random website can't reach it through DNS rebinding.
+- The content APIs need a token that changes every time the server starts, plus a matching `Origin`.
+- My Cloudflare login stays in Wrangler. The config file has project names and URLs, but no secrets.
+
+```ts
+if (request.headers['x-studio-token'] !== token
+  || (request.headers.origin && request.headers.origin !== origin))
+  return json(response, { error: 'Open the editor on this computer to access content.' }, 403);
+```
+
+{/* TODO: this is the section people trust the most. One real story, with the fix. Ideas: a publish that deployed but failed the marker check, a conflict you hit for real, an upload that half-finished, a draft that leaked or didn't show. */}
+
+## Trade-offs I'm living with
+
+Publishing ships whatever I've saved, even if I haven't committed it. Studio doesn't touch Git at all. That means the live site can be ahead of my repo, and my Git-connected Cloudflare deploy could overwrite a Studio publish with an older push. Right now I handle that by committing after I publish. {/* TODO: confirm that's really your habit. */}
+
+Draft project titles and covers still show up on the public site with a "case study in review" label. Draft posts stay hidden. {/* TODO: one sentence on why you kept draft project titles public. */}
+
+{/* TODO: end on whether you'd build it again, or the first thing you'd change. */}

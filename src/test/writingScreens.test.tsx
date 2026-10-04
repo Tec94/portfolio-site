@@ -62,7 +62,7 @@ describe('writing screens', () => {
     const facts = within(screen.getByRole('complementary', { name: 'Article details' }));
     expect(facts.getByText('Nov 3, 2025')).toBeInTheDocument();
     expect(facts.getByText('Note · 3 min')).toBeInTheDocument();
-    expect(facts.getByText('SQL · PostGIS')).toBeInTheDocument();
+    expect(facts.getAllByRole('listitem').map((tag) => tag.textContent)).toEqual(['SQL', 'PostGIS']);
     expect(screen.getByLabelText('Part 1 of 2')).toBeInTheDocument();
     expect(screen.getByText('Sample margin note for checking the article layout.')).toBeInTheDocument();
     expect(screen.getByText(/select id, title/)).toBeInTheDocument();

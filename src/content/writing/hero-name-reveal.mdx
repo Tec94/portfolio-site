@@ -1,0 +1,153 @@
+---
+slug: hero-name-reveal
+title: Inking a name in 700 milliseconds
+summary: How the red sweep on my homepage name works, and the two media queries that turn it off.
+publicationDate: "2026-10-03"
+format: Write-up
+tags:
+  - Interaction design
+  - Accessibility
+  - CSS
+status: published
+---
+
+<figure>
+  <video data-theme-media="light" src="/assets/writing/hero-name-reveal/reveal-1x.webm" autoPlay muted loop playsInline controls aria-label="The name Jack Cao turns from dark ink to red, left to right." />
+  <video data-theme-media="dark" src="/assets/writing/hero-name-reveal/reveal-1x-dark.webm" autoPlay muted loop playsInline controls aria-label="The name Jack Cao turns from dark ink to red, left to right." />
+  <figcaption>The reveal at normal speed.</figcaption>
+</figure>
+
+The first thing I ever coded was a tank game in Scratch, back in middle school. I spent something like five hours erasing the background off one sprite by hand, because I didn't know there was a faster way. Then I did it again for the next sprite. I still like that part of building, where you keep messing with a small detail until it finally feels right.
+
+This post is about one of those details. When you land on my homepage, my name starts out in the same dark ink as the rest of the heading, and then it turns red from left to right. It takes 700 milliseconds. It's one keyframe, a second copy of my name, and two media queries, and I want to walk through each of them because there's more going on than it looks like.
+
+## The red name comes first
+
+The first decision was kind of a safety one. The real name, the one inside the `strong` tag, is red from the very first paint. It pulls its color from a token:
+
+```css
+--name-accent: #9d2e1c;              /* light mode */
+--name-accent: oklch(0.75 0.13 32);  /* dark mode */
+```
+
+So if the animation never runs, or the CSS for it breaks, you still get a red name and the page looks finished. The effect is a layer on top of that. I never animate the real text.
+
+The layer is a second copy of my name, in ink, sitting right on top of the red one:
+
+```html
+<strong class="portfolio-hero__name">
+  Jack Cao
+  <span class="portfolio-hero__name-ink" aria-hidden="true">Jack Cao</span>
+</strong>
+```
+
+The animation just wipes that ink copy away.
+
+## A wipe instead of a fade
+
+{/* TODO: confirm you tried a fade first. If you didn't, change this to "I thought about a fade". */}
+My first idea was to fade the ink layer out. The problem with fading two colors is the middle. Halfway through, dark ink over red turns into this muddy brown that doesn't belong to either theme, and it made the whole heading look dirty for a split second.
+
+A clip doesn't have that problem. Every pixel is either ink or red, and the edge between them slides across the word kind of like a pen stroke.
+
+```css
+@keyframes portfolio-name-reveal {
+  from { clip-path: inset(0 0 0 0); }
+  to { clip-path: inset(0 0 0 100%); }
+}
+```
+
+`inset(0 0 0 100%)` pushes the left edge of the clip all the way to the right. So the ink layer gets eaten from the left side, and the red shows up in the same order you read it. The letters themselves never move, which means nothing shifts on the line.
+
+Here's the same moment frozen at 0%, 25%, 50%, 75%, and 100% of the animation:
+
+<div className="portfolio-writing-pair">
+  <figure>
+    <img src="/assets/writing/hero-name-reveal/frames-light.webp" alt="Five frames of the name Jack Cao. The first is all dark ink, the next three show red spreading from the left, the last is all red." loading="lazy" />
+    <figcaption>Light mode</figcaption>
+  </figure>
+  <figure>
+    <img src="/assets/writing/hero-name-reveal/frames-dark.webp" alt="The same five frames in dark mode, going from off-white to a soft coral red." loading="lazy" />
+    <figcaption>Dark mode</figcaption>
+  </figure>
+</div>
+
+If you look at the second frame, you'll see the red already covers "Jack C" at only a quarter of the time. That's the easing doing its job, which brings me to the numbers.
+
+## The numbers
+
+```css
+animation: portfolio-name-reveal 700ms var(--ease-out) 600ms both;
+```
+
+<figure>
+  <video data-theme-media="light" src="/assets/writing/hero-name-reveal/reveal-quarter.webm" autoPlay muted loop playsInline controls aria-label="The same page load slowed to a quarter speed so the wipe is easy to follow." />
+  <video data-theme-media="dark" src="/assets/writing/hero-name-reveal/reveal-quarter-dark.webm" autoPlay muted loop playsInline controls aria-label="The same page load slowed to a quarter speed so the wipe is easy to follow." />
+  <figcaption>Same thing at quarter speed.</figcaption>
+</figure>
+
+- **700ms long.** {/* TODO: how you picked 700. Did you try 400 and feel it was too snappy, 1000 and feel it dragged? Say it the way you'd say it out loud. */}
+- **600ms delay.** {/* TODO: confirm. My guess from the code is that you wanted the page and the preloaded Besley font to settle before anything moves. */}
+- **`--ease-out`, which is `cubic-bezier(0.22, 1, 0.36, 1)`.** It moves fast at the start and then slows way down for the last few letters. So most of the name goes red right away, and your eye ends up on "Cao."
+- **`both` for the fill mode.** The part that matters here is the end. Without a forwards fill, the clip gets dropped the moment the animation finishes, and the ink copy pops right back over the name. So you'd watch it turn red and then snap back to ink. `both` keeps the last keyframe applied after it's done. {/* TODO: if this actually happened to you, say so. "This one bit me" reads great if it's true. */}
+
+## Making the copy invisible to everything else
+
+Putting a second copy of my name on the page causes a few problems that I had to clean up.
+
+A screen reader would read it as "Jack Cao Jack Cao." `aria-hidden="true"` on the copy takes it out of the accessibility tree.
+
+If you selected the heading and copied it, you'd also get my name twice. `user-select: none` keeps the copy out of the selection, and `pointer-events: none` lets clicks go through to the real text underneath.
+
+The copy also needs to sit exactly on top of the name. The `strong` gets `position: relative` and `display: inline-block`, and the copy is absolutely positioned at `inset: 0` inside it. I also added `white-space: nowrap`, so the name can never break across two lines. A clip crossing a line break would look pretty weird.
+
+## Two media queries that turn it off
+
+The ink copy is `display: none` by default. It only shows up inside this block:
+
+```css
+@media (prefers-reduced-motion: no-preference) and (forced-colors: none) {
+  .portfolio-hero__name-ink {
+    position: absolute;
+    inset: 0;
+    display: block;
+    color: var(--portfolio-ink);
+    pointer-events: none;
+    user-select: none;
+    animation: portfolio-name-reveal 700ms var(--ease-out) 600ms both;
+  }
+}
+```
+
+I wrote it as opt-in on purpose. If you have reduced motion turned on, you just get the red name, no wipe. And because the query asks for `no-preference` instead of checking for `reduce`, a browser that doesn't understand the query at all also lands on the static version.
+
+<div className="portfolio-writing-pair">
+  <figure>
+    <img data-theme-media="light" src="/assets/writing/hero-name-reveal/default-start.webp" alt="The heading during the delay, with the name still in dark ink." loading="lazy" />
+    <img data-theme-media="dark" src="/assets/writing/hero-name-reveal/default-start-dark.webp" alt="The heading during the delay, with the name still in dark ink." loading="lazy" />
+    <figcaption>Normal settings, during the delay. The ink copy covers the red.</figcaption>
+  </figure>
+  <figure>
+    <img data-theme-media="light" src="/assets/writing/hero-name-reveal/reduced-motion.webp" alt="The heading with reduced motion on. The name is red right away." loading="lazy" />
+    <img data-theme-media="dark" src="/assets/writing/hero-name-reveal/reduced-motion-dark.webp" alt="The heading with reduced motion on. The name is red right away." loading="lazy" />
+    <figcaption>Reduced motion at the same moment. Red right away.</figcaption>
+  </figure>
+</div>
+
+Forced colors was the one I almost missed. That's the mode Windows High Contrast uses, where the system swaps out your colors for its own. In that mode my ink and my red both turn into the same system text color. The animation would be wiping one black over another black, so you'd see nothing, and there'd still be an extra layer of text sitting on the page for no reason. So I hide it there too.
+
+<figure>
+  <img src="/assets/writing/hero-name-reveal/forced-colors.webp" alt="The heading in forced colors mode, plain black text on white with no animation layer." loading="lazy" />
+  <figcaption>Forced colors. The system picks the colors, so the effect is gone.</figcaption>
+</figure>
+
+## How I'd check your own text effect
+
+If you're building something like this, these are the things I'd run through before shipping it:
+
+1. Turn the animation off and make sure the page still looks finished.
+2. Run a screen reader over it and listen for anything read twice.
+3. Select the text, copy it, and paste it somewhere.
+4. Open DevTools, go to the Rendering panel, and turn on reduced motion and forced colors one at a time.
+
+It's a small thing on the page, but it's the kind of detail I like spending time on. {/* TODO: end with what you'd change next, or how people reacted to it. Cut this comment if you don't have one. */}

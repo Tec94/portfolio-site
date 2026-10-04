@@ -1,0 +1,34 @@
+---
+slug: preload-one-font
+title: Preload one font, and add crossorigin
+summary: Moving off Google Fonts, and why I only preload the one face the hero heading needs.
+publicationDate: "2026-10-03"
+format: Note
+series: Small fixes
+tags:
+  - Performance
+  - Typography
+status: published
+---
+
+My site uses three font families: Besley for headings, Geologica for body text, and JetBrains Mono for the small labels. They were all coming from a Google Fonts stylesheet. That meant the browser had to go fetch CSS from another server before it could even start downloading a font, and Lighthouse showed that stylesheet holding up the first render.
+
+<figure>
+  <img src="/assets/writing/hero-name-reveal/reduced-motion.webp" alt="The homepage heading, Jack Cao is a product engineer in Texas, set in Besley." loading="lazy" />
+  <figcaption>The heading this whole note is about. It's Besley, and it's the biggest text on the page.</figcaption>
+</figure>
+
+So I downloaded the same faces and put them on my own server under `/fonts/portfolio/`. I kept the same Unicode subsets Google used and the same variable weight ranges, and the OFL license files sit right next to the fonts. The `@font-face` rules now load with my main stylesheet.
+
+Then I preloaded exactly one file, the Latin subset of Besley roman, because that's what paints the big heading:
+
+```html
+<link rel="preload" href="/fonts/portfolio/45a6…cdcb46.woff2"
+  as="font" type="font/woff2" crossorigin />
+```
+
+The `crossorigin` part is the thing that's easy to miss. You need it even though the font is on the same domain. Browsers always fetch fonts in CORS mode, so a preload without that attribute doesn't match the real request. The browser ends up downloading the font twice, and you get a console warning about an unused preload.
+
+I thought about preloading all of them, but then they'd all be fighting the hero image for bandwidth on the first load. One face covers the heading you see first, and the rest load normally through `@font-face` once the page needs them.
+
+{/* TODO: if you used a tool to grab or subset the files, link it here. */}

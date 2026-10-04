@@ -191,20 +191,18 @@ describe('portfolio overview shell', () => {
     view.unmount();
   });
 
-  it.each(['smartnest', 'stock-tracker', 'munky'])('removes the %s project route', (slug) => {
+  it.each(['munky'])('removes the retired %s project route', (slug) => {
     const view = render(<MemoryRouter initialEntries={[`/work/${slug}`]}><PreviewPortfolio /></MemoryRouter>);
     expect(within(view.container).getByRole('heading', { level: 1, name: 'This project is unavailable.' })).toBeInTheDocument();
     view.unmount();
   });
 
-  it('shows Slack Agent in the Hackathons filter without removed projects', async () => {
+  it('shows Slack Agent in the Hackathons filter', async () => {
     const view = render(<MemoryRouter initialEntries={['/']}><PreviewPortfolio /></MemoryRouter>);
     const archive = within(view.container.querySelector<HTMLElement>('#work')!);
     const expandProjects = archive.queryByRole('button', { name: /^Show \d+ more projects?$/ });
     if (expandProjects) fireEvent.click(expandProjects);
-    for (const title of ['Smartnest', 'Stock Tracker', '$Munky']) {
-      expect(archive.queryByText(title)).not.toBeInTheDocument();
-    }
+    expect(archive.queryByText('$Munky')).not.toBeInTheDocument();
     fireEvent.click(archive.getByRole('button', { name: 'Hackathons 04' }));
     const expandFilteredProjects = archive.queryByRole('button', { name: /^Show \d+ more projects?$/ });
     if (expandFilteredProjects) fireEvent.click(expandFilteredProjects);
@@ -214,20 +212,31 @@ describe('portfolio overview shell', () => {
     view.unmount();
   });
 
+  it('shows three projects per year in the list and the rest behind View more', () => {
+    const view = render(<MemoryRouter initialEntries={['/']}><PreviewPortfolio /></MemoryRouter>);
+    const archive = within(view.container.querySelector<HTMLElement>('#work')!);
+    expect(archive.queryByText('ClinicHub')).not.toBeInTheDocument();
+    fireEvent.click(archive.getByRole('button', { name: 'Show 2 more projects from 2026' }));
+    expect(archive.getByRole('link', { name: /ClinicHub/ })).toHaveAttribute('href', '/work/clinichub');
+    fireEvent.click(archive.getByRole('button', { name: 'Showcase view' }));
+    expect(archive.getByText('ClinicHub')).toBeInTheDocument();
+    expect(archive.getByRole('button', { name: 'All 10' })).toBeInTheDocument();
+    view.unmount();
+  });
+
   it('uses a simple Writing header and replaces the Lab link with Work', () => {
     const view = render(<MemoryRouter initialEntries={['/writing']}><PreviewPortfolio /></MemoryRouter>);
     expect(screen.getByRole('heading', { level: 1, name: 'Writing' })).toBeInTheDocument();
     expect(screen.queryByText('Notes from the work.')).not.toBeInTheDocument();
-    expect(within(view.container).getByRole('link', { name: 'View work' })).toHaveAttribute('href', '/#work');
+    expect(within(view.container).getByRole('link', { name: /Ship small, learn fast/ })).toHaveAttribute('href', '/writing/ship-small-learn-fast');
     expect(screen.getByRole('link', { name: '← Back to home' })).toHaveAttribute('href', '/#writing');
-    expect(within(view.container.querySelector('main')!).getByRole('link', { name: 'Back to home' })).toHaveAttribute('href', '/#writing');
     expect(document.querySelector('a[href="/lab"]')).toBeNull();
     view.unmount();
   });
 
   it.each(['artist-platform', 'nexora-landing-page', 'slack-agent'])('shows %s project metadata without requiring a written case study', (slug) => {
     const view = render(<MemoryRouter initialEntries={[`/work/${slug}`]}><PreviewPortfolio /></MemoryRouter>);
-    expect(screen.getByText('Watch demo')).toBeInTheDocument();
+    expect(screen.queryByText('Watch demo')).not.toBeInTheDocument();
     const details = within(screen.getByRole('complementary', { name: 'Project details' }));
     expect(details.getByText('Shipped')).toBeInTheDocument();
     expect(details.getByText('Role')).toBeInTheDocument();
@@ -235,10 +244,9 @@ describe('portfolio overview shell', () => {
     expect(view.container.querySelector('.portfolio-case-study__actions a')).toBeInTheDocument();
     expect(view.container.querySelector('.portfolio-case-study__content')).toBeNull();
     fireEvent.click(screen.getByRole('button', { name: /Open .* media viewer/ }));
-    expect(view.container.querySelector('.portfolio-viewer__stage')).toHaveClass('is-single');
-    expect(view.container.querySelector('video')).toHaveAttribute('src', expect.stringContaining(`/projects/${slug}/`));
+    expect(view.container.querySelector('.portfolio-viewer__stage video')).toHaveAttribute('src', expect.stringMatching(/^\/assets\/studio\//));
     fireEvent.click(screen.getByRole('button', { name: 'Close media viewer' }));
-    expect(view.container.querySelector('video')).toBeNull();
+    expect(view.container.querySelector('.portfolio-viewer__stage video')).toBeNull();
     view.unmount();
   });
 
@@ -392,7 +400,7 @@ describe('project media viewer', () => {
     expect(receipt).toHaveAttribute('aria-expanded', 'true');
     fireEvent.click(receipt);
     expect(receipt).toHaveAttribute('aria-expanded', 'false');
-    expect(page.getByRole('button', { name: 'All 06' })).toBeInTheDocument();
+    expect(page.getByRole('button', { name: 'All 10' })).toBeInTheDocument();
     expect(page.getByText('June–August 2026')).toHaveClass('sr-only');
     view.unmount();
   });

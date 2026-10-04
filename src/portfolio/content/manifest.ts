@@ -37,6 +37,8 @@ export interface ArticleRecord extends ArticleFrontmatter {
 export type PreviewProjectRecord = Pick<
   ProjectRecord,
   | 'slug'
+  | 'presentation'
+  | 'highlights'
   | 'summary'
   | 'title'
   | 'year'
@@ -64,6 +66,7 @@ function withoutFrontmatter(source: string) {
 
 function plainText(source: string) {
   return withoutFrontmatter(source)
+    .replace(/\{\/\*[\s\S]*?\*\/\}/g, ' ')
     .replace(/```[\s\S]*?```/g, ' ')
     .replace(/<[^>]+>/g, ' ')
     .replace(/!\[([^\]]*)\]\([^)]*\)/g, '$1')
@@ -113,12 +116,15 @@ const allProjectRecords = Object.entries(projectModules)
   .sort((a, b) => a.selectedWorkOrder - b.selectedWorkOrder);
 
 const studioPreview = import.meta.env.DEV && import.meta.env.VITE_STUDIO_PREVIEW === 'true';
+// Briefs live only as Work archive rows; they have no page, search entry, or "next project" slot.
 const publishedProjects = allProjectRecords.filter(
-  (project) => studioPreview || project.publicationState === 'published',
+  (project) => project.presentation !== 'brief' && (studioPreview || project.publicationState === 'published'),
 );
 
 export const previewProjectManifest: PreviewProjectRecord[] = allProjectRecords.map((project) => ({
   slug: project.slug,
+  presentation: project.presentation,
+  highlights: project.highlights,
   summary: project.summary,
   title: project.title,
   year: project.year,
@@ -163,5 +169,5 @@ export function getPublishedArticle(slug: string) {
 }
 
 export function getPreviewProject(slug: string) {
-  return previewProjectManifest.find((project) => project.slug === slug);
+  return previewProjectManifest.find((project) => project.slug === slug && project.presentation !== 'brief');
 }
