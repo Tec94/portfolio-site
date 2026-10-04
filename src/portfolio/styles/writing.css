@@ -128,6 +128,7 @@
 .portfolio-writing-empty .portfolio-writing-rule-link::before { content: none; }
 .portfolio-writing-more {
   width: fit-content;
+  margin-inline-start: var(--space-1);
   display: flex;
   align-items: center;
   justify-content: space-between;
