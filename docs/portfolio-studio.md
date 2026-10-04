@@ -7,31 +7,48 @@ Keep the terminal running while you edit. Stop it with Ctrl+C.
 
 ## Everyday workflow
 
-1. Open **Projects**, **Writing**, or **Site content** and select an entry.
-   Choose **New project** to open a blank form. Enter a normal project name;
-   Studio generates its URL automatically when you save. No slug is required.
-2. Change its fields. Use Markdown for project process writing and articles.
-   Images, links, headings, lists, and inline MDX are supported.
-3. Choose **Save changes**, then **Preview** to see the saved portfolio.
+1. Pick **Projects**, **Writing**, or **Site content**, then an entry in the
+   list beside it. Every entry has its own URL (`#/projects/credify`), so
+   reload, Back, and bookmarks work. **+ New** opens a blank form; the page URL
+   is created from the title on first save.
+2. Edit. Forms are split into collapsible sections. **Ctrl K** (or `/`)
+   searches every title, sentence, and field across all content and jumps
+   straight to the match with it selected — the fastest way to make a small
+   copy edit.
+3. **Ctrl S** saves. Unsaved edits are kept in this browser (an amber dot marks
+   them in the sidebar and list) until you save or discard them.
 4. Open **Publish**, optionally **Check build**, then **Publish saved changes**.
    The button publishes without an AI prompt or a Git commit.
 
-Project types and technologies have selectable options, searchable lists, and
-custom entries. You can add a prebuilt tech stack and then adjust its selected
-technologies. Existing custom values remain available.
+**Panel** in the editor header opens a side panel:
+- **Outline**: jump to any section or body heading, plus a publish checklist
+  (what the current page type still needs).
+- **Preview**: the saved page, live, at desktop or mobile width.
+- **History**: earlier saves with the fields each one differs in; **Load** puts
+  one in the editor.
 
-Drag a project's handle in the **Projects** list to change its order. Arrow
-buttons and the handle's Up/Down keyboard controls do the same thing. Ordering
-saves locally as soon as you move a project; publish to update the live site.
+Lists (highlights, experiences, links, services, media) reorder by dragging
+the ⠿ handle or with the arrow buttons; items can be duplicated, collapsed,
+or removed. Removing or reordering shows **Undo**, and **Ctrl Z** outside a
+text field undoes the last structural change. In a list of short text rows,
+Enter adds a row, Backspace on an empty row removes it, and Alt+↑/↓ moves it.
+
+Project types, technologies, and article tags are token inputs: type and
+press Enter, click a suggestion, or add a prebuilt stack. Drag tokens to
+reorder them.
+
+Choose **Reorder** in the **Projects** list to drag projects into a new order
+(or focus a handle and use ↑/↓). Each move saves locally right away and offers
+Undo; publish to update the live site.
 
 In a project's **Images & videos** section, drop several files or select them
 together. Each file attaches directly to the project, with detected dimensions,
 an editable description based on its filename, and an automatic thumbnail for
 videos. Review descriptions for meaningful alt text. The first item is the cover;
 use the arrows to change media order. Captions, poster replacements, and technical
-settings are optional under **Caption & advanced settings**. Files the browser
+settings are optional under **More settings**. Files the browser
 cannot decode are reported individually; successfully added files are retained.
-Choose **Save changes** to save the updated project. Removing an item keeps its
+Choose **Save** to save the updated project. Removing an item keeps its
 original in the library until separately removed.
 
 Site content includes homepage copy, page text, profile, experience, education,
@@ -39,6 +56,17 @@ milestones, services, contact labels, links, and search/social metadata. Text
 around inline links is presented as separate fields so existing link placement
 is preserved. This manages the current portfolio; archived classic/v2 layouts,
 application logic, and visual design remain code.
+
+To add a margin note to an article, put an `<aside>` immediately before the
+paragraph, code block, or image it annotates. An optional `<small>` label numbers
+it. On wide screens the note sits in a left column beside that block; on narrow
+screens it appears above it.
+
+```mdx
+<aside><small>01</small>Dallas 311 export, about 40k rows after dedupe.</aside>
+
+The paragraph the note is about.
+```
 
 Local Studio preview includes draft article and case-study bodies. Normal
 production routes continue to exclude draft article bodies and show the
@@ -68,8 +96,8 @@ Unsaved drafts are retained in this browser's local storage when available.
 Reopening an entry offers to restore its unsaved draft if the underlying file
 has not changed. They are not included in publishing.
 
-**Show saved revisions** loads an earlier saved version into the editor. Choose
-**Save changes** to restore it. Conflicting saves from another tab or code editor
+**Panel → History** loads an earlier saved version into the editor. Choose
+**Save** to restore it. Conflicting saves from another tab or code editor
 are rejected rather than overwritten. Deleted entries and unused local media are
 moved to `.studio/trash/`; copy a deleted entry back to its original
 `src/content/...` path to recover it. Revision history lives in `.studio/history/`.

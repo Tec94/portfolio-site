@@ -145,7 +145,10 @@
         "company": "string",
         "role": "string",
         "location": "string",
-        "period": "string"
+        "period": "string",
+        "highlights": [
+          "string"
+        ]
       }
     ],
     "education": {

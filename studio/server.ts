@@ -48,7 +48,6 @@ server.on('request', async (request, response) => {
     }
     const staticFiles: Record<string, [string, string]> = {
       '/__studio/app.js': ['app.js', 'text/javascript'], '/__studio/style.css': ['style.css', 'text/css'],
-      '/__studio/project-editor.css': ['project-editor.css', 'text/css'],
     };
     if (staticFiles[url.pathname]) {
       const [file, type] = staticFiles[url.pathname];
