@@ -93,6 +93,15 @@ export function WorkArchive({ standalone = false }: { standalone?: boolean }) {
     sound.play('press');
   };
 
+  const toggleGroup = (label: string) => {
+    sound.play('press');
+    const update = () => setExpandedGroups((groups) => groups.includes(label)
+      ? groups.filter((group) => group !== label)
+      : [...groups, label]);
+    if (reducedMotion || typeof document.startViewTransition !== 'function') update();
+    else document.startViewTransition(() => flushSync(update));
+  };
+
   return (
     <section
       id="work"
@@ -216,14 +225,15 @@ export function WorkArchive({ standalone = false }: { standalone?: boolean }) {
                       <span className="portfolio-work-row__arrow" aria-hidden="true">→</span>
                     </Link>
                   ))}
-                  {group.projects.length > projectsPerYear && !expandedGroups.includes(group.label) ? (
+                  {group.projects.length > projectsPerYear ? (
                     <button
                       type="button"
                       className="portfolio-dossier-toggle portfolio-work-more"
-                      aria-label={`Show ${group.projects.length - projectsPerYear} more projects from ${group.label}`}
-                      onClick={() => { setExpandedGroups([...expandedGroups, group.label]); sound.play('press'); }}
+                      aria-expanded={expandedGroups.includes(group.label)}
+                      aria-label={expandedGroups.includes(group.label) ? `Show fewer projects from ${group.label}` : `Show ${group.projects.length - projectsPerYear} more projects from ${group.label}`}
+                      onClick={() => toggleGroup(group.label)}
                     >
-                      View more · {String(group.projects.length - projectsPerYear).padStart(2, '0')}
+                      {expandedGroups.includes(group.label) ? 'View less' : `View more · ${String(group.projects.length - projectsPerYear).padStart(2, '0')}`}
                     </button>
                   ) : null}
                 </div>

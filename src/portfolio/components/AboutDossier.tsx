@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { flushSync } from 'react-dom';
+import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion';
 import { education, experiences, profile, toolbox } from '../../data/portfolioData';
 import { usePortfolioSound } from '../providers/SoundProvider';
 
@@ -11,6 +13,13 @@ export function ResumeStamp() {
 export function AboutDossier() {
   const [showAll, setShowAll] = useState(false);
   const sound = usePortfolioSound();
+  const reducedMotion = usePrefersReducedMotion();
+  const toggleChapters = () => {
+    sound.play('press');
+    const update = () => setShowAll((expanded) => !expanded);
+    if (reducedMotion || typeof document.startViewTransition !== 'function') update();
+    else document.startViewTransition(() => flushSync(update));
+  };
   const chapters = [
     ...experiences.map((experience) => ({
       title: experience.company,
@@ -59,7 +68,7 @@ export function AboutDossier() {
         ))}
       </ol>
       {chapters.length > visibleChapters ? (
-        <button type="button" className="portfolio-dossier-toggle" aria-expanded={showAll} onClick={() => { setShowAll(!showAll); sound.play('press'); }}>
+        <button type="button" className="portfolio-dossier-toggle" aria-expanded={showAll} onClick={toggleChapters}>
           {showAll ? 'View less' : `View more · ${String(chapters.length - visibleChapters).padStart(2, '0')}`}
         </button>
       ) : null}

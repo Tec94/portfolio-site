@@ -218,6 +218,11 @@ describe('portfolio overview shell', () => {
     expect(archive.queryByText('ClinicHub')).not.toBeInTheDocument();
     fireEvent.click(archive.getByRole('button', { name: 'Show 2 more projects from 2026' }));
     expect(archive.getByRole('link', { name: /ClinicHub/ })).toHaveAttribute('href', '/work/clinichub');
+    const collapse = archive.getByRole('button', { name: 'Show fewer projects from 2026' });
+    expect(collapse).toHaveAttribute('aria-expanded', 'true');
+    fireEvent.click(collapse);
+    expect(archive.queryByText('ClinicHub')).not.toBeInTheDocument();
+    expect(archive.getByRole('button', { name: 'Show 2 more projects from 2026' })).toHaveAttribute('aria-expanded', 'false');
     fireEvent.click(archive.getByRole('button', { name: 'Showcase view' }));
     expect(archive.getByText('ClinicHub')).toBeInTheDocument();
     expect(archive.getByRole('button', { name: 'All 10' })).toBeInTheDocument();
