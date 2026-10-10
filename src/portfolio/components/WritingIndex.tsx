@@ -3,14 +3,14 @@ import { Link } from 'react-router-dom';
 import pageCopy from '../../content/site/WritingPage.json';
 import { portfolioManifest, type ArticleRecord } from '../content/manifest';
 
-// `detailed` is the /writing index row: full date and tags instead of reading time.
+// `detailed` is the /writing index row: tags instead of reading time.
 export function WritingList({ articles, detailed = false }: { articles: ArticleRecord[]; detailed?: boolean }) {
   return (
     <div className="portfolio-writing-rows">
       {articles.map((article) => (
         <Link key={article.slug} className="portfolio-writing-row" data-format={article.format} to={article.href}>
           <time dateTime={article.publicationDate}>
-            {new Intl.DateTimeFormat('en-US', detailed ? { month: 'short', day: 'numeric', year: 'numeric' } : { month: 'short', year: '2-digit' }).format(new Date(`${article.publicationDate}T12:00:00`))}
+            {new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' }).format(new Date(`${article.publicationDate}T12:00:00`))}
           </time>
           <div className="portfolio-writing-row__copy">
             <h2>{article.title}</h2>
