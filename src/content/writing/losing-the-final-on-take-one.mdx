@@ -1,0 +1,58 @@
+---
+slug: losing-the-final-on-take-one
+title: Losing the final on take one
+summary: A short film for Runout's Club Cup, cut from a whole tournament the AI played for me, including the run where it lost the final.
+publicationDate: "2026-11-22"
+format: Write-up
+tags:
+  - Process
+  - Tooling
+  - Interaction design
+status: published
+---
+
+The Club Cup is the new tournament mode in Runout. You get an eight-player bracket, three rounds, and seven AI rivals, and each rival has a style. Mara is The Closer, so she gets sharper at the end of a rack. Rafe is The Banker and kicks his way out of trouble. Kit is a Gunslinger who fires at everything. I wanted a short film showing that the rivals play like people do, which means they also mess up.
+
+<figure>
+  <video src="/assets/writing/losing-the-final-on-take-one/cup-film.mp4" poster="/assets/writing/losing-the-final-on-take-one/cup-film-poster.webp" controls playsInline preload="none" aria-label="Runout launch film: the Club Cup." />
+  <figcaption>The Club Cup film. One real tournament, sound on.</figcaption>
+</figure>
+
+{/* TODO(Jack): a line on why the rivals got personalities instead of one difficulty slider. */}
+
+## Recording a whole tournament
+
+I used the same capture setup as the [cues film](/writing/twenty-six-wild-cues). The app runs in Playwright on a fake clock, the AI plays my side too, and every frame goes straight into ffmpeg. The difference this time is that I didn't record single shots. The script taps Start, then plays the entire cup, from the quarterfinal through the final, without stopping.
+
+Once a second it also reads whatever text is on screen and writes it to a log with a timestamp:
+
+```js
+const t = (await text(p)).replace(/\s+/g, ' ');
+if (t.slice(0, 200) !== last) {
+  last = t.slice(0, 200);
+  mark('T ' + last);
+}
+```
+
+That log turned out to be the most useful part. The game already prints things like "Wrong pocket: the turn passes." and "Foul: scratch. Ball in hand", so finding the good moments in seven minutes of footage was just a text search. The run in the film had six wrong pockets and two scratches, and each one came with a timestamp I could cut on.
+
+<figure>
+  <img src="/assets/writing/losing-the-final-on-take-one/cup-bracket.webp" alt="The Club Cup bracket in Runout: eight players in the quarterfinal column, with a legend for The Closer, The Banker and Gunslinger styles." loading="lazy" />
+  <figcaption>The bracket. The legend under it lists the rival styles.</figcaption>
+</figure>
+
+## Take one lost
+
+The first full run I recorded used seed 99. I won the quarterfinal against Hugo and the semifinal against Rafe, then lost the final to Mara. The result screen says "Lost the rack: the 8 went down on a foul." A film about winning the cup can't use that, so the script just stops on a loss and logs it, and I ran it again with another seed.
+
+Seed 7 went all the way. That's the run in the film: Mara goes long and puts a ball in the wrong pocket in the semifinal, Tam scratches in the final, and I get ball in hand and pot the 8. Nothing in it is staged. The AI made those mistakes on its own, and the log told me where they were.
+
+## The edit
+
+Same HyperFrames setup as before: an HTML page, a GSAP timeline, rendered to MP4. I reviewed it in rounds with a fresh reviewer every time. The notes that changed the most were about reading time. The foul captions were up for under half a second, so you couldn't actually read the proof that the rivals make mistakes. The other big one was the win itself, which showed the same results card as the semifinal. I cut the semifinal card, gave each foul more than a second, and rebuilt the Champion card big, in the app's own yellow, over the dimmed result screen.
+
+{/* TODO(Jack): final review score goes here once it's in. */}
+
+The sound comes from the same small Python synth as the cues film: a bed, ball clacks, pots and a hit on each cut, mixed to -16 LUFS.
+
+Runout is in App Store review. The waitlist is at [runout.win](https://runout.win).
