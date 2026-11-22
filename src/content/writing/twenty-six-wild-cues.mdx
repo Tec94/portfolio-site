@@ -1,0 +1,54 @@
+---
+slug: twenty-six-wild-cues
+title: 26 wild cues, one shot
+summary: A short launch film for Runout's cues, cut from the real game, with the AI playing both sides so every take comes out the same.
+publicationDate: "2026-11-22"
+format: Write-up
+tags:
+  - Process
+  - Tooling
+  - Interaction design
+status: published
+---
+
+Runout has 26 cues now, and most of them have some kind of trick. Daybreak runs the object ball's line all the way across the table. Surveyor shows you where the cue ball goes after contact. Nonchalant doesn't show a guide at all. I wanted a short film that gets that idea across in about ten seconds, using nothing but footage from the actual game.
+
+<figure>
+  <video src="/assets/writing/twenty-six-wild-cues/cues-film.mp4" poster="/assets/writing/twenty-six-wild-cues/cues-film-poster.webp" controls playsInline preload="none" aria-label="Runout launch film: 26 wild cues." />
+  <figcaption>The cues film. Real game footage, sound on.</figcaption>
+</figure>
+
+{/* TODO(Jack): one or two lines on why cues got tricks in the first place. */}
+
+## Getting the same shot twice
+
+The middle of the film plays the same shot twice, once with House and once with Surveyor. For that to work, the table has to be identical in both takes, down to the pixel.
+
+So I don't screen record. I build the Expo app for web, open it in Playwright, and replace the browser's clock with a fake one. Then I step that clock 1/30 of a second at a time and take a screenshot after each step. The screenshots get piped straight into ffmpeg. It's pretty slow, but the output is perfectly smooth even when a frame takes my laptop way longer than 33 ms to draw.
+
+```js
+await page.clock.install({ time: 0 });
+for (let f = 0; f < frames; f++) {
+  await page.clock.runFor(1000 / 30);
+  ffmpeg.stdin.write(await page.screenshot());
+}
+```
+
+I also seed `Math.random` before the page loads, so the break lands the same way every run. And I didn't want to hold a phone and play the shots myself, so a scratch copy of the app lets the AI play my side too. It aims with my cue's guide showing, which is the part you actually want to see. That patch never goes near the real repo.
+
+<figure>
+  <img src="/assets/writing/twenty-six-wild-cues/cues-screen.webp" alt="The Cues screen in Runout: a grid of cue cards next to a detail panel for the Nonchalant cue, which reads no guide, Aim 0." loading="lazy" />
+  <figcaption>The Cues screen. Nonchalant's panel is the one with Aim at 0.</figcaption>
+</figure>
+
+## The edit
+
+The film is a HyperFrames project, which means it's just an HTML page with a GSAP timeline that gets rendered to MP4. Each beat is a video or image with a start time and a duration, and the type sits on top.
+
+I ran it through review rounds with a fresh reviewer each time, scoring the hook, clarity, type, motion and so on. The first cuts scored around 7 out of 10, and the notes were pretty specific. The split screen cut off right before the payoff. Text sat on top of the app's own labels. A ball rolled right into the end of a word. One cut even said "No calls" while the app showed a called pocket on screen. Most of the fixes were about cutting things, not adding them. The film went from about 15 seconds down to 11.
+
+It still never got past about 7. The notes in the last rounds all said the same thing: at table scale, House and Surveyor draw guides that look almost alike, so the film can't really prove its own claim. Fixing that needs a new capture with the camera much closer on the guide.
+
+There's no music library behind this one either. The bed, the ball clacks and the little hits on each cut come from a small Python script that synthesizes them, then ffmpeg brings the mix to -16 LUFS.
+
+Runout is in App Store review. The waitlist is at [runout.win](https://runout.win).
