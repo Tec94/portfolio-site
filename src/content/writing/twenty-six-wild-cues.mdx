@@ -1,0 +1,54 @@
+---
+slug: twenty-six-wild-cues
+title: 26 wild cues, one shot
+summary: A short loop for Runout's cues, built from pieces of the real game, with the AI playing both sides so every take comes out the same.
+publicationDate: "2026-11-22"
+format: Write-up
+tags:
+  - Process
+  - Tooling
+  - Interaction design
+status: published
+---
+
+Runout has 26 cues now, and most of them have some kind of trick. Daybreak runs the object ball's line all the way across the table. Surveyor shows you where the cue ball goes after contact. Nonchalant doesn't show a guide at all. I wanted a short loop that gets that idea across in twelve seconds, using nothing but pieces of the actual game.
+
+<figure>
+  <video src="/assets/writing/twenty-six-wild-cues/cues-film.mp4" poster="/assets/writing/twenty-six-wild-cues/cues-film-poster.webp" autoPlay muted loop playsInline controls aria-label="A row of Runout cue cards, then the same shot aimed with House, Daybreak and Surveyor. Each cue's name and ability sits above the table, and each one draws a different guide." />
+  <figcaption>The cues loop. Real game footage, no sound.</figcaption>
+</figure>
+
+{/* TODO(Jack): one or two lines on why cues got tricks in the first place. */}
+
+## Getting the same shot twice
+
+The middle of the loop aims the same shot three times, with House, Daybreak and Surveyor. For that to work, the table has to be identical in every take, down to the pixel.
+
+So I don't screen record. I build the Expo app for web, open it in Playwright, and replace the browser's clock with a fake one. Then I step that clock 1/30 of a second at a time and take a screenshot after each step. The screenshots get piped straight into ffmpeg. It's pretty slow, but the output is perfectly smooth even when a frame takes my laptop way longer than 33 ms to draw.
+
+```js
+await page.clock.install({ time: 0 });
+for (let f = 0; f < frames; f++) {
+  await page.clock.runFor(1000 / 30);
+  ffmpeg.stdin.write(await page.screenshot());
+}
+```
+
+I also seed `Math.random` before the page loads, so the break lands the same way every run. And I didn't want to hold a phone and play the shots myself, so a scratch copy of the app lets the AI play my side too. It aims with my cue's guide showing, which is the part you actually want to see. That patch never goes near the real repo.
+
+<figure>
+  <img src="/assets/writing/twenty-six-wild-cues/cues-screen.webp" alt="The Cues screen in Runout: a grid of cue cards next to a detail panel for the Nonchalant cue, which reads no guide, Aim 0." loading="lazy" />
+  <figcaption>The Cues screen. Nonchalant's panel is the one with Aim at 0.</figcaption>
+</figure>
+
+## The edit
+
+The first cut was a HyperFrames film: an HTML page with a GSAP timeline, type over the footage and a synthesized sound bed. It scored 7.3 in review, and it didn't look like anything else on this site. Every project here has a short silent loop made of real UI pieces on a plain backdrop, so I rebuilt this one the same way.
+
+The loop is a Remotion composition. I took 3x screenshots of the Cues screen in Playwright and cropped out the cue cards and each cue's name and ability. The tables come from the fake-clock capture, with a scratch build that draws the guides 2.6 times thicker so they survive being shrunk. Each beat slows the aim down and then holds on the finished guide.
+
+I reviewed it in rounds with a fresh reviewer each time. The first cut scored 4.5. The panel text was too small to read, a cue card ghosted over the table, and frame 359 didn't match frame 0, so the loop jumped. Later rounds cut the panel down to the name and the ability line, showed the whole table instead of a crop, and trimmed each clip so it ends on the guide instead of empty felt. Seven rounds in, it scored 9.
+
+Surveyor's after-hit line is still short. That's the game's own drawing, so I left it.
+
+Runout is in App Store review. The waitlist is at [runout.win](https://runout.win).

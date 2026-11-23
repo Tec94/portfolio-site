@@ -216,16 +216,16 @@ describe('portfolio overview shell', () => {
     const view = render(<MemoryRouter initialEntries={['/']}><PreviewPortfolio /></MemoryRouter>);
     const archive = within(view.container.querySelector<HTMLElement>('#work')!);
     expect(archive.queryByText('ClinicHub')).not.toBeInTheDocument();
-    fireEvent.click(archive.getByRole('button', { name: 'Show 2 more projects from 2026' }));
+    fireEvent.click(archive.getByRole('button', { name: 'Show 3 more projects from 2026' }));
     expect(archive.getByRole('link', { name: /ClinicHub/ })).toHaveAttribute('href', '/work/clinichub');
     const collapse = archive.getByRole('button', { name: 'Show fewer projects from 2026' });
     expect(collapse).toHaveAttribute('aria-expanded', 'true');
     fireEvent.click(collapse);
     expect(archive.queryByText('ClinicHub')).not.toBeInTheDocument();
-    expect(archive.getByRole('button', { name: 'Show 2 more projects from 2026' })).toHaveAttribute('aria-expanded', 'false');
+    expect(archive.getByRole('button', { name: 'Show 3 more projects from 2026' })).toHaveAttribute('aria-expanded', 'false');
     fireEvent.click(archive.getByRole('button', { name: 'Showcase view' }));
     expect(archive.getByText('ClinicHub')).toBeInTheDocument();
-    expect(archive.getByRole('button', { name: 'All 10' })).toBeInTheDocument();
+    expect(archive.getByRole('button', { name: 'All 11' })).toBeInTheDocument();
     view.unmount();
   });
 
@@ -405,7 +405,7 @@ describe('project media viewer', () => {
     expect(receipt).toHaveAttribute('aria-expanded', 'true');
     fireEvent.click(receipt);
     expect(receipt).toHaveAttribute('aria-expanded', 'false');
-    expect(page.getByRole('button', { name: 'All 10' })).toBeInTheDocument();
+    expect(page.getByRole('button', { name: 'All 11' })).toBeInTheDocument();
     expect(page.getByText('June–August 2026')).toHaveClass('sr-only');
     view.unmount();
   });
