@@ -1,7 +1,7 @@
 ---
 slug: losing-the-final-on-take-one
 title: Losing the final on take one
-summary: A short film for Runout's Club Cup, cut from a whole tournament the AI played for me, including the run where it lost the final.
+summary: A short loop for Runout's Club Cup, cut from a whole tournament the AI played for me, including the run where it lost the final.
 publicationDate: "2026-11-22"
 format: Write-up
 tags:
@@ -11,18 +11,18 @@ tags:
 status: published
 ---
 
-The Club Cup is the new tournament mode in Runout. You get an eight-player bracket, three rounds, and seven AI rivals, and each rival has a style. Mara is The Closer, so she gets sharper at the end of a rack. Rafe is The Banker and kicks his way out of trouble. Kit is a Gunslinger who fires at everything. I wanted a short film showing that the rivals play like people do, which means they also mess up.
+The Club Cup is the new tournament mode in Runout. You get an eight-player bracket, three rounds, and seven AI rivals, and each rival has a style. Mara is The Closer, so she gets sharper at the end of a rack. Rafe is The Banker and kicks his way out of trouble. Kit is a Gunslinger who fires at everything. I wanted a short loop of a cup run, from the bracket to the 8 going down in the final.
 
 <figure>
-  <video src="/assets/writing/losing-the-final-on-take-one/cup-film.mp4" poster="/assets/writing/losing-the-final-on-take-one/cup-film-poster.webp" controls playsInline preload="none" aria-label="Runout launch film: the Club Cup." />
-  <figcaption>The Club Cup film. One real tournament, sound on.</figcaption>
+  <video src="/assets/writing/losing-the-final-on-take-one/cup-film.mp4" poster="/assets/writing/losing-the-final-on-take-one/cup-film-poster.webp" autoPlay muted loop playsInline controls aria-label="The Club Cup in Runout: the semifinal slot You versus Mara, the Through to the semifinal card, Mara's rival card, the 8 dropping in the final, and the Champion card." />
+  <figcaption>The Club Cup loop. One real tournament, no sound.</figcaption>
 </figure>
 
 {/* TODO(Jack): a line on why the rivals got personalities instead of one difficulty slider. */}
 
 ## Recording a whole tournament
 
-I used the same capture setup as the [cues film](/writing/twenty-six-wild-cues). The app runs in Playwright on a fake clock, the AI plays my side too, and every frame goes straight into ffmpeg. The difference this time is that I didn't record single shots. The script taps Start, then plays the entire cup, from the quarterfinal through the final, without stopping.
+I used the same capture setup as the [cues loop](/writing/twenty-six-wild-cues). The app runs in Playwright on a fake clock, the AI plays my side too, and every frame goes straight into ffmpeg. The difference this time is that I didn't record single shots. The script taps Start, then plays the entire cup, from the quarterfinal through the final, without stopping.
 
 Once a second it also reads whatever text is on screen and writes it to a log with a timestamp:
 
@@ -34,7 +34,7 @@ if (t.slice(0, 200) !== last) {
 }
 ```
 
-That log turned out to be the most useful part. The game already prints things like "Wrong pocket: the turn passes." and "Foul: scratch. Ball in hand", so finding the good moments in seven minutes of footage was just a text search. The run in the film had six wrong pockets and two scratches, and each one came with a timestamp I could cut on.
+That log turned out to be the most useful part. The game already prints things like "Wrong pocket: the turn passes." and "Foul: scratch. Ball in hand", so finding the good moments in seven minutes of footage was just a text search. The run I used had six wrong pockets and two scratches, and each one came with a timestamp I could cut on.
 
 <figure>
   <img src="/assets/writing/losing-the-final-on-take-one/cup-bracket.webp" alt="The Club Cup bracket in Runout: eight players in the quarterfinal column, with a legend for The Closer, The Banker and Gunslinger styles." loading="lazy" />
@@ -43,16 +43,16 @@ That log turned out to be the most useful part. The game already prints things l
 
 ## Take one lost
 
-The first full run I recorded used seed 99. I won the quarterfinal against Hugo and the semifinal against Rafe, then lost the final to Mara. The result screen says "Lost the rack: the 8 went down on a foul." A film about winning the cup can't use that, so the script just stops on a loss and logs it, and I ran it again with another seed.
+The first full run I recorded used seed 99. I won the quarterfinal against Hugo and the semifinal against Rafe, then lost the final to Mara. The result screen says "Lost the rack: the 8 went down on a foul." A loop about winning the cup can't use that, so the script just stops on a loss and logs it, and I ran it again with another seed.
 
-Seed 7 went all the way. That's the run in the film: Mara goes long and puts a ball in the wrong pocket in the semifinal, Tam scratches in the final, and I get ball in hand and pot the 8. Nothing in it is staged. The AI made those mistakes on its own, and the log told me where they were.
+Seed 7 went all the way. That's the run in the loop: Mara goes long and puts a ball in the wrong pocket in the semifinal, Tam scratches in the final, and I get ball in hand and pot the 8. Nothing in it is staged. The AI made those mistakes on its own, and the log told me where they were.
 
 ## The edit
 
-Same HyperFrames setup as before: an HTML page, a GSAP timeline, rendered to MP4. I reviewed it in rounds with a fresh reviewer every time. The notes that changed the most were about reading time. The foul captions were up for under half a second, so you couldn't actually read the proof that the rivals make mistakes. The other big one was the win itself, which showed the same results card as the semifinal. I cut the semifinal card, gave each foul more than a second, and rebuilt the Champion card big, in the app's own yellow, over the dimmed result screen.
+The first cut was a HyperFrames film with type and a synthesized sound bed. It got to 7.4 in review, and like the cues film, it didn't match the rest of this site. So I rebuilt it as a silent Remotion loop: real pieces of the app on a plain backdrop, one beat at a time.
 
-Those two notes got fixed. The bracket now fills in after the semifinal, and Rafe gets his own beat with a real bank. That bank isn't from seed 7, though. It comes from the seed 99 run, the one I lost, so the film labels it as another cup. Seven rounds in, it sits at 7.4 out of 10.
+The pieces are 3x screenshots from the seed 7 run: the bracket, the results cards and Mara's rival card. The table clip is the end of the final. I get ball in hand, and the 8 goes in. That part plays at half speed while the frame pushes in on the pocket.
 
-The sound comes from the same small Python synth as the cues film: a bed, ball clacks, pots and a hit on each cut, mixed to -14 LUFS.
+The reviews caught one thing I'd gotten wrong. An earlier cut ringed Rafe in the bracket and gave him a beat with a bank shot. But that bank came from the seed 99 run, and in seed 7 Rafe lost his quarterfinal to Tam. He was never my opponent. I cut his beat. Now the loop follows only my side of the bracket: through to the semifinal, Mara next, the final, Champion. After seven rounds it scored 9.
 
 Runout is in App Store review. The waitlist is at [runout.win](https://runout.win).
